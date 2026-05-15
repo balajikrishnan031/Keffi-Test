@@ -1,0 +1,774 @@
+import traceback
+from fastapi import FastAPI, BackgroundTasks, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from transformers import pipeline
+from sqlalchemy.orm import Session
+from datetime import datetime
+import requests
+
+from clinical_db import get_db, get_or_create_patient, calculate_mhq_delta, update_mhq_score, Patient, ChatMessage
+from clinical_ai import analyze_clinical_state, analyze_intent
+from memory_engine import memory_engine
+
+from groq_engine import get_keffi_reply as get_groq_reply, evaluate_safety, KEFFI_SYSTEM_PROMPT
+from chatgpt_engine import get_keffi_reply as get_chatgpt_reply
+
+app = FastAPI(title="Keffi Clinical AI Brain")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ----------------------------------------------------------
+# 1. BERT - Emotion Detector
+# ----------------------------------------------------------
+print("Loading BERT Emotion Model...")
+emotion_classifier = pipeline(
+    "text-classification",
+    model="bhadresh-savani/bert-base-uncased-emotion",
+    top_k=1,
+    device="cpu"
+)
+print("BERT Ready!")
+
+# ----------------------------------------------------------
+# WEBHOOKS
+# ----------------------------------------------------------
+N8N_CHAT_WEBHOOK = "http://localhost:5678/webhook/keffi-chat"
+N8N_ALERT_WEBHOOK = "http://localhost:5678/webhook/patient-alert"
+N8N_APPOINTMENT_WEBHOOK = "http://localhost:5678/webhook/keffi-appointment"
+
+class ChatRequest(BaseModel):
+    patient_id: str
+    message: str
+    emotional_context: str = ""  # Last emotional message for Story/Music/Joke context
+
+class AppointmentRequest(BaseModel):
+    patient_id: str
+    phone: str = ""
+    email: str = ""
+    name: str = ""
+
+# ----------------------------------------------------------
+# BACKGROUND: Send SOS Alert to n8n
+# ----------------------------------------------------------
+def trigger_sos_alert(patient_id: str, message: str, clinical_state: str):
+    payload = {
+        "patient_id": patient_id,
+        "alert_type": "SOS_CRISIS",
+        "clinical_state": clinical_state,
+        "trigger_message": message
+    }
+    try:
+        requests.post(N8N_ALERT_WEBHOOK, json=payload, timeout=5)
+        print(f"[SOS ALERT SENT] Patient: {patient_id} | State: {clinical_state}")
+    except Exception as e:
+        print(f"[SOS ALERT FAILED] {e}")
+
+# ----------------------------------------------------------
+# MAIN CHAT ENDPOINT
+# ----------------------------------------------------------
+@app.post("/api/chat")
+async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+    try:
+        # STEP 1: Get or create patient profile
+        patient = get_or_create_patient(db, req.patient_id)
+        
+        user_text = req.message.lower().strip()
+        
+        # ── QA TEST OVERRIDE: CLEAR MEMORY ──────────────────────────────────────
+        # Allows the tester to start a fresh chat without old context bleeding in
+        if user_text in ["clear", "reset", "restart"]:
+            db.query(ChatMessage).filter(ChatMessage.patient_id == req.patient_id).delete()
+            db.commit()
+            return {
+                "reply": "🧠 Memory cleared successfully! We can start a fresh conversation now.",
+                "options": [],
+                "bert_emotion": "neutral",
+                "clinical_state": "Neutral",
+                "clinical_category": "General",
+                "clinical_severity": 1,
+                "clinical_insight": "Memory Reset",
+                "mhq_before": patient.mhq_score,
+                "mhq_after": patient.mhq_score,
+                "mhq_delta": 0,
+                "depression_level": patient.depression_level
+            }
+
+        greetings = ["hi", "hii", "hello", "hey", "good morning", "good evening", "hi keffi", "hello keffi"]
+        is_greeting = user_text in greetings or len(user_text) < 4
+
+        if is_greeting:
+            clinical = {}
+            user_intent = "GENERAL_CONVERSATION"
+            bert_emotion = "neutral"
+            clinical_state = "Neutral"
+            clinical_category = "Positive State"
+            clinical_severity = 1
+            is_sos = False
+            clinical_insight = "Greeting detected"
+            mhq_before = patient.mhq_score
+            mhq_delta = 0.0
+            new_mhq = mhq_before
+            requires_appointment = False
+        else:
+            # STEP 2: Intent Classification
+            user_intent = analyze_intent(req.message)
+            
+            # STEP 3: BERT Emotion
+            bert_result = emotion_classifier(req.message)
+            if isinstance(bert_result[0], list):
+                bert_emotion = bert_result[0][0]["label"]
+            else:
+                bert_emotion = bert_result[0]["label"]
+
+            # STEP 4: Rule Based Router (Clinical AI)
+            clinical = analyze_clinical_state(req.message, bert_emotion)
+            clinical_state = clinical.get("state_name", "Unknown")
+            clinical_category = clinical.get("category", "Unknown")
+            clinical_severity = clinical.get("severity", 5)
+            is_sos = clinical.get("is_sos", False)
+
+            # STEP 5: Keyword Insight
+            clinical_insight = clinical.get("clinical_insight", "")
+
+            # STEP 6: MHQ Delta Calculation (Only for distress)
+            mhq_before = patient.mhq_score
+            if user_intent == "PERSONAL_DISTRESS":
+                mhq_delta = calculate_mhq_delta(clinical_category, clinical_state)
+                new_mhq = update_mhq_score(db, patient, mhq_delta)
+            else:
+                mhq_delta = 0.0
+                new_mhq = mhq_before
+                
+            requires_appointment = is_sos or (user_intent == "PERSONAL_DISTRESS" and (clinical_severity >= 8 or new_mhq < 20))
+        # NOTE: is_sos must ONLY come from the current message's router keywords.
+        # MHQ score must NOT override is_sos to avoid false positives on non-crisis messages.
+
+        # Memory recall
+        past_context = memory_engine.recall_past_memory(req.patient_id, req.message)
+
+        # 3. The Ultimate 11-Mode Rule Dictionary (Dynamic Rule Injection)
+        dynamic_rules = {
+            # --- CLINICAL MODES ---
+            "CBT": (
+                "Rule 1: Deep Validation: Empathize deeply with the user's specific problem.\n"
+                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological or physical reason why they are experiencing this (e.g., explain cognitive distortions like catastrophizing or all-or-nothing thinking) using exactly ONE relatable metaphor.\n"
+                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, detailed cognitive reframing question or action step. Start this final sentence with a bullet point symbol ( - ) followed immediately by the specific action the user should take right now. Explain exactly how and why this specific solution will help their exact problem.\n"
+                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+            ),
+            "Double_Standard_CBT": (
+                "Rule 1: Deep Validation: Warmly name the exact gap between how they treat friends vs. themselves. Reference their specific situation.\n"
+                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological reason why we are often our own harshest critics, using exactly ONE relatable metaphor (e.g., a lighthouse or a doctor).\n"
+                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific action step. Start this final sentence with a bullet point symbol ( - ) asking them to close their eyes, imagine their friend in their place, and say the exact same compassionate thing to themselves. Explain how this helps.\n"
+                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+            ),
+            "Somatic": (
+                "Rule 1: Deep Validation: Empathize deeply with their specific PHYSICAL symptoms (e.g., tightness, trembling).\n"
+                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the physiological reason why their body is reacting this way (e.g., fight-or-flight, nervous system overload) using exactly ONE relatable physical metaphor.\n"
+                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, detailed grounding exercise (like 5-4-3-2-1). Start this final sentence with a bullet point symbol ( - ) followed immediately by the specific sensory action they should take right now. Explain exactly how this cools down their nervous system.\n"
+                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+            ),
+            "DBT": (
+                "Rule 1: Deep Validation: Empathize deeply with the intensity of their specific emotion (rage, betrayal) without judging or telling them to calm down.\n"
+                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological or physical reason why they are experiencing this intense emotional flood (e.g., threat system overwhelmed, adrenaline spike) using exactly ONE relatable metaphor.\n"
+                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, detailed physical distress tolerance skill (e.g., holding ice, cold water on wrists). Start this final sentence with a bullet point symbol ( - ) followed immediately by the specific action. Explain exactly how this acts as an emergency brake for their nervous system.\n"
+                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+            ),
+            "ACT": (
+                "Rule 1: Deep Validation: Empathize deeply with the reality of their specific unchangeable pain (illness, loss), honoring that fighting it has been exhausting.\n"
+                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological reason why we suffer more when we fight reality vs accepting it, using exactly ONE relatable metaphor.\n"
+                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, detailed perspective shift or small committed action step. Start this final sentence with a bullet point symbol ( - ) asking what one small thing still matters to them despite the pain. Explain how this helps them move forward.\n"
+                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+            ),
+            "Rogerian": (
+                "Rule 1: Deep Validation: Reflect deeply and empathize with the FEELING behind their specific words.\n"
+                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological weight of carrying this burden alone, using exactly ONE relatable metaphor to capture how they might be feeling inside.\n"
+                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE open, gentle question. Start this final sentence with a bullet point symbol ( - ) inviting them to share more if they want to. Explain that this is a safe space just to be heard without needing to fix anything.\n"
+                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+            ),
+            "CaCBT": (
+                "Rule 1: Deep Validation: Empathize deeply with the specific cultural or family pressure they are facing, validating that this weight is real and heavy.\n"
+                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological reason why cultural/societal expectations create so much stress and guilt, using exactly ONE relatable metaphor (e.g., carrying the weight of the family's expectations).\n"
+                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, culturally-sensitive boundary or perspective shift. Start this final sentence with a bullet point symbol ( - ) followed immediately by a practical step they can take to protect their wellbeing. Explain how this protects their peace without being selfish.\n"
+                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+            ),
+
+            # --- SOS MODE ---
+            "Crisis_SOS": "CRITICAL RULE: STOP ALL THERAPY. DO NOT give exercises, metaphors, or stories. Only output deep empathy and IMMEDIATELY provide emergency helplines: 'Please call AASRA at 9820466726 or the National Emergency Number 104'.",
+
+            # --- ENTERTAINMENT & GENERAL MODES (Situation-Specific) ---
+            "Storytelling": (
+                f"The user is going through this: '{req.emotional_context or req.message}'. "
+                "Tell ONE unique, real-world, catchy short story or parable that directly mirrors their specific emotional situation. "
+                "The story must feel like it was written for THIS exact person. Use a relatable real-life scenario (not a fairy tale). "
+                "The character in the story should face the same type of challenge the user is facing and find their way through it in a surprising, non-cliche way. "
+                "Do NOT give generic stories. Do NOT give therapy exercises after the story. End with one warm, open sentence."
+            ),
+            "Humor": (
+                f"The user is feeling: '{req.emotional_context or req.message[:120]}'. "
+                "Tell ONE completely fresh, unique, witty joke that is light-hearted and safe. "
+                "CRITICAL RULES: The joke must be NEW and ORIGINAL — do NOT reuse old classic jokes. "
+                "The humor must NEVER mock mental health, sadness, relationships, or the user's own situation. "
+                "Pick a funny observation about everyday Indian life, office life, food, traffic, or technology. "
+                "Keep it short (2-3 lines max). End with a warm, friendly sentence that doesn't feel therapeutic."
+            ),
+            "Music": (
+                f"The user's mood is: '{req.emotional_context or req.message[:120]}'. "
+                "Suggest EXACTLY ONE slow, healing, soul-touching Tamil melody song (by Ilayaraja or A.R. Rahman or similar) "
+                "that MATCHES this specific emotional state. "
+                "Write the song name and composer. Then write 2 lines of the most comforting lyrics from that song (in Tamil or transliteration). "
+                "In ONE warm sentence, explain why THIS specific song matches how they feel right now. "
+                "NEVER suggest fast, upbeat, party, or disco songs. No therapy advice after the song."
+            ),
+            "Puzzle": (
+                f"The user seems to be in this state: '{req.message[:120]}'. "
+                "Give ONE fun, engaging puzzle or riddle that is perfectly matched to their energy level. "
+                "If they seem drained or sad, give a VERY simple and satisfying riddle with a surprising answer. "
+                "If they seem bored or restless, give a slightly more clever brain teaser. "
+                "After the puzzle, do NOT give the answer immediately — end with: 'Take your time, no rush!' "
+                "NEVER give complex math or stressful logic puzzles. Keep it light and fun."
+            ),
+            "Casual": "Give a warm, short, friendly greeting. Ask how their day is going. Keep it strictly under 3 sentences.",
+            "Factual": "Provide a direct, factual answer clearly and warmly. Drop the therapist persona and DO NOT therapize."
+        }
+
+        # 4. Map the router's clinical category to the predicted method
+        predicted_method = "Rogerian"  # default
+        suggested_options = []
+
+        if is_greeting:
+            predicted_method = "Casual"
+            suggested_options = ["I need to vent", "Hear a joke 😄", "Give me a puzzle 🧩"]
+        elif is_sos:
+            predicted_method = "Crisis_SOS"
+            suggested_options = []
+        elif clinical_category == "General":
+            predicted_method = "Factual"
+            suggested_options = ["I need to vent", "Hear a joke 😄", "Give me a puzzle 🧩"]
+        elif clinical_category == "Depression":
+            predicted_method = "CBT"
+            suggested_options = ["Help me reframe this thought 💭", "Tell me a story 📖", "Play me a song 🎵"]
+        elif clinical_category == "Anxiety":
+            predicted_method = "Somatic"
+            suggested_options = ["Guide me through grounding 🌿", "Play me a calming song 🎵", "Tell me a story 📖"]
+        elif clinical_category == "Trauma & Stress":
+            predicted_method = "DBT"
+            suggested_options = ["Give me a distress skill 🧊", "I need to vent this out", "Play me a calming song 🎵"]
+        elif clinical_category in ["Interpersonal", "Attrition Risk"]:
+            predicted_method = "Rogerian"
+            suggested_options = ["I want to share more", "Help me understand this feeling", "Tell me a story 📖"]
+        elif clinical_category == "Physical-Mental":
+            predicted_method = "ACT"
+            suggested_options = ["What small step can I take?", "I want to talk more", "Play me a song 🎵"]
+        elif clinical_category == "Positive State":
+            predicted_method = "Casual"
+            suggested_options = ["Give me a puzzle 🧩", "Hear a joke 😄", "Tell me a story 📖"]
+
+        # ── Per-State Options Override ─────────────────────────────────────────
+        # Fine-grained options matched to the EXACT clinical state, not just category
+        STATE_OPTIONS_MAP = {
+            # DEPRESSION (1-20)
+            1:  ["Help me reframe this thought 💭", "I want to share more", "Play me a song 🎵"],           # Major Depressive Episode
+            2:  ["Help me reframe this thought 💭", "Tell me a story 📖", "Play me a song 🎵"],             # Persistent Depressive
+            3:  ["Tell me a story 📖", "Help me reframe this thought 💭", "Play me a song 🎵"],             # Anhedonia
+            4:  ["Help me find one small reason 💭", "Tell me a story 📖", "Play me a song 🎵"],            # Hopelessness
+            5:  ["Play me a calming song 🎵", "What small step can I take?", "Tell me a story 📖"],         # Psychomotor Retardation
+            6:  ["Play me a calming song 🎵", "Help me reframe this thought 💭", "Tell me a story 📖"],     # Cognitive Impairment
+            7:  ["Guide me through grounding 🌿", "Play me a calming song 🎵", "Tell me a story 📖"],       # Somatic Depression
+            8:  ["Help me reframe this thought 💭", "Tell me a story 📖", "Play me a song 🎵"],             # Atypical Depression
+            9:  ["Play me a calming song 🎵", "Help me get through this morning 💭", "Tell me a story 📖"], # Melancholic
+            10: ["Give me a distress skill 🧊", "I need to vent this out", "Play me a calming song 🎵"],    # Agitated Depression
+            11: ["Play me a calming song 🎵", "Tell me a story 📖", "Help me reframe this thought 💭"],     # Seasonal
+            12: ["I want to share more", "Help me understand this feeling", "Play me a calming song 🎵"],   # Postpartum
+            13: ["I need someone to listen 🤝", "Tell me a story 📖", "Play me a calming song 🎵"],        # Grief-Related
+            14: ["Help me find meaning 💭", "Tell me a story 📖", "What small step can I take?"],          # Existential Depression
+            15: ["I want to share more", "Help me understand this feeling", "Tell me a story 📖"],          # Masked Depression
+            16: ["Tell me a story 📖", "I want to share more", "Play me a song 🎵"],                       # Treatment-Resistant
+            17: ["Help me be kinder to myself 💭", "Tell me a story 📖", "Play me a song 🎵"],             # Self-Loathing
+            18: ["Play me a song 🎵", "Tell me a story 📖", "Guide me through grounding 🌿"],              # Emotional Numbness
+            19: ["I need someone to listen 🤝", "I want to share more", "Play me a calming song 🎵"],      # Suicidal Passive
+
+            # ANXIETY (21-35)
+            21: ["Help me stop worrying 💭", "Guide me through grounding 🌿", "Play me a calming song 🎵"], # GAD
+            22: ["Help me reframe this thought 💭", "Tell me a story 📖", "Play me a calming song 🎵"],     # Social Anxiety
+            23: ["Guide me through grounding 🌿", "Help me calm my body 🌬️", "Play me a calming song 🎵"], # Panic Attack
+            24: ["Help me reframe this thought 💭", "Play me a calming song 🎵", "Guide me through grounding 🌿"], # Anticipatory
+            25: ["Help me reframe this thought 💭", "I want to share more", "Play me a calming song 🎵"],   # Health Anxiety
+            26: ["I want to share more", "Help me understand this feeling", "Play me a calming song 🎵"],   # Separation Anxiety
+            27: ["Help me reframe this thought 💭", "Play me a calming song 🎵", "Tell me a story 📖"],     # Performance Anxiety
+            28: ["Guide me through grounding 🌿", "Play me a calming song 🎵", "I want to share more"],    # Agoraphobia
+            29: ["Help me stop these thoughts 💭", "Guide me through grounding 🌿", "Play me a calming song 🎵"], # Intrusive Thoughts
+            30: ["Help me stop overthinking 💭", "Tell me a story 📖", "Play me a calming song 🎵"],        # Rumination
+            31: ["Guide me through grounding 🌿", "Play me a calming song 🎵", "I want to share more"],    # Hypervigilance
+            32: ["Help me reframe this thought 💭", "Tell me a story 📖", "Play me a calming song 🎵"],     # Catastrophizing
+            33: ["Tell me a story 📖", "Help me find meaning 💭", "Play me a calming song 🎵"],            # Existential Anxiety
+            34: ["What small step can I take?", "I want to share more", "Tell me a story 📖"],             # Financial Anxiety
+            35: ["I want to share more", "Help me understand this feeling", "Play me a calming song 🎵"],   # Relationship Anxiety
+
+            # ATTRITION RISK (36-50)
+            36: ["I want to share more", "Tell me a story 📖", "Help me understand this feeling"],          # Therapy Disengagement
+            37: ["I want to share more", "Help me understand this feeling", "Tell me a story 📖"],          # Session Dropout
+            38: ["What small step can I take?", "I want to share more", "Tell me a story 📖"],             # Low Motivation
+            39: ["I want to share more", "Help me understand this feeling", "I need to vent this out"],     # Alliance Rupture
+            40: ["What small step can I take?", "I want to share more", "Play me a calming song 🎵"],      # Skill Avoidance
+            41: ["What small step can I take?", "I want to share more", "Tell me a story 📖"],             # Homework Non-Compliance
+            42: ["I want to share more", "Help me understand this feeling", "Tell me a story 📖"],          # Ambivalence
+            43: ["I want to share more", "Help me understand this feeling", "Play me a calming song 🎵"],   # Passive Resistance
+            44: ["Play me a calming song 🎵", "Tell me a story 📖", "I want to share more"],              # Info Overload
+            45: ["I want to share more", "Tell me a story 📖", "Give me a puzzle 🧩"],                    # Digital Burnout
+            49: ["What small step can I take?", "I want to share more", "Tell me a story 📖"],             # Premature Termination
+
+            # TRAUMA & STRESS (51-62)
+            51: ["I need someone to listen 🤝", "Guide me through grounding 🌿", "Play me a calming song 🎵"], # Acute Stress
+            52: ["Guide me through grounding 🌿", "I need someone to listen 🤝", "Play me a calming song 🎵"], # PTSD Flashback
+            53: ["I need someone to listen 🤝", "Help me understand this feeling", "Play me a calming song 🎵"], # Complex Trauma
+            54: ["Give me a distress skill 🧊", "I need to vent this out", "Play me a calming song 🎵"],    # Emotional Dysregulation
+            55: ["Guide me through grounding 🌿", "I need someone to listen 🤝", "Play me a calming song 🎵"], # Dissociation
+            56: ["I want to share more", "Help me be kinder to myself 💭", "Tell me a story 📖"],          # Shame
+            57: ["I want to share more", "Help me reframe this thought 💭", "Tell me a story 📖"],          # Guilt
+            58: ["Give me a distress skill 🧊", "I need to vent this out", "I want to share more"],        # Betrayal Trauma
+            59: ["I need someone to listen 🤝", "Help me understand this feeling", "Tell me a story 📖"],  # Abandonment Fear
+            60: ["Help me reframe this thought 💭", "I want to share more", "Tell me a story 📖"],         # Rejection Sensitivity
+            61: ["Give me a distress skill 🧊", "Guide me through grounding 🌿", "Play me a calming song 🎵"], # Hyperarousal
+            62: ["What small step can I take?", "I want to share more", "Tell me a story 📖"],             # Avoidance
+
+            # INTERPERSONAL (63-74)
+            63: ["I need someone to listen 🤝", "Tell me a story 📖", "Play me a song 🎵"],               # Loneliness
+            64: ["I need someone to listen 🤝", "Help me understand this feeling", "Play me a calming song 🎵"], # Social Withdrawal
+            65: ["Help me understand this feeling", "I want to share more", "Tell me a story 📖"],         # Conflict Avoidance
+            66: ["Help me understand this feeling", "I want to share more", "Tell me a story 📖"],         # Codependency
+            67: ["I need someone to listen 🤝", "Help me understand this feeling", "Play me a calming song 🎵"], # Attachment Anxiety
+            68: ["Help me understand this feeling", "I want to share more", "Tell me a story 📖"],         # Attachment Avoidance
+            69: ["Help me reframe this thought 💭", "I want to share more", "Tell me a story 📖"],         # Boundary Difficulties
+            70: ["I want to share more", "Help me understand this feeling", "Tell me a story 📖"],         # Communication Breakdown
+            71: ["I need someone to listen 🤝", "I need to vent this out", "Play me a calming song 🎵"],   # Family Stress
+            72: ["I need to vent this out", "Help me reframe this thought 💭", "Tell me a story 📖"],      # Workplace Conflict
+            73: ["I need someone to listen 🤝", "Help me understand this feeling", "Tell me a story 📖"],  # Romantic Distress
+            74: ["I need someone to listen 🤝", "Tell me a story 📖", "Play me a calming song 🎵"],        # Grief and Loss
+
+            # POSITIVE STATES (75-88)
+            75: ["Tell me a story 📖", "Give me a puzzle 🧩", "Hear a joke 😄"],                          # Positive Reframing
+            76: ["Tell me a story 📖", "Give me a puzzle 🧩", "Hear a joke 😄"],                          # Gratitude
+            77: ["Give me a puzzle 🧩", "Hear a joke 😄", "Tell me a story 📖"],                          # Progress
+            78: ["Give me a puzzle 🧩", "Tell me a story 📖", "Hear a joke 😄"],                          # Motivation
+            79: ["Hear a joke 😄", "Give me a puzzle 🧩", "Tell me a story 📖"],                          # Relief
+            80: ["Tell me a story 📖", "Give me a puzzle 🧩", "Hear a joke 😄"],                          # Hope
+            81: ["Give me a puzzle 🧩", "Tell me a story 📖", "Hear a joke 😄"],                          # Mindfulness
+            82: ["Tell me a story 📖", "Hear a joke 😄", "Give me a puzzle 🧩"],                          # Social Connection
+            83: ["Tell me a story 📖", "Hear a joke 😄", "Give me a puzzle 🧩"],                          # Self-Compassion
+            84: ["Hear a joke 😄", "Tell me a story 📖", "Give me a puzzle 🧩"],                          # Resilience
+            85: ["Tell me a story 📖", "Hear a joke 😄", "Give me a puzzle 🧩"],                          # Acceptance
+            86: ["Give me a puzzle 🧩", "Hear a joke 😄", "Tell me a story 📖"],                          # Empowerment
+            87: ["Tell me a story 📖", "Give me a puzzle 🧩", "Hear a joke 😄"],                          # Insight
+            88: ["Tell me a story 📖", "Hear a joke 😄", "Give me a puzzle 🧩"],                          # PTG
+
+            # PHYSICAL-MENTAL (89-96)
+            89: ["Play me a calming song 🎵", "What small step can I take?", "Tell me a story 📖"],        # Sleep Disturbance
+            90: ["What small step can I take?", "Play me a calming song 🎵", "Tell me a story 📖"],        # Appetite Change
+            91: ["Play me a calming song 🎵", "What small step can I take?", "Tell me a story 📖"],        # Fatigue/Burnout
+            92: ["What small step can I take?", "Help me accept this 💭", "Tell me a story 📖"],           # Chronic Pain
+            93: ["I need someone to listen 🤝", "What small step can I take?", "Play me a calming song 🎵"], # Substance Risk
+            94: ["I need someone to listen 🤝", "Guide me through grounding 🌿", "Play me a calming song 🎵"], # Self-Harm Risk
+            95: ["Guide me through grounding 🌿", "Play me a calming song 🎵", "I want to share more"],    # Psychosomatic
+        }
+
+        # Apply state-level override if the exact state has a custom options set
+        state_num = clinical.get("state_number", 0)
+        if state_num in STATE_OPTIONS_MAP and not is_sos:
+            suggested_options = STATE_OPTIONS_MAP[state_num]
+
+        # Override for explicit entertainment requests
+        msg_clean = req.message.strip()
+        if any(k in msg_clean for k in ["Hear a joke", "Give me a joke", "Tell me a joke"]):
+            predicted_method = "Humor"
+            suggested_options = ["Give me another joke 😄", "Tell me a story 📖", "I need to talk"]
+        elif any(k in msg_clean for k in ["Play me a song", "Play a Calming Song", "Suggest a song"]):
+            predicted_method = "Music"
+            suggested_options = ["Give me another song 🎵", "I want to talk more", "Give me a joke 😄"]
+        elif any(k in msg_clean for k in ["Tell me a story", "Solve a Puzzle", "Give me a puzzle"]):
+            if "puzzle" in msg_clean.lower() or "Puzzle" in msg_clean:
+                predicted_method = "Puzzle"
+                suggested_options = ["Give me another puzzle 🧩", "Tell me a story 📖", "I need to talk"]
+            else:
+                predicted_method = "Storytelling"
+                suggested_options = ["Tell me another story 📖", "Give me a joke 😄", "I need to talk"]
+        elif any(k in msg_clean for k in ["I want to vent", "I need to vent", "I need to talk", "I want to talk more", "I want to share more"]):
+            predicted_method = "Rogerian"
+            suggested_options = ["Tell me more", "Play me a song 🎵", "Tell me a story 📖"]
+        elif any(k in msg_clean for k in ["Help me reframe", "Help me reframe this thought", "Reframe this"]):
+            predicted_method = "CBT"
+            suggested_options = ["I feel a bit better", "Tell me a story 📖", "Play me a song 🎵"]
+        elif any(k in msg_clean for k in ["Guide me through grounding", "Help me calm my body", "Ground me"]):
+            predicted_method = "Somatic"
+            suggested_options = ["I feel calmer now", "Play me a calming song 🎵", "Tell me a story 📖"]
+        elif any(k in msg_clean for k in ["Give me a distress skill", "Distress skill"]):
+            predicted_method = "DBT"
+            suggested_options = ["Give me another skill", "I need to vent this out", "Play me a calming song 🎵"]
+        elif any(k in msg_clean for k in ["What small step can I take", "Small step", "Help me take a step"]):
+            predicted_method = "ACT"
+            suggested_options = ["I want to talk more", "Tell me a story 📖", "Play me a song 🎵"]
+        elif any(k in msg_clean for k in ["Help me understand this feeling", "Understand this feeling"]):
+            predicted_method = "Rogerian"
+            suggested_options = ["I want to share more", "Tell me a story 📖", "Play me a calming song 🎵"]
+        elif any(k in msg_clean for k in ["I feel a bit better", "I feel calmer", "Feeling better", "I feel better"]):
+            predicted_method = "Casual"
+            suggested_options = ["Tell me a story 📖", "Give me a puzzle 🧩", "Hear a joke 😄"]
+        elif any(k in msg_clean for k in ["Play me a calming song", "Calming song"]):
+            predicted_method = "Music"
+            suggested_options = ["Give me another song 🎵", "Tell me a story 📖", "I feel calmer now"]
+        elif any(k in msg_clean for k in ["I need to vent this out", "I need to vent"]):
+            predicted_method = "Rogerian"
+            suggested_options = ["Tell me more", "Help me understand this feeling", "Play me a calming song 🎵"]
+        elif any(k in msg_clean for k in ["I need someone to listen"]):
+            predicted_method = "Rogerian"
+            suggested_options = ["I want to share more", "Help me understand this feeling", "Play me a calming song 🎵"]
+        elif any(k in msg_clean for k in ["Help me be kinder to myself"]):
+            predicted_method = "Double_Standard_CBT"
+            suggested_options = ["I feel a bit better", "Tell me a story 📖", "Play me a song 🎵"]
+        elif any(k in msg_clean for k in ["Help me find meaning"]):
+            predicted_method = "ACT"
+            suggested_options = ["What small step can I take?", "Tell me a story 📖", "Play me a calming song 🎵"]
+        elif any(k in msg_clean for k in ["Help me accept this"]):
+            predicted_method = "ACT"
+            suggested_options = ["What small step can I take?", "I want to share more", "Play me a calming song 🎵"]
+        elif any(k in msg_clean for k in ["Help me stop worrying"]):
+            predicted_method = "CBT"
+            suggested_options = ["Guide me through grounding 🌿", "Play me a calming song 🎵", "Tell me a story 📖"]
+        elif any(k in msg_clean for k in ["Help me stop overthinking", "Help me stop these thoughts"]):
+            predicted_method = "CBT"
+            suggested_options = ["Guide me through grounding 🌿", "I feel a bit better", "Play me a calming song 🎵"]
+        elif any(k in msg_clean for k in ["Help me calm my body"]):
+            predicted_method = "Somatic"
+            suggested_options = ["I feel calmer now", "Play me a calming song 🎵", "Tell me a story 📖"]
+        elif any(k in msg_clean for k in ["Help me get through this morning"]):
+            predicted_method = "CBT"
+            suggested_options = ["Help me reframe this thought 💭", "Play me a calming song 🎵", "Tell me a story 📖"]
+        elif any(k in msg_clean for k in ["Help me find one small reason"]):
+            predicted_method = "CBT"
+            suggested_options = ["I feel a bit better", "Tell me a story 📖", "Play me a calming song 🎵"]
+        elif any(k in msg_clean for k in ["Give me another skill"]):
+            predicted_method = "DBT"
+            suggested_options = ["I feel calmer now", "I want to share more", "Play me a calming song 🎵"]
+
+        # ── Double Standard CBT Detection ─────────────────────────────────────
+        # Detect when user gives good advice to friends but can't apply it to themselves
+        msg_lower_ds = req.message.lower()
+        DOUBLE_STANDARD_TRIGGERS = [
+            # English patterns
+            "i tell my friend", "i told my friend", "i give advice to", "i give my friend",
+            "when my friend", "when i advise", "i advise my friend", "i can advise",
+            "give advice but", "advice to others but", "tell others but",
+            "help my friend but", "support my friend but", "comfort my friend but",
+            "can't do it myself", "can't apply it", "cannot do it for myself",
+            "easy to say to others", "easy to tell others",
+            # Tanglish patterns
+            "friend ku advice", "friend ku solluvean", "friend kashtam",
+            "en friend ku", "naan solluven", "advice pannuven", "advice panren",
+            "overcome panna mudila", "overcome pannala", "enakku vara",
+            "enaku varumbodhu", "enaku vandha", "enaku same",
+            "naan pannala", "naan pannave mudiyala", "naan overcome",
+        ]
+        if any(trigger in msg_lower_ds for trigger in DOUBLE_STANDARD_TRIGGERS) and not is_sos:
+            predicted_method = "Double_Standard_CBT"
+            suggested_options = ["I want to talk more", "Tell me a story 📖", "Play me a song 🎵"]
+
+        # ── SOMATIC OVERRIDE (CRITICAL FIX) ───────────────────────────────────
+        # If the user text contains panic keywords, ALWAYS prioritize physical calming first.
+        somatic_keywords = ["heart is beating", "sick to my stomach", "can't breathe", "trembling", "panic", "shaking", "racing heart", "fast heart", "breathing heavily"]
+        if any(keyword in msg_lower_ds for keyword in somatic_keywords) and not is_sos:
+            predicted_method = "Somatic"
+            suggested_options = ["Continue grounding exercise 🌿", "Tell me a story 📖", "Play me a calming song 🎵"]
+
+        # Select the exact rule to inject into the LLM
+        rule_to_send = dynamic_rules.get(predicted_method, dynamic_rules["Rogerian"])
+        intervention_type = rule_to_send
+
+        # STEP 7: Context String
+        crisis_flag = ""
+        if is_sos:
+            crisis_flag = (
+                "🚨 CRISIS_ALERT — MANDATORY PROTOCOL: "
+                "The patient has expressed active self-harm or suicidal intent. "
+                "DO NOT give lifestyle advice, metaphors, or techniques. "
+                "You MUST output exactly this message: 'I hear how much pain you are in. Your life is valuable. Please call 9152987821 or 104 immediately for emergency support. We are here to help you stay safe.' "
+                "Nothing else. No battery metaphors. No tips. Crisis protocol ONLY. | "
+            )
+
+        # If the user just clicked an option button (like "Help me reframe this"),
+        # we need to ensure the LLM knows what they are referring to using the emotional_context.
+        original_context_injection = ""
+        if req.emotional_context and req.message != req.emotional_context:
+            original_context_injection = f"The user is requesting the REQUIRED INTERVENTION for their original situation: '{req.emotional_context}'. | "
+
+        option_instruction = (
+            "CRITICAL SYSTEM INSTRUCTION - DYNAMIC OPTION GENERATION: "
+            "You MUST absolutely provide a single short phrase (under 8 words) at the very end of your response for a button that the user can click to continue with your specific exercise or solution. "
+            "If you fail to include this, the system will crash. "
+            "Format it EXACTLY like this on a new line: |||OPTION||| [Your specific option text here]. "
+            "Example: |||OPTION||| Continue the breathing exercise | "
+        )
+
+        anti_repetition_rule = (
+            "CRITICAL ANTI-ANCHORING RULE: DO NOT repeat metaphors or analogies you have already used in this conversation. "
+            "Invent a completely new visual image or metaphor every single time to ensure the conversation feels fresh and progressive. | "
+        )
+
+        context_str = (
+            crisis_flag +
+            f"[PAST CONTEXT: {past_context}] | "
+            f"Clinical State: {clinical_state} | "
+            f"Category: {clinical_category} | "
+            f"Severity Level: {'High' if clinical_severity >= 8 else 'Medium' if clinical_severity >= 5 else 'Low'} | "
+            f"BERT Emotion: {bert_emotion} | "
+            f"MHQ Trend: {patient.mhq_trend} | "
+            f"REQUIRED INTERVENTION: {intervention_type} | "
+            f"Clinical Insight: {clinical_insight} | "
+            f"{original_context_injection}"
+            f"{anti_repetition_rule}"
+            f"{option_instruction}"
+            "⚠️ STRICT ISOLATION: The REQUIRED INTERVENTION above applies ONLY to the [CURRENT USER MESSAGE] below. "
+            "Past context is background ONLY. Do NOT carry over any crisis or SOS behavior from past messages "
+            "unless the current message itself explicitly triggers it. | "
+            f"[CURRENT USER MESSAGE]: {req.message}"
+        )
+
+        print(f"\n--- KEFFI AI PROCESSING ({patient.name}) ---")
+        print(f"Message: {req.message}")
+        print(f"Context Sent to AI: {context_str}")
+        
+        # Memory Save
+        memory_engine.save_to_memory(req.patient_id, req.message, bert_emotion)
+
+        print(f"\n🔍 DIAGNOSTIC: is_sos={is_sos} | predicted_method={predicted_method} | category={clinical_category} | state={clinical_state}")
+        print(f"🔍 DIAGNOSTIC: intervention_type starts with = {str(intervention_type)[:80]}")
+
+        ai_reply = ""
+        print("[LLM ROUTER] Using Groq as primary engine (Free Deployment Mode)...")
+        try:
+            ai_reply = get_groq_reply(req.message, context_str)
+        except Exception as e:
+            print(f"[LLM ROUTER] Groq failed. Error: {e}")
+
+        if not ai_reply or "ERROR" in ai_reply:
+            print("[LLM ROUTER] Groq failed. Trying ChatGPT fallback...")
+            ai_reply = get_chatgpt_reply(req.message, context_str)
+
+        if not ai_reply or "ERROR" in ai_reply:
+            ai_reply = "[SYSTEM] All AI engines failed to respond. I am here for you, let's take a deep breath."
+
+        # Safety Check
+        is_safe = evaluate_safety(ai_reply)
+        if not is_safe:
+            ai_reply = "I'm sorry, but I can't provide that specific kind of advice. If you're feeling overwhelmed, please reach out to a professional or helpline immediately."
+
+        # Backend Post-Processing: Force strip all asterisks to prevent UI bleeding
+        ai_reply = ai_reply.replace("**", "").replace("*", "")
+
+        # HYBRID OPTION GENERATION (Method A + Method B)
+        # Extract dynamic option from LLM if present
+        if "|||OPTION|||" in ai_reply:
+            parts = ai_reply.split("|||OPTION|||")
+            ai_reply = parts[0].strip()
+            dynamic_option_text = parts[1].strip()
+            
+            # Keep Method B as Option 1. Fallback to Method A's entertainment options for 2 & 3.
+            fallback_entertainment = ["Hear a joke 😄", "Play me a song 🎵"]
+            if len(suggested_options) >= 3:
+                fallback_entertainment = [suggested_options[1], suggested_options[2]]
+            
+            # Ensure the dynamic option looks somewhat like a button if it's too long
+            if len(dynamic_option_text) > 50:
+                dynamic_option_text = dynamic_option_text[:47] + "..."
+                
+            suggested_options = [dynamic_option_text] + fallback_entertainment
+
+        # DB Save
+        chat_msg = ChatMessage(
+            patient_id=patient.patient_id,
+            message=req.message,
+            ai_reply=ai_reply,
+            bert_emotion=bert_emotion,
+            clinical_state=clinical_state,
+            clinical_category=clinical_category,
+            mhq_before=mhq_before,
+            mhq_after=new_mhq,
+            mhq_delta=mhq_delta,
+            is_sos=is_sos
+        )
+        db.add(chat_msg)
+        db.commit()
+
+        if is_sos:
+            background_tasks.add_task(trigger_sos_alert, req.patient_id, req.message, clinical_state)
+
+        return {
+            "reply": ai_reply,
+            "options": suggested_options,
+            "bert_emotion": bert_emotion,
+            "clinical_state": clinical_state,
+            "clinical_category": clinical_category,
+            "clinical_severity": clinical_severity,
+            "clinical_insight": clinical_insight,
+            "mhq_before": mhq_before,
+            "mhq_after": new_mhq,
+            "mhq_delta": mhq_delta,
+            "depression_level": patient.depression_level,
+            "is_sos": is_sos,
+            "sos_hotline": "9152987821" if is_sos else None,
+            "requires_appointment": requires_appointment
+        }
+    except Exception as e:
+        traceback.print_exc()
+        raise e
+
+# ----------------------------------------------------------
+# APPOINTMENT BOOKING AUTOMATION
+# ----------------------------------------------------------
+@app.post("/api/book_appointment")
+async def book_appointment(req: AppointmentRequest, db: Session = Depends(get_db)):
+    patient = db.query(Patient).filter(Patient.patient_id == req.patient_id).first()
+    
+    payload = {
+        "patient_id": req.patient_id,
+        "name": req.name or (patient.name if patient else "Patient"),
+        "phone": req.phone or req.patient_id,
+        "email": req.email or "",
+        "booking_source": "Keffi_App"
+    }
+    
+    try:
+        response = requests.post(N8N_APPOINTMENT_WEBHOOK, json=payload, timeout=10)
+        if response.status_code == 200:
+            return {"status": "success", "message": "Appointment request sent to n8n successfully!"}
+        else:
+            return {"status": "error", "message": f"n8n returned status {response.status_code}"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+# ----------------------------------------------------------
+# ADMIN API ENDPOINTS
+# ----------------------------------------------------------
+
+def _get_risk(mhq: float, is_sos: bool) -> tuple:
+    """Convert MHQ score to risk label and color."""
+    if is_sos or mhq < 20:
+        return "Critical", "text-red-600"
+    elif mhq < 40:
+        return "High", "text-orange-500"
+    elif mhq < 60:
+        return "Medium", "text-yellow-500"
+    else:
+        return "Low", "text-green-600"
+
+@app.get("/api/admin/patients")
+async def get_patients(db: Session = Depends(get_db)):
+    patients = db.query(Patient).all()
+    roster = []
+    for p in patients:
+        last_log = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id).order_by(ChatMessage.timestamp.desc()).first()
+        msg_count = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id).count()
+        sos_count = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id, ChatMessage.is_sos == True).count()
+        category = last_log.clinical_category if last_log else "General"
+        last_seen = str(last_log.timestamp)[:16] if last_log else "Never"
+        emotion = last_log.bert_emotion if last_log else "neutral"
+        last_message = last_log.message[:80] + "..." if last_log and len(last_log.message) > 80 else (last_log.message if last_log else "No messages yet")
+        risk, color = _get_risk(p.mhq_score or 70, sos_count > 0)
+
+        roster.append({
+            "id": p.patient_id,
+            "name": p.name or "Anonymous",
+            "mhq": round(p.mhq_score or 70, 1),
+            "trend": p.mhq_trend or "Stable",
+            "depression_level": p.depression_level or "Minimal",
+            "attrition": round(p.attrition_probability or 0, 1),
+            "category": category,
+            "risk": risk,
+            "color": color,
+            "last_seen": last_seen,
+            "emotion": emotion,
+            "msg_count": msg_count,
+            "sos_count": sos_count,
+            "last_message": last_message,
+            "assigned_doctor": getattr(p, "assigned_doctor", "Unassigned") or "Unassigned",
+            "recent_logs": [last_log.message[:100]] if last_log else ["No recent logs"]
+        })
+    return {"patients": roster}
+
+@app.get("/api/admin/inactive-patients")
+async def get_inactive_patients(db: Session = Depends(get_db)):
+    """Patients who haven't sent a message in the last 7 days."""
+    from datetime import timedelta, datetime
+    cutoff = datetime.utcnow() - timedelta(days=7)
+    patients = db.query(Patient).all()
+    inactive = []
+    for p in patients:
+        last_log = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id).order_by(ChatMessage.timestamp.desc()).first()
+        if not last_log or last_log.timestamp < cutoff:
+            last_seen = str(last_log.timestamp)[:16] if last_log else "Never"
+            inactive.append({
+                "id": p.patient_id,
+                "name": p.name or "Anonymous",
+                "last_seen": last_seen,
+                "mhq": round(p.mhq_score or 70, 1),
+                "depression_level": p.depression_level or "Minimal"
+            })
+    return {"patients": inactive}
+
+@app.get("/api/admin/analytics")
+async def get_analytics(db: Session = Depends(get_db)):
+    """Real-time aggregated clinical statistics."""
+    total_patients = db.query(Patient).count()
+    total_messages = db.query(ChatMessage).count()
+    sos_events = db.query(ChatMessage).filter(ChatMessage.is_sos == True).count()
+
+    # MHQ distribution
+    patients = db.query(Patient).all()
+    mhq_scores = [p.mhq_score or 70 for p in patients]
+    avg_mhq = round(sum(mhq_scores) / len(mhq_scores), 1) if mhq_scores else 70
+
+    critical_count = sum(1 for s in mhq_scores if s < 20)
+    high_count = sum(1 for s in mhq_scores if 20 <= s < 40)
+    medium_count = sum(1 for s in mhq_scores if 40 <= s < 60)
+    low_count = sum(1 for s in mhq_scores if s >= 60)
+
+    # Category distribution from last messages
+    category_counts = {}
+    for p in patients:
+        last_log = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id).order_by(ChatMessage.timestamp.desc()).first()
+        if last_log:
+            cat = last_log.clinical_category or "General"
+            category_counts[cat] = category_counts.get(cat, 0) + 1
+
+    return {
+        "total_patients": total_patients,
+        "total_messages": total_messages,
+        "sos_events": sos_events,
+        "avg_mhq": avg_mhq,
+        "risk_distribution": {
+            "Critical": critical_count,
+            "High": high_count,
+            "Medium": medium_count,
+            "Low": low_count
+        },
+        "category_distribution": category_counts
+    }
+
+@app.get("/api/admin/patients/{patient_id}/chat")
+async def get_patient_chat(patient_id: str, db: Session = Depends(get_db)):
+    chats = db.query(ChatMessage).filter(ChatMessage.patient_id == patient_id).order_by(ChatMessage.timestamp.asc()).all()
+    history = []
+    for c in chats:
+        history.append({"sender": "User", "message": c.message, "timestamp": str(c.timestamp)[:16], "emotion": c.bert_emotion})
+        history.append({"sender": "Keffi", "message": c.ai_reply, "timestamp": str(c.timestamp)[:16], "clinical_state": c.clinical_state})
+    return {"history": history}
+
+if __name__ == "__main__":
+    import uvicorn
+    print("Starting Keffi Backend Server on port 8000...")
+    uvicorn.run(app, host="0.0.0.0", port=8000)

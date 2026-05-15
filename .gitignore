@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.env
+Platform/n8n/
+Platform/Backend/n8n_workflows/
+node_modules/
+.DS_Store
+keffi_clinical.db
+user_state.json
