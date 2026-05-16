@@ -203,31 +203,31 @@ const LandingPage = ({ setView }) => {
           <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#3A7070]/5 rounded-full blur-[100px] z-0"></div>
           <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[100px] z-0"></div>
 
-          <div className="max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-20 relative z-10 w-full">
-            <div className="flex-1 flex flex-col items-start text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#3A7070]/20 text-[#3A7070] font-semibold text-sm mb-4 shadow-sm">
+          <div className="max-w-[1200px] mx-auto px-4 lg:px-12 flex flex-row items-center justify-between gap-2 md:gap-12 lg:gap-20 relative z-10 w-full">
+            <div className="flex flex-col items-start text-left w-[60%] md:flex-1 z-20">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white border border-[#3A7070]/20 text-[#3A7070] font-semibold text-[10px] md:text-sm mb-4 shadow-sm">
                 <Sparkles size={16} className="text-[#3A7070]" /> Keffi is an Emotion Engine
               </div>
-              <h1 className="h1-title font-poppins text-slate-900 mb-6 leading-[1.1]">
-                Bridging the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-blue-600 font-black">Invisible Gap</span> <br/>in Mental Healthcare.
+              <h1 className="font-poppins font-black text-2xl md:text-5xl lg:text-6xl text-slate-900 mb-4 md:mb-6 leading-tight md:leading-[1.1]">
+                Bridging the <br className="block md:hidden" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-blue-600">Invisible Gap</span> <br className="hidden md:block"/>in Mental Healthcare.
               </h1>
               
-              <p className="p-text max-w-lg mb-6 text-slate-600 text-lg leading-relaxed">
+              <p className="font-inter text-xs md:text-lg text-slate-600 leading-relaxed md:leading-relaxed max-w-lg mb-6">
                 Keffi is your Emotionally Intelligent AI Companion. While traditional therapy supports you for one hour a week, Keffi bridges the 167-hour gap. It deeply understands 96 emotional states, safely remembers your journey, and delivers personalized, human-like therapeutic support exactly when you need it. A safe sanctuary where advanced AI meets profound empathy.
               </p>
               
-              <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mt-2">
-                <button onClick={() => setView('login-patient')} className="group relative w-full sm:w-auto px-10 py-5 rounded-2xl bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white font-inter font-bold text-lg shadow-[0_20px_40px_rgba(58,112,112,0.4)] hover:shadow-[0_20px_60px_rgba(58,112,112,0.6)] hover:-translate-y-1 transition-all overflow-hidden flex items-center justify-center gap-3">
+              <div className="flex flex-col sm:flex-row items-start gap-3 w-full sm:w-auto mt-2">
+                <button onClick={() => setView('login-patient')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white font-inter font-bold text-xs md:text-lg shadow-[0_10px_20px_rgba(58,112,112,0.3)] md:shadow-[0_20px_40px_rgba(58,112,112,0.4)] hover:-translate-y-1 transition-all overflow-hidden flex items-center justify-center gap-2 md:gap-3">
                   <div className="absolute inset-0 bg-white/20 blur-md transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-                  🌟 Enter Keffi Chat <ArrowRight size={20} className="transform group-hover:translate-x-1 transition-transform"/>
+                  🌟 <span className="hidden md:inline">Enter Keffi Chat</span><span className="inline md:hidden">Chat</span> <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform"/>
                 </button>
-                <button onClick={() => setView('login-admin')} className="group relative w-full sm:w-auto px-10 py-5 rounded-2xl bg-white border border-[#3A7070]/10 text-[#3A7070] font-inter font-bold text-lg shadow-[0_20px_40px_rgba(58,112,112,0.1)] hover:shadow-[0_20px_60px_rgba(58,112,112,0.2)] hover:border-[#3A7070]/30 hover:-translate-y-1 transition-all flex items-center justify-center gap-3">
-                  🩺 Doctor / Clinical Hub
+                <button onClick={() => setView('login-admin')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-white border border-[#3A7070]/10 text-[#3A7070] font-inter font-bold text-xs md:text-lg shadow-sm hover:shadow-md hover:border-[#3A7070]/30 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 md:gap-3">
+                  🩺 <span className="hidden md:inline">Doctor / Clinical Hub</span><span className="inline md:hidden">Clinic</span>
                 </button>
               </div>
             </div>
             
-            <div className="flex-1 flex justify-center lg:justify-end relative w-full max-w-[600px] mt-10 lg:mt-0">
+            <div className="flex justify-end relative w-[40%] md:flex-1 max-w-[600px] transform scale-[0.45] md:scale-100 origin-right md:origin-center z-10">
                <div className="relative w-80 h-80 flex items-center justify-center">
                   <div className="absolute inset-0 bg-[#3A7070] rounded-full blur-[80px] opacity-30 animate-pulse"></div>
                   <div className="absolute inset-4 bg-emerald-400 rounded-full blur-[40px] opacity-20"></div>
