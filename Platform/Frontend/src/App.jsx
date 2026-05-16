@@ -515,7 +515,7 @@ const PatientLogin = ({ setView, setUserData }) => {
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-6 md:p-10`}>
-      <div className={`max-w-5xl w-full h-[700px] rounded-[2.5rem] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] flex flex-col md:flex-row overflow-hidden border border-slate-100`}>
+      <div className={`max-w-5xl w-full min-h-[700px] lg:h-[700px] rounded-[2.5rem] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] flex flex-col md:flex-row overflow-hidden border border-slate-100`}>
         {/* Left Image Side */}
         <div className="hidden md:flex md:w-5/12 relative overflow-hidden bg-[#E6F0F0] rounded-l-[2.5rem] items-center justify-center p-8">
            <DynamicLoginIllustration step={step} className="w-full h-full max-w-[300px] object-contain relative z-10 drop-shadow-2xl transition-all duration-500" />
@@ -1350,7 +1350,19 @@ const ProfileVault = ({ userData }) => (
 const PatientDashboard = ({ setView, userData }) => {
   const [activePage, setActivePage] = useState('chat');
   const [globalPoints, setGlobalPoints] = useState(0);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setIsSidebarOpen(true);
+      else setIsSidebarOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const menuItems = [
     { id: 'chat', label: 'Chat with Keffi', icon: MessageCircle },
@@ -1376,10 +1388,15 @@ const PatientDashboard = ({ setView, userData }) => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-[#f4f7f6] overflow-hidden font-inter text-slate-800">
+    <div className="flex h-screen w-screen bg-[#f4f7f6] overflow-hidden font-inter text-slate-800 relative">
       
+      {/* Mobile Overlay */}
+      {isMobile && isSidebarOpen && (
+        <div className="absolute inset-0 bg-black/40 z-20 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)}></div>
+      )}
+
       {/* Sleek Collapsible Sidebar */}
-      <div className={`${isSidebarOpen ? 'w-64 md:w-72' : 'w-0 opacity-0'} transition-all duration-300 h-full bg-white border-r border-slate-200 flex flex-col shrink-0 overflow-hidden relative z-20`}>
+      <div className={`${isSidebarOpen ? 'w-64 md:w-72 translate-x-0' : 'w-64 md:w-0 -translate-x-full md:translate-x-0 md:opacity-0'} absolute md:relative z-30 transition-all duration-300 h-full bg-white border-r border-slate-200 flex flex-col shrink-0 overflow-hidden`}>
         {/* Light Green Animated Background */}
         <div className="absolute -top-[10%] -left-[10%] w-[120%] h-[50%] bg-[#8FA989] rounded-full mix-blend-multiply blur-[80px] opacity-[0.15] animate-pulse pointer-events-none z-0" style={{animationDuration: '4s'}}></div>
         <div className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[50%] bg-[#EAF4F0] rounded-full mix-blend-multiply blur-[80px] opacity-70 pointer-events-none z-0" style={{animation: 'pulse 8s infinite alternate'}}></div>
@@ -1398,7 +1415,10 @@ const PatientDashboard = ({ setView, userData }) => {
                 return (
                   <button
                     key={item.id}
-                    onClick={() => setActivePage(item.id)}
+                    onClick={() => {
+                      setActivePage(item.id);
+                      if (isMobile) setIsSidebarOpen(false);
+                    }}
                     className={`w-full flex items-center gap-4 px-5 py-4 rounded-[1.2rem] font-bold text-sm transition-all duration-300 ${
                       isActive 
                       ? 'bg-[#3A7070] text-white shadow-md shadow-[#3A7070]/20' 
@@ -1423,13 +1443,13 @@ const PatientDashboard = ({ setView, userData }) => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 h-full min-w-0 bg-[#EAF0EE] relative flex flex-col overflow-hidden">
-        {!isSidebarOpen && (
+      <div className="flex-1 h-full w-full min-w-0 bg-[#EAF0EE] relative flex flex-col overflow-hidden">
+        {(!isSidebarOpen || isMobile) && (
           <button 
             onClick={() => setIsSidebarOpen(true)}
-            className="absolute top-6 left-6 z-50 p-2.5 text-slate-500 hover:text-[#3A7070] bg-white border border-slate-100 shadow-sm rounded-xl hover:-translate-y-1 transition-all"
+            className="absolute top-4 md:top-6 left-4 md:left-6 z-10 p-2.5 text-slate-500 hover:text-[#3A7070] bg-white border border-slate-100 shadow-sm rounded-xl hover:-translate-y-1 transition-all"
           >
-            <Icon size={20}><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></Icon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
         )}
         

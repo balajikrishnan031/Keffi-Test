@@ -12,19 +12,29 @@ load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "YOUR_GROQ_API_KEY_HERE")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-KEFFI_SYSTEM_PROMPT = """You are Keffi, a deeply empathetic Mental Wellness AI companion.
+KEFFI_SYSTEM_PROMPT = """You are Keffi, an advanced Clinical Emotion AI. Your primary job is to address the CURRENT USER MESSAGE directly and empathetically.
 
-You must flawlessly understand the user's input even if it is in Tanglish, Tamil-English mix, or broken English. You MUST always reply in warm, clear, plain English only.
+[ABSOLUTE LANGUAGE RULE]: 
+You perfectly understand Tanglish, Tamil-English mix, and broken English. 
+However, YOU MUST REPLY 100% IN PURE, CLEAR ENGLISH. 
+NEVER use Tanglish words. NEVER mimic their language. ZERO exceptions.
 
-CRITICAL QUALITY RULES — follow these without exception:
-1. REFERENCE THE USER'S EXACT WORDS. If they said "I failed my interview", say "failing that interview". If they said "my friend betrayed me", say "your friend's betrayal". NEVER give a response that could be copy-pasted to a different person.
-2. BE SPECIFIC, NOT GENERIC. Do NOT say vague things like "things will be okay" or "I understand". Show that you truly heard them by reflecting their specific situation back.
-3. FOLLOW THE INJECTED RULE PRECISELY. The 'Injected Rule' in the context tells you exactly which therapy method to use. Follow it step-by-step. Do not skip any step. Do not add steps not mentioned.
-4. DEPTH OVER BREVITY. Write 3-5 sentences total. Be thorough enough that the user feels genuinely heard and helped — not rushed.
-5. PLAIN TEXT ONLY. No asterisks (*), no bold, no bullet points, no numbered lists, no markdown formatting of any kind.
-6. NEVER diagnose. Never say "You have depression" or "You have anxiety."
-7. NEVER give toxic positivity like "everything happens for a reason" or "it will all work out."
-8. CRITICAL: DO NOT repeat metaphors you have already used in this conversation. Invent a new visual image every time.
+[THE 7-THERAPIST METHOD EXECUTION]
+The backend will inject a specific [REQUIRED INTERVENTION] based on its 96-state clinical analysis.
+You MUST flawlessly execute the EXACT steps provided in that intervention.
+- Do NOT give generic advice. Use the exact therapeutic framework requested (CBT, DBT, ACT, Storytelling, etc.).
+- The intervention will ask you for a metaphor and a solution. You must provide a deeply thought-out, practical adult metaphor and a highly specific solution based on that framework.
+- KEEP IT CONCISE: Output 3-5 sentences total. Do not overwhelm the user.
+
+[CRISIS & SAFETY]
+- If the user is just sad or crying, provide empathy. Do NOT trigger SOS.
+- ONLY trigger SOS if they state an ACTIVE INTENT to self-harm right now.
+
+[DYNAMIC OPTION GENERATION (MANDATORY)]
+- At the very end of your response, you MUST provide a single short phrase (under 8 words) for a UI button that the user can click to continue with your specific exercise.
+- Format it EXACTLY on a new line like this:
+|||OPTION||| [Your specific option text here]
+Example: |||OPTION||| Show me how to untangle my thoughts
 """
 
 def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
@@ -32,10 +42,11 @@ def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
     Calls Groq (Llama-3) directly from Python to get Keffi's therapeutic reply.
     """
     
-    # If the user hasn't added a key yet, fallback immediately
-    if GROQ_API_KEY == "YOUR_GROQ_API_KEY_HERE":
-        print("[GROQ WARNING] API Key not set. Using mock reply.")
-        return get_mock_reply(patient_message)
+    # If the user hasn't added a key yet, fallback immediately to trigger ChatGPT
+    if not GROQ_API_KEY or GROQ_API_KEY == "YOUR_GROQ_API_KEY_HERE":
+        err_msg = "[GROQ ERROR] API Key not set in Hugging Face Secrets."
+        print(err_msg)
+        return err_msg
 
     full_prompt = patient_message
     if clinical_context:
@@ -73,7 +84,7 @@ def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
 
 def evaluate_safety(ai_reply: str) -> bool:
     """MIND-SAFE Protocol: Uses Groq to verify if the generated reply is safe."""
-    if not GROQ_API_KEY: return True
+    if not GROQ_API_KEY or GROQ_API_KEY == "YOUR_GROQ_API_KEY_HERE": return True
     prompt = f"Review the following AI response to a patient. Is it completely safe, empathetic, and free of medical prescriptions or dangerous advice? Reply STRICTLY with the word 'SAFE' or 'UNSAFE'. No other text.\n\nAI RESPONSE: '{ai_reply}'"
     headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
     payload = {"model": "llama3-8b-8192", "messages": [{"role": "user", "content": prompt}], "temperature": 0.1, "max_tokens": 10}
@@ -85,23 +96,3 @@ def evaluate_safety(ai_reply: str) -> bool:
     except:
         pass
     return True
-
-def get_mock_reply(patient_message: str) -> str:
-    """Mock AI fallback responses in Tamil/Tanglish."""
-    import random
-    msg = patient_message.lower()
-    
-    if "sari ella" in msg or "sad" in msg or "kastama" in msg or "kashtam" in msg:
-        return random.choice([
-            "Kandippa unga nilamai puriyuthu. Manasu sari illatha appo romba kastama thaan irukkum. I'm here for you. Enna aachu detail ah solla mudiyuma?",
-            "Unga feeling romba valid. Sila neram apdi thaan feel aagum, aana neenga thaniya illa. Ithu eppo la irunthu ipdi feel panringa?"
-        ])
-    elif "alone" in msg or "thaniya" in msg or "lonely" in msg:
-        return "Neenga thaniya illa, naan ungaloda irukken! Intha lonely feeling romba kashtam thaan. Ethaavathu pesanum na thayangama sollunga."
-    elif "anxious" in msg or "bayama" in msg or "panic" in msg:
-        return "Romba bayama irukkunu theriyuthu. First namma moochula kavanatha veppom. Naan ungaloda thaan irukken.\\n\\n1. Inhale for 4 seconds, exhale for 6.\\n2. Suthi irukkura 3 porul-a gavanivunga."
-    else:
-        return random.choice([
-            "I hear you. Ithu kandippa kashtamana visayam thaan. Neenga epdi feel panringalo atha apdiye accept pannikonga. Naan kekkuren, innum sollunga.",
-            "Unga feelings a share pannathukku romba nandri. Neenga anubavikkira intha valiya ennala purinjikka mudiyuthu. I'm with you."
-        ])

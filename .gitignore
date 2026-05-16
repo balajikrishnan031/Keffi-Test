@@ -7,3 +7,4 @@ node_modules/
 .DS_Store
 keffi_clinical.db
 user_state.json
+deploy_hf.py

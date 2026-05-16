@@ -16,6 +16,11 @@ from chatgpt_engine import get_keffi_reply as get_chatgpt_reply
 
 app = FastAPI(title="Keffi Clinical AI Brain")
 
+# --- ROOT ENDPOINT TO FIX 404 LOGS ---
+@app.get("/")
+def root_status():
+    return {"status": "Keffi Clinical AI Backend is Running 🚀", "version": "1.0"}
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -157,46 +162,46 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         dynamic_rules = {
             # --- CLINICAL MODES ---
             "CBT": (
-                "Rule 1: Deep Validation: Empathize deeply with the user's specific problem.\n"
-                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological or physical reason why they are experiencing this (e.g., explain cognitive distortions like catastrophizing or all-or-nothing thinking) using exactly ONE relatable metaphor.\n"
-                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, detailed cognitive reframing question or action step. Start this final sentence with a bullet point symbol ( - ) followed immediately by the specific action the user should take right now. Explain exactly how and why this specific solution will help their exact problem.\n"
-                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+                "Rule 1: Deep Validation: Empathize deeply with the user's exact problem, feeling their pain like a human friend.\n"
+                "Rule 2: The Dependent Story (Metaphor): Explain the psychology of their problem using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story. Do NOT sound like a machine.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, tailored cognitive reframing action. Start with a bullet point ( - ) and explain exactly how this solution directly resolves the pain in their story.\n"
+                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
             ),
             "Double_Standard_CBT": (
-                "Rule 1: Deep Validation: Warmly name the exact gap between how they treat friends vs. themselves. Reference their specific situation.\n"
-                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological reason why we are often our own harshest critics, using exactly ONE relatable metaphor (e.g., a lighthouse or a doctor).\n"
-                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific action step. Start this final sentence with a bullet point symbol ( - ) asking them to close their eyes, imagine their friend in their place, and say the exact same compassionate thing to themselves. Explain how this helps.\n"
-                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+                "Rule 1: Deep Validation: Empathize deeply with the user's exact problem, feeling their pain like a human friend.\n"
+                "Rule 2: The Dependent Story (Metaphor): Explain why we judge ourselves harsher than friends using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, tailored action. Start with a bullet point ( - ) asking them to imagine a friend in their place. Explain exactly how this solution resolves their specific pain.\n"
+                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
             ),
             "Somatic": (
-                "Rule 1: Deep Validation: Empathize deeply with their specific PHYSICAL symptoms (e.g., tightness, trembling).\n"
-                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the physiological reason why their body is reacting this way (e.g., fight-or-flight, nervous system overload) using exactly ONE relatable physical metaphor.\n"
-                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, detailed grounding exercise (like 5-4-3-2-1). Start this final sentence with a bullet point symbol ( - ) followed immediately by the specific sensory action they should take right now. Explain exactly how this cools down their nervous system.\n"
-                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+                "Rule 1: Deep Validation: Empathize deeply with their physical symptoms (e.g., tightness, trembling), feeling their pain like a human friend.\n"
+                "Rule 2: The Dependent Story (Metaphor): Explain their body's nervous system reaction using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed grounding exercise (like 5-4-3-2-1). Start with a bullet point ( - ) and explain exactly how this specific sensory action cools down their nervous system.\n"
+                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
             ),
             "DBT": (
-                "Rule 1: Deep Validation: Empathize deeply with the intensity of their specific emotion (rage, betrayal) without judging or telling them to calm down.\n"
-                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological or physical reason why they are experiencing this intense emotional flood (e.g., threat system overwhelmed, adrenaline spike) using exactly ONE relatable metaphor.\n"
-                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, detailed physical distress tolerance skill (e.g., holding ice, cold water on wrists). Start this final sentence with a bullet point symbol ( - ) followed immediately by the specific action. Explain exactly how this acts as an emergency brake for their nervous system.\n"
-                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+                "Rule 1: Deep Validation: Empathize deeply with the intensity of their emotion without judging, feeling their pain like a human friend.\n"
+                "Rule 2: The Dependent Story (Metaphor): Explain their emotional flood using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed physical distress tolerance skill (e.g., holding ice). Start with a bullet point ( - ) and explain exactly how this acts as an emergency brake for their specific pain.\n"
+                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
             ),
             "ACT": (
-                "Rule 1: Deep Validation: Empathize deeply with the reality of their specific unchangeable pain (illness, loss), honoring that fighting it has been exhausting.\n"
-                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological reason why we suffer more when we fight reality vs accepting it, using exactly ONE relatable metaphor.\n"
-                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, detailed perspective shift or small committed action step. Start this final sentence with a bullet point symbol ( - ) asking what one small thing still matters to them despite the pain. Explain how this helps them move forward.\n"
-                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+                "Rule 1: Deep Validation: Empathize deeply with the reality of their unchangeable pain, feeling it like a human friend.\n"
+                "Rule 2: The Dependent Story (Metaphor): Explain why fighting reality causes more suffering using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed perspective shift. Start with a bullet point ( - ) asking what one small thing still matters to them despite the pain. Explain exactly how this helps them move forward.\n"
+                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
             ),
             "Rogerian": (
-                "Rule 1: Deep Validation: Reflect deeply and empathize with the FEELING behind their specific words.\n"
-                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological weight of carrying this burden alone, using exactly ONE relatable metaphor to capture how they might be feeling inside.\n"
-                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE open, gentle question. Start this final sentence with a bullet point symbol ( - ) inviting them to share more if they want to. Explain that this is a safe space just to be heard without needing to fix anything.\n"
-                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+                "Rule 1: Deep Validation: Empathize deeply with the feeling behind their exact words, like a close human friend listening.\n"
+                "Rule 2: The Dependent Story (Metaphor): Explain the psychological weight of their burden using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE gentle, tailored question to help them reflect. Start with a bullet point ( - ) inviting them to share more. Explain that this is a safe space just to be heard.\n"
+                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
             ),
             "CaCBT": (
-                "Rule 1: Deep Validation: Empathize deeply with the specific cultural or family pressure they are facing, validating that this weight is real and heavy.\n"
-                "Rule 2: Psychoeducation (The 'Why'): Briefly explain the psychological reason why cultural/societal expectations create so much stress and guilt, using exactly ONE relatable metaphor (e.g., carrying the weight of the family's expectations).\n"
-                "Rule 3: Tailored Solution (The 'How'): Provide exactly ONE specific, culturally-sensitive boundary or perspective shift. Start this final sentence with a bullet point symbol ( - ) followed immediately by a practical step they can take to protect their wellbeing. Explain how this protects their peace without being selfish.\n"
-                "Rule 4: Formatting Limit: Keep the response under 4 short paragraphs. Do not overwhelm them with a wall of text."
+                "Rule 1: Deep Validation: Empathize deeply with the cultural or family pressure they face, validating their heavy burden like a human friend.\n"
+                "Rule 2: The Dependent Story (Metaphor): Explain the stress of societal expectations using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, culturally-sensitive boundary shift. Start with a bullet point ( - ) and explain exactly how this protects their peace without being selfish.\n"
+                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
             ),
 
             # --- SOS MODE ---
@@ -205,34 +210,29 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             # --- ENTERTAINMENT & GENERAL MODES (Situation-Specific) ---
             "Storytelling": (
                 f"The user is going through this: '{req.emotional_context or req.message}'. "
-                "Tell ONE unique, real-world, catchy short story or parable that directly mirrors their specific emotional situation. "
-                "The story must feel like it was written for THIS exact person. Use a relatable real-life scenario (not a fairy tale). "
-                "The character in the story should face the same type of challenge the user is facing and find their way through it in a surprising, non-cliche way. "
-                "Do NOT give generic stories. Do NOT give therapy exercises after the story. End with one warm, open sentence."
+                "Tell ONE highly unique, reality-based human story that directly relates to their specific life situation. "
+                "CRITICAL RULES: It MUST sound like a real story told by a close human friend, NEVER like a machine. NEVER repeat a story you've told before. "
+                "The story must help them understand their situation better and gently guide them to a decision if they are confused. "
+                "No generic fairy tales. Make it feel incredibly natural and deeply empathetic."
             ),
             "Humor": (
                 f"The user is feeling: '{req.emotional_context or req.message[:120]}'. "
-                "Tell ONE completely fresh, unique, witty joke that is light-hearted and safe. "
-                "CRITICAL RULES: The joke must be NEW and ORIGINAL — do NOT reuse old classic jokes. "
-                "The humor must NEVER mock mental health, sadness, relationships, or the user's own situation. "
-                "Pick a funny observation about everyday Indian life, office life, food, traffic, or technology. "
-                "Keep it short (2-3 lines max). End with a warm, friendly sentence that doesn't feel therapeutic."
+                "Tell ONE completely fresh, natural, human-like joke. "
+                "CRITICAL RULES: It MUST sound like two close friends joking naturally. NEVER sound like a machine generating a joke. NEVER use old classic jokes. "
+                "The comedy must be completely unique, safe, and light-hearted, without mocking their pain. "
+                "Keep it short and punchy."
             ),
             "Music": (
                 f"The user's mood is: '{req.emotional_context or req.message[:120]}'. "
-                "Suggest EXACTLY ONE slow, healing, soul-touching Tamil melody song (by Ilayaraja or A.R. Rahman or similar) "
-                "that MATCHES this specific emotional state. "
-                "Write the song name and composer. Then write 2 lines of the most comforting lyrics from that song (in Tamil or transliteration). "
-                "In ONE warm sentence, explain why THIS specific song matches how they feel right now. "
-                "NEVER suggest fast, upbeat, party, or disco songs. No therapy advice after the song."
+                "Suggest EXACTLY ONE highly relaxing, soul-touching melody song. "
+                "CRITICAL RULES: The song MUST be deeply relaxing for the mind. ABSOLUTELY NO heavy bass sounds, no fast beats, no party songs. "
+                "Write the song name, composer, and 2 lines of the most comforting lyrics. Explain naturally like a friend why this specific calm song matches their feelings."
             ),
             "Puzzle": (
                 f"The user seems to be in this state: '{req.message[:120]}'. "
-                "Give ONE fun, engaging puzzle or riddle that is perfectly matched to their energy level. "
-                "If they seem drained or sad, give a VERY simple and satisfying riddle with a surprising answer. "
-                "If they seem bored or restless, give a slightly more clever brain teaser. "
-                "After the puzzle, do NOT give the answer immediately — end with: 'Take your time, no rush!' "
-                "NEVER give complex math or stressful logic puzzles. Keep it light and fun."
+                "Give ONE 'Mastermind' style puzzle or riddle specifically tailored to change their current mindset. "
+                "CRITICAL RULES: It must be totally unique and different from standard puzzles. It should engage their brain to shift their focus completely away from their stress. "
+                "Make it sound like a fun challenge from a human friend. End with 'Take your time, no rush!'"
             ),
             "Casual": "Give a warm, short, friendly greeting. Ask how their day is going. Keep it strictly under 3 sentences.",
             "Factual": "Provide a direct, factual answer clearly and warmly. Drop the therapist persona and DO NOT therapize."
@@ -398,6 +398,10 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             else:
                 predicted_method = "Storytelling"
                 suggested_options = ["Tell me another story 📖", "Give me a joke 😄", "I need to talk"]
+        # NEW RULE: Confusion and Indecision -> Trigger Story/Metaphor
+        elif any(k in msg_clean.lower() for k in ["i don't understand", "confused", "don't know what to do", "can't decide", "puriyala", "theriyala", "kuzhappama", "confusion", "what should i do"]):
+            predicted_method = "Storytelling"
+            suggested_options = ["Tell me another story 📖", "Help me reframe this thought 💭", "Play me a song 🎵"]
         elif any(k in msg_clean for k in ["I want to vent", "I need to vent", "I need to talk", "I want to talk more", "I want to share more"]):
             predicted_method = "Rogerian"
             suggested_options = ["Tell me more", "Play me a song 🎵", "Tell me a story 📖"]
