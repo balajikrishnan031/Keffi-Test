@@ -492,15 +492,11 @@ const PatientLogin = ({ setView, setUserData }) => {
     if (step === 1) {
       const phoneClean = formData.phone.replace(/\D/g, '');
       if (!formData.phone) return setError('Please enter your mobile number.');
-      if (phoneClean.length < 10) return setError('Mobile number must be at least 10 digits.');
+      if (phoneClean.length !== 10) return setError('Mobile number must be exactly 10 digits.');
       if (!formData.email) return setError('Please enter your email address.');
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return setError('Please enter a valid email address.');
       setStep(2);
     } else if (step === 2) {
-      if (!formData.otp) return setError('Please enter the 4-digit code.');
-      if (formData.otp.length !== 4) return setError('Code must be exactly 4 digits.');
-      setStep(3);
-    } else if (step === 3) {
       if (!formData.name.trim()) return setError('Please enter your preferred name.');
       if (!formData.age || isNaN(formData.age) || +formData.age < 5 || +formData.age > 120) return setError('Please enter a valid age (5–120).');
       if (!formData.gender) return setError('Please select your gender.');
@@ -522,13 +518,11 @@ const PatientLogin = ({ setView, setUserData }) => {
            <div className="absolute inset-0 bg-gradient-to-t from-[#2C5555]/40 via-transparent to-transparent flex flex-col justify-end p-12 text-[#1E293B] z-20">
               <h2 className="text-3xl font-black mb-3">
                 {step === 1 && "Secure Entry"}
-                {step === 2 && "Verify Identity"}
-                {step === 3 && "Your Sanctuary"}
+                {step === 2 && "Your Sanctuary"}
               </h2>
               <p className="text-base opacity-90 font-medium">
                 {step === 1 && "Enter your details below to establish a secure connection."}
-                {step === 2 && "We have sent an encrypted OTP. Please enter it below."}
-                {step === 3 && "Let's build your personal profile for a better experience."}
+                {step === 2 && "Let's build your personal profile for a better experience."}
               </p>
            </div>
         </div>
@@ -536,7 +530,7 @@ const PatientLogin = ({ setView, setUserData }) => {
         {/* Right Form Side */}
         <div className="w-full md:w-7/12 p-10 md:p-16 flex flex-col justify-center bg-white">
           <div className="flex justify-start gap-3 mb-10">
-            {[1,2,3].map(i => (
+            {[1,2].map(i => (
               <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === step ? 'w-12 bg-[#3A7070]' : 'w-4 bg-slate-200'}`}></div>
             ))}
           </div>
@@ -559,27 +553,15 @@ const PatientLogin = ({ setView, setUserData }) => {
               </div>
               {error && <div className="text-red-500 text-sm font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
               <div className="pt-2 space-y-4">
-                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Get Magic Code</button>
+                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Continue</button>
                 <button onClick={() => setView('landing')} className="w-full text-center text-slate-400 font-bold text-sm hover:text-[#3A7070] transition-colors">Back to Home</button>
               </div>
             </div>
           )}
 
-          {step === 2 && (
-            <div className="space-y-8 animate-fade-in">
-              <div>
-                <h2 className="text-3xl font-black text-slate-800 mb-3">Verification</h2>
-                <p className="text-slate-500 text-base">Enter the 4-digit code sent to <span className="text-slate-800 font-bold">{formData.phone}</span></p>
-              </div>
-              <input type="number" placeholder="0000" value={formData.otp} onChange={e => setFormData({...formData, otp: e.target.value})} className={`w-full p-6 text-center text-5xl tracking-[0.5em] rounded-2xl bg-slate-50 border border-slate-200 outline-none text-[#3A7070] font-black focus:border-[#3A7070] focus:ring-4 focus:ring-[#3A7070]/10 transition-all`} maxLength={4} />
-              {error && <div className="text-red-500 text-sm font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
-              <div className="pt-4">
-                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Verify Identity</button>
-              </div>
-            </div>
           )}
 
-          {step === 3 && (
+          {step === 2 && (
             <div className="space-y-8 animate-fade-in h-full flex flex-col justify-center">
               <div>
                 <h2 className="text-3xl font-black text-slate-800 mb-3">Your Profile</h2>
