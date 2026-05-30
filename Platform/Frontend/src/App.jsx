@@ -559,8 +559,6 @@ const PatientLogin = ({ setView, setUserData }) => {
             </div>
           )}
 
-          )}
-
           {step === 2 && (
             <div className="space-y-8 animate-fade-in h-full flex flex-col justify-center">
               <div>
