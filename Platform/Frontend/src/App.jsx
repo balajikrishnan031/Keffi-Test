@@ -837,7 +837,12 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
         emotional_context: lastEmotionalMessage
       });
       
-      const botResponse = response.data.reply || "I'm here for you.";
+      let botResponse = response.data.reply || "I'm here for you.";
+      
+      if (botResponse.includes('[TRIGGER_MUSIC_PLAYER]')) {
+        botResponse = botResponse.replace('[TRIGGER_MUSIC_PLAYER]', '').trim();
+        setTimeout(() => setShowMediaPlayer(true), 1500); // Popup the music player after a small delay
+      }
       
       setIsTyping(false);
       setMessages(prev => [...prev, { 

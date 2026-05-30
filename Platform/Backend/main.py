@@ -163,51 +163,57 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             # --- CLINICAL MODES ---
             "CBT": (
                 "Rule 1: Deep Validation: Empathize deeply with the user's exact problem, feeling their pain like a human friend.\n"
-                "Rule 2: The Dependent Story (Metaphor): Explain the psychology of their problem using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story. Do NOT sound like a machine.\n"
-                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, tailored cognitive reframing action. Start with a bullet point ( - ) and explain exactly how this solution directly resolves the pain in their story.\n"
-                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
+                "Rule 2: Psychological Explanation: Give a brief, literal psychological explanation of why their mind/body is reacting this way (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, tailored cognitive action. Start with a bullet point ( - ) focusing on a real-world grounding technique. No visualization exercises.\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
             ),
             "Double_Standard_CBT": (
                 "Rule 1: Deep Validation: Empathize deeply with the user's exact problem, feeling their pain like a human friend.\n"
-                "Rule 2: The Dependent Story (Metaphor): Explain why we judge ourselves harsher than friends using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
-                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, tailored action. Start with a bullet point ( - ) asking them to imagine a friend in their place. Explain exactly how this solution resolves their specific pain.\n"
-                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
+                "Rule 2: Psychological Explanation: Give a brief, literal psychological explanation of why we judge ourselves harsher than friends (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, tailored action. Start with a bullet point ( - ) focusing on a real-world grounding technique. No visualization exercises.\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
             ),
             "Somatic": (
                 "Rule 1: Deep Validation: Empathize deeply with their physical symptoms (e.g., tightness, trembling), feeling their pain like a human friend.\n"
-                "Rule 2: The Dependent Story (Metaphor): Explain their body's nervous system reaction using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
-                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed grounding exercise (like 5-4-3-2-1). Start with a bullet point ( - ) and explain exactly how this specific sensory action cools down their nervous system.\n"
-                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
+                "Rule 2: Psychological Explanation: Give a brief, literal psychological explanation of their body's nervous system reaction (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed grounding exercise (like 5-4-3-2-1). Start with a bullet point ( - ) focusing on a real-world physical action. No visualization exercises.\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
             ),
             "DBT": (
                 "Rule 1: Deep Validation: Empathize deeply with the intensity of their emotion without judging, feeling their pain like a human friend.\n"
-                "Rule 2: The Dependent Story (Metaphor): Explain their emotional flood using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
-                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed physical distress tolerance skill (e.g., holding ice). Start with a bullet point ( - ) and explain exactly how this acts as an emergency brake for their specific pain.\n"
-                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
+                "Rule 2: Psychological Explanation: Give a brief, literal psychological explanation of their emotional flood (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed physical distress tolerance skill (e.g., holding ice). Start with a bullet point ( - ) focusing on a real-world physical grounding technique. No visualization exercises.\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
             ),
             "ACT": (
                 "Rule 1: Deep Validation: Empathize deeply with the reality of their unchangeable pain, feeling it like a human friend.\n"
-                "Rule 2: The Dependent Story (Metaphor): Explain why fighting reality causes more suffering using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
-                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed perspective shift. Start with a bullet point ( - ) asking what one small thing still matters to them despite the pain. Explain exactly how this helps them move forward.\n"
-                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
+                "Rule 2: Psychological Explanation: Give a brief, literal psychological explanation of why fighting reality causes more suffering (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed perspective shift. Start with a bullet point ( - ) focusing on a real-world physical grounding technique. No visualization exercises.\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
             ),
             "Rogerian": (
                 "Rule 1: Deep Validation: Empathize deeply with the feeling behind their exact words, like a close human friend listening.\n"
-                "Rule 2: The Dependent Story (Metaphor): Explain the psychological weight of their burden using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
-                "Rule 3: Deep Solution: Provide exactly ONE gentle, tailored question to help them reflect. Start with a bullet point ( - ) inviting them to share more. Explain that this is a safe space just to be heard.\n"
-                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
+                "Rule 2: Psychological Explanation: Give a brief, literal psychological explanation of the emotional weight of their burden (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE gentle, tailored question to help them reflect. Start with a bullet point ( - ) focusing on a grounded reflection. No visualization exercises.\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
             ),
             "CaCBT": (
                 "Rule 1: Deep Validation: Empathize deeply with the cultural or family pressure they face, validating their heavy burden like a human friend.\n"
-                "Rule 2: The Dependent Story (Metaphor): Explain the stress of societal expectations using ONE highly unique, reality-based human story or metaphor that perfectly matches their life situation. NEVER repeat a past story.\n"
-                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, culturally-sensitive boundary shift. Start with a bullet point ( - ) and explain exactly how this protects their peace without being selfish.\n"
-                "Rule 4: Limit: Keep it to 3-4 natural human paragraphs."
+                "Rule 2: Psychological Explanation: Give a brief, literal psychological explanation of the stress of societal expectations (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, culturally-sensitive boundary shift. Start with a bullet point ( - ) focusing on a real-world physical grounding technique. No visualization exercises.\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
             ),
 
             # --- SOS MODE ---
             "Crisis_SOS": "CRITICAL RULE: STOP ALL THERAPY. DO NOT give exercises, metaphors, or stories. Only output deep empathy and IMMEDIATELY provide emergency helplines: 'Please call AASRA at 9820466726 or the National Emergency Number 104'.",
 
             # --- ENTERTAINMENT & GENERAL MODES (Situation-Specific) ---
+            "Comfort_Storytelling": (
+                "Rule 1: Deep Validation: Empathize warmly with their need for comfort or their emotional state, like a caring human friend.\n"
+                "Rule 2: Therapeutic Metaphor (Cognitive Defusion): Tell ONE highly unique, beautiful, and relaxing therapeutic metaphor (like 'leaves on a stream' or 'clouds passing') that perfectly matches their current feelings. NEVER repeat a past metaphor.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE gentle reflection or cognitive reframing based on the metaphor. Start with a bullet point ( - ).\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
+            ),
             "Storytelling": (
                 f"The user is going through this: '{req.emotional_context or req.message}'. "
                 "Tell ONE highly unique, reality-based human story that directly relates to their specific life situation. "
@@ -226,7 +232,8 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
                 f"The user's mood is: '{req.emotional_context or req.message[:120]}'. "
                 "Suggest EXACTLY ONE highly relaxing, soul-touching melody song. "
                 "CRITICAL RULES: The song MUST be deeply relaxing for the mind. ABSOLUTELY NO heavy bass sounds, no fast beats, no party songs. "
-                "Write the song name, composer, and 2 lines of the most comforting lyrics. Explain naturally like a friend why this specific calm song matches their feelings."
+                "Write the song name, composer, and 2 lines of the most comforting lyrics. Explain naturally like a friend why this specific calm song matches their feelings.\n"
+                "AT THE VERY END of your response, you MUST include this exact text on a new line: [TRIGGER_MUSIC_PLAYER]"
             ),
             "Puzzle": (
                 f"The user seems to be in this state: '{req.message[:120]}'. "
@@ -391,16 +398,19 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         elif any(k in msg_clean for k in ["Play me a song", "Play a Calming Song", "Suggest a song"]):
             predicted_method = "Music"
             suggested_options = ["Give me another song 🎵", "I want to talk more", "Give me a joke 😄"]
-        elif any(k in msg_clean for k in ["Tell me a story", "Solve a Puzzle", "Give me a puzzle"]):
+        elif any(k in msg_clean for k in ["Tell me a story", "Solve a Puzzle", "Give me a puzzle", "Tell me a comforting story", "comfort me"]):
             if "puzzle" in msg_clean.lower() or "Puzzle" in msg_clean:
                 predicted_method = "Puzzle"
                 suggested_options = ["Give me another puzzle 🧩", "Tell me a story 📖", "I need to talk"]
+            elif any(k in msg_clean.lower() for k in ["comforting story", "comfort me", "aaru-thal"]):
+                predicted_method = "Comfort_Storytelling"
+                suggested_options = ["Tell me another story 📖", "Help me reframe this thought 💭", "Play me a song 🎵"]
             else:
                 predicted_method = "Storytelling"
                 suggested_options = ["Tell me another story 📖", "Give me a joke 😄", "I need to talk"]
         # NEW RULE: Confusion and Indecision -> Trigger Story/Metaphor
         elif any(k in msg_clean.lower() for k in ["i don't understand", "confused", "don't know what to do", "can't decide", "puriyala", "theriyala", "kuzhappama", "confusion", "what should i do"]):
-            predicted_method = "Storytelling"
+            predicted_method = "Comfort_Storytelling"
             suggested_options = ["Tell me another story 📖", "Help me reframe this thought 💭", "Play me a song 🎵"]
         elif any(k in msg_clean for k in ["I want to vent", "I need to vent", "I need to talk", "I want to talk more", "I want to share more"]):
             predicted_method = "Rogerian"
