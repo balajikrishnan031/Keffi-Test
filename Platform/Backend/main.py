@@ -395,7 +395,7 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         if any(k in msg_clean for k in ["Hear a joke", "Give me a joke", "Tell me a joke"]):
             predicted_method = "Humor"
             suggested_options = ["Give me another joke 😄", "Tell me a story 📖", "I need to talk"]
-        elif any(k in msg_clean for k in ["Play me a song", "Play a Calming Song", "Suggest a song"]):
+        elif any(k in msg_clean.lower() for k in ["play me a song", "play a calming song", "suggest a song", "play a song", "music", "melody"]):
             predicted_method = "Music"
             suggested_options = ["Give me another song 🎵", "I want to talk more", "Give me a joke 😄"]
         elif any(k in msg_clean for k in ["Tell me a story", "Solve a Puzzle", "Give me a puzzle", "Tell me a comforting story", "comfort me"]):
