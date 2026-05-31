@@ -210,7 +210,7 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             # --- ENTERTAINMENT & GENERAL MODES (Situation-Specific) ---
             "Comfort_Storytelling": (
                 "Rule 1: Deep Validation: Empathize warmly with their need for comfort or their emotional state, like a caring human friend.\n"
-                "Rule 2: Therapeutic Metaphor (Cognitive Defusion): Tell ONE highly unique, beautiful, and relaxing therapeutic metaphor (like 'leaves on a stream' or 'clouds passing') that perfectly matches their current feelings. NEVER repeat a past metaphor.\n"
+                "Rule 2: Therapeutic Metaphor (Cognitive Defusion): Tell EXACTLY ONE simple therapeutic metaphor (like 'leaves on a stream' or 'clouds passing') that perfectly matches their current feelings. STRICTLY limit yourself to ONE metaphor. Do NOT stack multiple poetic imagery. NEVER repeat a past metaphor.\n"
                 "Rule 3: Deep Solution: Provide exactly ONE gentle reflection or cognitive reframing based on the metaphor. Start with a bullet point ( - ).\n"
                 "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
             ),
@@ -224,25 +224,25 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             "Humor": (
                 f"The user is feeling: '{req.emotional_context or req.message[:120]}'. "
                 "Tell ONE completely fresh, natural, human-like joke. "
-                "CRITICAL RULES: It MUST sound like two close friends joking naturally. NEVER sound like a machine generating a joke. NEVER use old classic jokes. "
+                "CRITICAL RULES: DO NOT therapize the user. DO NOT mention their emotional context or validate their feelings. Just tell the joke. It MUST sound like two close friends joking naturally. NEVER sound like a machine generating a joke. NEVER use old classic jokes. "
                 "The comedy must be completely unique, safe, and light-hearted, without mocking their pain. "
                 "Keep it short and punchy."
             ),
             "Music": (
                 f"The user's mood is: '{req.emotional_context or req.message[:120]}'. "
                 "Suggest EXACTLY ONE highly relaxing, soul-touching melody song. "
-                "CRITICAL RULES: The song MUST be deeply relaxing for the mind. ABSOLUTELY NO heavy bass sounds, no fast beats, no party songs. "
+                "CRITICAL RULES: The song MUST be deeply relaxing for the mind. ABSOLUTELY NO heavy bass sounds, no fast beats, no party songs. DO NOT therapize. "
                 "Write the song name, composer, and 2 lines of the most comforting lyrics. Explain naturally like a friend why this specific calm song matches their feelings.\n"
                 "AT THE VERY END of your response, you MUST include this exact text on a new line: [TRIGGER_MUSIC_PLAYER]"
             ),
             "Puzzle": (
                 f"The user seems to be in this state: '{req.message[:120]}'. "
                 "Give ONE 'Mastermind' style puzzle or riddle specifically tailored to change their current mindset. "
-                "CRITICAL RULES: It must be totally unique and different from standard puzzles. It should engage their brain to shift their focus completely away from their stress. "
+                "CRITICAL RULES: DO NOT therapize. It must be totally unique and different from standard puzzles. It should engage their brain to shift their focus completely away from their stress. "
                 "Make it sound like a fun challenge from a human friend. End with 'Take your time, no rush!'"
             ),
-            "Casual": "Give a warm, short, friendly greeting. Ask how their day is going. Keep it strictly under 3 sentences.",
-            "Factual": "Provide a direct, factual answer clearly and warmly. Drop the therapist persona and DO NOT therapize."
+            "Casual": "Give a warm, short, friendly greeting. Ask how their day is going. Keep it strictly under 3 sentences. DO NOT therapize.",
+            "Factual": "Provide a direct, factual answer clearly and warmly. STRICTLY DO NOT therapize the user. DO NOT validate their feelings. DO NOT mention their emotional context. Just answer the question."
         }
 
         # 4. Map the router's clinical category to the predicted method
@@ -392,7 +392,7 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
 
         # Override for explicit entertainment requests
         msg_clean = req.message.strip()
-        if any(k in msg_clean for k in ["Hear a joke", "Give me a joke", "Tell me a joke"]):
+        if any(k in msg_clean.lower() for k in ["hear a joke", "give me a joke", "tell me a joke", "fun fact", "give me a fun fact"]):
             predicted_method = "Humor"
             suggested_options = ["Give me another joke 😄", "Tell me a story 📖", "I need to talk"]
         elif any(k in msg_clean.lower() for k in ["play me a song", "play a calming song", "suggest a song", "play a song", "music", "melody"]):
@@ -518,7 +518,8 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         # we need to ensure the LLM knows what they are referring to using the emotional_context.
         original_context_injection = ""
         if req.emotional_context and req.message != req.emotional_context:
-            original_context_injection = f"The user is requesting the REQUIRED INTERVENTION for their original situation: '{req.emotional_context}'. | "
+            if predicted_method not in ["Humor", "Factual", "Puzzle", "Music", "Casual"]:
+                original_context_injection = f"The user is requesting the REQUIRED INTERVENTION for their original situation: '{req.emotional_context}'. | "
 
         option_instruction = (
             "CRITICAL SYSTEM INSTRUCTION - DYNAMIC OPTION GENERATION: "
@@ -533,6 +534,11 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             "Invent a completely new visual image or metaphor every single time to ensure the conversation feels fresh and progressive. | "
         )
 
+        medical_rule = (
+            "MEDICAL RULE: If the user asks for medical advice, pill recommendations, or diagnoses, "
+            "explicitly state: 'I am an AI, not a doctor. I cannot prescribe medication or diagnose. Please consult a healthcare professional.' | "
+        )
+
         context_str = (
             crisis_flag +
             f"[PAST CONTEXT: {past_context}] | "
@@ -544,6 +550,7 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             f"REQUIRED INTERVENTION: {intervention_type} | "
             f"Clinical Insight: {clinical_insight} | "
             f"{original_context_injection}"
+            f"{medical_rule}"
             f"{anti_repetition_rule}"
             f"{option_instruction}"
             "⚠️ STRICT ISOLATION: The REQUIRED INTERVENTION above applies ONLY to the [CURRENT USER MESSAGE] below. "
