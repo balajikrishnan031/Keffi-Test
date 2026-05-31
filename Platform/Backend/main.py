@@ -223,10 +223,9 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             ),
             "Humor": (
                 f"The user's message: '{req.message}'. "
-                "If the user is asking for the punchline or to continue, provide the hilarious punchline and laugh with them. For the option, output: |||OPTION||| Tell me another joke 😂\n"
-                "Otherwise, tell ONLY THE DETAILED SETUP of a fresh, natural, human-like joke, and stop before the punchline. "
+                "Tell ONE completely fresh, natural, human-like joke in FULL DETAIL. Include both the detailed setup and the hilarious punchline in the same message. "
                 "CRITICAL RULES: DO NOT therapize the user. DO NOT mention their emotional context or validate their feelings. Just tell the joke. It MUST sound like two close friends joking naturally. NEVER sound like a machine generating a joke. NEVER use old classic jokes. "
-                "If providing the setup, output EXACTLY: |||OPTION||| Tell me the punchline 😄"
+                "For the option, output EXACTLY: |||OPTION||| Tell me another joke 😂"
             ),
             "Music": (
                 f"The user's message: '{req.message}'. "
@@ -238,10 +237,9 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             ),
             "Puzzle": (
                 f"The user's message: '{req.message}'. "
-                "If the user is guessing the answer or asking for the solution, reveal the correct answer and explain it warmly. For the option, output: |||OPTION||| Give me another puzzle 🧩\n"
-                "Otherwise, give a highly DETAILED and immersive 'Mastermind' style puzzle or riddle. DO NOT reveal the answer yet. "
-                "CRITICAL RULES: DO NOT therapize. It must be totally unique and different from standard puzzles. It should engage their brain to shift their focus completely away from their stress. "
-                "If providing the puzzle setup, output EXACTLY: |||OPTION||| Show me the answer 🧩"
+                "Give ONE highly DETAILED and immersive 'Mastermind' style puzzle or riddle, and FULLY EXPLAIN the solution at the end of the message. "
+                "CRITICAL RULES: DO NOT therapize. It must be totally unique and different from standard puzzles. It should engage their brain to shift their focus completely away from their stress. Include the answer in your detailed explanation. "
+                "For the option, output EXACTLY: |||OPTION||| Give me another puzzle 🧩"
             ),
             "Casual": "Give a warm, short, friendly greeting. Ask how their day is going. Keep it strictly under 3 sentences. DO NOT therapize.",
             "Factual": "Provide a direct, factual answer clearly and warmly. STRICTLY DO NOT therapize the user. DO NOT validate their feelings. DO NOT mention their emotional context. Just answer the question."
@@ -394,16 +392,16 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
 
         # Override for explicit entertainment requests
         msg_clean = req.message.strip()
-        if any(k in msg_clean.lower() for k in ["hear a joke", "give me a joke", "tell me a joke", "fun fact", "give me a fun fact", "punchline", "tell me the punchline"]):
+        if any(k in msg_clean.lower() for k in ["hear a joke", "give me a joke", "tell me a joke", "fun fact", "give me a fun fact"]):
             predicted_method = "Humor"
-            suggested_options = ["Tell me the punchline 😄", "Tell me a story 📖", "I need to talk"]
+            suggested_options = ["Tell me another joke 😄", "Tell me a story 📖", "I need to talk"]
         elif any(k in msg_clean.lower() for k in ["play me a song", "play a calming song", "suggest a song", "play a song", "music", "melody", "lofi", "classical", "nature", "ambient"]):
             predicted_method = "Music"
             suggested_options = ["Lofi or Nature sounds 🌿", "I want to talk more", "Give me a joke 😄"]
-        elif any(k in msg_clean.lower() for k in ["tell me a story", "solve a puzzle", "give me a puzzle", "comfort me", "continue the story", "show me the answer", "what's the answer", "answer"]):
-            if any(k in msg_clean.lower() for k in ["puzzle", "answer"]):
+        elif any(k in msg_clean.lower() for k in ["tell me a story", "solve a puzzle", "give me a puzzle", "comfort me", "continue the story"]):
+            if "puzzle" in msg_clean.lower():
                 predicted_method = "Puzzle"
-                suggested_options = ["Show me the answer 🧩", "Tell me a story 📖", "I need to talk"]
+                suggested_options = ["Give me another puzzle 🧩", "Tell me a story 📖", "I need to talk"]
             elif any(k in msg_clean.lower() for k in ["comforting story", "comfort me", "aaru-thal"]):
                 predicted_method = "Comfort_Storytelling"
                 suggested_options = ["Tell me another story 📖", "Help me reframe this thought 💭", "Play me a song 🎵"]
