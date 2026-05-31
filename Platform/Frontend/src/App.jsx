@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import * as faceapi from 'face-api.js';
 
 // ==========================================
 // CUSTOM ICONS (SVG inline)
@@ -19,9 +20,10 @@ const Activity = (p) => <Icon {...p}><polyline points="22 12 18 12 15 21 9 3 6 1
 const TrendingDown = (p) => <Icon {...p}><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></Icon>;
 const Brain = (p) => <Icon {...p}><path d="M9.5 2A2.5 2.5 0 0 0 7 4.5v15a2.5 2.5 0 0 0 4.9 1 2.5 2.5 0 0 0 4.2 0 2.5 2.5 0 0 0 4.9-1v-15A2.5 2.5 0 0 0 18.5 2H9.5z"/><path d="M12 2v20"/></Icon>;
 const Database = (p) => <Icon {...p}><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></Icon>;
-const Target = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Icon>;
-const Zap = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
-const Heart = (p) => <Icon {...p}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></Icon>;
+const PhoneCall = (p) => <Icon {...p}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></Icon>;
+const Camera = (p) => <Icon {...p}><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></Icon>;
+const CameraOff = (p) => <Icon {...p}><line x1="2" y1="2" x2="22" y2="22"/><path d="M10.41 4H14l2.5 3h3.5a2 2 0 0 1 2 2v9m-1.55 2.45c-.44.34-1 .55-1.56.55H4a2 2 0 0 1-2-2V9c0-.55.2-1.05.55-1.5M10.5 10.5a3 3 0 0 0 4 4"/></Icon>;
+const Settings = (p) => <Icon {...p}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></Icon>;
 
 // Patient Dashboard Icons
 const BookOpen = (p) => <Icon {...p}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></Icon>;
@@ -36,6 +38,8 @@ const Bell = (p) => <Icon {...p}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-
 const AlertTriangle = (p) => <Icon {...p}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></Icon>;
 const PhoneCall = (p) => <Icon {...p}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></Icon>;
 const Settings = (p) => <Icon {...p}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></Icon>;
+const Volume2 = (p) => <Icon {...p}><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></Icon>;
+const VolumeX = (p) => <Icon {...p}><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></Icon>;
 const PieChart = (p) => <Icon {...p}><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></Icon>;
 const Smile = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></Icon>;
 const Frown = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></Icon>;
@@ -771,19 +775,86 @@ const MediaPlayer = ({ onClose }) => {
   );
 };
 
+// 4.0 Camera Emotion Tracker
+const CameraEmotionTracker = ({ onEmotionDetected, isCameraActive }) => {
+  const videoRef = useRef();
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadModels = async () => {
+      try {
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+          faceapi.nets.faceExpressionNet.loadFromUri('/models')
+        ]);
+        setIsLoaded(true);
+      } catch (err) {
+        console.error("Failed to load face-api models", err);
+      }
+    };
+    if (isCameraActive) loadModels();
+  }, [isCameraActive]);
+
+  useEffect(() => {
+    let interval;
+    if (isCameraActive && isLoaded) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        })
+        .catch(err => console.error("Webcam error:", err));
+      
+      interval = setInterval(async () => {
+        if (videoRef.current && !videoRef.current.paused) {
+          const detections = await faceapi.detectSingleFace(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceExpressions();
+          if (detections) {
+            const emotions = detections.expressions;
+            const dominant = Object.keys(emotions).reduce((a, b) => emotions[a] > emotions[b] ? a : b);
+            onEmotionDetected(dominant);
+          }
+        }
+      }, 3000);
+    } else {
+      if (videoRef.current && videoRef.current.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach(t => t.stop());
+        videoRef.current.srcObject = null;
+      }
+    }
+    return () => clearInterval(interval);
+  }, [isCameraActive, isLoaded, onEmotionDetected]);
+
+  if (!isCameraActive) return null;
+
+  return (
+    <div className="absolute top-24 left-6 z-30 w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg bg-slate-100 hidden md:flex items-center justify-center">
+      {!isLoaded && <div className="text-[10px] font-bold text-slate-400 text-center px-2">Loading AI Vision...</div>}
+      <video ref={videoRef} autoPlay muted className="object-cover w-full h-full" />
+    </div>
+  );
+};
+
 // 4.1 Enhanced Chat Page
 const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
   const [moodSet, setMoodSet] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
   const [showSOS, setShowSOS] = useState(false);
   const [showMediaPlayer, setShowMediaPlayer] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
   const [appointmentPrompted, setAppointmentPrompted] = useState(false);
   const [lastEmotionalMessage, setLastEmotionalMessage] = useState('');
   const chatEndRef = useRef(null);
+
+  // Biofeedback & Camera States
+  const [heartRate, setHeartRate] = useState(72);
+  const [hasTriggeredPanic, setHasTriggeredPanic] = useState(false);
+  const [isCameraActive, setIsCameraActive] = useState(false);
+  const [visualEmotion, setVisualEmotion] = useState('neutral');
   const recognitionRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -830,16 +901,27 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
   const handleMoodSelect = (mood) => {
     setMoodSet(true);
     setMessages([
-      { id: 1, sender: 'keffi', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), text: `Hi ${userData?.name || 'there'}. I see you're feeling a bit ${mood.label.toLowerCase()} today. I'm here for you. Do you want to talk about it?` }
+      { id: 1, sender: 'keffi', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), text: `Hi ${userData?.name || 'there'}. I see you're feeling a bit ${mood.label.toLowerCase()}. I'm here for you. Do you want to talk about it?` }
     ]);
   };
 
-  const handleSend = async (textOverride) => {
-    const textToSend = textOverride || input;
-    if (!textToSend.trim()) return;
-    
+  useEffect(() => {
+    // Biofeedback Panic Trigger
+    if (heartRate > 110 && !hasTriggeredPanic && !isTyping) {
+      setHasTriggeredPanic(true);
+      const panicMsg = "[BIOFEEDBACK ALERT]: My heart is racing at " + heartRate + " BPM. I feel like I'm having a panic attack, I can't breathe!";
+      setMessages(prev => [...prev, { id: Date.now(), sender: 'user', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), text: panicMsg }]);
+      
+      // Auto-trigger the send handler with the panic message
+      handleSend(panicMsg, true);
+    }
+  }, [heartRate, hasTriggeredPanic, isTyping]);
 
-    const newMsg = { id: Date.now(), sender: 'user', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), text: textToSend };
+  const handleSend = async (forcedMessage = null, isPanicTrigger = false) => {
+    const message = forcedMessage || input;
+    if (!message.trim()) return;
+
+    const newMsg = { id: Date.now(), sender: 'user', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), text: message };
     setMessages(prev => [...prev, newMsg]);
     setInput('');
     setGlobalPoints(p => p + 10);
@@ -856,16 +938,20 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
       "Play me a calming song", "Calming song", "I need to vent this out",
       "I want to share more", "I need to talk"
     ];
-    const isButtonClick = BUTTON_OPTIONS.some(opt => textToSend.includes(opt));
-    if (!isButtonClick && textToSend.length > 15) {
-      setLastEmotionalMessage(textToSend);
+    const isButtonClick = BUTTON_OPTIONS.some(opt => message.includes(opt));
+    
+    // Store context for next queries
+    if (!isPanicTrigger && message.length > 10 && !isButtonClick) {
+      setLastEmotionalMessage(message);
     }
     
     try {
+      const payloadContext = isCameraActive && visualEmotion ? `[Visual Face Emotion Detected via Webcam: ${visualEmotion}] ` + lastEmotionalMessage : lastEmotionalMessage;
+      
       const response = await axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/chat', {
-        message: textToSend,
+        message: message,
         patient_id: userData?.patient_id || "P-102",
-        emotional_context: lastEmotionalMessage
+        emotional_context: payloadContext
       });
       
       let botResponse = response.data.reply || "I'm here for you.";
@@ -889,12 +975,15 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
         setTimeout(() => setShowAppointmentPopup(true), 1500);
       }
 
-      if ('speechSynthesis' in window) {
+      if ('speechSynthesis' in window && isVoiceEnabled) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(botResponse.replace(/[#*]/g, ''));
         utterance.lang = 'en-US';
-        utterance.pitch = 0.9;
-        utterance.rate = 0.85;
+        const voices = window.speechSynthesis.getVoices();
+        const preferredVoice = voices.find(v => v.name.includes('Google UK English Female') || v.name.includes('Google US English') || v.name.includes('Female'));
+        if (preferredVoice) utterance.voice = preferredVoice;
+        utterance.pitch = 0.95;
+        utterance.rate = 0.9;
         window.speechSynthesis.speak(utterance);
       }
     } catch (err) {
@@ -944,6 +1033,23 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <button 
+            onClick={() => setIsCameraActive(!isCameraActive)} 
+            className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex ${isCameraActive ? 'bg-[#3A7070] text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
+            title="Toggle Visual Emotion Tracking"
+          >
+            {isCameraActive ? <Camera size={16}/> : <CameraOff size={16}/>}
+          </button>
+          <button 
+            onClick={() => {
+              setIsVoiceEnabled(!isVoiceEnabled);
+              if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+            }} 
+            className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors ${isVoiceEnabled ? 'bg-[#3A7070] text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
+            title="Toggle Voice Therapy"
+          >
+            {isVoiceEnabled ? <Volume2 size={16}/> : <VolumeX size={16}/>}
+          </button>
           <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full bg-slate-50 text-slate-600 font-bold text-xs hover:bg-slate-100 flex items-center gap-2 transition-colors">
             <User size={14}/> Therapist
           </button>
@@ -953,6 +1059,8 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
         </div>
       </div>
       
+      <CameraEmotionTracker isCameraActive={isCameraActive} onEmotionDetected={setVisualEmotion} />
+
       {showSOS && (
         <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 bg-white p-8 rounded-[2rem] shadow-2xl border border-red-100 flex flex-col items-center animate-fade-in w-80 text-center">
           <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 mb-6"><AlertTriangle size={32}/></div>
@@ -976,6 +1084,30 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
           </div>
         </div>
       )}
+
+      {/* Biofeedback Watch Simulator */}
+      <div className="absolute right-6 top-24 z-30 bg-white/80 backdrop-blur-md border border-slate-200 p-4 rounded-3xl shadow-lg flex flex-col items-center gap-2 animate-fade-in hidden md:flex">
+        <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
+          <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
+          Watch Sync
+        </div>
+        <div className={`text-3xl font-black ${heartRate > 100 ? 'text-red-500' : 'text-slate-800'}`}>
+          {heartRate} <span className="text-sm font-bold text-slate-400">BPM</span>
+        </div>
+        <input 
+          type="range" 
+          min="60" 
+          max="140" 
+          value={heartRate} 
+          onChange={(e) => {
+            const val = parseInt(e.target.value);
+            setHeartRate(val);
+            if (val < 100) setHasTriggeredPanic(false); // Reset panic if they calm down
+          }}
+          className="w-24 mt-2 accent-[#3A7070]"
+        />
+        <div className="text-[9px] text-slate-400 mt-1 max-w-[100px] text-center leading-tight">Drag above 110 BPM to trigger panic.</div>
+      </div>
 
       <div className="overflow-y-auto p-6 md:p-8 flex flex-col gap-6 z-10 min-h-0 relative">
         {messages.map(m => {
