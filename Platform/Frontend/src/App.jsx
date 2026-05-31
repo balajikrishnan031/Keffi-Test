@@ -613,6 +613,18 @@ const PatientLogin = ({ setView, setUserData }) => {
 // 3. ADMIN LOGIN
 // ==========================================
 const AdminLogin = ({ setView }) => {
+  const [doctorId, setDoctorId] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = () => {
+    if (doctorId === 'balaji' && password === 'balaji') {
+      setView('admin-dashboard');
+    } else {
+      setError('Invalid ID or Passcode');
+    }
+  };
+
   return (
     <div className={`min-h-screen flex items-center justify-center p-6`}>
       <div className={`max-w-md w-full rounded-[2rem] ${theme.outset} p-10 flex flex-col gap-8`}>
@@ -623,18 +635,37 @@ const AdminLogin = ({ setView }) => {
           <h2 className="text-3xl font-black text-slate-800 mb-3">Clinical Hub</h2>
           <p className="text-slate-500 font-medium text-sm">Strictly for authorized medical personnel.</p>
         </div>
+        
+        {error && (
+          <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl text-center text-sm font-bold">
+            {error}
+          </div>
+        )}
+
         <div className="space-y-5 mt-2">
           <div>
             <label className="block text-sm font-bold text-slate-700 mb-2">Doctor ID / Email</label>
-            <input type="text" placeholder="doctor@keffi.ai" className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
+            <input 
+              type="text" 
+              value={doctorId}
+              onChange={(e) => setDoctorId(e.target.value)}
+              placeholder="Doctor ID" 
+              className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} 
+            />
           </div>
           <div>
              <label className="block text-sm font-bold text-slate-700 mb-2">Secure Passcode</label>
-             <input type="password" placeholder="••••••••" className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
+             <input 
+               type="password" 
+               value={password}
+               onChange={(e) => setPassword(e.target.value)}
+               placeholder="••••••••" 
+               className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} 
+             />
           </div>
         </div>
         <div className="pt-4 space-y-4">
-          <button onClick={() => setView('admin-dashboard')} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Authenticate</button>
+          <button onClick={handleLogin} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Authenticate</button>
           <button onClick={() => setView('landing')} className="w-full text-center text-slate-400 font-bold text-sm hover:text-slate-600 transition-colors">Back to Home</button>
         </div>
       </div>
