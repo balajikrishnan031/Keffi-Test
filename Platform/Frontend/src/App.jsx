@@ -36,8 +36,6 @@ const Gift = (p) => <Icon {...p}><polyline points="20 12 20 22 4 22 4 12"/><rect
 const Search = (p) => <Icon {...p}><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></Icon>;
 const Bell = (p) => <Icon {...p}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></Icon>;
 const AlertTriangle = (p) => <Icon {...p}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></Icon>;
-const PhoneCall = (p) => <Icon {...p}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></Icon>;
-const Settings = (p) => <Icon {...p}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></Icon>;
 const Volume2 = (p) => <Icon {...p}><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></Icon>;
 const VolumeX = (p) => <Icon {...p}><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></Icon>;
 const PieChart = (p) => <Icon {...p}><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></Icon>;
@@ -46,13 +44,13 @@ const Frown = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M16 1
 const Meh = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></Icon>;
 
 const theme = {
-  bg: 'bg-[#F2F9F6]', 
+  bg: 'bg-[#F2F9F6]/25 backdrop-blur-md', 
   textMain: 'text-[#2C5555]',
   textDark: 'text-slate-800',
-  outset: 'bg-white shadow-[0_20px_40px_rgb(58,112,112,0.05)] border border-slate-100/50 rounded-[2rem]',
-  outsetHover: 'hover:shadow-[0_20px_60px_rgb(58,112,112,0.1)] hover:-translate-y-1 transition-all duration-300',
-  btnTeal: 'bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white shadow-[0_10px_20px_rgba(58,112,112,0.3)] hover:shadow-[0_15px_30px_rgba(58,112,112,0.4)] hover:-translate-y-1 transition-all border border-[#8FA989]/30',
-  btnOutline: 'border border-[#3A7070]/20 text-[#3A7070] shadow-[0_10px_20px_rgba(58,112,112,0.05)] hover:border-[#3A7070]/40 hover:shadow-[0_15px_30px_rgba(58,112,112,0.1)] hover:-translate-y-1 transition-all bg-white'
+  outset: 'glass-card rounded-[2rem]',
+  outsetHover: 'glass-card-hover',
+  btnTeal: 'bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white shadow-[0_10px_20px_rgba(58,112,112,0.25)] hover:shadow-[0_15px_30px_rgba(58,112,112,0.35)] hover:-translate-y-0.5 transition-all border border-white/20',
+  btnOutline: 'border border-[#3A7070]/25 text-[#3A7070] shadow-[0_10px_20px_rgba(58,112,112,0.03)] hover:border-[#3A7070]/40 hover:shadow-[0_15px_30px_rgba(58,112,112,0.08)] hover:-translate-y-0.5 transition-all bg-white/45 backdrop-blur-sm'
 };
 const KeffiLogo = ({ size = "w-10 h-10", onClick }) => (
   <div onClick={onClick} className={`${size} relative flex items-center justify-center cursor-pointer group`}>
@@ -168,64 +166,66 @@ const LandingPage = ({ setView }) => {
 
   return (
     <>
-    <div className="min-h-screen bg-[#F2F9F6] overflow-x-hidden text-[#1E293B] font-inter selection:bg-[#3A7070] selection:text-white relative">
+    <div className="min-h-screen bg-transparent overflow-x-hidden text-[#1E293B] font-inter selection:bg-[#3A7070] selection:text-white relative">
       
       <div className="floating-blob w-[600px] h-[600px] bg-[#8FA989] top-[-100px] right-[-200px]"></div>
       <div className="floating-blob w-[800px] h-[800px] bg-[#E6F0F0] top-[800px] left-[-400px]"></div>
       <div className="floating-blob w-[600px] h-[600px] bg-[#3A7070] opacity-10 top-[2200px] right-[-200px]" style={{animationDelay: '2s'}}></div>
 
       {/* 🚀 HEADER */}
-      <nav className="w-full px-6 md:px-12 py-6 flex justify-between items-center max-w-[1400px] mx-auto bg-transparent relative z-50">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView('landing')}>
-          <KeffiLogo size="w-12 h-12" />
-          <span className="text-3xl font-poppins font-bold text-[#2C5555] tracking-tight">Keffi AI</span>
-        </div>
-        
-        <div className="hidden lg:flex items-center gap-10 font-inter text-[16px] font-medium text-slate-500">
-          <button onClick={() => setView('landing')} className="text-slate-900 font-semibold transition-colors">Home</button>
-          <button onClick={() => {document.getElementById('story').scrollIntoView({behavior: 'smooth'})}} className="hover:text-[#3A7070] transition-colors">Our Story</button>
-          <button onClick={() => setView('login-admin')} className="hover:text-[#3A7070] transition-colors">Clinical Hub</button>
-          <button onClick={() => setView('login-patient')} className="hover:text-[#3A7070] transition-colors">Sanctuary</button>
-        </div>
+      <div className="sticky top-4 z-[100] w-full max-w-[1200px] mx-auto px-4">
+        <nav className="w-full px-6 py-4 flex justify-between items-center rounded-2xl glass-nav backdrop-blur-md">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView('landing')}>
+            <KeffiLogo size="w-10 h-10" />
+            <span className="text-2xl font-poppins font-bold text-[#2C5555] tracking-tight">Keffi AI</span>
+          </div>
+          
+          <div className="hidden lg:flex items-center gap-10 font-inter text-[15px] font-semibold text-slate-600">
+            <button onClick={() => setView('landing')} className="text-slate-900 font-bold transition-colors cursor-pointer">Home</button>
+            <button onClick={() => {document.getElementById('story').scrollIntoView({behavior: 'smooth'})}} className="hover:text-[#3A7070] transition-colors cursor-pointer">Our Story</button>
+            <button onClick={() => setView('login-admin')} className="hover:text-[#3A7070] transition-colors cursor-pointer">Clinical Hub</button>
+            <button onClick={() => setView('login-patient')} className="hover:text-[#3A7070] transition-colors cursor-pointer">Sanctuary</button>
+          </div>
 
-        <div className="flex items-center gap-6">
-          <button onClick={() => setView('login-patient')} className="hidden md:block font-inter text-[16px] font-medium text-slate-600 hover:text-[#3A7070] transition-colors">
-            Log in
-          </button>
-          <button onClick={() => setView('login-patient')} className="px-8 py-3.5 rounded-full bg-[#3A7070] text-white font-inter font-semibold text-[16px] shadow-lg shadow-[#3A7070]/30 hover:bg-[#2C5555] hover:scale-105 transition-all">
-            Get Started
-          </button>
-        </div>
-      </nav>
+          <div className="flex items-center gap-6">
+            <button onClick={() => setView('login-patient')} className="hidden md:block font-inter text-[15px] font-semibold text-slate-600 hover:text-[#3A7070] transition-colors cursor-pointer">
+              Log in
+            </button>
+            <button onClick={() => setView('login-patient')} className="px-6 py-2.5 rounded-xl bg-[#3A7070] text-white font-inter font-bold text-[15px] shadow-md shadow-[#3A7070]/20 hover:bg-[#2C5555] hover:scale-105 transition-all cursor-pointer">
+              Get Started
+            </button>
+          </div>
+        </nav>
+      </div>
 
       <main className="relative z-10 w-full">
         
         {/* 🚀 SECTION 1: THE HERO (Gradient Layout) */}
         <section className="w-full min-h-[90vh] flex items-center relative overflow-hidden pt-24 pb-12">
           {/* Soft Blue/Green Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#E6F0F0] via-white to-[#E8F4F8] z-0"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#E6F0F0]/40 via-white/40 to-[#E8F4F8]/40 backdrop-blur-md z-0"></div>
           <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#3A7070]/5 rounded-full blur-[100px] z-0"></div>
           <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[100px] z-0"></div>
 
           <div className="max-w-[1200px] mx-auto px-4 lg:px-12 flex flex-row items-center justify-between gap-2 md:gap-12 lg:gap-20 relative z-10 w-full">
             <div className="flex flex-col items-start text-left w-[60%] md:flex-1 z-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white border border-[#3A7070]/20 text-[#3A7070] font-semibold text-[10px] md:text-sm mb-4 shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full glass-card border border-white/30 text-[#3A7070] font-bold text-[10px] md:text-sm mb-4 shadow-sm">
                 <Sparkles size={16} className="text-[#3A7070]" /> Keffi is an Emotion Engine
               </div>
               <h1 className="font-poppins font-black text-2xl md:text-5xl lg:text-6xl text-slate-900 mb-4 md:mb-6 leading-tight md:leading-[1.1]">
                 Bridging the <br className="block md:hidden" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-blue-600">Invisible Gap</span> <br className="hidden md:block"/>in Mental Healthcare.
               </h1>
               
-              <p className="font-inter text-xs md:text-lg text-slate-600 leading-relaxed md:leading-relaxed max-w-lg mb-6">
+              <p className="font-inter text-xs md:text-lg text-slate-600 leading-relaxed md:leading-relaxed max-w-lg mb-6 font-medium">
                 Keffi is your Emotionally Intelligent AI Companion. While traditional therapy supports you for one hour a week, Keffi bridges the 167-hour gap. It deeply understands 96 emotional states, safely remembers your journey, and delivers personalized, human-like therapeutic support exactly when you need it. A safe sanctuary where advanced AI meets profound empathy.
               </p>
               
               <div className="flex flex-col sm:flex-row items-start gap-3 w-full sm:w-auto mt-2">
-                <button onClick={() => setView('login-patient')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white font-inter font-bold text-xs md:text-lg shadow-[0_10px_20px_rgba(58,112,112,0.3)] md:shadow-[0_20px_40px_rgba(58,112,112,0.4)] hover:-translate-y-1 transition-all overflow-hidden flex items-center justify-center gap-2 md:gap-3">
+                <button onClick={() => setView('login-patient')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white font-inter font-bold text-xs md:text-lg shadow-[0_10px_20px_rgba(58,112,112,0.25)] md:shadow-[0_20px_40px_rgba(58,112,112,0.35)] hover:-translate-y-0.5 transition-all overflow-hidden flex items-center justify-center gap-2 md:gap-3 cursor-pointer">
                   <div className="absolute inset-0 bg-white/20 blur-md transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                   🌟 <span className="hidden md:inline">Enter Keffi Chat</span><span className="inline md:hidden">Chat</span> <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform"/>
                 </button>
-                <button onClick={() => setView('login-admin')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-white border border-[#3A7070]/10 text-[#3A7070] font-inter font-bold text-xs md:text-lg shadow-sm hover:shadow-md hover:border-[#3A7070]/30 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 md:gap-3">
+                <button onClick={() => setView('login-admin')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-white/40 backdrop-blur-sm border border-white/30 text-[#3A7070] font-inter font-bold text-xs md:text-lg shadow-sm hover:shadow-md hover:border-[#3A7070]/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 md:gap-3 cursor-pointer">
                   🩺 <span className="hidden md:inline">Doctor / Clinical Hub</span><span className="inline md:hidden">Clinic</span>
                 </button>
               </div>
@@ -233,12 +233,12 @@ const LandingPage = ({ setView }) => {
             
             <div className="flex justify-end relative w-[40%] md:flex-1 max-w-[600px] transform scale-[0.45] md:scale-100 origin-right md:origin-center z-10">
                <div className="relative w-80 h-80 flex items-center justify-center">
-                  <div className="absolute inset-0 bg-[#3A7070] rounded-full blur-[80px] opacity-30 animate-pulse"></div>
-                  <div className="absolute inset-4 bg-emerald-400 rounded-full blur-[40px] opacity-20"></div>
+                  <div className="absolute inset-0 bg-[#3A7070] rounded-full blur-[80px] opacity-25 animate-pulse"></div>
+                  <div className="absolute inset-4 bg-emerald-400 rounded-full blur-[40px] opacity-15"></div>
                   
-                  <div className="relative z-10 w-56 h-56 rounded-full bg-gradient-to-br from-[#E6F0F0] to-white shadow-[inset_-10px_-10px_20px_rgba(0,0,0,0.05),_inset_10px_10px_20px_rgba(255,255,255,0.8),_0_20px_40px_rgba(58,112,112,0.4)] flex items-center justify-center border-[8px] border-white group">
-                     <div className="absolute inset-4 bg-[#3A7070] rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-700"></div>
-                     <Star size={96} className="text-[#3A7070] fill-[#3A7070] relative z-10 animate-[spin_10s_linear_infinite] drop-shadow-[0_15px_15px_rgba(58,112,112,0.6)]" />
+                  <div className="relative z-10 w-56 h-56 rounded-full bg-white/20 backdrop-blur-md shadow-[inset_-10px_-10px_20px_rgba(255,255,255,0.2),_inset_10px_10px_20px_rgba(255,255,255,0.4),_0_20px_40px_rgba(58,112,112,0.2)] flex items-center justify-center border-[8px] border-white/50 group">
+                     <div className="absolute inset-4 bg-[#3A7070] rounded-full blur-xl opacity-15 group-hover:opacity-30 transition-opacity duration-700"></div>
+                     <Star size={96} className="text-[#3A7070] fill-[#3A7070] relative z-10 animate-[spin_12s_linear_infinite] drop-shadow-[0_15px_15px_rgba(58,112,112,0.4)]" />
                   </div>
                   
                   {/* Orbiting elements */}
@@ -250,31 +250,33 @@ const LandingPage = ({ setView }) => {
         </section>
 
         {/* 🚀 SECTION 2: THE PROBLEM (Story Zig-Zag) */}
-        <section id="story" className="scroll-3d w-full py-32 max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row-reverse items-center gap-24 relative transition-all duration-75 ease-out">
-           <div className="absolute top-10 left-0 text-[300px] font-poppins font-bold text-slate-100 opacity-50 z-[-1] leading-none select-none">01</div>
-          
-           <div className="flex-1 flex justify-center lg:justify-start">
-             <img src="https://illustrations.popsy.co/amber/surreal-hourglass.svg" alt="Hourglass Drawing" className="w-full max-w-[500px] drop-shadow-xl" />
-           </div>
+        <section id="story" className="scroll-3d w-full py-32 bg-[#F2F9F6]/35 backdrop-blur-md border-y border-white/20 transition-all duration-75 ease-out">
+          <div className="max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row-reverse items-center gap-24 relative">
+             <div className="absolute top-10 left-0 text-[300px] font-poppins font-bold text-slate-100 opacity-50 z-[-1] leading-none select-none">01</div>
+            
+             <div className="flex-1 flex justify-center lg:justify-start">
+               <img src="https://illustrations.popsy.co/amber/surreal-hourglass.svg" alt="Hourglass Drawing" className="w-full max-w-[500px] drop-shadow-xl" />
+             </div>
 
-           <div className="flex-1 flex flex-col items-start text-left">
-            <h2 className="h2-title font-poppins text-slate-900 mb-8">The Silent Crisis We Ignore.</h2>
-            <div className="space-y-6">
-              <p className="p-text">
-                Therapy typically happens for one hour a week. But emotional struggles don't follow a schedule. What happens during the remaining 167 hours? Patients are left alone to fight their anxiety, burnout, and depression in silence.
-              </p>
-              <p className="p-text">
-                Healing is incredibly hard, and it isn't linear. Due to stigma, high costs, and a lack of immediate support, nearly 60% of patients drop out of treatment before fully recovering. 
-              </p>
-              <p className="p-text">
-                When they drop out, relapses go completely undetected. Doctors have no proactive way to monitor these at-risk patients outside the clinic walls. This is the gap Keffi AI was built to close.
-              </p>
+             <div className="flex-1 flex flex-col items-start text-left">
+              <h2 className="h2-title font-poppins text-slate-900 mb-8">The Silent Crisis We Ignore.</h2>
+              <div className="space-y-6">
+                <p className="p-text">
+                  Therapy typically happens for one hour a week. But emotional struggles don't follow a schedule. What happens during the remaining 167 hours? Patients are left alone to fight their anxiety, burnout, and depression in silence.
+                </p>
+                <p className="p-text">
+                  Healing is incredibly hard, and it isn't linear. Due to stigma, high costs, and a lack of immediate support, nearly 60% of patients drop out of treatment before fully recovering. 
+                </p>
+                <p className="p-text">
+                  When they drop out, relapses go completely undetected. Doctors have no proactive way to monitor these at-risk patients outside the clinic walls. This is the gap Keffi AI was built to close.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* 🚀 NEW SECTION 3: HOW KEFFI WORKS (Timeline Layout) */}
-        <section className="scroll-3d w-full py-32 bg-white border-y border-slate-100 transition-all duration-75 ease-out">
+        <section className="scroll-3d w-full py-32 bg-white/30 backdrop-blur-md border-y border-white/20 transition-all duration-75 ease-out">
            <div className="max-w-[1200px] mx-auto px-6 lg:px-12 text-center">
              <h2 className="h2-title font-poppins text-slate-900 mb-20">How Keffi Heals.</h2>
              
@@ -316,98 +318,100 @@ const LandingPage = ({ setView }) => {
         </section>
 
         {/* 🚀 NEW SECTION 4: THE SCIENCE (Grid Layout) */}
-        <section className="scroll-3d w-full py-32 max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-24 relative transition-all duration-75 ease-out">
-          <div className="absolute top-10 right-10 text-[300px] font-poppins font-bold text-slate-100 opacity-50 z-[-1] leading-none select-none">02</div>
-          
-          <div className="flex-1 grid grid-cols-2 gap-6 relative">
-            <div className="absolute -inset-4 bg-gradient-to-tr from-[#3A7070]/10 to-[#8FA989]/10 rounded-[3rem] blur-xl z-[-1]"></div>
-            <div className="bg-white p-8 rounded-3xl shadow-lg flex flex-col gap-4 transform translate-y-8">
-              <div className="w-12 h-12 bg-indigo-50 text-indigo-500 rounded-full flex items-center justify-center"><Activity size={24}/></div>
-              <h4 className="font-poppins font-bold text-lg text-slate-800">96-State BERT</h4>
-              <p className="text-sm text-slate-500">Not just "sad". Keffi detects complex states like Atypical Depression.</p>
+        <section className="scroll-3d w-full py-32 bg-[#F2F9F6]/35 backdrop-blur-md border-y border-white/20 transition-all duration-75 ease-out">
+          <div className="max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-24 relative">
+            <div className="absolute top-10 right-10 text-[300px] font-poppins font-bold text-slate-100 opacity-50 z-[-1] leading-none select-none">02</div>
+            
+            <div className="flex-1 grid grid-cols-2 gap-6 relative">
+              <div className="absolute -inset-4 bg-gradient-to-tr from-[#3A7070]/10 to-[#8FA989]/10 rounded-[3rem] blur-xl z-[-1]"></div>
+              <div className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 transform translate-y-8">
+                <div className="w-12 h-12 bg-[#3A7070]/10 text-[#3A7070] rounded-full flex items-center justify-center"><Activity size={24}/></div>
+                <h4 className="font-poppins font-bold text-lg text-slate-800">96-State BERT</h4>
+                <p className="text-sm text-slate-500 font-medium">Not just "sad". Keffi detects complex states like Atypical Depression.</p>
+              </div>
+              <div className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4">
+                <div className="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-full flex items-center justify-center"><Database size={24}/></div>
+                <h4 className="font-poppins font-bold text-lg text-slate-800">Pinecone Memory</h4>
+                <p className="text-sm text-slate-500 font-medium">Vector memory ensures Keffi never forgets your past triggers or progress.</p>
+              </div>
+              <div className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 transform translate-y-8">
+                <div className="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-full flex items-center justify-center"><Target size={24}/></div>
+                <h4 className="font-poppins font-bold text-lg text-slate-800">Dynamic MHQ</h4>
+                <p className="text-sm text-slate-500 font-medium">Silent, continuous evaluation of your Mental Health Quotient during chats.</p>
+              </div>
+              <div className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4">
+                <div className="w-12 h-12 bg-rose-500/10 text-rose-600 rounded-full flex items-center justify-center"><Zap size={24}/></div>
+                <h4 className="font-poppins font-bold text-lg text-slate-800">7-Mode Engine</h4>
+                <p className="text-sm text-slate-500 font-medium">Switches seamlessly between active listening, CBT reframing, and crisis mode.</p>
+              </div>
             </div>
-            <div className="bg-white p-8 rounded-3xl shadow-lg flex flex-col gap-4">
-              <div className="w-12 h-12 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center"><Database size={24}/></div>
-              <h4 className="font-poppins font-bold text-lg text-slate-800">Pinecone Memory</h4>
-              <p className="text-sm text-slate-500">Vector memory ensures Keffi never forgets your past triggers or progress.</p>
-            </div>
-            <div className="bg-white p-8 rounded-3xl shadow-lg flex flex-col gap-4 transform translate-y-8">
-              <div className="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center"><Target size={24}/></div>
-              <h4 className="font-poppins font-bold text-lg text-slate-800">Dynamic MHQ</h4>
-              <p className="text-sm text-slate-500">Silent, continuous evaluation of your Mental Health Quotient during chats.</p>
-            </div>
-            <div className="bg-white p-8 rounded-3xl shadow-lg flex flex-col gap-4">
-              <div className="w-12 h-12 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center"><Zap size={24}/></div>
-              <h4 className="font-poppins font-bold text-lg text-slate-800">7-Mode Engine</h4>
-              <p className="text-sm text-slate-500">Switches seamlessly between active listening, CBT reframing, and crisis mode.</p>
-            </div>
-          </div>
 
-          <div className="flex-1 flex flex-col items-start text-left">
-            <h2 className="h2-title font-poppins text-slate-900 mb-8">An Engine Built on Empathy.</h2>
-            <div className="space-y-6">
-              <p className="p-text">
-                Behind the calming interface lies a robust Triple-AI Architecture. We don't rely on simple prompts. Keffi is powered by a custom-trained clinical classification system that understands the deepest nuances of human emotion.
-              </p>
-              <p className="p-text">
-                By combining semantic search with real-time generative capabilities, Keffi replaces tedious weekly assessment forms with natural, empathetic dialogue. It learns your unique psychological profile to offer deeply personalized care.
-              </p>
+            <div className="flex-1 flex flex-col items-start text-left">
+              <h2 className="h2-title font-poppins text-slate-900 mb-8">An Engine Built on Empathy.</h2>
+              <div className="space-y-6">
+                <p className="p-text">
+                  Behind the calming interface lies a robust Triple-AI Architecture. We don't rely on simple prompts. Keffi is powered by a custom-trained clinical classification system that understands the deepest nuances of human emotion.
+                </p>
+                <p className="p-text">
+                  By combining semantic search with real-time generative capabilities, Keffi replaces tedious weekly assessment forms with natural, empathetic dialogue. It learns your unique psychological profile to offer deeply personalized care.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* 🚀 SECTION 5: DUAL PLATFORM (True Split-Screen) */}
-        <section className="scroll-3d w-full flex flex-col lg:flex-row mt-20 border-y border-slate-200 transition-all duration-75 ease-out">
+        <section className="scroll-3d w-full flex flex-col lg:flex-row mt-20 border-y border-white/20 transition-all duration-75 ease-out bg-white/20 backdrop-blur-md">
            {/* Left Side: Patient (Light) */}
-           <div className="flex-1 bg-[#F2F9F6] p-16 lg:p-24 flex flex-col items-center text-center">
+           <div className="flex-1 bg-[#F2F9F6]/20 p-16 lg:p-24 flex flex-col items-center text-center border-r border-white/10">
              <div className="h-48 flex items-end justify-center mb-10">
                <img src="https://illustrations.popsy.co/amber/success.svg" alt="Patient Sanctuary" className="h-full drop-shadow-xl" />
              </div>
              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Patients.<br/>The Sanctuary.</h2>
-             <p className="p-text text-slate-600 mb-10 max-w-sm">
+             <p className="p-text text-slate-600 mb-10 max-w-sm font-medium">
                A completely judgment-free zone to vent, track your shifting moods, and receive real-time emotional first-aid without having to wait weeks for an appointment.
              </p>
-             <button onClick={() => setView('login-patient')} className={`mt-auto px-10 py-4 rounded-2xl font-inter font-bold text-lg ${theme.btnTeal}`}>
+             <button onClick={() => setView('login-patient')} className={`mt-auto px-10 py-4 rounded-2xl font-inter font-bold text-lg ${theme.btnTeal} cursor-pointer`}>
                Keffi
              </button>
            </div>
 
            {/* Right Side: Doctor (Light) */}
-           <div className="flex-1 bg-white p-16 lg:p-24 flex flex-col items-center text-center border-l border-slate-100">
+           <div className="flex-1 bg-white/15 p-16 lg:p-24 flex flex-col items-center text-center border-l border-white/10">
              <div className="h-48 flex items-end justify-center mb-10">
                <img src="https://illustrations.popsy.co/amber/video-call.svg" alt="Clinical Hub" className="h-full drop-shadow-2xl" />
              </div>
              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Clinicians.<br/>The Hub.</h2>
-             <p className="p-text text-slate-600 mb-10 max-w-sm">
+             <p className="p-text text-slate-600 mb-10 max-w-sm font-medium">
                A predictive dashboard giving you a real-time view of your entire roster's emotional trajectory. If a patient shows signs of relapse, Keffi alerts you instantly.
              </p>
-             <button onClick={() => setView('login-admin')} className={`mt-auto px-10 py-4 rounded-2xl font-inter font-bold text-lg ${theme.btnOutline}`}>
+             <button onClick={() => setView('login-admin')} className={`mt-auto px-10 py-4 rounded-2xl font-inter font-bold text-lg ${theme.btnOutline} cursor-pointer`}>
                Access Hub
              </button>
            </div>
         </section>
 
         {/* 🚀 SECTION 6: SAFETY (Light Mode Alert Block) */}
-        <section className="scroll-3d w-full bg-[#F2F9F6] py-32 relative overflow-hidden border-y border-red-500/10 transition-all duration-75 ease-out">
+        <section className="scroll-3d w-full bg-[#F2F9F6]/30 backdrop-blur-md py-32 relative overflow-hidden border-y border-red-500/20 transition-all duration-75 ease-out">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-500/5 rounded-full blur-[120px]"></div>
           <div className="max-w-[800px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
              <div className="w-24 h-24 mb-10 text-red-500 animate-pulse"><Shield size={96} strokeWidth={1} /></div>
              <h2 className="h2-title font-poppins text-slate-900 mb-8">Clinical Safety First. Always.</h2>
-             <p className="p-text text-slate-600 max-w-3xl">
+             <p className="p-text text-slate-600 max-w-3xl font-medium">
                Built with strict WHO-compliant crisis protocols and the n8n automation engine, Keffi continuously monitors conversations for high-risk signals. In moments of severe distress or suicidal ideation, it overrides AI independence and instantly triggers an SOS alert to emergency contacts and your clinical supervisor. 
                <br/><br/>
-               <span className="text-red-500 font-semibold">We prioritize human safety over everything else.</span>
+               <span className="text-red-500 font-bold">We prioritize human safety over everything else.</span>
              </p>
           </div>
         </section>
 
         {/* 🚀 FINAL CTA */}
-        <section className="w-full py-32 bg-[#F2F9F6] flex flex-col items-center text-center relative overflow-hidden">
-          <div className="w-full max-w-[1000px] mx-auto bg-gradient-to-br from-[#E6F0F0] to-[#FDFCF8] border border-slate-200 rounded-[3rem] p-16 lg:p-24 shadow-xl relative overflow-hidden">
+        <section className="w-full py-32 bg-transparent flex flex-col items-center text-center relative overflow-hidden">
+          <div className="w-full max-w-[1000px] mx-auto glass-panel border border-white/35 rounded-[3rem] p-16 lg:p-24 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#3A7070]/5 rounded-full blur-[80px]"></div>
             <h2 className="h1-title font-poppins text-slate-900 mb-6 relative z-10">Ready to Heal?</h2>
-            <p className="p-text text-slate-600 mb-12 relative z-10 max-w-lg mx-auto">Whether you are seeking support or providing care, Keffi AI is here to bridge the gap.</p>
-            <button onClick={() => setView('login-patient')} className={`px-12 py-5 rounded-2xl font-inter font-bold text-xl relative z-10 ${theme.btnTeal}`}>
+            <p className="p-text text-slate-600 mb-12 relative z-10 max-w-lg mx-auto font-medium">Whether you are seeking support or providing care, Keffi AI is here to bridge the gap.</p>
+            <button onClick={() => setView('login-patient')} className={`px-12 py-5 rounded-2xl font-inter font-bold text-xl relative z-10 ${theme.btnTeal} cursor-pointer`}>
               Keffi
             </button>
           </div>
@@ -415,7 +419,7 @@ const LandingPage = ({ setView }) => {
       </main>
 
       {/* 🚀 ULTIMATE FOOTER */}
-      <footer className="w-full relative z-10 bg-[#E6F0F0] text-slate-900 overflow-hidden mt-10 border-t border-[#3A7070]/10">
+      <footer className="w-full relative z-10 bg-[#E6F0F0]/30 backdrop-blur-md text-slate-900 overflow-hidden mt-10 border-t border-white/20">
         {/* Glow Effects */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-[#3A7070]/50 to-transparent"></div>
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[100px] pointer-events-none"></div>
@@ -426,14 +430,14 @@ const LandingPage = ({ setView }) => {
             
             {/* Column 1: Brand & Emergency */}
             <div className="col-span-1 md:col-span-5 flex flex-col items-start">
-              <div className="flex items-center gap-3 mb-8 bg-white/60 px-6 py-4 rounded-2xl border border-white backdrop-blur-sm w-fit shadow-sm">
+              <div className="flex items-center gap-3 mb-8 glass-card px-6 py-4 rounded-2xl border border-white/30 backdrop-blur-sm w-fit shadow-sm">
                  <Star size={32} className="text-[#3A7070] fill-[#3A7070]" />
                  <span className="text-3xl font-poppins font-bold tracking-tight text-[#2C5555]">Keffi AI</span>
               </div>
-              <p className="font-inter text-slate-600 text-lg mb-8 max-w-sm leading-relaxed">
+              <p className="font-inter text-slate-600 text-lg mb-8 max-w-sm leading-relaxed font-semibold">
                 Bridging the invisible gap in mental healthcare with continuous, empathetic AI tracking.
               </p>
-              <div className="p-6 rounded-2xl bg-white/80 border border-red-200 backdrop-blur-sm w-full max-w-md shadow-sm">
+              <div className="p-6 rounded-2xl bg-red-500/10 border border-red-200/35 backdrop-blur-sm w-full max-w-md shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
                   <Shield size={20} className="text-red-500" />
                   <h4 className="font-poppins font-semibold text-red-600 uppercase tracking-widest text-xs">Emergency Support</h4>
@@ -514,12 +518,12 @@ const PatientLogin = ({ setView, setUserData }) => {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-6 md:p-10`}>
-      <div className={`max-w-5xl w-full min-h-[700px] lg:h-[700px] rounded-[2.5rem] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] flex flex-col md:flex-row overflow-hidden border border-slate-100`}>
+    <div className={`min-h-screen flex items-center justify-center p-6 md:p-10 bg-transparent`}>
+      <div className={`max-w-5xl w-full min-h-[700px] lg:h-[700px] rounded-[2.5rem] glass-panel flex flex-col md:flex-row overflow-hidden border border-white/20`}>
         {/* Left Image Side */}
-        <div className="hidden md:flex md:w-5/12 relative overflow-hidden bg-[#E6F0F0] rounded-l-[2.5rem] items-center justify-center p-8">
+        <div className="hidden md:flex md:w-5/12 relative overflow-hidden bg-[#E6F0F0]/25 rounded-l-[2.5rem] items-center justify-center p-8 border-r border-white/20">
            <DynamicLoginIllustration step={step} className="w-full h-full max-w-[300px] object-contain relative z-10 drop-shadow-2xl transition-all duration-500" />
-           <div className="absolute inset-0 bg-gradient-to-t from-[#2C5555]/40 via-transparent to-transparent flex flex-col justify-end p-12 text-[#1E293B] z-20">
+           <div className="absolute inset-0 bg-gradient-to-t from-[#2C5555]/30 via-transparent to-transparent flex flex-col justify-end p-12 text-[#1E293B] z-20">
               <h2 className="text-3xl font-black mb-3">
                 {step === 1 && "Secure Entry"}
                 {step === 2 && "Your Sanctuary"}
@@ -532,10 +536,10 @@ const PatientLogin = ({ setView, setUserData }) => {
         </div>
         
         {/* Right Form Side */}
-        <div className="w-full md:w-7/12 p-10 md:p-16 flex flex-col justify-center bg-white">
+        <div className="w-full md:w-7/12 p-10 md:p-16 flex flex-col justify-center bg-white/25 backdrop-blur-sm">
           <div className="flex justify-start gap-3 mb-10">
             {[1,2].map(i => (
-              <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === step ? 'w-12 bg-[#3A7070]' : 'w-4 bg-slate-200'}`}></div>
+              <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === step ? 'w-12 bg-[#3A7070]' : 'w-4 bg-white/40'}`}></div>
             ))}
           </div>
 
@@ -548,11 +552,11 @@ const PatientLogin = ({ setView, setUserData }) => {
               <div className="space-y-5">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Mobile Number</label>
-                  <input type="tel" placeholder="+91 98765 43210" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] focus:ring-4 focus:ring-[#3A7070]/10 transition-all`} />
+                  <input type="tel" placeholder="+91 98765 43210" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                  <input type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] focus:ring-4 focus:ring-[#3A7070]/10 transition-all`} />
+                  <input type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
                 </div>
               </div>
               {error && <div className="text-red-500 text-sm font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
@@ -572,22 +576,22 @@ const PatientLogin = ({ setView, setUserData }) => {
               <div className="space-y-5">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Preferred Name</label>
-                  <input type="text" placeholder="What should we call you?" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] focus:ring-4 focus:ring-[#3A7070]/10 transition-all`} />
+                  <input type="text" placeholder="What should we call you?" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
                 </div>
                 <div className="flex gap-5">
                   <div className="w-1/3">
                     <label className="block text-sm font-bold text-slate-700 mb-2">Age</label>
-                    <input type="number" placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] focus:ring-4 focus:ring-[#3A7070]/10 transition-all`} />
+                    <input type="number" placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
                   </div>
                   <div className="w-2/3">
                     <label className="block text-sm font-bold text-slate-700 mb-2">Date of Birth</label>
-                    <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-600 font-medium text-base focus:border-[#3A7070] focus:ring-4 focus:ring-[#3A7070]/10 transition-all`} />
+                    <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-600 font-medium text-base focus:border-[#3A7070] transition-all`} />
                   </div>
                 </div>
                 <div className="flex gap-5">
                   <div className="w-1/2">
                     <label className="block text-sm font-bold text-slate-700 mb-2">Gender</label>
-                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] focus:ring-4 focus:ring-[#3A7070]/10 transition-all appearance-none`}>
+                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all appearance-none`}>
                       <option value="" disabled>Select</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -597,7 +601,7 @@ const PatientLogin = ({ setView, setUserData }) => {
                   </div>
                   <div className="w-1/2">
                     <label className="block text-sm font-bold text-slate-700 mb-2">Location</label>
-                    <input type="text" placeholder="City / District" value={formData.place} onChange={e => setFormData({...formData, place: e.target.value})} className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] focus:ring-4 focus:ring-[#3A7070]/10 transition-all`} />
+                    <input type="text" placeholder="City / District" value={formData.place} onChange={e => setFormData({...formData, place: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
                   </div>
                 </div>
               </div>
@@ -630,18 +634,18 @@ const AdminLogin = ({ setView }) => {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-6`}>
-      <div className={`max-w-md w-full rounded-[2rem] ${theme.outset} p-10 flex flex-col gap-8`}>
+    <div className={`min-h-screen flex items-center justify-center p-6 bg-transparent`}>
+      <div className={`max-w-md w-full rounded-[2rem] glass-panel p-10 flex flex-col gap-8 border border-white/20`}>
         <div className="flex justify-center mb-2">
-          <div className={`w-20 h-20 rounded-2xl bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070]`}><Shield size={40} /></div>
+          <div className={`w-20 h-20 rounded-2xl glass-card flex items-center justify-center text-[#3A7070] border border-white/20`}><Shield size={40} /></div>
         </div>
         <div className="text-center">
           <h2 className="text-3xl font-black text-slate-800 mb-3">Clinical Hub</h2>
-          <p className="text-slate-500 font-medium text-sm">Strictly for authorized medical personnel.</p>
+          <p className="text-slate-500 font-bold text-sm">Strictly for authorized medical personnel.</p>
         </div>
         
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl text-center text-sm font-bold">
+          <div className="p-3 bg-red-500/10 border border-red-200/30 text-red-600 rounded-xl text-center text-sm font-bold backdrop-blur-sm">
             {error}
           </div>
         )}
@@ -654,7 +658,7 @@ const AdminLogin = ({ setView }) => {
               value={doctorId}
               onChange={(e) => setDoctorId(e.target.value)}
               placeholder="Doctor ID" 
-              className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} 
+              className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} 
             />
           </div>
           <div>
@@ -664,7 +668,7 @@ const AdminLogin = ({ setView }) => {
                value={password}
                onChange={(e) => setPassword(e.target.value)}
                placeholder="••••••••" 
-               className={`w-full p-4 rounded-xl bg-slate-50 border border-slate-200 outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} 
+               className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} 
              />
           </div>
         </div>
@@ -717,7 +721,7 @@ const DailyMoodCheckIn = ({ patientId, onComplete }) => {
       <h2 className="text-3xl font-black text-slate-800 mb-4 text-center">
         Welcome to your Sanctuary.
       </h2>
-      <p className="text-lg text-slate-500 mb-12 text-center">
+      <p className="text-lg text-slate-600 mb-12 text-center font-semibold">
         Before we begin, how is your mind feeling today?
       </p>
       
@@ -727,7 +731,7 @@ const DailyMoodCheckIn = ({ patientId, onComplete }) => {
             key={m.score} 
             disabled={isSubmitting}
             onClick={() => handleMoodSelect(m)} 
-            className={`p-6 md:p-8 rounded-[2rem] bg-white border-2 border-slate-100 shadow-sm flex flex-col items-center gap-4 transition-all duration-300 hover:-translate-y-1 ${m.hover}`}
+            className={`p-6 md:p-8 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:bg-white/60 hover:border-white/40 cursor-pointer`}
           >
             <span className="text-5xl">{m.emoji}</span>
             <span className={`font-bold text-base ${m.color}`}>{m.label}</span>
@@ -745,31 +749,63 @@ const parseMessageText = (text) => {
 };
 
 const MediaPlayer = ({ onClose }) => {
+  const tracks = [
+    { title: 'Ambient River Flow', desc: 'Soothing stream water', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3' },
+    { title: 'Deep Meditation Ambient', desc: 'Slow synth waves', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+    { title: 'Calm Horizon Melodies', desc: 'Healing keyboards & pad', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
+    { title: 'Tranquil Sanctuary', desc: 'Gentle acoustic ambient', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' }
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const currentTrack = tracks[currentIndex];
+
   return (
-    <div className="absolute inset-0 z-[70] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-      <div className="w-full max-w-sm bg-white rounded-[2.5rem] p-8 shadow-2xl flex flex-col items-center relative overflow-hidden">
-         <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#8FA989]/20 rounded-full blur-2xl"></div>
-         <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#3A7070]/20 rounded-full blur-2xl"></div>
-         
-         <div className="w-48 h-48 rounded-full bg-gradient-to-tr from-slate-100 to-white border-4 border-slate-50 shadow-[0_10px_30px_rgba(0,0,0,0.1)] flex items-center justify-center animate-[spin_8s_linear_infinite] mb-6 relative z-10">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#3A7070] to-[#2C5555] rounded-full shadow-inner flex items-center justify-center">
-              <div className="w-4 h-4 bg-white rounded-full"></div>
-            </div>
-            {/* Record grooves */}
-            <div className="absolute inset-4 rounded-full border border-slate-200/50"></div>
-            <div className="absolute inset-8 rounded-full border border-slate-200/50"></div>
-            <div className="absolute inset-12 rounded-full border border-slate-200/50"></div>
-         </div>
-         <h3 className="text-xl font-black text-slate-800 mb-1 relative z-10">Ambient River Flow</h3>
-         <p className="text-sm text-[#8FA989] font-bold tracking-widest uppercase mb-8 relative z-10">Keffi Calming Audio</p>
-         
-         <audio controls autoPlay className="w-full mb-6 relative z-10 opacity-80 hover:opacity-100 transition-opacity">
-            {/* Using a reliable free sample audio for demonstration */}
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" type="audio/mpeg" />
-            Your browser does not support the audio element.
-         </audio>
-         
-         <button onClick={onClose} className="w-full py-4 rounded-2xl bg-white border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 hover:text-red-500 transition-all relative z-10">Close Player</button>
+    <div className="absolute inset-0 z-[70] bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+      <div className="w-full max-w-md glass-panel border border-white/30 rounded-[2.5rem] p-8 shadow-2xl flex flex-col items-center relative overflow-hidden">
+        <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#8FA989]/20 rounded-full blur-2xl"></div>
+        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#3A7070]/20 rounded-full blur-2xl"></div>
+        
+        {/* Record/Vinyl Animation */}
+        <div className="w-40 h-40 rounded-full bg-gradient-to-tr from-slate-100 to-white border-4 border-slate-50 shadow-[0_10px_30px_rgba(0,0,0,0.1)] flex items-center justify-center animate-[spin_8s_linear_infinite] mb-6 relative z-10">
+          <div className="w-12 h-12 bg-gradient-to-br from-[#3A7070] to-[#2C5555] rounded-full shadow-inner flex items-center justify-center">
+            <div className="w-4 h-4 bg-white rounded-full"></div>
+          </div>
+          <div className="absolute inset-4 rounded-full border border-slate-200/50"></div>
+          <div className="absolute inset-8 rounded-full border border-slate-200/50"></div>
+          <div className="absolute inset-12 rounded-full border border-slate-200/50"></div>
+        </div>
+
+        <h3 className="text-xl font-black text-slate-800 mb-1 relative z-10 text-center">{currentTrack.title}</h3>
+        <p className="text-sm text-[#8FA989] font-bold tracking-widest uppercase mb-4 relative z-10 text-center">{currentTrack.desc}</p>
+        
+        {/* Audio element with key to force reload and autoplay on source change */}
+        <audio key={currentTrack.url} controls autoPlay className="w-full mb-6 relative z-10 opacity-80 hover:opacity-100 transition-opacity">
+          <source src={currentTrack.url} type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+
+        {/* Track Playlist Selector */}
+        <div className="w-full mb-6 z-10 max-h-40 overflow-y-auto space-y-2 pr-1">
+          {tracks.map((track, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all text-left cursor-pointer ${
+                idx === currentIndex
+                  ? 'border-[#3A7070] bg-[#3A7070]/10 text-[#3A7070] font-bold'
+                  : 'border-white/20 bg-white/20 hover:bg-white/40 text-slate-700'
+              }`}
+            >
+              <div className="flex flex-col">
+                <span className="text-xs font-bold leading-tight">{track.title}</span>
+                <span className="text-[10px] opacity-75">{track.desc}</span>
+              </div>
+              <span className="text-[10px] font-bold">{idx === currentIndex ? '▶ Playing' : 'Select'}</span>
+            </button>
+          ))}
+        </div>
+        
+        <button onClick={onClose} className="w-full py-4 rounded-2xl bg-white/40 backdrop-blur-sm border border-white/30 text-slate-700 font-bold hover:bg-white/60 hover:text-red-500 transition-all relative z-10 cursor-pointer">Close Player</button>
       </div>
     </div>
   );
@@ -944,6 +980,13 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
     if (!isPanicTrigger && message.length > 10 && !isButtonClick) {
       setLastEmotionalMessage(message);
     }
+
+    // Auto-trigger music player immediately if user requests song/music
+    const lowerMessage = message.toLowerCase();
+    const isMusicRequest = lowerMessage.includes('song') || lowerMessage.includes('music') || lowerMessage.includes('audio') || lowerMessage.includes('soundscape') || lowerMessage.includes('ambient');
+    if (isMusicRequest) {
+      setTimeout(() => setShowMediaPlayer(true), 500);
+    }
     
     try {
       const payloadContext = isCameraActive && visualEmotion ? `[Visual Face Emotion Detected via Webcam: ${visualEmotion}] ` + lastEmotionalMessage : lastEmotionalMessage;
@@ -1019,15 +1062,15 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
   }
 
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] h-full w-full relative animate-fade-in mx-auto overflow-hidden">
-      <div className="flex justify-between items-center px-6 md:px-8 pt-6 pb-4 z-20 border-b border-white/40 bg-white/30 backdrop-blur-sm">
+    <div className="grid grid-rows-[auto_1fr_auto] h-full w-full relative animate-fade-in mx-auto overflow-hidden bg-transparent">
+      <div className="flex justify-between items-center px-6 md:px-8 pt-6 pb-4 z-20 border-b border-white/20 bg-white/20 backdrop-blur-md">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+          <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
             <KeffiLogo size="w-7 h-7" />
           </div>
           <div>
             <h2 className="text-xl font-bold text-slate-800">Keffi</h2>
-            <div className="flex items-center gap-2 text-xs text-[#8FA989] font-medium">
+            <div className="flex items-center gap-2 text-xs text-[#8FA989] font-bold">
               <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-pulse"></div> Active & Listening
             </div>
           </div>
@@ -1035,7 +1078,7 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => setIsCameraActive(!isCameraActive)} 
-            className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex ${isCameraActive ? 'bg-[#3A7070] text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
+            className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
             title="Toggle Visual Emotion Tracking"
           >
             {isCameraActive ? <Camera size={16}/> : <CameraOff size={16}/>}
@@ -1045,15 +1088,22 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
               setIsVoiceEnabled(!isVoiceEnabled);
               if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
             }} 
-            className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors ${isVoiceEnabled ? 'bg-[#3A7070] text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
+            className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
             title="Toggle Voice Therapy"
           >
             {isVoiceEnabled ? <Volume2 size={16}/> : <VolumeX size={16}/>}
           </button>
-          <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full bg-slate-50 text-slate-600 font-bold text-xs hover:bg-slate-100 flex items-center gap-2 transition-colors">
+          <button 
+            onClick={() => setShowMediaPlayer(true)} 
+            className="px-4 py-2 rounded-full bg-emerald-500/12 backdrop-blur-sm border border-emerald-500/20 text-[#2C5555] font-bold text-xs hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
+            title="Open Calming Music Sanctuary"
+          >
+            🎵 Music
+          </button>
+          <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full glass-card text-slate-600 font-bold text-xs hover:bg-white/50 border border-white/30 flex items-center gap-2 transition-colors cursor-pointer">
             <User size={14}/> Therapist
           </button>
-          <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-50 text-red-600 font-bold text-xs hover:bg-red-100 flex items-center gap-2 transition-colors">
+          <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/12 border border-red-500/20 text-red-600 font-bold text-xs hover:bg-red-500/20 backdrop-blur-sm flex items-center gap-2 transition-colors cursor-pointer">
             <PhoneCall size={14}/> SOS
           </button>
         </div>
@@ -1062,31 +1112,31 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
       <CameraEmotionTracker isCameraActive={isCameraActive} onEmotionDetected={setVisualEmotion} />
 
       {showSOS && (
-        <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 bg-white p-8 rounded-[2rem] shadow-2xl border border-red-100 flex flex-col items-center animate-fade-in w-80 text-center">
-          <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 mb-6"><AlertTriangle size={32}/></div>
+        <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 glass-panel p-8 rounded-[2rem] shadow-2xl border border-red-500/20 flex flex-col items-center animate-fade-in w-80 text-center">
+          <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 mb-6"><AlertTriangle size={32}/></div>
           <h3 className="text-xl font-black text-slate-800 mb-2">Emergency Hotline</h3>
-          <p className="text-sm text-slate-500 mb-6 font-medium">You are not alone. Please call iCall India for immediate support.</p>
+          <p className="text-sm text-slate-600 mb-6 font-semibold">You are not alone. Please call iCall India for immediate support.</p>
           <div className="text-2xl font-black text-[#2C5555] mb-6 tracking-widest">9152987821</div>
-          <button onClick={() => setShowSOS(false)} className="px-8 py-3 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm hover:bg-slate-200 w-full transition-colors">Close</button>
+          <button onClick={() => setShowSOS(false)} className="px-8 py-3 rounded-xl glass-card border border-white/30 text-slate-700 font-bold text-sm hover:bg-white/50 w-full transition-colors cursor-pointer">Close</button>
         </div>
       )}
 
       {showMediaPlayer && <MediaPlayer onClose={() => setShowMediaPlayer(false)} />}
 
       {showAppointmentPopup && (
-        <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-[60] bg-white p-8 rounded-[2rem] shadow-2xl border border-slate-100 flex flex-col items-center animate-fade-in w-80 text-center">
-          <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-[#3A7070] mb-6 text-3xl">🫂</div>
+        <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-[60] glass-panel p-8 rounded-[2rem] shadow-2xl border border-white/30 flex flex-col items-center animate-fade-in w-80 text-center">
+          <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-[#3A7070] mb-6 text-3xl">🫂</div>
           <h3 className="text-xl font-black text-slate-800 mb-2">You're not alone</h3>
-          <p className="text-sm text-slate-500 mb-8 font-medium">We noticed you're going through a tough time. Would you like to schedule an automatic appointment with a human therapist?</p>
+          <p className="text-sm text-slate-600 mb-8 font-semibold">We noticed you're going through a tough time. Would you like to schedule an automatic appointment with a human therapist?</p>
           <div className="flex flex-col gap-3 w-full">
-            <button onClick={handleBookAppointment} className={`w-full py-3.5 rounded-xl font-bold text-sm ${theme.btnTeal}`}>Yes, Book Session</button>
-            <button onClick={() => setShowAppointmentPopup(false)} className={`w-full py-3.5 rounded-xl font-bold text-sm bg-slate-50 text-slate-500 hover:bg-slate-100 transition-colors`}>Not Right Now</button>
+            <button onClick={handleBookAppointment} className={`w-full py-3.5 rounded-xl font-bold text-sm ${theme.btnTeal} cursor-pointer`}>Yes, Book Session</button>
+            <button onClick={() => setShowAppointmentPopup(false)} className={`w-full py-3.5 rounded-xl font-bold text-sm glass-card border border-white/30 text-slate-600 hover:bg-white/50 transition-colors cursor-pointer`}>Not Right Now</button>
           </div>
         </div>
       )}
 
       {/* Biofeedback Watch Simulator */}
-      <div className="absolute right-6 top-24 z-30 bg-white/80 backdrop-blur-md border border-slate-200 p-4 rounded-3xl shadow-lg flex flex-col items-center gap-2 animate-fade-in hidden md:flex">
+      <div className="absolute right-6 top-24 z-30 glass-card border border-white/40 p-4 rounded-3xl shadow-lg flex flex-col items-center gap-2 animate-fade-in hidden md:flex">
         <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
           <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
           Watch Sync
@@ -1115,15 +1165,15 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
           return (
             <div key={m.id} className={`flex w-full ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}>
               <div className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%]`}>
-                <div className={`whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-medium leading-relaxed ${
+                <div className={`whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-semibold leading-relaxed rounded-[1.5rem] ${
                   m.sender === 'user' 
-                  ? 'bg-white text-slate-800 rounded-[1.5rem] rounded-tr-sm shadow-sm border border-slate-100' 
-                  : 'bg-[#3A7070]/10 text-slate-800 rounded-[1.5rem] rounded-tl-sm border border-[#3A7070]/10'
+                  ? 'glass-message-user text-slate-800 rounded-tr-sm shadow-sm' 
+                  : 'glass-message-keffi text-[#2C5555] rounded-tl-sm'
                 }`}>
                   {mainText}
                 </div>
                 
-                <span className={`text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-2 px-1`}>
+                <span className={`text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-2 px-1`}>
                   {m.time}
                 </span>
 
@@ -1134,12 +1184,12 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
                       <button 
                         key={i} 
                         onClick={() => handleSend(qr)} 
-                        className="flex items-start text-left p-4 rounded-2xl bg-white border border-slate-200 hover:border-[#3A7070]/40 hover:shadow-md transition-all shadow-sm group"
+                        className="flex items-start text-left p-4 rounded-2xl glass-card glass-card-hover border border-white/30 shadow-sm group cursor-pointer"
                       >
-                        <div className="w-5 h-5 rounded-full bg-slate-50 border border-slate-200 text-slate-400 group-hover:bg-[#3A7070]/10 group-hover:text-[#3A7070] group-hover:border-[#3A7070]/20 flex items-center justify-center text-[10px] font-bold shrink-0 mr-3 mt-0.5 transition-colors">
+                        <div className="w-5 h-5 rounded-full bg-white/20 border border-white/30 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#3A7070] group-hover:border-[#3A7070]/30 flex items-center justify-center text-[10px] font-bold shrink-0 mr-3 mt-0.5 transition-colors">
                           {i + 1}
                         </div>
-                        <span className="text-[13px] font-bold text-slate-600 group-hover:text-slate-800 leading-snug">
+                        <span className="text-[13px] font-bold text-slate-700 group-hover:text-slate-900 leading-snug">
                           {qr}
                         </span>
                       </button>
@@ -1152,7 +1202,7 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
         })}
         {isTyping && (
           <div className="flex flex-col self-start items-start max-w-[85%]">
-            <div className="p-4 rounded-[1.5rem] bg-[#3A7070]/10 flex gap-1.5 items-center rounded-tl-sm">
+            <div className="p-4 rounded-[1.5rem] glass-message-keffi flex gap-1.5 items-center rounded-tl-sm border border-[#3A7070]/10">
               <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '0ms' }}></div>
               <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '150ms' }}></div>
               <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '300ms' }}></div>
@@ -1162,17 +1212,17 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
         <div ref={chatEndRef} className="h-4" />
       </div>
 
-      <div className="p-4 md:p-6 bg-white/40 backdrop-blur-sm border-t border-white/40 z-20">
+      <div className="p-4 md:p-6 bg-white/15 backdrop-blur-md border-t border-white/20 z-20">
         <div className="flex gap-2 relative">
-          <button onClick={toggleRecording} className={`p-4 rounded-2xl ${isRecording ? 'bg-red-50 text-red-500 animate-pulse' : 'bg-white text-slate-400 hover:text-[#3A7070] hover:bg-slate-50'} border border-slate-200 shadow-sm transition-colors shrink-0`}>
+          <button onClick={toggleRecording} className={`p-4 rounded-2xl ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'glass-card border border-white/30 text-slate-500 hover:text-[#3A7070] hover:bg-white/50'} shadow-sm transition-colors shrink-0 cursor-pointer`}>
             <Mic size={20} />
           </button>
           <input 
             value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSend()}
             placeholder={isRecording ? "Listening..." : "Type your feelings safely here..."} 
-            className="flex-1 rounded-2xl border border-slate-200 px-5 py-4 text-sm outline-none focus:border-[#3A7070] focus:ring-2 focus:ring-[#3A7070]/20 shadow-sm transition-all"
+            className="flex-1 rounded-2xl glass-input px-5 py-4 text-sm focus:ring-2 focus:ring-[#3A7070]/20 shadow-sm transition-all"
           />
-          <button onClick={() => handleSend()} className="px-6 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-sm shrink-0">
+          <button onClick={() => handleSend()} className="px-6 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-sm shrink-0 cursor-pointer">
             <Send size={18} />
           </button>
         </div>
@@ -1198,7 +1248,7 @@ const PeaceLog = () => (
         <div key={i} className={`p-8 rounded-[2rem] ${theme.outset} cursor-pointer ${theme.outsetHover} flex flex-col`}>
           <div className="flex justify-between items-center mb-5">
             <span className="text-xs text-[#8FA989] font-bold uppercase tracking-widest">{log.date}</span>
-            <span className="px-3 py-1 rounded-md bg-slate-50 border border-slate-100 text-xs font-bold text-slate-500">{log.mood}</span>
+            <span className="px-3 py-1 rounded-md bg-white/20 border border-white/30 text-xs font-bold text-slate-600">{log.mood}</span>
           </div>
           <h3 className="text-lg font-bold text-slate-800 mb-3">{log.title}</h3>
           <p className="text-slate-500 leading-relaxed text-sm flex-1">{log.desc}</p>
@@ -1216,28 +1266,28 @@ const MyJourney = () => (
   <div className="h-full flex flex-col max-w-5xl mx-auto w-full">
     <h2 className="text-2xl font-black text-slate-800 mb-8">Emotional Landscape</h2>
     
-    <div className={`w-full h-80 rounded-[2.5rem] bg-slate-50 border border-slate-100 mb-8 relative overflow-hidden flex items-end justify-center shadow-inner`}>
+    <div className={`w-full h-80 rounded-[2.5rem] glass-panel border border-white/30 mb-8 relative overflow-hidden flex items-end justify-center shadow-inner`}>
       <div className="absolute top-8 right-12 w-24 h-24 rounded-full bg-gradient-to-tr from-[#D4A373] to-white blur-md shadow-[0_0_40px_#D4A373]"></div>
       <div className="w-[120%] h-40 bg-[#8FA989] rounded-[100%] absolute -bottom-8 opacity-40"></div>
-      <div className="w-[80%] h-48 bg-[#3A7070] rounded-[100%] absolute -bottom-10 opacity-70 left-[-10%]"></div>
-      <div className="w-[90%] h-44 bg-[#548a8a] rounded-[100%] absolute -bottom-8 opacity-80 right-[-10%]"></div>
-      <div className={`absolute top-8 left-8 px-6 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-white shadow-sm`}>
+      <div className="w-[80%] h-48 bg-[#3A7070] rounded-[100%] absolute -bottom-10 opacity-60 left-[-10%]"></div>
+      <div className="w-[90%] h-44 bg-[#548a8a] rounded-[100%] absolute -bottom-8 opacity-70 right-[-10%]"></div>
+      <div className={`absolute top-8 left-8 px-6 py-3 rounded-2xl glass-card border border-white/40 shadow-sm`}>
         <h3 className="text-lg font-bold text-slate-800">You are Thriving 🌿</h3>
       </div>
     </div>
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className={`p-8 rounded-[2rem] bg-white border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-3`}>
+      <div className={`p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3`}>
         <div className="text-4xl font-black text-[#3A7070]">12</div>
-        <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Day Streak</div>
+        <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Day Streak</div>
       </div>
-      <div className={`p-8 rounded-[2rem] bg-white border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-3`}>
+      <div className={`p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3`}>
         <div className="text-4xl font-black text-[#8FA989]">85%</div>
-        <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Calm Status</div>
+        <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Calm Status</div>
       </div>
-      <div className={`p-8 rounded-[2rem] bg-white border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-3`}>
+      <div className={`p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3`}>
         <div className="text-4xl font-black text-[#D4A373]">4</div>
-        <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Tools Used</div>
+        <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Tools Used</div>
       </div>
     </div>
   </div>
@@ -1266,9 +1316,9 @@ const MindTools = () => {
         </div>
         <div className="relative w-80 h-80 flex items-center justify-center">
           <div className="absolute inset-0 bg-[#3A7070] rounded-full opacity-10 animate-ping" style={{animationDuration: '4s'}}></div>
-          <div className={`w-48 h-48 rounded-full bg-white shadow-xl border border-slate-100 flex items-center justify-center text-[#3A7070] font-black text-xl z-10`}>Breathe In</div>
+          <div className={`w-48 h-48 rounded-full glass-card shadow-xl border border-white/40 flex items-center justify-center text-[#3A7070] font-black text-xl z-10 backdrop-blur-md`}>Breathe In</div>
         </div>
-        <button onClick={() => setActiveTool(null)} className={`px-8 py-3 rounded-xl font-bold text-base ${theme.btnOutline}`}>Stop & Go Back</button>
+        <button onClick={() => setActiveTool(null)} className={`px-8 py-3 rounded-xl font-bold text-base ${theme.btnOutline} cursor-pointer`}>Stop & Go Back</button>
       </div>
     );
   }
@@ -1282,12 +1332,12 @@ const MindTools = () => {
         </div>
         <textarea 
           value={worryText} onChange={(e) => setWorryText(e.target.value)}
-          className={`w-full h-64 p-8 rounded-[2rem] bg-white border border-slate-200 shadow-inner outline-none text-slate-800 text-base resize-none transition-all duration-1000 ${isBurning ? 'blur-xl opacity-0 scale-110' : ''}`}
+          className={`w-full h-64 p-8 rounded-[2rem] glass-input shadow-inner outline-none text-slate-800 text-base resize-none transition-all duration-1000 ${isBurning ? 'blur-xl opacity-0 scale-110' : ''}`}
           placeholder="I am worried about..."
         />
         <div className="flex gap-4 w-full">
-          <button onClick={() => setActiveTool(null)} className={`flex-1 py-4 rounded-xl font-bold text-base ${theme.btnOutline}`}>Cancel</button>
-          <button onClick={handleBurn} className={`flex-1 py-4 rounded-xl font-bold text-base bg-[#D4A373] text-white shadow-lg hover:-translate-y-1 transition-transform`}>Burn Worry</button>
+          <button onClick={() => setActiveTool(null)} className={`flex-1 py-4 rounded-xl font-bold text-base ${theme.btnOutline} cursor-pointer`}>Cancel</button>
+          <button onClick={handleBurn} className={`flex-1 py-4 rounded-xl font-bold text-base bg-[#D4A373] text-white shadow-lg hover:-translate-y-0.5 transition-transform cursor-pointer`}>Burn Worry</button>
         </div>
       </div>
     );
@@ -1304,7 +1354,7 @@ const MindTools = () => {
            <input 
              value={gratitudeText} onChange={e => setGratitudeText(e.target.value)} 
              placeholder="I am grateful for..." 
-             className={`flex-1 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm outline-none text-slate-800 font-medium text-base`}
+             className={`flex-1 p-4 rounded-2xl glass-input shadow-sm outline-none text-slate-800 font-medium text-base`}
              onKeyPress={e => {
                if(e.key === 'Enter' && gratitudeText) {
                  setGratitudeList([{id: Date.now(), text: gratitudeText}, ...gratitudeList]);
@@ -1317,18 +1367,18 @@ const MindTools = () => {
                setGratitudeList([{id: Date.now(), text: gratitudeText}, ...gratitudeList]);
                setGratitudeText('');
              }
-           }} className={`px-8 py-4 rounded-2xl bg-[#8FA989] text-white font-bold shadow-md hover:-translate-y-1 transition-transform text-base`}>Drop</button>
+           }} className={`px-8 py-4 rounded-2xl bg-[#8FA989] text-white font-bold shadow-md hover:-translate-y-0.5 transition-transform text-base cursor-pointer`}>Drop</button>
         </div>
-        <div className={`flex-1 w-full rounded-[2.5rem] bg-slate-50 border-8 border-[#8FA989]/10 p-8 flex flex-col-reverse items-center justify-start overflow-y-auto relative`}>
+        <div className={`flex-1 w-full rounded-[2.5rem] glass-panel border-8 border-[#8FA989]/20 p-8 flex flex-col-reverse items-center justify-start overflow-y-auto relative`}>
            <div className="w-48 h-8 rounded-[100%] bg-slate-200 absolute -top-4 opacity-50 blur-md"></div>
-           {gratitudeList.length === 0 && <div className="text-slate-400 font-bold text-sm absolute top-1/2">Your jar is empty.</div>}
+           {gratitudeList.length === 0 && <div className="text-slate-500 font-bold text-sm absolute top-1/2">Your jar is empty.</div>}
            {gratitudeList.map(g => (
              <div key={g.id} className="bg-gradient-to-r from-[#8FA989] to-[#649e9e] text-white px-6 py-3.5 rounded-full mb-3 shadow-lg transform rotate-[-2deg] font-bold text-sm animate-fade-in">
-                {g.text}
+                 {g.text}
              </div>
            ))}
         </div>
-        <button onClick={() => setActiveTool(null)} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnOutline}`}>Back to Tools</button>
+        <button onClick={() => setActiveTool(null)} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnOutline} cursor-pointer`}>Back to Tools</button>
       </div>
     );
   }
@@ -1351,18 +1401,18 @@ const MindTools = () => {
         </div>
         
         {groundingStep < 5 ? (
-          <div className={`p-16 rounded-[3rem] bg-white border border-slate-100 shadow-xl flex flex-col items-center text-center w-full`}>
+          <div className={`p-16 rounded-[3rem] glass-panel border border-white/30 shadow-xl flex flex-col items-center text-center w-full`}>
             <div className={`text-7xl font-black ${current.color} mb-6`}>{current.num}</div>
             <h3 className={`text-2xl font-black text-slate-800 mb-10 uppercase tracking-widest`}>{current.text}</h3>
-            <p className="text-slate-500 font-medium text-base mb-10">Take your time. Look around you. Name them silently or out loud.</p>
-            <button onClick={() => setGroundingStep(s => s + 1)} className={`w-full py-4 rounded-xl text-white font-bold text-base ${current.bg} shadow-lg hover:-translate-y-1 transition-transform`}>Next Step</button>
+            <p className="text-slate-600 font-bold text-base mb-10">Take your time. Look around you. Name them silently or out loud.</p>
+            <button onClick={() => setGroundingStep(s => s + 1)} className={`w-full py-4 rounded-xl text-white font-bold text-base ${current.bg} shadow-lg hover:-translate-y-0.5 transition-transform cursor-pointer`}>Next Step</button>
           </div>
         ) : (
-          <div className={`p-16 rounded-[3rem] bg-white border border-slate-100 shadow-xl flex flex-col items-center text-center w-full`}>
-            <div className={`w-24 h-24 rounded-2xl bg-[#8FA989]/10 text-[#8FA989] flex items-center justify-center mb-8`}><Star size={48}/></div>
+          <div className={`p-16 rounded-[3rem] glass-panel border border-white/30 shadow-xl flex flex-col items-center text-center w-full`}>
+            <div className={`w-24 h-24 rounded-2xl bg-[#8FA989]/20 text-[#8FA989] flex items-center justify-center mb-8 border border-white/30`}><Star size={48}/></div>
             <h3 className="text-2xl font-black text-slate-800 mb-6">You did great.</h3>
-            <p className="text-slate-500 font-medium text-base mb-10">Welcome back to the present moment.</p>
-            <button onClick={() => {setGroundingStep(0); setActiveTool(null);}} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnOutline}`}>Finish</button>
+            <p className="text-slate-600 font-bold text-base mb-10">Welcome back to the present moment.</p>
+            <button onClick={() => {setGroundingStep(0); setActiveTool(null);}} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnOutline} cursor-pointer`}>Finish</button>
           </div>
         )}
       </div>
@@ -1388,8 +1438,8 @@ const MindTools = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto pb-8 pr-2">
         {allTools.map((tool) => (
           <div key={tool.id} onClick={() => tool.active ? setActiveTool(tool.id) : null} 
-            className={`p-6 rounded-[2rem] bg-white border border-slate-100 shadow-sm flex flex-col items-center justify-center gap-4 text-center ${tool.active ? theme.outsetHover : 'opacity-60'} ${tool.locked ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
-            <div className={`w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center ${tool.color}`}><tool.icon size={24} /></div>
+            className={`p-6 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center justify-center gap-4 text-center ${tool.active ? theme.outsetHover : 'opacity-65'} ${tool.locked ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+            <div className={`w-14 h-14 rounded-2xl bg-white/20 border border-white/10 flex items-center justify-center ${tool.color}`}><tool.icon size={24} /></div>
             <div>
               <h3 className="font-bold text-slate-800 text-base mb-1">{tool.title}</h3>
               <p className="text-xs text-slate-500 font-medium">{tool.desc}</p>
@@ -1404,29 +1454,29 @@ const MindTools = () => {
 // 4.5 Rewards
 const Rewards = ({ points }) => (
   <div className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto w-full">
-    <div className={`w-full p-10 rounded-[2.5rem] bg-white shadow-sm border border-slate-100 flex flex-col items-center text-center mb-10`}>
+    <div className={`w-full p-10 rounded-[2.5rem] glass-panel shadow-sm border border-white/30 flex flex-col items-center text-center mb-10`}>
       <Gift size={48} className="text-[#D4A373] mb-6" />
-      <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Total Keffi Points</h2>
+      <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Total Keffi Points</h2>
       <div className="text-5xl font-black text-[#3A7070]">{points}</div>
     </div>
     
     <div className="w-full space-y-4">
       <h3 className="font-black text-slate-800 text-xl mb-4">Unlock Goals</h3>
-      <div className={`p-5 rounded-2xl bg-slate-50 border border-slate-100 flex justify-between items-center opacity-60`}>
+      <div className={`p-5 rounded-2xl bg-white/10 border border-white/10 flex justify-between items-center opacity-60`}>
         <span className="font-bold text-slate-600 text-base">Mindfulness Badge</span>
         <span className="font-bold text-[#3A7070] text-base">100 pts (Unlocked)</span>
       </div>
-      <div className={`p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex justify-between items-center`}>
+      <div className={`p-5 rounded-2xl glass-card border border-white/35 shadow-sm flex justify-between items-center`}>
         <span className="font-bold text-slate-800 text-base">Free Therapist Session</span>
         <span className="font-bold text-[#D4A373] text-base">1000 pts</span>
       </div>
-      <div className="w-full bg-slate-100 rounded-full h-3 mt-4 overflow-hidden border border-slate-200">
+      <div className="w-full bg-white/15 rounded-full h-3 mt-4 overflow-hidden border border-white/20">
         <div className="bg-[#3A7070] h-3 transition-all duration-1000" style={{width: `${Math.min((points/1000)*100, 100)}%`}}></div>
       </div>
       {points >= 1000 ? (
-        <button className={`w-full py-4 mt-6 rounded-xl font-bold text-base ${theme.btnTeal}`}>Claim Therapist Session</button>
+        <button className={`w-full py-4 mt-6 rounded-xl font-bold text-base ${theme.btnTeal} cursor-pointer`}>Claim Therapist Session</button>
       ) : (
-        <button disabled className={`w-full py-4 mt-6 rounded-xl font-bold text-base bg-slate-100 text-slate-400 cursor-not-allowed`}>Chat more to Unlock</button>
+        <button disabled className={`w-full py-4 mt-6 rounded-xl font-bold text-base glass-card border border-white/10 text-slate-500 cursor-not-allowed`}>Chat more to Unlock</button>
       )}
     </div>
   </div>
@@ -1437,25 +1487,25 @@ const FriendsSync = () => (
   <div className="h-full flex flex-col items-center justify-center">
     <div className="text-center mb-10">
       <h2 className="text-2xl font-black text-slate-800 mb-3">Neighbor Sync</h2>
-      <p className="text-slate-500 text-base">You are not alone. See the abstract mood of people near you.</p>
+      <p className="text-slate-600 text-base font-semibold">You are not alone. See the abstract mood of people near you.</p>
     </div>
     
-    <div className={`w-80 h-80 rounded-full bg-slate-50 border border-slate-100 relative flex items-center justify-center shadow-inner`}>
-      <div className="absolute w-64 h-64 rounded-full border border-slate-200 opacity-70"></div>
-      <div className="absolute w-40 h-40 rounded-full border border-slate-200 opacity-70"></div>
+    <div className={`w-80 h-80 rounded-full glass-panel border border-white/25 relative flex items-center justify-center shadow-inner`}>
+      <div className="absolute w-64 h-64 rounded-full border border-white/10 opacity-70"></div>
+      <div className="absolute w-40 h-40 rounded-full border border-white/10 opacity-70"></div>
       
       <div className={`w-10 h-10 bg-[#3A7070] rounded-full z-10 shadow-lg animate-pulse`}></div>
-      <div className="absolute mt-16 font-bold text-xs text-[#3A7070] bg-white/80 px-3 py-1 rounded-full border border-slate-100 shadow-sm">You</div>
-
+      <div className="absolute mt-16 font-bold text-xs text-[#3A7070] bg-white/70 px-3 py-1 rounded-full border border-white/30 shadow-sm">You</div>
+ 
       <div className="absolute top-16 left-16 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform" title="Calm Neighbor"></div>
       <div className="absolute bottom-20 right-16 w-8 h-8 bg-[#D4A373] rounded-full shadow-[0_0_20px_#D4A373] cursor-pointer hover:scale-125 transition-transform" title="Anxious Neighbor"></div>
       <div className="absolute top-24 right-10 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform" title="Calm Neighbor"></div>
     </div>
-
-    <div className={`mt-12 p-6 rounded-2xl bg-white border border-slate-100 shadow-sm flex items-center gap-5`}>
+ 
+    <div className={`mt-12 p-6 rounded-2xl glass-card border border-white/30 shadow-sm flex items-center gap-5`}>
       <Heart className="text-[#D4A373]" size={24} />
       <span className="font-bold text-slate-800 text-base">Send a Virtual Hug</span>
-      <button className={`px-5 py-2.5 rounded-xl text-sm font-bold ${theme.btnOutline}`}>Send Love</button>
+      <button className={`px-5 py-2.5 rounded-xl text-sm font-bold ${theme.btnOutline} cursor-pointer`}>Send Love</button>
     </div>
   </div>
 );
@@ -1463,28 +1513,28 @@ const FriendsSync = () => (
 // 4.7 Profile
 const ProfileVault = ({ userData }) => (
   <div className="h-full flex flex-col items-center justify-center">
-    <div className={`max-w-2xl w-full p-10 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm`}>
+    <div className={`max-w-2xl w-full p-10 rounded-[2.5rem] glass-panel border border-white/30 shadow-sm`}>
       <div className="flex flex-col items-center mb-8">
-        <div className={`w-24 h-24 rounded-3xl bg-slate-50 flex items-center justify-center text-[#3A7070] mb-5`}>
+        <div className={`w-24 h-24 rounded-3xl bg-white/20 border border-white/35 flex items-center justify-center text-[#3A7070] mb-5`}>
           <User size={40} />
         </div>
         <h2 className="text-2xl font-black text-slate-800">Identity Vault</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className={`p-5 rounded-2xl bg-slate-50 border border-slate-100`}>
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Full Name</div>
+        <div className={`p-5 rounded-2xl glass-card border border-white/20`}>
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Full Name</div>
           <div className="text-lg font-bold text-slate-800">{userData?.name || 'Guest User'}</div>
         </div>
-        <div className={`p-5 rounded-2xl bg-slate-50 border border-slate-100`}>
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Age / DOB / Gender</div>
+        <div className={`p-5 rounded-2xl glass-card border border-white/20`}>
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Age / DOB / Gender</div>
           <div className="text-lg font-bold text-slate-800">{userData?.age || '25'} • {userData?.dob || 'Not Set'} • {userData?.gender || 'Not Set'}</div>
         </div>
-        <div className={`p-5 rounded-2xl bg-slate-50 border border-slate-100`}>
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Phone / Email</div>
-          <div className="text-lg font-bold text-slate-800">{userData?.phone || '+91 00000000'} <br/><span className="text-sm font-medium text-slate-500 mt-1 inline-block">{userData?.email || 'email@example.com'}</span></div>
+        <div className={`p-5 rounded-2xl glass-card border border-white/20`}>
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Phone / Email</div>
+          <div className="text-lg font-bold text-slate-800">{userData?.phone || '+91 00000000'} <br/><span className="text-sm font-semibold text-slate-600 mt-1 inline-block">{userData?.email || 'email@example.com'}</span></div>
         </div>
-        <div className={`p-5 rounded-2xl bg-slate-50 border border-slate-100`}>
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Sanctuary Location</div>
+        <div className={`p-5 rounded-2xl glass-card border border-white/20`}>
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Sanctuary Location</div>
           <div className="text-lg font-bold text-slate-800 flex items-center gap-2"><MapPin size={20} className="text-[#3A7070]"/> {userData?.place || 'Salem, TN'}</div>
         </div>
       </div>
@@ -1536,7 +1586,7 @@ const PatientDashboard = ({ setView, userData }) => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-[#f4f7f6] overflow-hidden font-inter text-slate-800 relative">
+    <div className="flex h-screen w-screen bg-transparent overflow-hidden font-inter text-slate-800 relative">
       
       {/* Mobile Overlay */}
       {isMobile && isSidebarOpen && (
@@ -1544,10 +1594,10 @@ const PatientDashboard = ({ setView, userData }) => {
       )}
 
       {/* Sleek Collapsible Sidebar */}
-      <div className={`${isSidebarOpen ? 'w-64 md:w-72 translate-x-0' : 'w-64 md:w-0 -translate-x-full md:translate-x-0 md:opacity-0'} absolute md:relative z-30 transition-all duration-300 h-full bg-white border-r border-slate-200 flex flex-col shrink-0 overflow-hidden`}>
+      <div className={`${isSidebarOpen ? 'w-64 md:w-72 translate-x-0' : 'w-64 md:w-0 -translate-x-full md:translate-x-0 md:opacity-0'} absolute md:relative z-30 transition-all duration-300 h-full glass-sidebar flex flex-col shrink-0 overflow-hidden`}>
         {/* Light Green Animated Background */}
-        <div className="absolute -top-[10%] -left-[10%] w-[120%] h-[50%] bg-[#8FA989] rounded-full mix-blend-multiply blur-[80px] opacity-[0.15] animate-pulse pointer-events-none z-0" style={{animationDuration: '4s'}}></div>
-        <div className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[50%] bg-[#EAF4F0] rounded-full mix-blend-multiply blur-[80px] opacity-70 pointer-events-none z-0" style={{animation: 'pulse 8s infinite alternate'}}></div>
+        <div className="absolute -top-[10%] -left-[10%] w-[120%] h-[50%] bg-[#8FA989] rounded-full mix-blend-multiply blur-[80px] opacity-[0.12] animate-pulse pointer-events-none z-0" style={{animationDuration: '4s'}}></div>
+        <div className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[50%] bg-[#EAF4F0] rounded-full mix-blend-multiply blur-[80px] opacity-40 pointer-events-none z-0" style={{animation: 'pulse 8s infinite alternate'}}></div>
 
         {isSidebarOpen && (
           <div className="flex flex-col h-full w-full p-6 relative z-10">
@@ -1567,10 +1617,10 @@ const PatientDashboard = ({ setView, userData }) => {
                       setActivePage(item.id);
                       if (isMobile) setIsSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center gap-4 px-5 py-4 rounded-[1.2rem] font-bold text-sm transition-all duration-300 ${
+                    className={`w-full flex items-center gap-4 px-5 py-4 rounded-[1.2rem] font-bold text-sm transition-all duration-300 cursor-pointer ${
                       isActive 
                       ? 'bg-[#3A7070] text-white shadow-md shadow-[#3A7070]/20' 
-                      : 'text-slate-500 hover:bg-slate-50 hover:text-[#3A7070]'
+                      : 'text-slate-600 hover:bg-white/40 hover:text-[#3A7070]'
                     }`}
                   >
                     <IconComponent size={18} /> {item.label}
@@ -1579,11 +1629,11 @@ const PatientDashboard = ({ setView, userData }) => {
               })}
             </div>
 
-            <div className="mt-6 px-4 py-4 rounded-[1.2rem] bg-slate-50 border border-slate-100 font-bold text-xs text-[#D4A373] flex items-center justify-center gap-2 shrink-0">
+            <div className="mt-6 px-4 py-4 rounded-[1.2rem] glass-card border border-white/30 font-bold text-xs text-[#D4A373] flex items-center justify-center gap-2 shrink-0">
               <Star size={16} className="fill-[#D4A373] text-[#D4A373] animate-pulse" /> {globalPoints} Sanctuary Points
             </div>
 
-            <button onClick={() => setView('landing')} className="mt-4 text-slate-400 hover:text-slate-600 font-bold text-sm transition-all w-full text-center shrink-0">
+            <button onClick={() => setView('landing')} className="mt-4 text-slate-500 hover:text-slate-700 font-bold text-sm transition-all w-full text-center shrink-0 cursor-pointer">
               Exit Sanctuary
             </button>
           </div>
@@ -1591,11 +1641,11 @@ const PatientDashboard = ({ setView, userData }) => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 h-full w-full min-w-0 bg-[#EAF0EE] relative flex flex-col overflow-hidden">
+      <div className="flex-1 h-full w-full min-w-0 bg-transparent relative flex flex-col overflow-hidden">
         {(!isSidebarOpen || isMobile) && (
           <button 
             onClick={() => setIsSidebarOpen(true)}
-            className="absolute top-4 md:top-6 left-4 md:left-6 z-10 p-2.5 text-slate-500 hover:text-[#3A7070] bg-white border border-slate-100 shadow-sm rounded-xl hover:-translate-y-1 transition-all"
+            className="absolute top-4 md:top-6 left-4 md:left-6 z-10 p-2.5 text-slate-600 hover:text-[#3A7070] glass-card border border-white/20 rounded-xl hover:bg-white/50 hover:-translate-y-0.5 transition-all cursor-pointer"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
@@ -1675,26 +1725,26 @@ const AdminDashboard = ({ setView }) => {
   };
 
   return (
-    <div className={`flex h-screen w-full ${theme.bg} overflow-hidden p-6 gap-6 font-sans text-slate-800`}>
-      <div className={`w-72 h-full rounded-[2rem] bg-white border border-slate-100 shadow-sm flex flex-col p-6 shrink-0`}>
+    <div className="flex h-screen w-full bg-transparent overflow-hidden p-6 gap-6 font-sans text-slate-800">
+      <div className="w-72 h-full rounded-[2rem] glass-panel border border-white/20 shadow-sm flex flex-col p-6 shrink-0">
         <div className="flex flex-col items-center mb-8 pt-4 cursor-pointer" onClick={() => setView('landing')}>
-          <div className={`w-12 h-12 rounded-2xl bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070] mb-4`}><Shield size={24} /></div>
+          <div className="w-12 h-12 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-[#3A7070] mb-4"><Shield size={24} /></div>
           <h1 className="text-xl font-black text-[#2C5555] tracking-tight text-center">Clinical Hub</h1>
         </div>
         
         <div className="flex-1 space-y-2">
           {adminTabs.map(tab => (
             <button key={tab.id} onClick={() => {setActiveTab(tab.id); setSelectedPatient(null);}} 
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${activeTab === tab.id ? `bg-slate-50 border border-slate-100 text-[#3A7070] shadow-sm` : `text-slate-500 hover:text-[#3A7070] hover:bg-slate-50`}`}>
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all duration-300 cursor-pointer ${activeTab === tab.id ? `bg-[#3A7070]/10 border border-[#3A7070]/15 text-[#3A7070] shadow-sm` : `text-slate-600 hover:text-[#3A7070] hover:bg-white/40`}`}>
                <tab.icon size={18} /> {tab.label}
             </button>
           ))}
         </div>
-        <button onClick={() => setView('landing')} className="mt-auto font-bold text-sm text-slate-400 hover:text-red-500 hover:bg-red-50 p-4 rounded-xl transition-all">Logout</button>
+        <button onClick={() => setView('landing')} className="mt-auto font-bold text-sm text-slate-500 hover:text-red-500 hover:bg-red-500/10 p-4 rounded-xl transition-all cursor-pointer">Logout</button>
       </div>
 
       <div className="flex-1 h-full relative">
-        <div className={`absolute inset-0 rounded-[2rem] bg-[#FDFCF8] border border-slate-100 shadow-inner p-8 overflow-hidden`}>
+        <div className="absolute inset-0 rounded-[2rem] glass-panel border border-white/25 shadow-inner p-8 overflow-hidden">
           {selectedPatient ? (
              <div className={`h-full flex flex-col animate-fade-in`}>
                 <div className="flex justify-between items-center mb-6">
@@ -1718,17 +1768,17 @@ const AdminDashboard = ({ setView }) => {
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-6 flex-1">
-                  <div className={`col-span-1 p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col gap-4`}>
+                  <div className={`col-span-1 p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col gap-4`}>
                     <h3 className="text-base font-bold text-slate-800">Depression / MHQ Score</h3>
                     <div className="flex-1 flex flex-col justify-center items-center gap-2">
                        <span className={`text-4xl font-black ${selectedPatient.color}`}>{selectedPatient.score}</span>
-                       <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-2">Current Score</span>
+                       <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-2">Current Score</span>
                     </div>
                   </div>
-                  <div className={`col-span-2 p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col`}>
+                  <div className={`col-span-2 p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col`}>
                     <h3 className="text-base font-bold text-slate-800 mb-3">Recent Logs</h3>
-                    <div className={`flex-1 bg-slate-50 rounded-xl p-4 overflow-y-auto`}>
-                      {selectedPatient.logs.map((l,i) => <div key={i} className="p-3 mb-3 bg-white rounded-lg shadow-sm border border-slate-100 text-xs font-medium text-slate-700">{l}</div>)}
+                    <div className={`flex-1 bg-white/10 border border-white/10 rounded-xl p-4 overflow-y-auto`}>
+                      {selectedPatient.logs.map((l,i) => <div key={i} className="p-3 mb-3 glass-card rounded-lg shadow-sm border border-white/15 text-xs font-semibold text-slate-700">{l}</div>)}
                     </div>
                   </div>
                 </div>
@@ -1737,27 +1787,27 @@ const AdminDashboard = ({ setView }) => {
             <div className="h-full flex flex-col animate-fade-in">
                <h2 className="text-2xl font-black text-slate-800 mb-6">System Overview</h2>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-                 <div className={`p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col items-center text-center gap-1`}>
+                 <div className={`p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col items-center text-center gap-1`}>
                     <div className="text-3xl font-black text-[#3A7070]">{analytics?.total_patients || patients.length}</div>
-                    <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Active Patients</div>
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Active Patients</div>
                  </div>
-                 <div className={`p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col items-center text-center gap-1`}>
+                 <div className={`p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col items-center text-center gap-1`}>
                     <div className="text-3xl font-black text-[#8FA989]">{analytics?.safety_score || '0'}%</div>
-                    <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">AI Safety Score</div>
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">AI Safety Score</div>
                  </div>
-                 <div className={`p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col items-center text-center gap-1`}>
+                 <div className={`p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col items-center text-center gap-1`}>
                     <div className="text-3xl font-black text-red-500">{patients.filter(p => p.risk === 'Critical').length}</div>
-                    <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Critical Interventions</div>
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Critical Interventions</div>
                  </div>
                </div>
-               <div className={`flex-1 p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col`}>
+               <div className={`flex-1 p-5 rounded-2xl glass-card border border-white/25 shadow-sm flex flex-col`}>
                   <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><Bell size={20}/> Urgent Alerts Stream</h3>
-                  <div className={`flex-1 rounded-xl bg-slate-50 p-4 overflow-y-auto space-y-3`}>
-                    {patients.filter(p => p.risk === 'Critical').length === 0 && <div className="text-slate-400 font-medium text-sm">No urgent alerts.</div>}
+                  <div className={`flex-1 rounded-xl bg-white/15 border border-white/10 p-4 overflow-y-auto space-y-3`}>
+                    {patients.filter(p => p.risk === 'Critical').length === 0 && <div className="text-slate-500 font-semibold text-sm">No urgent alerts.</div>}
                     {patients.filter(p => p.risk === 'Critical').map(p => (
-                      <div key={p.id} className="p-4 rounded-xl bg-white border border-slate-100 border-l-4 border-l-red-500 shadow-sm">
-                        <div className="font-bold text-red-500 text-sm mb-1">{p.id} ({p.name}): Critical Risk Detected.</div>
-                        <div className="text-slate-600 text-xs">MHQ Score: {p.score}. AI monitoring closely. Consider manual intervention.</div>
+                      <div key={p.id} className="p-4 rounded-xl glass-card border border-red-500/25 border-l-4 border-l-red-500 shadow-sm">
+                        <div className="font-bold text-red-600 text-sm mb-1">{p.id} ({p.name}): Critical Risk Detected.</div>
+                        <div className="text-slate-700 text-xs font-semibold">MHQ Score: {p.score}. AI monitoring closely. Consider manual intervention.</div>
                       </div>
                     ))}
                   </div>
@@ -1767,28 +1817,28 @@ const AdminDashboard = ({ setView }) => {
             <div className="h-full flex flex-col animate-fade-in">
                <div className="flex justify-between items-center mb-5">
                  <h2 className="text-2xl font-black text-slate-800">Patient Roster</h2>
-                 <div className={`flex items-center gap-3 px-3 py-2 rounded-xl bg-white border border-slate-200 w-64 shadow-sm`}>
-                   <Search size={18} className="text-slate-400"/>
-                   <input type="text" placeholder="Search ID..." className="bg-transparent outline-none flex-1 text-slate-800 font-medium text-sm"/>
+                 <div className={`flex items-center gap-3 px-3 py-2 rounded-xl glass-input w-64 shadow-sm`}>
+                   <Search size={18} className="text-slate-500"/>
+                   <input type="text" placeholder="Search ID..." className="bg-transparent outline-none flex-1 text-slate-800 font-bold text-sm"/>
                  </div>
                </div>
-               <div className={`flex-1 rounded-2xl bg-white border border-slate-100 shadow-sm p-5 flex flex-col`}>
-                  <div className="flex justify-between items-center px-4 font-bold text-slate-400 uppercase text-xs tracking-widest border-b border-slate-100 pb-2 mb-3">
+               <div className={`flex-1 rounded-2xl glass-card border border-white/25 shadow-sm p-5 flex flex-col`}>
+                  <div className="flex justify-between items-center px-4 font-bold text-slate-500 uppercase text-xs tracking-widest border-b border-white/10 pb-2 mb-3">
                     <span className="w-1/4">Patient ID</span>
                     <span className="w-1/4">Condition</span>
                     <span className="w-1/4 text-center">Risk Level</span>
                     <span className="w-1/4 text-right">Action</span>
                   </div>
                   <div className="flex-1 overflow-y-auto space-y-3 pr-2">
-                    {patients.length === 0 && <div className="text-center text-slate-400 font-medium mt-6 text-sm">No patients tracked yet.</div>}
+                    {patients.length === 0 && <div className="text-center text-slate-500 font-semibold mt-6 text-sm">No patients tracked yet.</div>}
                     {patients.map(p => (
-                      <div key={p.id} className={`flex justify-between items-center p-3 rounded-xl bg-slate-50 border border-slate-100`}>
+                      <div key={p.id} className={`flex justify-between items-center p-3 rounded-xl bg-white/20 border border-white/10`}>
                         <span className="w-1/4 font-black text-slate-800 text-sm">{p.id}</span>
-                        <span className="w-1/4 text-slate-600 font-medium text-xs">{p.condition}</span>
+                        <span className="w-1/4 text-slate-700 font-semibold text-xs">{p.condition}</span>
                         <span className={`w-1/4 text-center font-bold text-xs ${p.color}`}>{p.risk}</span>
                         <span className="w-1/4 text-right">
-                          <button onClick={() => setSelectedPatient(p)} className={`px-3 py-1.5 rounded-lg text-xs font-bold border border-slate-300 text-slate-600 hover:bg-slate-100 mr-2 transition-colors`}>Inspect</button>
-                          <button onClick={() => handleExportAbstract(p.id)} className={`px-3 py-1.5 rounded-lg text-xs font-bold bg-[#8FA989] text-white shadow-sm hover:bg-[#7a9474] transition-colors`}>Export Abstract</button>
+                          <button onClick={() => setSelectedPatient(p)} className={`px-3 py-1.5 rounded-lg text-xs font-bold border border-white/30 text-slate-700 hover:bg-white/40 mr-2 transition-colors cursor-pointer`}>Inspect</button>
+                          <button onClick={() => handleExportAbstract(p.id)} className={`px-3 py-1.5 rounded-lg text-xs font-bold bg-[#8FA989] text-white shadow-sm hover:bg-[#7a9474] transition-colors cursor-pointer`}>Export Abstract</button>
                         </span>
                       </div>
                     ))}
@@ -1798,18 +1848,18 @@ const AdminDashboard = ({ setView }) => {
           ) : activeTab === 'inactive' ? (
             <div className="h-full flex flex-col animate-fade-in">
                <h2 className="text-2xl font-black text-slate-800 mb-5">Inactive Patients (3+ Days)</h2>
-               <div className={`flex-1 rounded-2xl bg-white border border-slate-100 shadow-sm p-5 flex flex-col`}>
+               <div className={`flex-1 rounded-2xl glass-card border border-white/25 shadow-sm p-5 flex flex-col`}>
                   <div className="flex-1 overflow-y-auto space-y-3 pr-2">
-                    {inactivePatients.length === 0 && <div className="text-center text-slate-400 font-medium mt-6 text-sm">No inactive patients found.</div>}
+                    {inactivePatients.length === 0 && <div className="text-center text-slate-500 font-semibold mt-6 text-sm">No inactive patients found.</div>}
                     {inactivePatients.map((p, i) => (
-                      <div key={i} className={`flex justify-between items-center p-4 rounded-xl bg-slate-50 border border-slate-100`}>
+                      <div key={i} className={`flex justify-between items-center p-4 rounded-xl bg-white/20 border border-white/10`}>
                         <div>
                            <div className="font-black text-slate-800 text-sm mb-1">{p.patient_id} ({p.name})</div>
-                           <div className="text-slate-500 text-xs font-medium">Inactive for {p.days_inactive} days</div>
+                           <div className="text-slate-600 text-xs font-semibold">Inactive for {p.days_inactive} days</div>
                         </div>
                         <div className="text-right">
                            <div className="font-bold text-slate-800 text-sm mb-1">MHQ: {p.mhq_score}</div>
-                           <div className="text-slate-500 text-xs font-medium">{p.depression_level}</div>
+                           <div className="text-slate-600 text-xs font-semibold">{p.depression_level}</div>
                         </div>
                       </div>
                     ))}
@@ -1820,24 +1870,24 @@ const AdminDashboard = ({ setView }) => {
             <div className="h-full flex flex-col animate-fade-in">
                <h2 className="text-2xl font-black text-slate-800 mb-5">NLP & Sentiment Analytics</h2>
                <div className="grid grid-cols-2 gap-5 flex-1">
-                 <div className={`p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col`}>
+                 <div className={`p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col`}>
                     <h3 className="text-base font-bold text-slate-800 mb-3">Platform Sentiment Trend</h3>
-                    <div className={`flex-1 bg-slate-50 rounded-xl p-3 flex items-end gap-2`}>
+                    <div className={`flex-1 bg-white/15 border border-white/10 rounded-xl p-3 flex items-end gap-2`}>
                       {[40, 60, 30, 80, 90, 50, 70].map((h, i) => (
                         <div key={i} className="flex-1 bg-[#3A7070] rounded-t-md transition-all hover:bg-[#8FA989]" style={{height: `${h}%`}}></div>
                       ))}
                     </div>
-                    <div className="flex justify-between mt-2 text-slate-400 font-bold text-[10px] uppercase tracking-widest"><span>Mon</span><span>Sun</span></div>
+                    <div className="flex justify-between mt-2 text-slate-500 font-bold text-[10px] uppercase tracking-widest"><span>Mon</span><span>Sun</span></div>
                  </div>
-                 <div className={`p-5 rounded-2xl bg-white border border-slate-100 shadow-sm flex flex-col`}>
+                 <div className={`p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col`}>
                     <h3 className="text-base font-bold text-slate-800 mb-4">Top Detected Emotions</h3>
                     <div className="flex flex-col gap-3 flex-1 justify-center overflow-y-auto pr-2">
                        {analytics && analytics.category_distribution && Object.entries(analytics.category_distribution).length > 0 ? Object.entries(analytics.category_distribution).map(([emotion, count], i) => (
                          <div key={i}>
                            <div className="flex justify-between font-bold text-xs text-slate-700 mb-1"><span>{emotion}</span><span>{count} msgs</span></div>
-                           <div className="w-full bg-slate-100 rounded-full h-2.5"><div className="bg-[#3A7070] h-2.5 rounded-full" style={{width: `${Math.min(count * 5, 100)}%`}}></div></div>
+                           <div className="w-full bg-white/15 border border-white/10 rounded-full h-2.5"><div className="bg-[#3A7070] h-2.5 rounded-full" style={{width: `${Math.min(count * 5, 100)}%`}}></div></div>
                          </div>
-                       )) : <div className="text-slate-400 text-sm font-medium">No data available yet.</div>}
+                       )) : <div className="text-slate-500 text-sm font-semibold">No data available yet.</div>}
                     </div>
                  </div>
                </div>
@@ -1845,62 +1895,62 @@ const AdminDashboard = ({ setView }) => {
           ) : activeTab === 'therapists' ? (
             <div className="h-full flex flex-col animate-fade-in">
                <h2 className="text-2xl font-black text-slate-800 mb-5">Therapist Allocation</h2>
-               <div className={`flex-1 rounded-2xl bg-white border border-slate-100 shadow-sm p-5 flex flex-col`}>
-                 <div className="grid grid-cols-1 gap-3 overflow-y-auto">
-                   {patients.filter(p => p.risk === 'Critical' || p.risk === 'High').length === 0 && <div className="text-slate-400 font-medium p-4 text-sm">No critical or high-risk patients needing assignment.</div>}
-                   {patients.filter(p => p.risk === 'Critical' || p.risk === 'High').map((p) => (
-                     <div key={p.id} className={`p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between`}>
-                       <div className="flex items-center gap-3">
-                         <div className={`w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-[#3A7070]`}><User size={18}/></div>
-                         <div>
-                           <h4 className="text-sm font-bold text-slate-800">{p.id} ({p.name})</h4>
-                           <span className={`text-[10px] font-bold ${p.color} uppercase tracking-widest`}>{p.risk} Risk</span>
-                         </div>
-                       </div>
-                       <div className="flex items-center gap-2">
-                         <select id={`doc-select-${p.id}`} className="p-2 rounded-lg bg-white border border-slate-200 outline-none text-xs font-bold text-slate-700 shadow-sm cursor-pointer">
-                           <option value="">Select Doctor</option>
-                           <option value="Dr. Sarah Jenkins">Dr. Sarah Jenkins</option>
-                           <option value="Dr. Arun Kumar">Dr. Arun Kumar</option>
-                           <option value="Dr. Emily Chen">Dr. Emily Chen</option>
-                         </select>
-                         <button onClick={() => {
-                           const sel = document.getElementById(`doc-select-${p.id}`);
-                           if(sel.value) assignTherapist(p.id, sel.value);
-                         }} className={`px-3 py-2 rounded-lg font-bold text-xs bg-white border border-[#3A7070] text-[#3A7070] hover:bg-[#3A7070] hover:text-white transition-colors shadow-sm`}>
-                           {p.assigned_doctor && p.assigned_doctor !== 'Unassigned' ? `Reassign` : 'Assign'}
-                         </button>
-                       </div>
-                     </div>
-                   ))}
-                 </div>
+               <div className={`flex-1 rounded-2xl glass-card border border-white/25 shadow-sm p-5 flex flex-col`}>
+                  <div className="grid grid-cols-1 gap-3 overflow-y-auto">
+                    {patients.filter(p => p.risk === 'Critical' || p.risk === 'High').length === 0 && <div className="text-slate-500 font-semibold p-4 text-sm">No critical or high-risk patients needing assignment.</div>}
+                    {patients.filter(p => p.risk === 'Critical' || p.risk === 'High').map((p) => (
+                      <div key={p.id} className={`p-3 rounded-xl bg-white/20 border border-white/10 flex items-center justify-between`}>
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-full bg-white/30 border border-white/40 shadow-sm flex items-center justify-center text-[#3A7070]`}><User size={18}/></div>
+                          <div>
+                            <h4 className="text-sm font-bold text-slate-800">{p.id} ({p.name})</h4>
+                            <span className={`text-[10px] font-bold ${p.color} uppercase tracking-widest`}>{p.risk} Risk</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <select id={`doc-select-${p.id}`} className="p-2 rounded-lg glass-input outline-none text-xs font-bold text-slate-800 shadow-sm cursor-pointer">
+                            <option value="">Select Doctor</option>
+                            <option value="Dr. Sarah Jenkins">Dr. Sarah Jenkins</option>
+                            <option value="Dr. Arun Kumar">Dr. Arun Kumar</option>
+                            <option value="Dr. Emily Chen">Dr. Emily Chen</option>
+                          </select>
+                          <button onClick={() => {
+                            const sel = document.getElementById(`doc-select-${p.id}`);
+                            if(sel.value) assignTherapist(p.id, sel.value);
+                          }} className={`px-3 py-2 rounded-lg font-bold text-xs bg-white/40 border border-[#3A7070]/30 text-[#3A7070] hover:bg-[#3A7070] hover:text-white transition-all shadow-sm cursor-pointer`}>
+                            {p.assigned_doctor && p.assigned_doctor !== 'Unassigned' ? `Reassign` : 'Assign'}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                </div>
             </div>
           ) : (
             <div className="h-full flex flex-col animate-fade-in">
                <h2 className="text-2xl font-black text-slate-800 mb-5">System Settings</h2>
-               <div className={`flex-1 rounded-2xl bg-white border border-slate-100 shadow-sm p-6 flex flex-col gap-5`}>
-                 <div className={`p-5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between`}>
-                    <div>
-                       <h3 className="text-sm font-bold text-slate-800 mb-1">AI Empathy Level</h3>
-                       <p className="text-xs text-slate-500 font-medium">Adjust the depth of Socratic questioning.</p>
-                    </div>
-                    <input type="range" min="1" max="100" defaultValue="80" className="w-40 accent-[#3A7070]"/>
-                 </div>
-                 <div className={`p-5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between`}>
-                    <div>
-                       <h3 className="text-sm font-bold text-slate-800 mb-1">Emergency Hotlines (iCall India)</h3>
-                       <p className="text-xs text-slate-500 font-medium">Automatically trigger on Critical Risk detection.</p>
-                    </div>
-                    <div className="w-10 h-6 bg-[#8FA989] rounded-full relative cursor-pointer"><div className="absolute right-1 top-1 bg-white w-4 h-4 rounded-full shadow-sm"></div></div>
-                 </div>
-                 <div className={`p-5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between`}>
-                    <div>
-                       <h3 className="text-sm font-bold text-slate-800 mb-1">Clear NLP Cache</h3>
-                       <p className="text-xs text-slate-500 font-medium">Free up memory used by BERT classifier.</p>
-                    </div>
-                    <button className={`px-4 py-2 rounded-lg font-bold text-xs bg-white border border-slate-300 text-slate-700 shadow-sm hover:bg-slate-100 transition-colors`}>Clear Cache</button>
-                 </div>
+               <div className={`flex-1 rounded-2xl glass-card border border-white/25 shadow-sm p-6 flex flex-col gap-5`}>
+                  <div className={`p-5 rounded-xl bg-white/20 border border-white/10 flex items-center justify-between`}>
+                     <div>
+                        <h3 className="text-sm font-bold text-slate-800 mb-1">AI Empathy Level</h3>
+                        <p className="text-xs text-slate-500 font-medium">Adjust the depth of Socratic questioning.</p>
+                     </div>
+                     <input type="range" min="1" max="100" defaultValue="80" className="w-40 accent-[#3A7070] cursor-pointer"/>
+                  </div>
+                  <div className={`p-5 rounded-xl bg-white/20 border border-white/10 flex items-center justify-between`}>
+                     <div>
+                        <h3 className="text-sm font-bold text-slate-800 mb-1">Emergency Hotlines (iCall India)</h3>
+                        <p className="text-xs text-slate-500 font-medium">Automatically trigger on Critical Risk detection.</p>
+                     </div>
+                     <div className="w-10 h-6 bg-[#8FA989] rounded-full relative cursor-pointer"><div className="absolute right-1 top-1 bg-white w-4 h-4 rounded-full shadow-sm"></div></div>
+                  </div>
+                  <div className={`p-5 rounded-xl bg-white/20 border border-white/10 flex items-center justify-between`}>
+                     <div>
+                        <h3 className="text-sm font-bold text-slate-800 mb-1">Clear NLP Cache</h3>
+                        <p className="text-xs text-slate-500 font-medium">Free up memory used by BERT classifier.</p>
+                     </div>
+                     <button className={`px-4 py-2 rounded-lg font-bold text-xs bg-white/40 border border-slate-300 text-slate-700 shadow-sm hover:bg-white/60 transition-all cursor-pointer`}>Clear Cache</button>
+                  </div>
                </div>
             </div>
           )}
@@ -1940,7 +1990,18 @@ export default function App() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&display=swap');
         
-        body { margin: 0; padding: 0; background-color: #F2F9F6; font-family: 'Inter', sans-serif; color: #1E293B; }
+        body {
+          margin: 0;
+          padding: 0;
+          background-image: url('/keffi-bg.png');
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+          background-repeat: no-repeat;
+          background-color: #F2F9F6;
+          font-family: 'Inter', sans-serif;
+          color: #1E293B;
+        }
         h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
         
         .font-poppins { font-family: 'Poppins', sans-serif; }

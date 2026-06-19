@@ -21,6 +21,11 @@ body {
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
+  background-image: url('/keffi-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 /* Hide scrollbar for a clean app look */
@@ -30,4 +35,88 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ==========================================================================
+   GLASSMORPHISM DESIGN SYSTEM TOKENS
+   ========================================================================== */
+
+/* Standard card for grids, dashboard cards, check-in options */
+.glass-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(58, 112, 112, 0.05);
+}
+
+/* hover animation for cards */
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(58, 112, 112, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Large panels e.g., onboarding form, dashboard main panels, admin center */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px) saturate(135%);
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 32px 0 rgba(58, 112, 112, 0.08);
+}
+
+/* Transparent panel for dashboard main body wrap */
+.glass-panel-main {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Floating Navigation Header */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(58, 112, 112, 0.04);
+}
+
+/* Form controls and inputs */
+.glass-input {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease-in-out;
+}
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.65);
+  border-color: rgba(58, 112, 112, 0.45);
+  box-shadow: 0 0 0 4px rgba(58, 112, 112, 0.12);
+  outline: none;
+}
+
+/* Dashboard Sidebar background */
+.glass-sidebar {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Chat Message Bubbles */
+.glass-message-user {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-message-keffi {
+  background: rgba(58, 112, 112, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(58, 112, 112, 0.15);
 }
