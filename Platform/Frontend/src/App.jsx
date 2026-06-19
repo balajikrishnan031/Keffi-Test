@@ -218,7 +218,7 @@ const LandingPage = ({ setView }) => {
                 <Sparkles size={16} className="text-[#3A7070]" /> Keffi is an Emotion Engine
               </div>
               <h1 className="font-poppins font-black text-2xl md:text-5xl lg:text-6xl text-slate-900 mb-4 md:mb-6 leading-tight md:leading-[1.1]">
-                Bridging the <br className="block md:hidden" /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-blue-600">Invisible Gap</span> <br className="hidden md:block"/>in Mental Healthcare.
+                Bridging the <br className="block md:hidden" /><span className="cursive-accent text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-blue-600">Invisible Gap</span> <br className="hidden md:block"/>in Mental Healthcare.
               </h1>
               
               <p className="font-inter text-xs md:text-lg text-slate-600 leading-relaxed md:leading-relaxed max-w-lg mb-6 font-medium">
@@ -264,7 +264,7 @@ const LandingPage = ({ setView }) => {
              </div>
 
              <div className="flex-1 flex flex-col items-start text-left">
-              <h2 className="h2-title font-poppins text-slate-900 mb-8">The Silent Crisis We Ignore.</h2>
+              <h2 className="h2-title font-poppins text-slate-900 mb-8">The Silent <span className="cursive-accent">Crisis</span> We Ignore.</h2>
               <div className="space-y-6">
                 <p className="p-text">
                   Therapy typically happens for one hour a week. But emotional struggles don't follow a schedule. What happens during the remaining 167 hours? Patients are left alone to fight their anxiety, burnout, and depression in silence.
@@ -352,7 +352,7 @@ const LandingPage = ({ setView }) => {
             </div>
 
             <div className="flex-1 flex flex-col items-start text-left">
-              <h2 className="h2-title font-poppins text-slate-900 mb-8">An Engine Built on Empathy.</h2>
+              <h2 className="h2-title font-poppins text-slate-900 mb-8">An Engine Built on <span className="cursive-accent">Empathy</span>.</h2>
               <div className="space-y-6">
                 <p className="p-text">
                   Behind the calming interface lies a robust Triple-AI Architecture. We don't rely on simple prompts. Keffi is powered by a custom-trained clinical classification system that understands the deepest nuances of human emotion.
@@ -372,7 +372,7 @@ const LandingPage = ({ setView }) => {
              <div className="h-48 flex items-end justify-center mb-10">
                <img src="https://illustrations.popsy.co/amber/success.svg" alt="Patient Sanctuary" className="h-full drop-shadow-xl" />
              </div>
-             <h2 className="h2-title font-poppins text-slate-900 mb-6">For Patients.<br/>The Sanctuary.</h2>
+              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Patients.<br/>The <span className="cursive-accent">Sanctuary</span>.</h2>
              <p className="p-text text-slate-600 mb-10 max-w-sm font-medium">
                A completely judgment-free zone to vent, track your shifting moods, and receive real-time emotional first-aid without having to wait weeks for an appointment.
              </p>
@@ -386,7 +386,7 @@ const LandingPage = ({ setView }) => {
              <div className="h-48 flex items-end justify-center mb-10">
                <img src="https://illustrations.popsy.co/amber/video-call.svg" alt="Clinical Hub" className="h-full drop-shadow-2xl" />
              </div>
-             <h2 className="h2-title font-poppins text-slate-900 mb-6">For Clinicians.<br/>The Hub.</h2>
+              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Clinicians.<br/>The <span className="cursive-accent">Hub</span>.</h2>
              <p className="p-text text-slate-600 mb-10 max-w-sm font-medium">
                A predictive dashboard giving you a real-time view of your entire roster's emotional trajectory. If a patient shows signs of relapse, Keffi alerts you instantly.
              </p>
@@ -401,7 +401,7 @@ const LandingPage = ({ setView }) => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-500/5 rounded-full blur-[120px]"></div>
           <div className="max-w-[800px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
              <div className="w-24 h-24 mb-10 text-red-500 animate-pulse"><Shield size={96} strokeWidth={1} /></div>
-             <h2 className="h2-title font-poppins text-slate-900 mb-8">Clinical Safety First. Always.</h2>
+              <h2 className="h2-title font-poppins text-slate-900 mb-8">Clinical <span className="cursive-accent text-red-500">Safety First</span>. Always.</h2>
              <p className="p-text text-slate-600 max-w-3xl font-medium">
                Built with strict WHO-compliant crisis protocols and the n8n automation engine, Keffi continuously monitors conversations for high-risk signals. In moments of severe distress or suicidal ideation, it overrides AI independence and instantly triggers an SOS alert to emergency contacts and your clinical supervisor. 
                <br/><br/>
@@ -1170,10 +1170,10 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
           return (
             <div key={m.id} className={`flex w-full ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}>
               <div className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%]`}>
-                <div className={`whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-semibold leading-relaxed rounded-[1.5rem] ${
+                <div className={`whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-medium leading-relaxed rounded-[1.5rem] ${
                   m.sender === 'user' 
                   ? 'glass-message-user text-slate-800 rounded-tr-sm shadow-sm' 
-                  : 'glass-message-keffi text-[#2C5555] rounded-tl-sm'
+                  : 'glass-message-keffi text-[#1A2E2E] rounded-tl-sm'
                 }`}>
                   {mainText}
                 </div>
@@ -1993,7 +1993,13 @@ export default function App() {
   return (
     <div className="font-inter min-h-screen w-full">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@1,500;1,700&display=swap');
+        
+        .cursive-accent {
+          font-family: 'Playfair Display', serif;
+          font-style: italic;
+          font-weight: 700;
+        }
         
         body {
           margin: 0;
