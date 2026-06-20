@@ -7,10 +7,24 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ==========================================
-# GROQ API SETTINGS
+# GROQ API SETTINGS & ROTATION
 # ==========================================
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", "YOUR_GROQ_API_KEY_HERE")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+
+def _get_groq_keys():
+    """Dynamically compile all available Groq API keys from environment variables."""
+    keys = []
+    # 1. Try numbered keys GROQ_API_KEY_1, GROQ_API_KEY_2, GROQ_API_KEY_3, etc.
+    for i in range(1, 6):
+        key = os.getenv(f"GROQ_API_KEY_{i}")
+        if key and key.strip() and key != "YOUR_GROQ_API_KEY_HERE":
+            keys.append(key.strip())
+    # 2. Try the default GROQ_API_KEY
+    default_key = os.getenv("GROQ_API_KEY")
+    if default_key and default_key.strip() and default_key != "YOUR_GROQ_API_KEY_HERE":
+        if default_key.strip() not in keys:
+            keys.insert(0, default_key.strip())
+    return keys
 
 KEFFI_SYSTEM_PROMPT = """You are Keffi, an advanced Clinical Emotion AI and Master Clinical Psychologist. 
 You possess deep, comprehensive knowledge of all aspects of mental health, clinical psychology, psychiatry, neurobiology, and the DSM-5. 
@@ -47,22 +61,17 @@ Example: |||OPTION||| Show me how to untangle my thoughts
 def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
     """
     Calls Groq (Llama-3) directly from Python to get Keffi's therapeutic reply.
+    Rotates through available Groq API keys if rate limits or errors are encountered.
     """
-    
-    # If the user hasn't added a key yet, fallback immediately to trigger ChatGPT
-    if not GROQ_API_KEY or GROQ_API_KEY == "YOUR_GROQ_API_KEY_HERE":
-        err_msg = "[GROQ ERROR] API Key not set in Hugging Face Secrets."
+    keys = _get_groq_keys()
+    if not keys:
+        err_msg = "[GROQ ERROR] No API Keys set in environment variables."
         print(err_msg)
         return err_msg
 
     full_prompt = patient_message
     if clinical_context:
         full_prompt = f"[Context: {clinical_context}]\n\nPatient says: {patient_message}"
-
-    headers = {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type": "application/json"
-    }
 
     payload = {
         "model": "llama-3.1-8b-instant",  # Active Groq model
@@ -74,32 +83,48 @@ def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
         "max_tokens": 500
     }
 
-    try:
-        response = requests.post(GROQ_URL, headers=headers, json=payload, timeout=15)
-        if response.status_code == 200:
-            data = response.json()
-            reply = data["choices"][0]["message"]["content"]
-            return reply.strip()
-        else:
-            err_msg = f"[GROQ ERROR] Status {response.status_code}: {response.text[:200]}"
-            print(err_msg)
-            return err_msg
-    except Exception as e:
-        err_msg = f"[GROQ ERROR Exception] {e}"
-        print(err_msg)
-        return err_msg
+    last_err = ""
+    for idx, key in enumerate(keys):
+        headers = {
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json"
+        }
+        try:
+            print(f"[GROQ ROTATOR] Trying API key {idx + 1}/{len(keys)}...")
+            response = requests.post(GROQ_URL, headers=headers, json=payload, timeout=12)
+            if response.status_code == 200:
+                data = response.json()
+                reply = data["choices"][0]["message"]["content"]
+                return reply.strip()
+            elif response.status_code == 429:
+                print(f"[GROQ ROTATOR] Key {idx + 1} hit rate limit (429). Trying next...")
+                last_err = f"Rate Limit (429): {response.text[:100]}"
+            else:
+                print(f"[GROQ ROTATOR] Key {idx + 1} failed with status {response.status_code}.")
+                last_err = f"Status {response.status_code}: {response.text[:100]}"
+        except Exception as e:
+            print(f"[GROQ ROTATOR] Key {idx + 1} exception: {e}")
+            last_err = str(e)
+
+    # If all keys failed
+    err_msg = f"[GROQ ERROR All Keys Failed] Last error: {last_err}"
+    print(err_msg)
+    return err_msg
 
 def evaluate_safety(ai_reply: str) -> bool:
     """MIND-SAFE Protocol: Uses Groq to verify if the generated reply is safe."""
-    if not GROQ_API_KEY or GROQ_API_KEY == "YOUR_GROQ_API_KEY_HERE": return True
+    keys = _get_groq_keys()
+    if not keys: return True
     prompt = f"Review the following AI response to a patient. Is it completely safe, empathetic, and free of medical prescriptions or dangerous advice? Reply STRICTLY with the word 'SAFE' or 'UNSAFE'. No other text.\n\nAI RESPONSE: '{ai_reply}'"
-    headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
     payload = {"model": "llama3-8b-8192", "messages": [{"role": "user", "content": prompt}], "temperature": 0.1, "max_tokens": 10}
-    try:
-        response = requests.post(GROQ_URL, headers=headers, json=payload, timeout=5)
-        if response.status_code == 200:
-            decision = response.json()["choices"][0]["message"]["content"].strip().upper()
-            return "SAFE" in decision
-    except:
-        pass
+    
+    for idx, key in enumerate(keys):
+        headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+        try:
+            response = requests.post(GROQ_URL, headers=headers, json=payload, timeout=5)
+            if response.status_code == 200:
+                decision = response.json()["choices"][0]["message"]["content"].strip().upper()
+                return "SAFE" in decision
+        except:
+            pass
     return True
