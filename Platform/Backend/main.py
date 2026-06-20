@@ -1,5 +1,5 @@
 import traceback
-from fastapi import FastAPI, BackgroundTasks, Depends
+from fastapi import FastAPI, BackgroundTasks, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from transformers import pipeline
@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 import requests
 
-from clinical_db import get_db, get_or_create_patient, calculate_mhq_delta, update_mhq_score, Patient, ChatMessage
+from clinical_db import get_db, get_or_create_patient, calculate_mhq_delta, update_mhq_score, Patient, ChatMessage, MoodCheckIn
 from clinical_ai import analyze_clinical_state, analyze_intent
 from memory_engine import memory_engine
 
@@ -58,6 +58,15 @@ class AppointmentRequest(BaseModel):
     phone: str = ""
     email: str = ""
     name: str = ""
+
+class MoodCheckInRequest(BaseModel):
+    patient_id: str
+    emoji_score: int
+    sentiment_label: str
+
+class AssignTherapistRequest(BaseModel):
+    patient_id: str
+    doctor_name: str
 
 # ----------------------------------------------------------
 # BACKGROUND: Send SOS Alert to n8n
@@ -693,6 +702,10 @@ async def get_patients(db: Session = Depends(get_db)):
     roster = []
     for p in patients:
         last_log = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id).order_by(ChatMessage.timestamp.desc()).first()
+        recent_msgs = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id).order_by(ChatMessage.timestamp.desc()).limit(5).all()
+        recent_msgs.reverse()
+        logs_list = [m.message for m in recent_msgs] if recent_msgs else ["No recent logs"]
+
         msg_count = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id).count()
         sos_count = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id, ChatMessage.is_sos == True).count()
         category = last_log.clinical_category if last_log else "General"
@@ -705,10 +718,12 @@ async def get_patients(db: Session = Depends(get_db)):
             "id": p.patient_id,
             "name": p.name or "Anonymous",
             "mhq": round(p.mhq_score or 70, 1),
+            "score": round(p.mhq_score or 70, 1),
             "trend": p.mhq_trend or "Stable",
             "depression_level": p.depression_level or "Minimal",
             "attrition": round(p.attrition_probability or 0, 1),
             "category": category,
+            "condition": category,
             "risk": risk,
             "color": color,
             "last_seen": last_seen,
@@ -717,7 +732,8 @@ async def get_patients(db: Session = Depends(get_db)):
             "sos_count": sos_count,
             "last_message": last_message,
             "assigned_doctor": getattr(p, "assigned_doctor", "Unassigned") or "Unassigned",
-            "recent_logs": [last_log.message[:100]] if last_log else ["No recent logs"]
+            "recent_logs": logs_list,
+            "logs": logs_list
         })
     return {"patients": roster}
 
@@ -788,6 +804,107 @@ async def get_patient_chat(patient_id: str, db: Session = Depends(get_db)):
         history.append({"sender": "User", "message": c.message, "timestamp": str(c.timestamp)[:16], "emotion": c.bert_emotion})
         history.append({"sender": "Keffi", "message": c.ai_reply, "timestamp": str(c.timestamp)[:16], "clinical_state": c.clinical_state})
     return {"history": history}
+
+# ----------------------------------------------------------
+# MISSING FRONTEND-SUPPORT ENDPOINTS
+# ----------------------------------------------------------
+
+@app.post("/api/patient/check-in")
+async def mood_check_in(req: MoodCheckInRequest, db: Session = Depends(get_db)):
+    try:
+        # Log mood checkin
+        checkin = MoodCheckIn(
+            patient_id=req.patient_id,
+            emoji_score=req.emoji_score,
+            sentiment_label=req.sentiment_label
+        )
+        db.add(checkin)
+        db.commit()
+
+        # Adjust MHQ slightly based on mood
+        delta = 0.0
+        if req.emoji_score == 5:
+            delta = 2.0
+        elif req.emoji_score == 4:
+            delta = 1.0
+        elif req.emoji_score == 2:
+            delta = -1.0
+        elif req.emoji_score == 1:
+            delta = -2.0
+
+        patient = get_or_create_patient(db, req.patient_id)
+        update_mhq_score(db, patient, delta)
+
+        return {"status": "success", "message": "Mood checked in successfully", "new_mhq": patient.mhq_score}
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/admin/assign-therapist")
+async def assign_therapist(req: AssignTherapistRequest, db: Session = Depends(get_db)):
+    try:
+        patient = db.query(Patient).filter(Patient.patient_id == req.patient_id).first()
+        if not patient:
+            patient = Patient(patient_id=req.patient_id)
+            db.add(patient)
+        patient.assigned_doctor = req.doctor_name
+        db.commit()
+        db.refresh(patient)
+        return {"status": "success", "message": f"Successfully assigned {req.doctor_name} to {req.patient_id}"}
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/patient/{patient_id}/report")
+async def get_patient_report(patient_id: str, db: Session = Depends(get_db)):
+    try:
+        patient = db.query(Patient).filter(Patient.patient_id == patient_id).first()
+        if not patient:
+            raise HTTPException(status_code=404, detail="Patient not found")
+
+        messages = db.query(ChatMessage).filter(ChatMessage.patient_id == patient_id).order_by(ChatMessage.timestamp.asc()).all()
+
+        emotions = set()
+        clinical_states = set()
+        clinical_categories = set()
+        for m in messages:
+            if m.bert_emotion:
+                emotions.add(m.bert_emotion)
+            if m.clinical_state:
+                clinical_states.add(m.clinical_state)
+            if m.clinical_category:
+                clinical_categories.add(m.clinical_category)
+
+        emotions_str = ", ".join(emotions) if emotions else "None detected"
+        states_str = ", ".join(clinical_states) if clinical_states else "None detected"
+        categories_str = ", ".join(clinical_categories) if clinical_categories else "None detected"
+
+        total_msgs = len(messages)
+        if total_msgs == 0:
+            abstract = "No chat transcripts available yet. The patient has registered but has not interacted with Keffi Clinical AI."
+        else:
+            abstract = (
+                f"Patient has engaged in {total_msgs} exchanges with Keffi Clinical AI.\n"
+                f"Primary clinical categories flagged: {categories_str}.\n"
+                f"Specific clinical states detected: {states_str}.\n"
+                f"Prevalent emotional states: {emotions_str}.\n\n"
+                f"Clinical Summary and Progression Analysis:\n"
+                f"Key Interactions:\n"
+            )
+            for m in messages[-5:]:
+                abstract += f"- [{m.timestamp.strftime('%Y-%m-%d %H:%M') if m.timestamp else 'N/A'}] ({m.clinical_category or 'General'}): \"{m.message[:60]}...\" -> Response: {m.clinical_state or 'neutral'}\n"
+
+        return {
+            "name": patient.name or "Anonymous",
+            "patient_id": patient.patient_id,
+            "current_mhq": round(patient.mhq_score or 70.0, 1),
+            "depression_level": patient.depression_level or "Moderate",
+            "assigned_doctor": patient.assigned_doctor or "Unassigned",
+            "clinical_abstract": abstract
+        }
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
