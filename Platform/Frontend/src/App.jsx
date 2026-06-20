@@ -206,19 +206,19 @@ const LandingPage = ({ setView }) => {
       <main className="relative z-10 w-full">
         
         {/* 🚀 SECTION 1: THE HERO (Gradient Layout) */}
-        <section className="w-full min-h-[90vh] flex items-center relative overflow-hidden pt-24 pb-12">
+        <section className="w-full min-h-[90vh] flex items-center relative overflow-hidden pt-24 pb-12 animate-fade-in">
           {/* Soft Blue/Green Gradient Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#E6F0F0]/40 via-white/40 to-[#E8F4F8]/40 backdrop-blur-md z-0"></div>
           <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#3A7070]/5 rounded-full blur-[100px] z-0"></div>
           <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[100px] z-0"></div>
 
           <div className="max-w-[1200px] mx-auto px-4 lg:px-12 flex flex-row items-center justify-between gap-2 md:gap-12 lg:gap-20 relative z-10 w-full">
-            <div className="flex flex-col items-start text-left w-[60%] md:flex-1 z-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full glass-card border border-white/30 text-[#3A7070] font-bold text-[10px] md:text-sm mb-4 shadow-sm">
+            <div className="flex flex-col items-start text-left w-[60%] md:flex-1 z-20 animate-slide-in-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full glass-card border border-white/30 text-[#3A7070] font-bold text-[10px] md:text-sm mb-4 shadow-sm hover:scale-102 transition-transform">
                 <Sparkles size={16} className="text-[#3A7070]" /> Keffi is an Emotion Engine
               </div>
               <h1 className="font-poppins font-black text-2xl md:text-5xl lg:text-6xl text-slate-900 mb-4 md:mb-6 leading-tight md:leading-[1.1]">
-                Bridging the <br className="block md:hidden" /><span className="cursive-accent text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-blue-600">Invisible Gap</span> <br className="hidden md:block"/>in Mental Healthcare.
+                Bridging the <br className="block md:hidden" /><span className="cursive-accent text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-[#8FA989]">Invisible Gap</span> <br className="hidden md:block"/>in Mental Healthcare.
               </h1>
               
               <p className="font-inter text-xs md:text-lg text-slate-600 leading-relaxed md:leading-relaxed max-w-lg mb-6 font-medium">
@@ -226,17 +226,17 @@ const LandingPage = ({ setView }) => {
               </p>
               
               <div className="flex flex-col sm:flex-row items-start gap-3 w-full sm:w-auto mt-2">
-                <button onClick={() => setView('login-patient')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white font-inter font-bold text-xs md:text-lg shadow-[0_10px_20px_rgba(58,112,112,0.25)] md:shadow-[0_20px_40px_rgba(58,112,112,0.35)] hover:-translate-y-0.5 transition-all overflow-hidden flex items-center justify-center gap-2 md:gap-3 cursor-pointer">
+                <button onClick={() => setView('login-patient')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white font-inter font-bold text-xs md:text-lg shadow-[0_10px_20px_rgba(58,112,112,0.25)] md:shadow-[0_20px_40px_rgba(58,112,112,0.35)] hover:-translate-y-1 hover:scale-102 transition-all overflow-hidden flex items-center justify-center gap-2 md:gap-3 cursor-pointer">
                   <div className="absolute inset-0 bg-white/20 blur-md transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                   🌟 <span className="hidden md:inline">Enter Keffi Chat</span><span className="inline md:hidden">Chat</span> <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform"/>
                 </button>
-                <button onClick={() => setView('login-admin')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-white/40 backdrop-blur-sm border border-white/30 text-[#3A7070] font-inter font-bold text-xs md:text-lg shadow-sm hover:shadow-md hover:border-[#3A7070]/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 md:gap-3 cursor-pointer">
+                <button onClick={() => setView('login-admin')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-white/40 backdrop-blur-sm border border-white/30 text-[#3A7070] font-inter font-bold text-xs md:text-lg shadow-sm hover:shadow-md hover:border-[#3A7070]/30 hover:-translate-y-1 hover:scale-102 transition-all flex items-center justify-center gap-2 md:gap-3 cursor-pointer">
                   🩺 <span className="hidden md:inline">Doctor / Clinical Hub</span><span className="inline md:hidden">Clinic</span>
                 </button>
               </div>
             </div>
             
-            <div className="flex justify-end relative w-[40%] md:flex-1 max-w-[600px] transform scale-[0.45] md:scale-100 origin-right md:origin-center z-10">
+            <div className="flex justify-end relative w-[40%] md:flex-1 max-w-[600px] transform scale-[0.45] md:scale-100 origin-right md:origin-center z-10 animate-slide-in-right">
                <div className="relative w-80 h-80 flex items-center justify-center">
                   <div className="absolute inset-0 bg-[#3A7070] rounded-full blur-[80px] opacity-25 animate-pulse"></div>
                   <div className="absolute inset-4 bg-emerald-400 rounded-full blur-[40px] opacity-15"></div>
@@ -247,8 +247,8 @@ const LandingPage = ({ setView }) => {
                   </div>
                   
                   {/* Orbiting elements */}
-                  <div className="absolute top-0 right-10 w-16 h-16 bg-white rounded-full shadow-xl flex items-center justify-center border border-emerald-100 text-emerald-500 transform hover:scale-110 transition-transform z-20"><Heart size={28} className="fill-emerald-100"/></div>
-                  <div className="absolute bottom-10 left-0 w-20 h-20 bg-white rounded-full shadow-xl flex items-center justify-center border border-slate-100 text-[#3A7070] transform hover:scale-110 transition-transform z-20"><MessageCircle size={36} className="fill-slate-50"/></div>
+                  <div className="absolute top-0 right-10 w-16 h-16 bg-white rounded-full shadow-xl flex items-center justify-center border border-emerald-100 text-emerald-500 transform hover:scale-110 transition-transform z-20 animate-float"><Heart size={28} className="fill-emerald-100"/></div>
+                  <div className="absolute bottom-10 left-0 w-20 h-20 bg-white rounded-full shadow-xl flex items-center justify-center border border-slate-100 text-[#3A7070] transform hover:scale-110 transition-transform z-20 animate-float" style={{animationDelay: '1.5s'}}><MessageCircle size={36} className="fill-slate-50"/></div>
                </div>
             </div>
           </div>
@@ -259,8 +259,8 @@ const LandingPage = ({ setView }) => {
           <div className="max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row-reverse items-center gap-24 relative">
              <div className="absolute top-10 left-0 text-[300px] font-poppins font-bold text-slate-100 opacity-50 z-[-1] leading-none select-none">01</div>
             
-             <div className="flex-1 flex justify-center lg:justify-start">
-               <img src="https://illustrations.popsy.co/amber/surreal-hourglass.svg" alt="Hourglass Drawing" className="w-full max-w-[500px] drop-shadow-xl" />
+             <div className="flex-1 flex justify-center lg:justify-start animate-fade-in">
+               <img src="https://illustrations.popsy.co/amber/surreal-hourglass.svg" alt="Hourglass Drawing" className="w-full max-w-[500px] drop-shadow-xl animate-float" />
              </div>
 
              <div className="flex-1 flex flex-col items-start text-left">
@@ -290,33 +290,33 @@ const LandingPage = ({ setView }) => {
                 <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 bg-gradient-to-b from-[#3A7070]/20 via-[#8FA989]/20 to-transparent"></div>
                 
                 {/* Step 1 */}
-                <div className="w-full flex justify-between items-center mb-24 relative">
+                <div className="w-full flex justify-between items-center mb-24 relative hover:scale-102 transition-transform duration-300 cursor-pointer group animate-fade-in">
                    <div className="w-[45%] text-right pr-10">
-                     <h3 className="h3-title font-poppins text-slate-900 mb-3">1. You Express.</h3>
-                     <p className="p-small">Enter the Sanctuary whenever anxiety hits. Type or speak your thoughts into Keffi exactly as you feel them, without fear of judgment.</p>
+                     <h3 className="h3-title font-poppins text-slate-900 mb-3 group-hover:text-[#3A7070] transition-colors">1. You Express.</h3>
+                     <p className="p-small font-medium">Enter the Sanctuary whenever anxiety hits. Type or speak your thoughts into Keffi exactly as you feel them, without fear of judgment.</p>
                    </div>
-                   <div className="w-16 h-16 rounded-full bg-white border-4 border-[#3A7070] flex items-center justify-center text-[#3A7070] z-10 shadow-lg font-bold text-xl">1</div>
-                   <div className="w-[45%] text-left pl-10 opacity-50"><MessageCircle size={64}/></div>
+                   <div className="w-16 h-16 rounded-full bg-white border-4 border-[#3A7070] flex items-center justify-center text-[#3A7070] z-10 shadow-lg font-bold text-xl group-hover:bg-[#3A7070] group-hover:text-white transition-all">1</div>
+                   <div className="w-[45%] text-left pl-10 opacity-40 group-hover:opacity-80 group-hover:translate-x-2 transition-all"><MessageCircle size={64} className="text-[#3A7070]"/></div>
                 </div>
 
                 {/* Step 2 */}
-                <div className="w-full flex justify-between items-center mb-24 relative">
-                   <div className="w-[45%] text-right pr-10 opacity-50 flex justify-end"><Brain size={64}/></div>
-                   <div className="w-16 h-16 rounded-full bg-[#3A7070] border-4 border-white flex items-center justify-center text-white z-10 shadow-lg font-bold text-xl">2</div>
+                <div className="w-full flex justify-between items-center mb-24 relative hover:scale-102 transition-transform duration-300 cursor-pointer group animate-fade-in">
+                   <div className="w-[45%] text-right pr-10 opacity-40 group-hover:opacity-80 group-hover:-translate-x-2 transition-all flex justify-end"><Brain size={64} className="text-[#3A7070]"/></div>
+                   <div className="w-16 h-16 rounded-full bg-[#3A7070] border-4 border-white flex items-center justify-center text-white z-10 shadow-lg font-bold text-xl group-hover:bg-white group-hover:text-[#3A7070] group-hover:border-[#3A7070] transition-all">2</div>
                    <div className="w-[45%] text-left pl-10">
-                     <h3 className="h3-title font-poppins text-slate-900 mb-3">2. Keffi Analyzes.</h3>
-                     <p className="p-small">Behind the scenes, Keffi's BERT engine detects your exact emotional state across 96 fine-grained categories, pulling from your Pinecone memory history.</p>
+                     <h3 className="h3-title font-poppins text-slate-900 mb-3 group-hover:text-[#3A7070] transition-colors">2. Keffi Analyzes.</h3>
+                     <p className="p-small font-medium">Behind the scenes, Keffi's BERT engine detects your exact emotional state across 96 fine-grained categories, pulling from your Pinecone memory history.</p>
                    </div>
                 </div>
 
                 {/* Step 3 */}
-                <div className="w-full flex justify-between items-center relative">
+                <div className="w-full flex justify-between items-center relative hover:scale-102 transition-transform duration-300 cursor-pointer group animate-fade-in">
                    <div className="w-[45%] text-right pr-10">
-                     <h3 className="h3-title font-poppins text-slate-900 mb-3">3. Immediate Relief.</h3>
-                     <p className="p-small">Keffi dynamically responds using 1 of 7 therapeutic modes—from guiding a breathing exercise to reframing negative thoughts using CBT principles.</p>
+                     <h3 className="h3-title font-poppins text-slate-900 mb-3 group-hover:text-[#3A7070] transition-colors">3. Immediate Relief.</h3>
+                     <p className="p-small font-medium">Keffi dynamically responds using 1 of 7 therapeutic modes—from guiding a breathing exercise to reframing negative thoughts using CBT principles.</p>
                    </div>
-                   <div className="w-16 h-16 rounded-full bg-[#8FA989] border-4 border-white flex items-center justify-center text-white z-10 shadow-lg font-bold text-xl">3</div>
-                   <div className="w-[45%] text-left pl-10 opacity-50"><Heart size={64}/></div>
+                   <div className="w-16 h-16 rounded-full bg-[#8FA989] border-4 border-white flex items-center justify-center text-white z-10 shadow-lg font-bold text-xl group-hover:bg-white group-hover:text-[#8FA989] group-hover:border-[#8FA989] transition-all">3</div>
+                   <div className="w-[45%] text-left pl-10 opacity-40 group-hover:opacity-80 group-hover:translate-x-2 transition-all"><Heart size={64} className="text-[#8FA989]"/></div>
                 </div>
              </div>
            </div>
@@ -329,22 +329,22 @@ const LandingPage = ({ setView }) => {
             
             <div className="flex-1 grid grid-cols-2 gap-6 relative">
               <div className="absolute -inset-4 bg-gradient-to-tr from-[#3A7070]/10 to-[#8FA989]/10 rounded-[3rem] blur-xl z-[-1]"></div>
-              <div className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 transform translate-y-8">
+              <div style={{animationDelay: '100ms'}} className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 transform translate-y-8 hover:shadow-lg animate-slide-up">
                 <div className="w-12 h-12 bg-[#3A7070]/10 text-[#3A7070] rounded-full flex items-center justify-center"><Activity size={24}/></div>
                 <h4 className="font-poppins font-bold text-lg text-slate-800">96-State BERT</h4>
                 <p className="text-sm text-slate-500 font-medium">Not just "sad". Keffi detects complex states like Atypical Depression.</p>
               </div>
-              <div className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4">
+              <div style={{animationDelay: '200ms'}} className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 hover:shadow-lg animate-slide-up">
                 <div className="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-full flex items-center justify-center"><Database size={24}/></div>
                 <h4 className="font-poppins font-bold text-lg text-slate-800">Pinecone Memory</h4>
                 <p className="text-sm text-slate-500 font-medium">Vector memory ensures Keffi never forgets your past triggers or progress.</p>
               </div>
-              <div className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 transform translate-y-8">
+              <div style={{animationDelay: '300ms'}} className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 transform translate-y-8 hover:shadow-lg animate-slide-up">
                 <div className="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-full flex items-center justify-center"><Target size={24}/></div>
                 <h4 className="font-poppins font-bold text-lg text-slate-800">Dynamic MHQ</h4>
                 <p className="text-sm text-slate-500 font-medium">Silent, continuous evaluation of your Mental Health Quotient during chats.</p>
               </div>
-              <div className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4">
+              <div style={{animationDelay: '400ms'}} className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 hover:shadow-lg animate-slide-up">
                 <div className="w-12 h-12 bg-rose-500/10 text-rose-600 rounded-full flex items-center justify-center"><Zap size={24}/></div>
                 <h4 className="font-poppins font-bold text-lg text-slate-800">7-Mode Engine</h4>
                 <p className="text-sm text-slate-500 font-medium">Switches seamlessly between active listening, CBT reframing, and crisis mode.</p>
@@ -368,11 +368,11 @@ const LandingPage = ({ setView }) => {
         {/* 🚀 SECTION 5: DUAL PLATFORM (True Split-Screen) */}
         <section className="scroll-3d w-full flex flex-col lg:flex-row mt-20 border-y border-white/20 transition-all duration-75 ease-out bg-white/20 backdrop-blur-md">
            {/* Left Side: Patient (Light) */}
-           <div className="flex-1 bg-[#F2F9F6]/20 p-16 lg:p-24 flex flex-col items-center text-center border-r border-white/10">
-             <div className="h-48 flex items-end justify-center mb-10">
+           <div className="flex-1 bg-[#F2F9F6]/20 p-16 lg:p-24 flex flex-col items-center text-center border-r border-white/10 hover:bg-[#F2F9F6]/40 transition-all duration-500 group">
+             <div className="h-48 flex items-end justify-center mb-10 group-hover:scale-105 transition-transform duration-500">
                <img src="https://illustrations.popsy.co/amber/success.svg" alt="Patient Sanctuary" className="h-full drop-shadow-xl" />
              </div>
-              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Patients.<br/>The <span className="cursive-accent">Sanctuary</span>.</h2>
+              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Patients.<br/>The <span className="cursive-accent text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-[#8FA989]">Sanctuary</span>.</h2>
              <p className="p-text text-slate-600 mb-10 max-w-sm font-medium">
                A completely judgment-free zone to vent, track your shifting moods, and receive real-time emotional first-aid without having to wait weeks for an appointment.
              </p>
@@ -382,11 +382,11 @@ const LandingPage = ({ setView }) => {
            </div>
 
            {/* Right Side: Doctor (Light) */}
-           <div className="flex-1 bg-white/15 p-16 lg:p-24 flex flex-col items-center text-center border-l border-white/10">
-             <div className="h-48 flex items-end justify-center mb-10">
+           <div className="flex-1 bg-white/15 p-16 lg:p-24 flex flex-col items-center text-center border-l border-white/10 hover:bg-white/30 transition-all duration-500 group">
+             <div className="h-48 flex items-end justify-center mb-10 group-hover:scale-105 transition-transform duration-500">
                <img src="https://illustrations.popsy.co/amber/video-call.svg" alt="Clinical Hub" className="h-full drop-shadow-2xl" />
              </div>
-              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Clinicians.<br/>The <span className="cursive-accent">Hub</span>.</h2>
+              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Clinicians.<br/>The <span className="cursive-accent text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-teal-700">Hub</span>.</h2>
              <p className="p-text text-slate-600 mb-10 max-w-sm font-medium">
                A predictive dashboard giving you a real-time view of your entire roster's emotional trajectory. If a patient shows signs of relapse, Keffi alerts you instantly.
              </p>
@@ -524,9 +524,9 @@ const PatientLogin = ({ setView, setUserData }) => {
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-6 md:p-10 bg-transparent`}>
-      <div className={`max-w-5xl w-full min-h-[700px] lg:h-[700px] rounded-[2.5rem] glass-panel flex flex-col md:flex-row overflow-hidden border border-white/20`}>
+      <div className={`max-w-5xl w-full min-h-[700px] lg:h-[700px] rounded-[2.5rem] glass-panel flex flex-col md:flex-row overflow-hidden border border-white/20 animate-scale-up`}>
         {/* Left Image Side */}
-        <div className="hidden md:flex md:w-5/12 relative overflow-hidden bg-[#E6F0F0]/25 rounded-l-[2.5rem] items-center justify-center p-8 border-r border-white/20">
+        <div className="hidden md:flex md:w-5/12 relative overflow-hidden bg-[#E6F0F0]/25 rounded-l-[2.5rem] items-center justify-center p-8 border-r border-white/20 animate-fade-in">
            <DynamicLoginIllustration step={step} className="w-full h-full max-w-[300px] object-contain relative z-10 drop-shadow-2xl transition-all duration-500" />
            <div className="absolute inset-0 bg-gradient-to-t from-[#2C5555]/30 via-transparent to-transparent flex flex-col justify-end p-12 text-[#1E293B] z-20">
               <h2 className="text-3xl font-black mb-3">
@@ -541,7 +541,7 @@ const PatientLogin = ({ setView, setUserData }) => {
         </div>
         
         {/* Right Form Side */}
-        <div className="w-full md:w-7/12 p-10 md:p-16 flex flex-col justify-center bg-white/25 backdrop-blur-sm">
+        <div className="w-full md:w-7/12 p-10 md:p-16 flex flex-col justify-center bg-white/25 backdrop-blur-sm animate-fade-in" style={{animationDelay: '100ms'}}>
           <div className="flex justify-start gap-3 mb-10">
             {[1,2].map(i => (
               <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === step ? 'w-12 bg-[#3A7070]' : 'w-4 bg-white/40'}`}></div>
@@ -552,20 +552,20 @@ const PatientLogin = ({ setView, setUserData }) => {
             <div className="space-y-8 animate-fade-in">
               <div>
                 <h2 className="text-3xl font-black text-slate-800 mb-3">Secure Entry</h2>
-                <p className="text-slate-500 text-base">Your privacy is our priority. Enter details for a secure OTP.</p>
+                <p className="text-slate-500 text-base font-semibold">Your privacy is our priority. Enter details for a secure OTP.</p>
               </div>
               <div className="space-y-5">
-                <div>
+                <div className="animate-slide-up" style={{animationDelay: '100ms'}}>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Mobile Number</label>
                   <input type="tel" placeholder="+91 98765 43210" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
                 </div>
-                <div>
+                <div className="animate-slide-up" style={{animationDelay: '200ms'}}>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
                   <input type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
                 </div>
               </div>
               {error && <div className="text-red-500 text-sm font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
-              <div className="pt-2 space-y-4">
+              <div className="pt-2 space-y-4 animate-slide-up" style={{animationDelay: '300ms'}}>
                 <button onClick={handleNext} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Continue</button>
                 <button onClick={() => setView('landing')} className="w-full text-center text-slate-400 font-bold text-sm hover:text-[#3A7070] transition-colors">Back to Home</button>
               </div>
@@ -576,24 +576,24 @@ const PatientLogin = ({ setView, setUserData }) => {
             <div className="space-y-8 animate-fade-in h-full flex flex-col justify-center">
               <div>
                 <h2 className="text-3xl font-black text-slate-800 mb-3">Your Profile</h2>
-                <p className="text-slate-500 text-base">Help Keffi understand you better.</p>
+                <p className="text-slate-500 text-base font-semibold">Help Keffi understand you better.</p>
               </div>
               <div className="space-y-5">
-                <div>
+                <div className="animate-slide-up" style={{animationDelay: '100ms'}}>
                   <label className="block text-sm font-bold text-slate-700 mb-2">Preferred Name</label>
                   <input type="text" placeholder="What should we call you?" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
                 </div>
-                <div className="flex gap-5">
+                <div className="flex gap-5 animate-slide-up" style={{animationDelay: '200ms'}}>
                   <div className="w-1/3">
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Age</label>
-                    <input type="number" placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
+                     <label className="block text-sm font-bold text-slate-700 mb-2">Age</label>
+                     <input type="number" placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
                   </div>
                   <div className="w-2/3">
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Date of Birth</label>
-                    <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-600 font-medium text-base focus:border-[#3A7070] transition-all`} />
+                     <label className="block text-sm font-bold text-slate-700 mb-2">Date of Birth</label>
+                     <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-600 font-medium text-base focus:border-[#3A7070] transition-all`} />
                   </div>
                 </div>
-                <div className="flex gap-5">
+                <div className="flex gap-5 animate-slide-up" style={{animationDelay: '300ms'}}>
                   <div className="w-1/2">
                     <label className="block text-sm font-bold text-slate-700 mb-2">Gender</label>
                     <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all appearance-none`}>
@@ -611,7 +611,7 @@ const PatientLogin = ({ setView, setUserData }) => {
                 </div>
               </div>
               {error && <div className="text-red-500 text-sm font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
-              <div className="pt-2 mt-auto">
+              <div className="pt-2 mt-auto animate-slide-up" style={{animationDelay: '400ms'}}>
                 <button onClick={handleNext} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Enter Keffi</button>
               </div>
             </div>
@@ -640,7 +640,7 @@ const AdminLogin = ({ setView }) => {
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-6 bg-transparent`}>
-      <div className={`max-w-md w-full rounded-[2rem] glass-panel p-10 flex flex-col gap-8 border border-white/20`}>
+      <div className={`max-w-md w-full rounded-[2rem] glass-panel p-10 flex flex-col gap-8 border border-white/20 animate-scale-up`}>
         <div className="flex justify-center mb-2">
           <div className={`w-20 h-20 rounded-2xl glass-card flex items-center justify-center text-[#3A7070] border border-white/20`}><Shield size={40} /></div>
         </div>
@@ -723,7 +723,7 @@ const DailyMoodCheckIn = ({ patientId, onComplete }) => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-full animate-fade-in p-6">
-      <div className="w-full max-w-3xl p-10 md:p-14 rounded-[2.5rem] glass-panel border border-white/35 flex flex-col items-center shadow-2xl backdrop-blur-xl">
+      <div className="w-full max-w-3xl p-10 md:p-14 rounded-[2.5rem] glass-panel border border-white/35 flex flex-col items-center shadow-2xl backdrop-blur-xl animate-scale-up">
         <h2 className="text-3xl font-black text-slate-800 mb-4 text-center">
           Welcome to your Sanctuary.
         </h2>
@@ -732,14 +732,15 @@ const DailyMoodCheckIn = ({ patientId, onComplete }) => {
         </p>
         
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 w-full">
-          {moods.map((m) => (
+          {moods.map((m, i) => (
             <button 
               key={m.score} 
               disabled={isSubmitting}
               onClick={() => handleMoodSelect(m)} 
-              className={`p-6 md:p-8 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:bg-white/60 hover:border-white/40 cursor-pointer`}
+              style={{animationDelay: `${i * 80}ms`}}
+              className="p-6 md:p-8 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center gap-4 transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:bg-white/60 hover:border-white/40 cursor-pointer animate-slide-up"
             >
-              <span className="text-5xl">{m.emoji}</span>
+              <span className="text-5xl transform hover:scale-110 transition-transform">{m.emoji}</span>
               <span className={`font-bold text-base ${m.color}`}>{m.label}</span>
             </button>
           ))}
@@ -1143,7 +1144,7 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
       )}
 
       {/* Biofeedback Watch Simulator */}
-      <div className="absolute right-6 top-24 z-30 glass-card border border-white/40 p-4 rounded-3xl shadow-lg flex flex-col items-center gap-2 animate-fade-in hidden md:flex">
+      <div className={`absolute right-6 top-24 z-30 glass-card border p-4 rounded-3xl shadow-lg flex flex-col items-center gap-2 animate-fade-in hidden md:flex transition-all duration-500 ${heartRate > 100 ? 'border-red-500 animate-glow-pulse' : 'border-white/40'}`}>
         <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
           <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
           Watch Sync
@@ -1161,9 +1162,9 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
             setHeartRate(val);
             if (val < 100) setHasTriggeredPanic(false); // Reset panic if they calm down
           }}
-          className="w-24 mt-2 accent-[#3A7070]"
+          className="w-24 mt-2 accent-[#3A7070] cursor-pointer"
         />
-        <div className="text-[9px] text-slate-400 mt-1 max-w-[100px] text-center leading-tight">Drag above 110 BPM to trigger panic.</div>
+        <div className="text-[9px] text-slate-400 mt-1 max-w-[100px] text-center leading-tight font-semibold">Drag above 110 BPM to trigger panic.</div>
       </div>
 
       <div className="overflow-y-auto p-6 md:p-8 flex flex-col gap-6 z-10 min-h-0 relative bg-white/5 backdrop-blur-[6px]">
@@ -1191,10 +1192,11 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
                       <button 
                         key={i} 
                         onClick={() => handleSend(qr)} 
-                        className="flex items-start text-left p-4 rounded-2xl glass-card glass-card-hover border border-white/30 shadow-sm group cursor-pointer"
+                        style={{animationDelay: `${i * 80}ms`}}
+                        className="flex items-start text-left p-4 rounded-2xl glass-card glass-card-hover border border-white/30 shadow-sm group cursor-pointer animate-slide-up"
                       >
                         <div className="w-5 h-5 rounded-full bg-white/20 border border-white/30 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#3A7070] group-hover:border-[#3A7070]/30 flex items-center justify-center text-[10px] font-bold shrink-0 mr-3 mt-0.5 transition-colors">
-                          {i + 1}
+                           {i + 1}
                         </div>
                         <span className="text-[13px] font-bold text-slate-700 group-hover:text-slate-900 leading-snug">
                           {qr}
@@ -1243,7 +1245,7 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
 
 // 4.2 Peace Log
 const PeaceLog = () => (
-  <div className="h-full flex flex-col max-w-5xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-hidden my-6">
+  <div className="h-full flex flex-col max-w-5xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-hidden my-6 animate-fade-in">
     <h2 className="text-2xl font-black text-slate-800 mb-8">Peace Log</h2>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto pb-8 pr-2">
       {[
@@ -1252,13 +1254,18 @@ const PeaceLog = () => (
         { date: '25 April 2026', mood: 'Heavy', title: 'Trauma Processing', desc: 'Keffi guided through severe anxiety. Grounding techniques used.' },
         { date: '22 April 2026', mood: 'Stressed', title: 'Work Stress', desc: 'Vented about the upcoming presentation. Keffi helped reframe thoughts.' }
       ].map((log, i) => (
-        <div key={i} className={`p-8 rounded-[2rem] ${theme.outset} cursor-pointer ${theme.outsetHover} flex flex-col`}>
+        <div key={i} style={{animationDelay: `${i * 100}ms`}} className={`p-8 rounded-[2rem] ${theme.outset} cursor-pointer ${theme.outsetHover} flex flex-col animate-slide-up hover:border-[#3A7070]/20`}>
           <div className="flex justify-between items-center mb-5">
             <span className="text-xs text-[#8FA989] font-bold uppercase tracking-widest">{log.date}</span>
-            <span className="px-3 py-1 rounded-md bg-white/20 border border-white/30 text-xs font-bold text-slate-600">{log.mood}</span>
+            <span className={`px-3 py-1.5 rounded-full border text-xs font-bold shadow-sm transition-colors ${
+              log.mood === 'Anxious' || log.mood === 'Stressed' ? 'bg-amber-100 border-amber-300 text-amber-700' :
+              log.mood === 'Calm' ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
+              log.mood === 'Heavy' ? 'bg-indigo-100 border-indigo-300 text-indigo-700' :
+              'bg-slate-100 border-slate-300 text-slate-700'
+            }`}>{log.mood}</span>
           </div>
           <h3 className="text-lg font-bold text-slate-800 mb-3">{log.title}</h3>
-          <p className="text-slate-500 leading-relaxed text-sm flex-1">{log.desc}</p>
+          <p className="text-slate-500 leading-relaxed text-sm flex-1 font-medium">{log.desc}</p>
           <div className="mt-6 flex items-center text-[#3A7070] font-bold text-sm group">
              Read full log <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform"/>
           </div>
@@ -1270,29 +1277,29 @@ const PeaceLog = () => (
 
 // 4.3 My Journey
 const MyJourney = () => (
-  <div className="h-full flex flex-col max-w-5xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-y-auto my-6">
+  <div className="h-full flex flex-col max-w-5xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-y-auto my-6 animate-fade-in">
     <h2 className="text-2xl font-black text-slate-800 mb-8">Emotional Landscape</h2>
     
     <div className={`w-full h-80 rounded-[2.5rem] glass-panel border border-white/30 mb-8 relative overflow-hidden flex items-end justify-center shadow-inner`}>
       <div className="absolute top-8 right-12 w-24 h-24 rounded-full bg-gradient-to-tr from-[#D4A373] to-white blur-md shadow-[0_0_40px_#D4A373]"></div>
-      <div className="w-[120%] h-40 bg-[#8FA989] rounded-[100%] absolute -bottom-8 opacity-40"></div>
-      <div className="w-[80%] h-48 bg-[#3A7070] rounded-[100%] absolute -bottom-10 opacity-60 left-[-10%]"></div>
-      <div className="w-[90%] h-44 bg-[#548a8a] rounded-[100%] absolute -bottom-8 opacity-70 right-[-10%]"></div>
-      <div className={`absolute top-8 left-8 px-6 py-3 rounded-2xl glass-card border border-white/40 shadow-sm`}>
-        <h3 className="text-lg font-bold text-slate-800">You are Thriving 🌿</h3>
+      <div className="w-[120%] h-40 bg-[#8FA989] rounded-[100%] absolute -bottom-8 opacity-40 animate-wave-drift"></div>
+      <div className="w-[80%] h-48 bg-[#3A7070] rounded-[100%] absolute -bottom-10 opacity-60 left-[-10%] animate-wave-drift" style={{animationDuration: '16s', animationDelay: '-4s'}}></div>
+      <div className="w-[90%] h-44 bg-[#548a8a] rounded-[100%] absolute -bottom-8 opacity-70 right-[-10%] animate-wave-drift" style={{animationDuration: '20s', animationDelay: '-8s'}}></div>
+      <div className={`absolute top-8 left-8 px-6 py-3 rounded-2xl glass-card border border-white/40 shadow-sm animate-float`}>
+        <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">You are Thriving 🌿</h3>
       </div>
     </div>
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className={`p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3`}>
+      <div style={{animationDelay: '100ms'}} className="p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3 animate-slide-up hover:scale-105 transition-transform cursor-pointer">
         <div className="text-4xl font-black text-[#3A7070]">12</div>
         <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Day Streak</div>
       </div>
-      <div className={`p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3`}>
+      <div style={{animationDelay: '200ms'}} className="p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3 animate-slide-up hover:scale-105 transition-transform cursor-pointer">
         <div className="text-4xl font-black text-[#8FA989]">85%</div>
         <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Calm Status</div>
       </div>
-      <div className={`p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3`}>
+      <div style={{animationDelay: '300ms'}} className="p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3 animate-slide-up hover:scale-105 transition-transform cursor-pointer">
         <div className="text-4xl font-black text-[#D4A373]">4</div>
         <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Tools Used</div>
       </div>
@@ -1323,7 +1330,7 @@ const MindTools = () => {
         </div>
         <div className="relative w-80 h-80 flex items-center justify-center">
           <div className="absolute inset-0 bg-[#3A7070] rounded-full opacity-10 animate-ping" style={{animationDuration: '4s'}}></div>
-          <div className={`w-48 h-48 rounded-full glass-card shadow-xl border border-white/40 flex items-center justify-center text-[#3A7070] font-black text-xl z-10 backdrop-blur-md`}>Breathe In</div>
+          <div className="w-48 h-48 rounded-full glass-card shadow-xl border border-white/40 flex items-center justify-center text-[#3A7070] font-black text-xl z-10 backdrop-blur-md animate-breathing">Breathe In</div>
         </div>
         <button onClick={() => setActiveTool(null)} className={`px-8 py-3 rounded-xl font-bold text-base ${theme.btnOutline} cursor-pointer`}>Stop & Go Back</button>
       </div>
@@ -1339,7 +1346,7 @@ const MindTools = () => {
         </div>
         <textarea 
           value={worryText} onChange={(e) => setWorryText(e.target.value)}
-          className={`w-full h-64 p-8 rounded-[2rem] glass-input shadow-inner outline-none text-slate-800 text-base resize-none transition-all duration-1000 ${isBurning ? 'blur-xl opacity-0 scale-110' : ''}`}
+          className={`w-full h-64 p-8 rounded-[2rem] glass-input shadow-inner outline-none text-slate-800 text-base resize-none transition-all duration-1000 ${isBurning ? 'blur-2xl opacity-0 scale-95 border-amber-500 bg-amber-500/5' : ''}`}
           placeholder="I am worried about..."
         />
         <div className="flex gap-4 w-full">
@@ -1379,8 +1386,8 @@ const MindTools = () => {
         <div className={`flex-1 w-full rounded-[2.5rem] glass-panel border-8 border-[#8FA989]/20 p-8 flex flex-col-reverse items-center justify-start overflow-y-auto relative`}>
            <div className="w-48 h-8 rounded-[100%] bg-slate-200 absolute -top-4 opacity-50 blur-md"></div>
            {gratitudeList.length === 0 && <div className="text-slate-500 font-bold text-sm absolute top-1/2">Your jar is empty.</div>}
-           {gratitudeList.map(g => (
-             <div key={g.id} className="bg-gradient-to-r from-[#8FA989] to-[#649e9e] text-white px-6 py-3.5 rounded-full mb-3 shadow-lg transform rotate-[-2deg] font-bold text-sm animate-fade-in">
+           {gratitudeList.map((g, idx) => (
+             <div key={g.id} style={{animationDelay: `${idx * 80}ms`}} className="bg-gradient-to-r from-[#8FA989] to-[#649e9e] text-white px-6 py-3.5 rounded-full mb-3 shadow-lg transform rotate-[-2deg] font-bold text-sm animate-scale-up hover:scale-105 transition-transform cursor-pointer">
                  {g.text}
              </div>
            ))}
@@ -1408,9 +1415,9 @@ const MindTools = () => {
         </div>
         
         {groundingStep < 5 ? (
-          <div className={`p-16 rounded-[3rem] glass-panel border border-white/30 shadow-xl flex flex-col items-center text-center w-full`}>
-            <div className={`text-7xl font-black ${current.color} mb-6`}>{current.num}</div>
-            <h3 className={`text-2xl font-black text-slate-800 mb-10 uppercase tracking-widest`}>{current.text}</h3>
+          <div className="p-16 rounded-[3rem] glass-panel border border-white/30 shadow-xl flex flex-col items-center text-center w-full animate-scale-up">
+            <div className={`text-7xl font-black ${current.color} mb-6 drop-shadow-md animate-pulse`}>{current.num}</div>
+            <h3 className="text-2xl font-black text-slate-800 mb-10 uppercase tracking-widest">{current.text}</h3>
             <p className="text-slate-600 font-bold text-base mb-10">Take your time. Look around you. Name them silently or out loud.</p>
             <button onClick={() => setGroundingStep(s => s + 1)} className={`w-full py-4 rounded-xl text-white font-bold text-base ${current.bg} shadow-lg hover:-translate-y-0.5 transition-transform cursor-pointer`}>Next Step</button>
           </div>
@@ -1440,12 +1447,13 @@ const MindTools = () => {
   ];
 
   return (
-    <div className="h-full flex flex-col max-w-7xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-hidden my-6">
+    <div className="h-full flex flex-col max-w-7xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-hidden my-6 animate-fade-in">
       <h2 className="text-2xl font-black text-slate-800 mb-8">Mind Tools Sandbox</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto pb-8 pr-2">
-        {allTools.map((tool) => (
+        {allTools.map((tool, i) => (
           <div key={tool.id} onClick={() => tool.active ? setActiveTool(tool.id) : null} 
-            className={`p-6 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center justify-center gap-4 text-center ${tool.active ? theme.outsetHover : 'opacity-65'} ${tool.locked ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+            style={{animationDelay: `${i * 60}ms`}}
+            className={`p-6 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center justify-center gap-4 text-center animate-slide-up ${tool.active ? theme.outsetHover + ' hover:scale-105' : 'opacity-65'} ${tool.locked ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
             <div className={`w-14 h-14 rounded-2xl bg-white/20 border border-white/10 flex items-center justify-center ${tool.color}`}><tool.icon size={24} /></div>
             <div>
               <h3 className="font-bold text-slate-800 text-base mb-1">{tool.title}</h3>
@@ -1460,30 +1468,30 @@ const MindTools = () => {
 
 // 4.5 Rewards
 const Rewards = ({ points }) => (
-  <div className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl my-6">
-    <div className={`w-full p-10 rounded-[2.5rem] bg-white/20 border border-white/20 flex flex-col items-center text-center mb-10`}>
-      <Gift size={48} className="text-[#D4A373] mb-6" />
+  <div className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl my-6 animate-fade-in">
+    <div className="w-full p-10 rounded-[2.5rem] bg-white/20 border border-white/20 flex flex-col items-center text-center mb-10 shadow-sm animate-float">
+      <Gift size={48} className="text-[#D4A373] mb-6 animate-bounce" style={{animationDuration: '3s'}} />
       <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Total Keffi Points</h2>
-      <div className="text-5xl font-black text-[#3A7070]">{points}</div>
+      <div className="text-5xl font-black text-[#3A7070] drop-shadow-sm">{points}</div>
     </div>
     
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-4 animate-slide-up" style={{animationDelay: '150ms'}}>
       <h3 className="font-black text-slate-800 text-xl mb-4">Unlock Goals</h3>
-      <div className={`p-5 rounded-2xl bg-white/10 border border-white/10 flex justify-between items-center opacity-60`}>
+      <div className="p-5 rounded-2xl bg-[#3A7070]/5 border border-[#3A7070]/20 flex justify-between items-center opacity-70 hover:opacity-100 transition-opacity">
         <span className="font-bold text-slate-600 text-base">Mindfulness Badge</span>
         <span className="font-bold text-[#3A7070] text-base">100 pts (Unlocked)</span>
       </div>
-      <div className={`p-5 rounded-2xl glass-card border border-white/35 shadow-sm flex justify-between items-center`}>
+      <div className="p-5 rounded-2xl border-2 border-dashed border-[#D4A373]/30 bg-white/10 flex justify-between items-center hover:bg-white/20 transition-all cursor-pointer">
         <span className="font-bold text-slate-800 text-base">Free Therapist Session</span>
         <span className="font-bold text-[#D4A373] text-base">1000 pts</span>
       </div>
-      <div className="w-full bg-white/15 rounded-full h-3 mt-4 overflow-hidden border border-white/20">
-        <div className="bg-[#3A7070] h-3 transition-all duration-1000" style={{width: `${Math.min((points/1000)*100, 100)}%`}}></div>
+      <div className="w-full bg-white/15 rounded-full h-3 mt-4 overflow-hidden border border-white/20 shadow-inner">
+        <div className="bg-[#3A7070] h-3 transition-all duration-1000 rounded-full" style={{width: `${Math.min((points/1000)*100, 100)}%`}}></div>
       </div>
       {points >= 1000 ? (
         <button className={`w-full py-4 mt-6 rounded-xl font-bold text-base ${theme.btnTeal} cursor-pointer`}>Claim Therapist Session</button>
       ) : (
-        <button disabled className={`w-full py-4 mt-6 rounded-xl font-bold text-base glass-card border border-white/10 text-slate-500 cursor-not-allowed`}>Chat more to Unlock</button>
+        <button disabled className="w-full py-4 mt-6 rounded-xl font-bold text-base glass-card border border-white/10 text-slate-500 cursor-not-allowed text-center">Chat more to Unlock</button>
       )}
     </div>
   </div>
@@ -1491,25 +1499,27 @@ const Rewards = ({ points }) => (
 
 // 4.6 Friends
 const FriendsSync = () => (
-  <div className="h-full flex flex-col items-center justify-center max-w-3xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl my-6">
+  <div className="h-full flex flex-col items-center justify-center max-w-3xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl my-6 animate-fade-in">
     <div className="text-center mb-10">
       <h2 className="text-2xl font-black text-slate-800 mb-3">Neighbor Sync</h2>
       <p className="text-slate-600 text-base font-semibold">You are not alone. See the abstract mood of people near you.</p>
     </div>
     
-    <div className={`w-80 h-80 rounded-full bg-white/10 border border-white/25 relative flex items-center justify-center shadow-inner`}>
-      <div className="absolute w-64 h-64 rounded-full border border-white/10 opacity-70"></div>
-      <div className="absolute w-40 h-40 rounded-full border border-white/10 opacity-70"></div>
+    <div className="w-80 h-80 rounded-full bg-white/10 border border-white/25 relative flex items-center justify-center shadow-inner overflow-hidden animate-[pulseSlow_6s_ease-in-out_infinite]">
+      {/* Sonar sweep */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-[#3A7070]/15 via-transparent to-transparent animate-radar origin-center pointer-events-none"></div>
+      <div className="absolute w-64 h-64 rounded-full border border-white/15 opacity-70"></div>
+      <div className="absolute w-40 h-40 rounded-full border border-white/15 opacity-70"></div>
       
-      <div className={`w-10 h-10 bg-[#3A7070] rounded-full z-10 shadow-lg animate-pulse`}></div>
-      <div className="absolute mt-16 font-bold text-xs text-[#3A7070] bg-white/70 px-3 py-1 rounded-full border border-white/30 shadow-sm">You</div>
+      <div className="w-10 h-10 bg-[#3A7070] rounded-full z-10 shadow-lg animate-pulse"></div>
+      <div className="absolute mt-16 font-bold text-xs text-[#3A7070] bg-white/80 px-3 py-1 rounded-full border border-white/30 shadow-sm z-20">You</div>
  
-      <div className="absolute top-16 left-16 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform" title="Calm Neighbor"></div>
-      <div className="absolute bottom-20 right-16 w-8 h-8 bg-[#D4A373] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform" title="Anxious Neighbor"></div>
-      <div className="absolute top-24 right-10 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform" title="Calm Neighbor"></div>
+      <div className="absolute top-16 left-16 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform animate-pulse z-20" title="Calm Neighbor"></div>
+      <div className="absolute bottom-20 right-16 w-8 h-8 bg-[#D4A373] rounded-full shadow-[0_0_20px_#D4A373] cursor-pointer hover:scale-125 transition-transform animate-pulse z-20" style={{animationDelay: '1s'}} title="Anxious Neighbor"></div>
+      <div className="absolute top-24 right-10 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform animate-pulse z-20" style={{animationDelay: '2s'}} title="Calm Neighbor"></div>
     </div>
  
-    <div className={`mt-12 p-6 rounded-2xl glass-card border border-white/30 shadow-sm flex items-center gap-5`}>
+    <div className="mt-12 p-6 rounded-2xl glass-card border border-white/30 shadow-sm flex items-center gap-5 animate-float">
       <Heart className="text-[#D4A373]" size={24} />
       <span className="font-bold text-slate-800 text-base">Send a Virtual Hug</span>
       <button className={`px-5 py-2.5 rounded-xl text-sm font-bold ${theme.btnOutline} cursor-pointer`}>Send Love</button>
@@ -1519,8 +1529,8 @@ const FriendsSync = () => (
 
 // 4.7 Profile
 const ProfileVault = ({ userData }) => (
-  <div className="h-full flex flex-col items-center justify-center">
-    <div className={`max-w-2xl w-full p-10 rounded-[2.5rem] glass-panel border border-white/30 shadow-sm`}>
+  <div className="h-full flex flex-col items-center justify-center p-6 animate-fade-in">
+    <div className={`max-w-2xl w-full p-10 rounded-[2.5rem] glass-panel border border-white/30 shadow-sm animate-scale-up`}>
       <div className="flex flex-col items-center mb-8">
         <div className={`w-24 h-24 rounded-3xl bg-white/20 border border-white/35 flex items-center justify-center text-[#3A7070] mb-5`}>
           <User size={40} />
@@ -1614,7 +1624,7 @@ const PatientDashboard = ({ setView, userData }) => {
             </div>
             
             <div className="flex-1 space-y-2 overflow-y-auto scrollbar-hide">
-              {menuItems.map(item => {
+              {menuItems.map((item, i) => {
                 const IconComponent = item.icon;
                 const isActive = activePage === item.id;
                 return (
@@ -1624,13 +1634,15 @@ const PatientDashboard = ({ setView, userData }) => {
                       setActivePage(item.id);
                       if (isMobile) setIsSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center gap-4 px-5 py-4 rounded-[1.2rem] font-bold text-sm transition-all duration-300 cursor-pointer ${
+                    style={{animationDelay: `${i * 50}ms`}}
+                    className={`w-full flex items-center gap-4 px-5 py-4 rounded-[1.2rem] font-bold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
                       isActive 
-                      ? 'bg-[#3A7070] text-white shadow-md shadow-[#3A7070]/20' 
-                      : 'text-slate-600 hover:bg-white/40 hover:text-[#3A7070]'
+                      ? 'bg-[#3A7070] text-white shadow-lg shadow-[#3A7070]/25 scale-102' 
+                      : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070] hover:shadow-[0_4px_12px_rgba(58,112,112,0.03)]'
                     }`}
                   >
-                    <IconComponent size={18} /> {item.label}
+                    {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
+                    <IconComponent size={18} className="relative z-10" /> <span className="relative z-10">{item.label}</span>
                   </button>
                 )
               })}
@@ -1740,10 +1752,12 @@ const AdminDashboard = ({ setView }) => {
         </div>
         
         <div className="flex-1 space-y-2">
-          {adminTabs.map(tab => (
+          {adminTabs.map((tab, i) => (
             <button key={tab.id} onClick={() => {setActiveTab(tab.id); setSelectedPatient(null);}} 
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all duration-300 cursor-pointer ${activeTab === tab.id ? `bg-[#3A7070]/10 border border-[#3A7070]/15 text-[#3A7070] shadow-sm` : `text-slate-600 hover:text-[#3A7070] hover:bg-white/40`}`}>
-               <tab.icon size={18} /> {tab.label}
+              style={{animationDelay: `${i * 50}ms`}}
+              className={`w-full flex items-center gap-3 px-5 py-4 rounded-[1.2rem] font-bold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${activeTab === tab.id ? `bg-[#3A7070] text-white shadow-lg shadow-[#3A7070]/25 scale-102` : `text-slate-600 hover:bg-white/50 hover:text-[#3A7070] hover:shadow-[0_4px_12px_rgba(58,112,112,0.03)]`}`}>
+               {activeTab === tab.id && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
+               <tab.icon size={18} className="relative z-10" /> <span className="relative z-10">{tab.label}</span>
             </button>
           ))}
         </div>
@@ -1838,14 +1852,17 @@ const AdminDashboard = ({ setView }) => {
                   </div>
                   <div className="flex-1 overflow-y-auto space-y-3 pr-2">
                     {patients.length === 0 && <div className="text-center text-slate-500 font-semibold mt-6 text-sm">No patients tracked yet.</div>}
-                    {patients.map(p => (
-                      <div key={p.id} className={`flex justify-between items-center p-3 rounded-xl bg-white/20 border border-white/10`}>
+                    {patients.map((p, i) => (
+                      <div key={p.id} style={{animationDelay: `${i * 60}ms`}} className="flex justify-between items-center p-3 rounded-xl bg-white/20 border border-white/10 hover:bg-white/40 hover:scale-101 hover:border-[#3A7070]/25 transition-all duration-300 animate-slide-up">
                         <span className="w-1/4 font-black text-slate-800 text-sm">{p.id}</span>
                         <span className="w-1/4 text-slate-700 font-semibold text-xs">{p.condition}</span>
-                        <span className={`w-1/4 text-center font-bold text-xs ${p.color}`}>{p.risk}</span>
+                        <span className={`w-1/4 text-center font-bold text-xs flex items-center justify-center gap-1.5 ${p.color}`}>
+                          {p.risk === 'Critical' && <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>}
+                          {p.risk}
+                        </span>
                         <span className="w-1/4 text-right">
-                          <button onClick={() => setSelectedPatient(p)} className={`px-3 py-1.5 rounded-lg text-xs font-bold border border-white/30 text-slate-700 hover:bg-white/40 mr-2 transition-colors cursor-pointer`}>Inspect</button>
-                          <button onClick={() => handleExportAbstract(p.id)} className={`px-3 py-1.5 rounded-lg text-xs font-bold bg-[#8FA989] text-white shadow-sm hover:bg-[#7a9474] transition-colors cursor-pointer`}>Export Abstract</button>
+                          <button onClick={() => setSelectedPatient(p)} className="px-3 py-1.5 rounded-lg text-xs font-bold border border-white/30 text-slate-700 hover:bg-white/40 mr-2 transition-colors cursor-pointer">Inspect</button>
+                          <button onClick={() => handleExportAbstract(p.id)} className="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#8FA989] text-white shadow-sm hover:bg-[#7a9474] transition-colors cursor-pointer">Export Abstract</button>
                         </span>
                       </div>
                     ))}
@@ -1995,12 +2012,12 @@ export default function App() {
   return (
     <div className="font-inter min-h-screen w-full">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&family=Dancing+Script:wght@600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&display=swap');
         
         .cursive-accent {
           font-family: 'Dancing Script', cursive;
           font-weight: 700;
-          font-size: 1.15em;
+          font-size: 1.25em;
           display: inline-block;
           transform: rotate(-1deg);
         }
@@ -2016,9 +2033,9 @@ export default function App() {
           font-family: 'Inter', sans-serif;
           color: #1E293B;
         }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
         
-        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-poppins { font-family: 'Outfit', sans-serif; }
         .font-inter { font-family: 'Inter', sans-serif; }
         
         .h1-title { font-size: 64px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
