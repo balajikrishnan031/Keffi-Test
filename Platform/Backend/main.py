@@ -592,6 +592,10 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         if not ai_reply or "ERROR" in ai_reply:
             ai_reply = "[SYSTEM] All AI engines failed to respond. I am here for you, let's take a deep breath."
 
+        # Strip background reflection tags before safety evaluation or options extraction
+        import re
+        ai_reply = re.sub(r"<reflection>.*?</reflection>", "", ai_reply, flags=re.DOTALL).strip()
+
         # Safety Check
         is_safe = evaluate_safety(ai_reply)
         if not is_safe:

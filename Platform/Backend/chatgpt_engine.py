@@ -33,7 +33,7 @@ def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
             {"role": "system", "content": KEFFI_SYSTEM_PROMPT},
             {"role": "user", "content": full_prompt}
         ],
-        "temperature": 0.7,
+        "temperature": 0.35,
         "max_tokens": 400
     }
 
