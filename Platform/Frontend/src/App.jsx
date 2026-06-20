@@ -722,28 +722,30 @@ const DailyMoodCheckIn = ({ patientId, onComplete }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full animate-fade-in px-6 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-black text-slate-800 mb-4 text-center">
-        Welcome to your Sanctuary.
-      </h2>
-      <p className="text-lg text-slate-600 mb-12 text-center font-semibold">
-        Before we begin, how is your mind feeling today?
-      </p>
-      
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 w-full">
-        {moods.map((m) => (
-          <button 
-            key={m.score} 
-            disabled={isSubmitting}
-            onClick={() => handleMoodSelect(m)} 
-            className={`p-6 md:p-8 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:bg-white/60 hover:border-white/40 cursor-pointer`}
-          >
-            <span className="text-5xl">{m.emoji}</span>
-            <span className={`font-bold text-base ${m.color}`}>{m.label}</span>
-          </button>
-        ))}
+    <div className="flex flex-col items-center justify-center h-full w-full animate-fade-in p-6">
+      <div className="w-full max-w-3xl p-10 md:p-14 rounded-[2.5rem] glass-panel border border-white/35 flex flex-col items-center shadow-2xl backdrop-blur-xl">
+        <h2 className="text-3xl font-black text-slate-800 mb-4 text-center">
+          Welcome to your Sanctuary.
+        </h2>
+        <p className="text-lg text-slate-600 mb-12 text-center font-semibold">
+          Before we begin, how is your mind feeling today?
+        </p>
+        
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 w-full">
+          {moods.map((m) => (
+            <button 
+              key={m.score} 
+              disabled={isSubmitting}
+              onClick={() => handleMoodSelect(m)} 
+              className={`p-6 md:p-8 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:bg-white/60 hover:border-white/40 cursor-pointer`}
+            >
+              <span className="text-5xl">{m.emoji}</span>
+              <span className={`font-bold text-base ${m.color}`}>{m.label}</span>
+            </button>
+          ))}
+        </div>
+        {isSubmitting && <p className="mt-12 text-sm font-bold text-slate-400 animate-pulse">Syncing with Keffi...</p>}
       </div>
-      {isSubmitting && <p className="mt-12 text-sm font-bold text-slate-400 animate-pulse">Syncing with Keffi...</p>}
     </div>
   );
 };
@@ -1164,7 +1166,7 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
         <div className="text-[9px] text-slate-400 mt-1 max-w-[100px] text-center leading-tight">Drag above 110 BPM to trigger panic.</div>
       </div>
 
-      <div className="overflow-y-auto p-6 md:p-8 flex flex-col gap-6 z-10 min-h-0 relative">
+      <div className="overflow-y-auto p-6 md:p-8 flex flex-col gap-6 z-10 min-h-0 relative bg-white/5 backdrop-blur-[6px]">
         {messages.map(m => {
           const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
           return (
@@ -1241,7 +1243,7 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
 
 // 4.2 Peace Log
 const PeaceLog = () => (
-  <div className="h-full flex flex-col max-w-5xl mx-auto w-full">
+  <div className="h-full flex flex-col max-w-5xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-hidden my-6">
     <h2 className="text-2xl font-black text-slate-800 mb-8">Peace Log</h2>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto pb-8 pr-2">
       {[
@@ -1268,7 +1270,7 @@ const PeaceLog = () => (
 
 // 4.3 My Journey
 const MyJourney = () => (
-  <div className="h-full flex flex-col max-w-5xl mx-auto w-full">
+  <div className="h-full flex flex-col max-w-5xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-y-auto my-6">
     <h2 className="text-2xl font-black text-slate-800 mb-8">Emotional Landscape</h2>
     
     <div className={`w-full h-80 rounded-[2.5rem] glass-panel border border-white/30 mb-8 relative overflow-hidden flex items-end justify-center shadow-inner`}>
@@ -1438,7 +1440,7 @@ const MindTools = () => {
   ];
 
   return (
-    <div className="h-full flex flex-col max-w-7xl mx-auto w-full">
+    <div className="h-full flex flex-col max-w-7xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-hidden my-6">
       <h2 className="text-2xl font-black text-slate-800 mb-8">Mind Tools Sandbox</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto pb-8 pr-2">
         {allTools.map((tool) => (
@@ -1458,8 +1460,8 @@ const MindTools = () => {
 
 // 4.5 Rewards
 const Rewards = ({ points }) => (
-  <div className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto w-full">
-    <div className={`w-full p-10 rounded-[2.5rem] glass-panel shadow-sm border border-white/30 flex flex-col items-center text-center mb-10`}>
+  <div className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl my-6">
+    <div className={`w-full p-10 rounded-[2.5rem] bg-white/20 border border-white/20 flex flex-col items-center text-center mb-10`}>
       <Gift size={48} className="text-[#D4A373] mb-6" />
       <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Total Keffi Points</h2>
       <div className="text-5xl font-black text-[#3A7070]">{points}</div>
@@ -1489,13 +1491,13 @@ const Rewards = ({ points }) => (
 
 // 4.6 Friends
 const FriendsSync = () => (
-  <div className="h-full flex flex-col items-center justify-center">
+  <div className="h-full flex flex-col items-center justify-center max-w-3xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl my-6">
     <div className="text-center mb-10">
       <h2 className="text-2xl font-black text-slate-800 mb-3">Neighbor Sync</h2>
       <p className="text-slate-600 text-base font-semibold">You are not alone. See the abstract mood of people near you.</p>
     </div>
     
-    <div className={`w-80 h-80 rounded-full glass-panel border border-white/25 relative flex items-center justify-center shadow-inner`}>
+    <div className={`w-80 h-80 rounded-full bg-white/10 border border-white/25 relative flex items-center justify-center shadow-inner`}>
       <div className="absolute w-64 h-64 rounded-full border border-white/10 opacity-70"></div>
       <div className="absolute w-40 h-40 rounded-full border border-white/10 opacity-70"></div>
       
@@ -1503,7 +1505,7 @@ const FriendsSync = () => (
       <div className="absolute mt-16 font-bold text-xs text-[#3A7070] bg-white/70 px-3 py-1 rounded-full border border-white/30 shadow-sm">You</div>
  
       <div className="absolute top-16 left-16 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform" title="Calm Neighbor"></div>
-      <div className="absolute bottom-20 right-16 w-8 h-8 bg-[#D4A373] rounded-full shadow-[0_0_20px_#D4A373] cursor-pointer hover:scale-125 transition-transform" title="Anxious Neighbor"></div>
+      <div className="absolute bottom-20 right-16 w-8 h-8 bg-[#D4A373] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform" title="Anxious Neighbor"></div>
       <div className="absolute top-24 right-10 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform" title="Calm Neighbor"></div>
     </div>
  
