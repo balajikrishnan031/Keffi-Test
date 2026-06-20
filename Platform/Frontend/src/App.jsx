@@ -1995,23 +1995,24 @@ export default function App() {
   return (
     <div className="font-inter min-h-screen w-full">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@1,500;1,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&family=Dancing+Script:wght@600;700&display=swap');
         
         .cursive-accent {
-          font-family: 'Playfair Display', serif;
-          font-style: italic;
+          font-family: 'Dancing Script', cursive;
           font-weight: 700;
+          font-size: 1.15em;
+          display: inline-block;
+          transform: rotate(-1deg);
         }
         
         body {
           margin: 0;
           padding: 0;
-          background-image: url('/keffi-bg.png');
+          background: linear-gradient(135deg, rgba(242, 249, 246, 0.88), rgba(225, 240, 235, 0.85)), url('/keffi-bg.png');
           background-size: cover;
           background-position: center;
           background-attachment: fixed;
           background-repeat: no-repeat;
-          background-color: #F2F9F6;
           font-family: 'Inter', sans-serif;
           color: #1E293B;
         }
