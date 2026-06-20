@@ -12,7 +12,17 @@ except ImportError:
 # ── Only EXPLICITLY general messages ────────────────────────────────────────
 PURE_GREETINGS    = ["hello","hi there","hey there","good morning","good evening","good night","how are you","how r u","what's up","wassup"]
 KEFFI_QUESTIONS   = ["who are you","what are you","what is keffi","introduce yourself","your name"]
-ENTERTAINMENT     = ["tell me a joke","give me a puzzle","suggest music","something funny","entertain me","make me laugh"]
+ENTERTAINMENT     = [
+    "tell me a joke", "give me a joke", "hear a joke", "another joke", 
+    "tell me another joke", "give me another joke", "punchline", "tell me the punchline", 
+    "something funny", "entertain me", "make me laugh", "fun fact",
+    "give me a puzzle", "another puzzle", "give me another puzzle", 
+    "show me the solution", "show me the answer", "solve a puzzle", "solve a riddle",
+    "suggest music", "play me a song", "play a song", "calming song", 
+    "another song", "lofi or nature sounds", "lofi sounds", "nature sounds",
+    "tell me a story", "comforting story", "another story", "continue the story", 
+    "tell me another story"
+]
 EDUCATIONAL       = ["what is depression","what is anxiety","what is therapy","what is cbt","what is dbt","what is ptsd","what is ocd","what is mental health","how does therapy work","explain depression","explain anxiety"]
 THANKS_SHORT      = ["thank you","thanks so much","you helped","great session","you're amazing"]
 

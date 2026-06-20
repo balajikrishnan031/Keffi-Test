@@ -225,16 +225,18 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             ),
             "Storytelling": (
                 f"The user's message: '{req.message}'. "
-                "If the user is asking to continue the story, seamlessly provide the DETAILED SECOND HALF and conclude it beautifully. For the option, output: |||OPTION||| That was a nice story ❤️\n"
+                "If the user is asking to continue the story (e.g. they clicked 'Continue the story' or asked what happens next), seamlessly provide the DETAILED SECOND HALF and conclude it beautifully. For the option, output: |||OPTION||| That was a nice story ❤️\n"
                 "Otherwise, tell ONLY THE DETAILED FIRST HALF of a highly unique, reality-based human story related to their situation. Stop at a cliffhanger or midway point. "
                 "CRITICAL RULES: It MUST sound like a real story told by a close human friend. Make it detailed and immersive. "
                 "If providing the first half, output EXACTLY: |||OPTION||| Continue the story 📖"
             ),
             "Humor": (
                 f"The user's message: '{req.message}'. "
-                "Tell ONE completely fresh, natural, human-like joke in FULL DETAIL. Include both the detailed setup and the hilarious punchline in the same message. "
-                "CRITICAL RULES: DO NOT therapize the user. DO NOT mention their emotional context or validate their feelings. Just tell the joke. It MUST sound like two close friends joking naturally. NEVER sound like a machine generating a joke. NEVER use old classic jokes. "
-                "For the option, output EXACTLY: |||OPTION||| Tell me another joke 😂"
+                "If the user is asking for the punchline (e.g. they clicked 'Tell me the punchline!' or asked for the punchline), reveal the punchline of the joke in a hilarious, laughing tone. For the option, output: |||OPTION||| Tell me another joke 😂\n"
+                "If the user is responding to the joke setup (e.g. trying to guess it, laughing, or saying 'what?'), comment on their reaction and reveal the punchline in a funny, warm friend tone. For the option, output: |||OPTION||| Tell me another joke 😂\n"
+                "Otherwise, tell ONLY the detailed setup of ONE completely fresh, natural, human-like joke. Do NOT output the punchline yet. "
+                "CRITICAL RULES: DO NOT therapize the user. It MUST sound like two close friends joking naturally. "
+                "For the option, output EXACTLY: |||OPTION||| Tell me the punchline! 😆"
             ),
             "Music": (
                 f"The user's message: '{req.message}'. "
@@ -246,9 +248,10 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             ),
             "Puzzle": (
                 f"The user's message: '{req.message}'. "
-                "Give ONE highly DETAILED and immersive 'Mastermind' style puzzle or riddle, and FULLY EXPLAIN the solution at the end of the message. "
-                "CRITICAL RULES: DO NOT therapize. It must be totally unique and different from standard puzzles. It should engage their brain to shift their focus completely away from their stress. Include the answer in your detailed explanation. "
-                "For the option, output EXACTLY: |||OPTION||| Give me another puzzle 🧩"
+                "If the user is asking to show the solution/answer (e.g. they clicked 'Show me the solution' or asked to reveal it), reveal the detailed explanation and solution of the previous puzzle clearly. For the option, output: |||OPTION||| Give me another puzzle 🧩\n"
+                "If the user is guessing the answer to the current riddle, evaluate their guess (tell them if they are correct, close, or incorrect) with a playful, friendly counselor tone. Encourage them to try again or ask for the solution. For the option, output: |||OPTION||| Show me the solution 🗝️\n"
+                "Otherwise, present ONE highly unique, immersive riddle or puzzle. Do NOT explain or reveal the solution in this message. Keep it a mystery so they can think about it. "
+                "CRITICAL RULES: DO NOT therapize the user. For the option, output EXACTLY: |||OPTION||| Show me the solution 🗝️"
             ),
             "Casual": "Give a warm, short, friendly greeting. Ask how their day is going. Keep it strictly under 3 sentences. DO NOT therapize.",
             "Factual": "Provide a direct, factual answer clearly and warmly. STRICTLY DO NOT therapize the user. DO NOT validate their feelings. DO NOT mention their emotional context. Just answer the question."
@@ -399,25 +402,89 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         if state_num in STATE_OPTIONS_MAP and not is_sos:
             suggested_options = STATE_OPTIONS_MAP[state_num]
 
+        # Get last message from DB for stateful context tracking
+        last_msg = db.query(ChatMessage).filter(ChatMessage.patient_id == req.patient_id).order_by(ChatMessage.timestamp.desc()).first()
+
+        # Stateful Entertainment Routing
+        in_active_puzzle = last_msg and last_msg.ai_reply and "Show me the solution" in last_msg.ai_reply
+        in_active_joke = last_msg and last_msg.ai_reply and "Tell me the punchline" in last_msg.ai_reply
+        in_active_story = last_msg and last_msg.ai_reply and "Continue the story" in last_msg.ai_reply
+        in_active_music = last_msg and last_msg.ai_reply and ("type of calming music" in last_msg.ai_reply.lower() or "music do you prefer" in last_msg.ai_reply.lower() or "music you prefer" in last_msg.ai_reply.lower())
+
+        # Determine if the user is explicitly switching context
+        is_context_switch = any(k in user_text for k in [
+            "vent", "talk", "panic", "die", "kill myself", "suicide", "cut myself", "self-harm", 
+            "help", "sad", "depressed", "anxious", "stress", "worried", "overthinking", "grounding", "distress skill"
+        ])
+
         # Override for explicit entertainment requests
         msg_clean = req.message.strip()
-        if any(k in msg_clean.lower() for k in ["hear a joke", "give me a joke", "tell me a joke", "fun fact", "give me a fun fact"]):
-            predicted_method = "Humor"
-            suggested_options = ["Tell me another joke 😄", "Tell me a story 📖", "I need to talk"]
-        elif any(k in msg_clean.lower() for k in ["play me a song", "play a calming song", "suggest a song", "play a song", "music", "melody", "lofi", "classical", "nature", "ambient"]):
-            predicted_method = "Music"
-            suggested_options = ["Lofi or Nature sounds 🌿", "I want to talk more", "Give me a joke 😄"]
-        elif any(k in msg_clean.lower() for k in ["tell me a story", "solve a puzzle", "give me a puzzle", "comfort me", "continue the story"]):
-            if "puzzle" in msg_clean.lower():
+        msg_lower = msg_clean.lower()
+
+        # 1. Joke / Humor Override
+        is_joke_request = any(k in msg_lower for k in [
+            "tell me a joke", "give me a joke", "hear a joke", 
+            "tell me another joke", "give me another joke", "another joke",
+            "punchline", "tell me the punchline", "make me laugh", "something funny",
+            "fun fact", "give me a fun fact"
+        ]) or (
+            "joke" in msg_lower and not any(ex in msg_lower for ex in ["life is a joke", "life's a joke", "not a joke", "no joke", "is this a joke", "bad joke"])
+        )
+        
+        # 2. Music Override
+        is_music_request = any(k in msg_lower for k in [
+            "play me a song", "play a calming song", "suggest a song", "play a song", 
+            "music", "melody", "lofi", "classical", "nature sounds", "ambient", "soundscape", "calming song", "another song"
+        ])
+        
+        # 3. Puzzle Override
+        is_puzzle_request = any(k in msg_lower for k in [
+            "puzzle", "solution", "answer", "riddle", "solve a puzzle", 
+            "give me a puzzle", "give me another puzzle", "another puzzle", 
+            "show me the solution", "show me the answer", "previous puzzle", "previous riddle"
+        ])
+        
+        # 4. Story Override
+        is_story_request = any(k in msg_lower for k in [
+            "tell me a story", "comforting story", "comfort me", "aaru-thal", 
+            "continue the story", "another story", "tell me another story", "comforting story"
+        ]) or (
+            "story" in msg_lower and not any(ex in msg_lower for ex in ["long story", "end of the story", "true story"])
+        )
+
+        if not is_context_switch:
+            if in_active_puzzle:
                 predicted_method = "Puzzle"
                 suggested_options = ["Give me another puzzle 🧩", "Tell me a story 📖", "I need to talk"]
-            elif any(k in msg_clean.lower() for k in ["comforting story", "comfort me", "aaru-thal"]):
+            elif in_active_joke:
+                predicted_method = "Humor"
+                suggested_options = ["Tell me another joke 😄", "Tell me a story 📖", "I need to talk"]
+            elif in_active_story:
+                predicted_method = "Storytelling"
+                suggested_options = ["Continue the story 📖", "Give me a joke 😄", "I need to talk"]
+            elif in_active_music:
+                predicted_method = "Music"
+                suggested_options = ["Lofi or Nature sounds 🌿", "I want to talk more", "Give me a joke 😄"]
+
+        if is_joke_request:
+            predicted_method = "Humor"
+            suggested_options = ["Tell me another joke 😄", "Tell me a story 📖", "I need to talk"]
+        elif is_music_request:
+            predicted_method = "Music"
+            suggested_options = ["Lofi or Nature sounds 🌿", "I want to talk more", "Give me a joke 😄"]
+        elif is_puzzle_request:
+            predicted_method = "Puzzle"
+            suggested_options = ["Give me another puzzle 🧩", "Tell me a story 📖", "I need to talk"]
+        elif is_story_request:
+            if any(k in msg_lower for k in ["comforting story", "comfort me", "aaru-thal"]):
                 predicted_method = "Comfort_Storytelling"
                 suggested_options = ["Tell me another story 📖", "Help me reframe this thought 💭", "Play me a song 🎵"]
+            elif any(k in msg_lower for k in ["nice story", "good story", "loved the story", "liked the story", "thanks for the story", "thank you for the story"]):
+                predicted_method = "Casual"
+                suggested_options = ["Give me a puzzle 🧩", "Hear a joke 😄", "I need to talk"]
             else:
                 predicted_method = "Storytelling"
                 suggested_options = ["Continue the story 📖", "Give me a joke 😄", "I need to talk"]
-        # NEW RULE: Confusion and Indecision -> Trigger Story/Metaphor
         elif any(k in msg_clean.lower() for k in ["i don't understand", "confused", "don't know what to do", "can't decide", "puriyala", "theriyala", "kuzhappama", "confusion", "what should i do"]):
             predicted_method = "Comfort_Storytelling"
             suggested_options = ["Tell me another story 📖", "Help me reframe this thought 💭", "Play me a song 🎵"]
@@ -511,6 +578,18 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         # Select the exact rule to inject into the LLM
         rule_to_send = dynamic_rules.get(predicted_method, dynamic_rules["Rogerian"])
         intervention_type = rule_to_send
+
+        # Database log cleansing for casual & entertainment modes
+        if predicted_method in ["Humor", "Puzzle", "Music", "Storytelling", "Comfort_Storytelling", "Casual", "Factual"]:
+            clinical_state = "General Conversation"
+            clinical_category = "General"
+            clinical_severity = 1
+            mhq_delta = 0.0
+            new_mhq = mhq_before
+            requires_appointment = False
+            # Update the database model to revert any MHQ changes made earlier in the request
+            patient.mhq_score = mhq_before
+            db.commit()
 
         # STEP 7: Context String
         crisis_flag = ""
