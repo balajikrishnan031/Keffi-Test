@@ -54,8 +54,8 @@ const theme = {
   textDark: 'text-slate-800',
   outset: 'glass-card rounded-[2rem]',
   outsetHover: 'glass-card-hover',
-  btnTeal: 'bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white shadow-[0_10px_20px_rgba(58,112,112,0.25)] hover:shadow-[0_15px_30px_rgba(58,112,112,0.35)] hover:-translate-y-0.5 transition-all border border-white/20',
-  btnOutline: 'border border-[#3A7070]/25 text-[#3A7070] shadow-[0_10px_20px_rgba(58,112,112,0.03)] hover:border-[#3A7070]/40 hover:shadow-[0_15px_30px_rgba(58,112,112,0.08)] hover:-translate-y-0.5 transition-all bg-white/45 backdrop-blur-sm'
+  btnTeal: 'glass-btn-shine bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white shadow-[0_10px_20px_rgba(58,112,112,0.25)] hover:shadow-[0_15px_30px_rgba(58,112,112,0.35)] hover:-translate-y-0.5 transition-all border border-white/20',
+  btnOutline: 'glass-btn-shine border border-[#3A7070]/25 text-[#3A7070] shadow-[0_10px_20px_rgba(58,112,112,0.03)] hover:border-[#3A7070]/40 hover:shadow-[0_15px_30px_rgba(58,112,112,0.08)] hover:-translate-y-0.5 transition-all bg-white/45 backdrop-blur-sm'
 };
 const KeffiLogo = ({ size = "w-10 h-10", onClick }) => (
   <div onClick={onClick} className={`${size} relative flex items-center justify-center cursor-pointer group`}>
@@ -174,7 +174,7 @@ const LandingPage = ({ setView }) => {
     <div className="min-h-screen bg-transparent overflow-x-hidden text-[#1E293B] font-inter selection:bg-[#3A7070] selection:text-white relative">
       
       <div className="floating-blob w-[600px] h-[600px] bg-[#8FA989] top-[-100px] right-[-200px]"></div>
-      <div className="floating-blob w-[800px] h-[800px] bg-[#E6F0F0] top-[800px] left-[-400px]"></div>
+      <div className="floating-blob-slow w-[800px] h-[800px] bg-[#E6F0F0] top-[800px] left-[-400px]"></div>
       <div className="floating-blob w-[600px] h-[600px] bg-[#3A7070] opacity-10 top-[2200px] right-[-200px]" style={{animationDelay: '2s'}}></div>
 
       {/* 🚀 HEADER */}
@@ -2036,15 +2036,73 @@ export default function App() {
           position: absolute;
           border-radius: 50%;
           filter: blur(120px);
-          opacity: 0.4;
+          opacity: 0.3;
           z-index: 0;
-          animation: float 10s ease-in-out infinite;
+          animation: float 15s ease-in-out infinite;
+        }
+        
+        .floating-blob-slow {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(130px);
+          opacity: 0.25;
+          z-index: 0;
+          animation: floatSlow 22s ease-in-out infinite;
         }
         
         @keyframes float {
-          0% { transform: translateY(0px) scale(1); }
-          50% { transform: translateY(-30px) scale(1.05); }
-          100% { transform: translateY(0px) scale(1); }
+          0% { transform: translateY(0px) translateX(0px) scale(1); }
+          33% { transform: translateY(-40px) translateX(25px) scale(1.05); }
+          66% { transform: translateY(15px) translateX(-30px) scale(0.95); }
+          100% { transform: translateY(0px) translateX(0px) scale(1); }
+        }
+        
+        @keyframes floatSlow {
+          0% { transform: translateY(0px) translateX(0px) scale(1); }
+          50% { transform: translateY(50px) translateX(-40px) scale(1.08); }
+          100% { transform: translateY(0px) translateX(0px) scale(1); }
+        }
+
+        /* Webkit custom scrollbars for elegant glass look */
+        ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+          background: rgba(242, 249, 246, 0.4);
+          backdrop-filter: blur(8px);
+        }
+        ::-webkit-scrollbar-thumb {
+          background: rgba(58, 112, 112, 0.32);
+          border-radius: 9999px;
+          border: 1.5px solid rgba(242, 249, 246, 0.4);
+          transition: background 0.2s ease-in-out;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(58, 112, 112, 0.55);
+        }
+
+        /* Glass shine sweeping reflection on buttons */
+        .glass-btn-shine {
+          position: relative;
+          overflow: hidden;
+        }
+        .glass-btn-shine::after {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -75%;
+          width: 40%;
+          height: 200%;
+          background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+          transform: rotate(30deg);
+          transition: all 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+          opacity: 0;
+          pointer-events: none;
+        }
+        .glass-btn-shine:hover::after {
+          left: 125%;
+          opacity: 1;
         }
       `}</style>
       
