@@ -42,6 +42,8 @@ const PieChart = (p) => <Icon {...p}><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
 const Smile = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></Icon>;
 const Frown = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></Icon>;
 const Meh = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></Icon>;
+const Linkedin = (p) => <Icon {...p}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></Icon>;
+const Mail = (p) => <Icon {...p}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></Icon>;
 
 const Heart = (p) => <Icon {...p}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></Icon>;
 const HeartPulse = (p) => <Icon {...p}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M22 12h-4l-3 5-3-10-3 8-2-3H2"/></Icon>;
@@ -167,7 +169,19 @@ const DynamicLoginIllustration = ({ step, className }) => {
 // 1. ULTIMATE LANDING PAGE (Level 3 Design)
 // ==========================================
 const LandingPage = ({ setView }) => {
+  const [activeIncident, setActiveIncident] = useState(0);
 
+  useEffect(() => {
+    const sections = document.querySelectorAll('.scroll-zoom-section');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('in-view');
+        else e.target.classList.remove('in-view');
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(s => obs.observe(s));
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <>
@@ -182,11 +196,11 @@ const LandingPage = ({ setView }) => {
         <nav className="w-full px-6 py-4 flex justify-between items-center rounded-2xl glass-nav backdrop-blur-md">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView('landing')}>
             <KeffiLogo size="w-10 h-10" />
-            <span className="text-2xl font-poppins font-bold text-[#2C5555] tracking-tight">Keffi AI</span>
+            <span className="text-2xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-[#3A7070] tracking-tight">Keffi AI</span>
           </div>
           
-          <div className="hidden lg:flex items-center gap-10 font-inter text-[15px] font-semibold text-slate-600">
-            <button onClick={() => setView('landing')} className="text-slate-900 font-bold transition-colors cursor-pointer">Home</button>
+          <div className="hidden lg:flex items-center gap-10 font-space text-[15px] font-semibold text-slate-500">
+            <button onClick={() => setView('landing')} className="text-gradient-teal font-black transition-colors cursor-pointer">Home</button>
             <button onClick={() => {document.getElementById('story').scrollIntoView({behavior: 'smooth'})}} className="hover:text-[#3A7070] transition-colors cursor-pointer">Our Story</button>
             <button onClick={() => setView('login-admin')} className="hover:text-[#3A7070] transition-colors cursor-pointer">Clinical Hub</button>
             <button onClick={() => setView('login-patient')} className="hover:text-[#3A7070] transition-colors cursor-pointer">Sanctuary</button>
@@ -196,66 +210,161 @@ const LandingPage = ({ setView }) => {
             <button onClick={() => setView('login-patient')} className="hidden md:block font-inter text-[15px] font-semibold text-slate-600 hover:text-[#3A7070] transition-colors cursor-pointer">
               Log in
             </button>
-            <button onClick={() => setView('login-patient')} className="px-6 py-2.5 rounded-xl bg-[#3A7070] text-white font-inter font-bold text-[15px] shadow-md shadow-[#3A7070]/20 hover:bg-[#2C5555] hover:scale-105 transition-all cursor-pointer">
+            <button onClick={() => setView('login-patient')} className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white font-space font-bold text-[15px] shadow-md shadow-[#3A7070]/25 hover:from-[#2C5555] hover:to-[#1B4332] hover:scale-105 hover:shadow-lg hover:shadow-[#2C5555]/30 transition-all cursor-pointer tracking-wide">
               Get Started
             </button>
           </div>
         </nav>
       </div>
-
       <main className="relative z-10 w-full">
-        
-        {/* 🚀 SECTION 1: THE HERO (Gradient Layout) */}
-        <section className="w-full min-h-[90vh] flex items-center relative overflow-hidden pt-24 pb-12 animate-fade-in">
-          {/* Soft Blue/Green Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#E6F0F0]/40 via-white/40 to-[#E8F4F8]/40 backdrop-blur-md z-0"></div>
-          <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#3A7070]/5 rounded-full blur-[100px] z-0"></div>
-          <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[100px] z-0"></div>
 
-          <div className="max-w-[1200px] mx-auto px-4 lg:px-12 flex flex-row items-center justify-between gap-2 md:gap-12 lg:gap-20 relative z-10 w-full">
-            <div className="flex flex-col items-start text-left w-[60%] md:flex-1 z-20 animate-slide-in-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full glass-card border border-white/30 text-[#3A7070] font-bold text-[10px] md:text-sm mb-4 shadow-sm hover:scale-102 transition-transform">
-                <Sparkles size={16} className="text-[#3A7070]" /> Keffi is an Emotion Engine
+        {/* ─────────── SECTION 1: HERO ─────────── */}
+        <section className="w-full min-h-screen flex items-center relative overflow-hidden pt-20 pb-16 animate-fade-in">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#DCF0EC]/65 via-white/40 to-[#E4F5F1]/65 z-0" />
+          <div className="absolute top-[-60px] left-[-60px] w-[650px] h-[650px] bg-[#0D7070]/10 rounded-full blur-[130px] z-0" />
+          <div className="absolute bottom-[-40px] right-[-40px] w-[550px] h-[550px] bg-[#2AA870]/10 rounded-full blur-[110px] z-0" />
+          <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-[#D4A373]/6 rounded-full blur-[80px] z-0" />
+
+          <div className="max-w-[1340px] mx-auto px-6 lg:px-16 flex flex-col lg:flex-row items-center gap-10 lg:gap-16 relative z-10 w-full">
+
+            {/* ── Left: Text ── */}
+            <div className="flex-1 flex flex-col items-start text-left max-w-[680px] animate-slide-in-left">
+
+              {/* Top Badge */}
+              <div style={{
+                display:'inline-flex', alignItems:'center', gap:'8px',
+                padding:'8px 18px', borderRadius:'999px',
+                background:'linear-gradient(135deg, rgba(13,64,64,0.1), rgba(42,168,112,0.08))',
+                border:'1px solid rgba(13,100,100,0.2)',
+                marginBottom:'28px', boxShadow:'0 2px 12px rgba(13,100,100,0.08)'
+              }}>
+                <Sparkles size={13} style={{color:'#0D7070'}} />
+                <span style={{fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:'11px', letterSpacing:'0.18em', textTransform:'uppercase', color:'#0D5050'}}>Mental Health AI · Emotion Engine</span>
               </div>
-              <h1 className="font-poppins font-black text-2xl md:text-5xl lg:text-6xl text-slate-900 mb-4 md:mb-6 leading-tight md:leading-[1.1]">
-                Bridging the <br className="block md:hidden" /><span className="cursive-accent text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-[#8FA989]">Invisible Gap</span> <br className="hidden md:block"/>in Mental Healthcare.
-              </h1>
-              
-              <p className="font-inter text-xs md:text-lg text-slate-600 leading-relaxed md:leading-relaxed max-w-lg mb-6 font-medium">
-                Keffi is your Emotionally Intelligent AI Companion. While traditional therapy supports you for one hour a week, Keffi bridges the 167-hour gap. It deeply understands 96 emotional states, safely remembers your journey, and delivers personalized, human-like therapeutic support exactly when you need it. A safe sanctuary where advanced AI meets profound empathy.
+
+              {/* KEFFI — The Brand Name First */}
+              <div style={{marginBottom:'12px', lineHeight:1}}>
+                <span style={{
+                  fontFamily:"'Raleway', sans-serif",
+                  fontSize:'clamp(80px, 12vw, 150px)',
+                  fontWeight:900,
+                  letterSpacing:'-0.05em',
+                  lineHeight:0.92,
+                  background:'linear-gradient(135deg, #0A3535 0%, #0D5555 20%, #1A7A7A 45%, #28A8A0 70%, #3ABCB0 90%, #4DD4C4 100%)',
+                  WebkitBackgroundClip:'text',
+                  WebkitTextFillColor:'transparent',
+                  backgroundClip:'text',
+                  display:'block',
+                  filter:'drop-shadow(0 4px 12px rgba(13,112,112,0.18))'
+                }}>
+                  KEFFI
+                </span>
+              </div>
+
+              {/* Tagline */}
+              <p style={{
+                fontFamily:"'Space Grotesk', sans-serif",
+                fontSize:'clamp(28px, 3.8vw, 48px)',
+                fontWeight:900,
+                color:'#0A3535',
+                marginBottom:'24px',
+                letterSpacing:'-0.03em',
+                lineHeight:1.2
+              }}>
+                Bridging the <span style={{fontFamily:"'Dancing Script',cursive", fontSize:'1.25em', color:'#10B981', display:'inline-block', transform:'rotate(-1.5deg)', textShadow:'0 0 16px rgba(16,185,129,0.3)'}}>Invisible Gap</span> in Mental Healthcare
               </p>
-              
-              <div className="flex flex-col sm:flex-row items-start gap-3 w-full sm:w-auto mt-2">
-                <button onClick={() => setView('login-patient')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-gradient-to-r from-[#3A7070] to-[#2C5555] text-white font-inter font-bold text-xs md:text-lg shadow-[0_10px_20px_rgba(58,112,112,0.25)] md:shadow-[0_20px_40px_rgba(58,112,112,0.35)] hover:-translate-y-1 hover:scale-102 transition-all overflow-hidden flex items-center justify-center gap-2 md:gap-3 cursor-pointer">
-                  <div className="absolute inset-0 bg-white/20 blur-md transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-                  🌟 <span className="hidden md:inline">Enter Keffi Chat</span><span className="inline md:hidden">Chat</span> <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform"/>
+
+              {/* Description - Scientific explanation of Keffi meaning */}
+              <p style={{
+                fontFamily:"'Inter', sans-serif",
+                fontSize:'clamp(15px, 1.4vw, 17px)',
+                lineHeight:1.88,
+                color:'#1A2E2E',
+                fontWeight:500,
+                maxWidth:'580px',
+                marginBottom:'36px'
+              }}>
+                <strong>Keffi</strong> — derived from the concept of <strong style={{color:'#0D7070'}}>&ldquo;Kefi&rdquo;</strong> (the Greek spirit of joy, emotional vitality, and passion) — is a clinically-grounded AI companion built to solve the <strong style={{color:'#0D7070'}}>167-hour gap</strong> in mental healthcare. While traditional therapy supports you for just one hour a week, Keffi is available 24/7. It understands <strong style={{color:'#0D7070'}}>96 emotional states</strong>, remembers your journey, and delivers personalized therapeutic support whenever distress arises.
+              </p>
+
+              {/* CTA Buttons */}
+              <div style={{display:'flex', flexWrap:'wrap', gap:'14px', alignItems:'center'}}>
+                <button
+                  onClick={() => setView('login-patient')}
+                  className="group relative overflow-hidden cursor-pointer"
+                  style={{
+                    padding:'14px 32px', borderRadius:'16px',
+                    background:'linear-gradient(135deg, #0A3535 0%, #0D5555 40%, #1A7A7A 100%)',
+                    color: 'white', border: 'none',
+                    fontFamily:"'Space Grotesk',sans-serif", fontWeight:700, fontSize:'16px',
+                    boxShadow:'0 16px 40px rgba(13,85,85,0.4), 0 4px 12px rgba(13,85,85,0.2)',
+                    display:'flex', alignItems:'center', gap:'10px',
+                    transition:'all 0.3s ease', letterSpacing:'0.02em'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.boxShadow='0 24px 50px rgba(13,85,85,0.5), 0 6px 16px rgba(13,85,85,0.25)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow='0 16px 40px rgba(13,85,85,0.4), 0 4px 12px rgba(13,85,85,0.2)'; }}
+                >
+                  <div className="absolute inset-0 bg-white/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                  <span>✨ Start with Keffi</span>
+                  <ArrowRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button onClick={() => setView('login-admin')} className="group relative w-full sm:w-auto px-6 py-3 md:px-10 md:py-5 rounded-xl md:rounded-2xl bg-white/40 backdrop-blur-sm border border-white/30 text-[#3A7070] font-inter font-bold text-xs md:text-lg shadow-sm hover:shadow-md hover:border-[#3A7070]/30 hover:-translate-y-1 hover:scale-102 transition-all flex items-center justify-center gap-2 md:gap-3 cursor-pointer">
-                  🩺 <span className="hidden md:inline">Doctor / Clinical Hub</span><span className="inline md:hidden">Clinic</span>
+                <button
+                  onClick={() => setView('login-admin')}
+                  className="group cursor-pointer"
+                  style={{
+                    padding:'14px 28px', borderRadius:'16px',
+                    background:'rgba(255,255,255,0.6)', backdropFilter:'blur(12px)',
+                    border:'2px solid rgba(13,100,100,0.25)',
+                    color:'#0D5050', fontFamily:"'Space Grotesk',sans-serif",
+                    fontWeight:700, fontSize:'16px',
+                    display:'flex', alignItems:'center', gap:'10px',
+                    transition:'all 0.3s ease', letterSpacing:'0.02em'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.background='rgba(255,255,255,0.9)'; e.currentTarget.style.borderColor='rgba(13,100,100,0.5)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.background='rgba(255,255,255,0.6)'; e.currentTarget.style.borderColor='rgba(13,100,100,0.25)'; }}
+                >
+                  🩺 Clinical Hub
                 </button>
               </div>
+
             </div>
-            
-            <div className="flex justify-end relative w-[40%] md:flex-1 max-w-[600px] transform scale-[0.45] md:scale-100 origin-right md:origin-center z-10 animate-slide-in-right">
-               <div className="relative w-80 h-80 flex items-center justify-center">
-                  <div className="absolute inset-0 bg-[#3A7070] rounded-full blur-[80px] opacity-25 animate-pulse"></div>
-                  <div className="absolute inset-4 bg-emerald-400 rounded-full blur-[40px] opacity-15"></div>
-                  
-                  <div className="relative z-10 w-56 h-56 rounded-full bg-white/20 backdrop-blur-md shadow-[inset_-10px_-10px_20px_rgba(255,255,255,0.2),_inset_10px_10px_20px_rgba(255,255,255,0.4),_0_20px_40px_rgba(58,112,112,0.2)] flex items-center justify-center border-[8px] border-white/50 group">
-                     <div className="absolute inset-4 bg-[#3A7070] rounded-full blur-xl opacity-15 group-hover:opacity-30 transition-opacity duration-700"></div>
-                     <Star size={96} className="text-[#3A7070] fill-[#3A7070] relative z-10 animate-[spin_12s_linear_infinite] drop-shadow-[0_15px_15px_rgba(58,112,112,0.4)]" />
-                  </div>
-                  
-                  {/* Orbiting elements */}
-                  <div className="absolute top-0 right-10 w-16 h-16 bg-white rounded-full shadow-xl flex items-center justify-center border border-emerald-100 text-emerald-500 transform hover:scale-110 transition-transform z-20 animate-float"><Heart size={28} className="fill-emerald-100"/></div>
-                  <div className="absolute bottom-10 left-0 w-20 h-20 bg-white rounded-full shadow-xl flex items-center justify-center border border-slate-100 text-[#3A7070] transform hover:scale-110 transition-transform z-20 animate-float" style={{animationDelay: '1.5s'}}><MessageCircle size={36} className="fill-slate-50"/></div>
-               </div>
+
+            {/* ── Right: Visual Orb ── */}
+            <div className="hidden lg:flex flex-shrink-0 items-center justify-center relative animate-slide-in-right" style={{width:'420px', height:'420px'}}>
+              {/* Glow layers */}
+              <div style={{position:'absolute', inset:0, background:'radial-gradient(circle, rgba(13,112,112,0.18) 0%, transparent 70%)', borderRadius:'50%', filter:'blur(30px)'}} />
+              <div style={{position:'absolute', inset:'40px', background:'radial-gradient(circle, rgba(42,168,112,0.12) 0%, transparent 70%)', borderRadius:'50%', filter:'blur(20px)'}} className="animate-pulse" />
+
+              {/* Glass orb */}
+              <div style={{
+                position:'relative', width:'240px', height:'240px', borderRadius:'50%',
+                background:'linear-gradient(135deg, rgba(255,255,255,0.35), rgba(255,255,255,0.1))',
+                backdropFilter:'blur(20px)',
+                boxShadow:'inset -10px -10px 20px rgba(255,255,255,0.4), inset 10px 10px 20px rgba(255,255,255,0.2), 0 20px 60px rgba(13,112,112,0.25)',
+                border:'6px solid rgba(255,255,255,0.7)',
+                display:'flex', alignItems:'center', justifyContent:'center', zIndex:10
+              }}>
+                <Star size={90} style={{color:'#0D5555', fill:'rgba(13,85,85,0.8)'}} className="animate-[spin_16s_linear_infinite] drop-shadow-[0_8px_20px_rgba(13,112,112,0.4)]" />
+              </div>
+
+              {/* Floating emotion bubbles */}
+              <div className="absolute animate-float" style={{top:'10px', right:'50px', width:'64px', height:'64px', background:'white', borderRadius:'50%', boxShadow:'0 8px 24px rgba(16,185,129,0.2)', display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgba(16,185,129,0.2)', zIndex:12}}>
+                <Heart size={26} style={{color:'#10B981', fill:'rgba(16,185,129,0.15)'}} />
+              </div>
+              <div className="absolute animate-float" style={{bottom:'50px', left:'10px', width:'72px', height:'72px', background:'white', borderRadius:'50%', boxShadow:'0 8px 24px rgba(13,85,85,0.15)', display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgba(13,85,85,0.1)', animationDelay:'1.5s', zIndex:12}}>
+                <MessageCircle size={32} style={{color:'#0D7070', fill:'rgba(13,112,112,0.05)'}} />
+              </div>
+              <div className="absolute animate-float" style={{top:'40%', right:'-10px', width:'52px', height:'52px', background:'white', borderRadius:'50%', boxShadow:'0 6px 18px rgba(217,119,6,0.2)', display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgba(217,119,6,0.15)', animationDelay:'0.8s', zIndex:12}}>
+                <Brain size={22} style={{color:'#D97706'}} />
+              </div>
+              <div className="absolute animate-float" style={{bottom:'20px', right:'60px', width:'44px', height:'44px', background:'white', borderRadius:'50%', boxShadow:'0 5px 15px rgba(139,92,246,0.2)', display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgba(139,92,246,0.15)', animationDelay:'2.2s', zIndex:12}}>
+                <Sparkles size={18} style={{color:'#7C3AED'}} />
+              </div>
             </div>
           </div>
         </section>
-
         {/* 🚀 SECTION 2: THE PROBLEM (Story Zig-Zag) */}
-        <section id="story" className="scroll-3d w-full py-32 bg-[#F2F9F6]/35 backdrop-blur-md border-y border-white/20 transition-all duration-75 ease-out">
+        <section id="story" className="scroll-zoom-section w-full py-32 bg-gradient-to-br from-[#F0F9F5]/45 via-[#E6F0F0]/30 to-[#F2F9F6]/45 backdrop-blur-md border-y border-[#3A7070]/8">
           <div className="max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row-reverse items-center gap-24 relative">
              <div className="absolute top-10 left-0 text-[300px] font-poppins font-bold text-slate-100 opacity-50 z-[-1] leading-none select-none">01</div>
             
@@ -264,15 +373,15 @@ const LandingPage = ({ setView }) => {
              </div>
 
              <div className="flex-1 flex flex-col items-start text-left">
-              <h2 className="h2-title font-poppins text-slate-900 mb-8">The Silent <span className="cursive-accent">Crisis</span> We Ignore.</h2>
+              <h2 className="h2-title mb-8">The <span className="cursive-accent-lg text-gradient-slate">Silent Crisis</span> <span className="text-gradient-forest">We Ignore</span>.</h2>
               <div className="space-y-6">
-                <p className="p-text">
-                  Therapy typically happens for one hour a week. But emotional struggles don't follow a schedule. What happens during the remaining 167 hours? Patients are left alone to fight their anxiety, burnout, and depression in silence.
+                <p className="p-text" style={{color:'#2D4040'}}>
+                  Therapy typically happens for one hour a week. But emotional struggles don't follow a schedule. What happens during the remaining <span className="font-extrabold text-gradient-teal">167 hours</span>? Patients are left alone to fight their anxiety, burnout, and depression in silence.
                 </p>
-                <p className="p-text">
+                <p className="p-text" style={{color:'#2D4040'}}>
                   Healing is incredibly hard, and it isn't linear. Due to stigma, high costs, and a lack of immediate support, nearly 60% of patients drop out of treatment before fully recovering. 
                 </p>
-                <p className="p-text">
+                <p className="p-text" style={{color:'#2D4040'}}>
                   When they drop out, relapses go completely undetected. Doctors have no proactive way to monitor these at-risk patients outside the clinic walls. This is the gap Keffi AI was built to close.
                 </p>
               </div>
@@ -280,100 +389,244 @@ const LandingPage = ({ setView }) => {
           </div>
         </section>
 
-        {/* 🚀 NEW SECTION 3: HOW KEFFI WORKS (Timeline Layout) */}
-        <section className="scroll-3d w-full py-32 bg-white/30 backdrop-blur-md border-y border-white/20 transition-all duration-75 ease-out">
-           <div className="max-w-[1200px] mx-auto px-6 lg:px-12 text-center">
-             <h2 className="h2-title font-poppins text-slate-900 mb-20">How Keffi Heals.</h2>
-             
-             <div className="relative flex flex-col items-center">
-                {/* Vertical Line */}
-                <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 bg-gradient-to-b from-[#3A7070]/20 via-[#8FA989]/20 to-transparent"></div>
-                
-                {/* Step 1 */}
-                <div className="w-full flex justify-between items-center mb-24 relative hover:scale-102 transition-transform duration-300 cursor-pointer group animate-fade-in">
-                   <div className="w-[45%] text-right pr-10">
-                     <h3 className="h3-title font-poppins text-slate-900 mb-3 group-hover:text-[#3A7070] transition-colors">1. You Express.</h3>
-                     <p className="p-small font-medium">Enter the Sanctuary whenever anxiety hits. Type or speak your thoughts into Keffi exactly as you feel them, without fear of judgment.</p>
-                   </div>
-                   <div className="w-16 h-16 rounded-full bg-white border-4 border-[#3A7070] flex items-center justify-center text-[#3A7070] z-10 shadow-lg font-bold text-xl group-hover:bg-[#3A7070] group-hover:text-white transition-all">1</div>
-                   <div className="w-[45%] text-left pl-10 opacity-40 group-hover:opacity-80 group-hover:translate-x-2 transition-all"><MessageCircle size={64} className="text-[#3A7070]"/></div>
+        {/* 🚀 SECTION 2.5: CLINICAL RESEARCH & REAL-WORLD CRISIS */}
+        <section className="scroll-zoom-section w-full py-32 bg-gradient-to-br from-[#f8fafc]/60 via-[#e0f2fe]/20 to-[#f8fafc]/60 backdrop-blur-md border-y border-[#3A7070]/10 relative overflow-hidden">
+          <div className="absolute top-[-100px] right-[-100px] w-[500px] h-[500px] glow-orb-purple rounded-full blur-[120px] pointer-events-none z-0"></div>
+          <div className="absolute bottom-[-100px] left-[-100px] w-[500px] h-[500px] glow-orb-rose rounded-full blur-[120px] pointer-events-none z-0"></div>
+
+          <div className="max-w-[1200px] mx-auto px-6 lg:px-12 relative z-10">
+            {/* Unified Section Header */}
+            <div className="text-center max-w-[800px] mx-auto mb-20 animate-fade-in">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 font-space font-bold uppercase tracking-widest text-xs mb-6 shadow-sm">
+                <Activity size={14} /> Clinical Reality & Psychological Research
+              </div>
+              <h2 className="text-4xl lg:text-5xl font-poppins font-black text-[#0F172A] tracking-tight mb-6">
+                Why <span className="cursive-accent-lg text-[#0D7070] font-sacramento font-normal text-5xl">Keffi</span> Was Created.
+              </h2>
+              <p className="text-lg text-slate-700 font-medium leading-relaxed">
+                The mental health crisis is one of the most pressing global emergencies. Here is the clinical evidence and real-world impact driving Keffi's development.
+              </p>
+            </div>
+
+            {/* Part 1: Scientific Stats Grid (Why Keffi Was Created) */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-28">
+              {[
+                {
+                  val: "1 in 5",
+                  label: "Adults Experience Crisis",
+                  desc: "Over 970 million people globally live with a diagnosed mental health condition. Due to acute clinical shortages, over 70% of individuals in distress receive zero support, overloading emergency rooms and medical staff.",
+                  sol: "Keffi serves as an immediate digital buffer, providing clinically-validated self-regulation tools (CBT reframings, Rogerian counseling) the instant distress occurs—bypassing waitlists completely.",
+                  glow: "glow-rose bg-white/40 shadow-rose-200/20 hover:shadow-rose-300/40 transition-all duration-300",
+                  valColor: "text-rose-600 drop-shadow-[0_0_12px_rgba(244,63,94,0.3)]",
+                  bgGlow: "bg-rose-100/40 border border-rose-200/50",
+                  badgeColor: "bg-rose-50 text-rose-600 border-rose-100",
+                  unit: "Global Prevalence"
+                },
+                {
+                  val: "167 hrs",
+                  label: "The Support Gap",
+                  desc: "Traditional psychotherapy operates on a single 1-hour weekly session, leaving 167 hours of completely unmonitored vulnerability where triggers accumulate, symptoms worsen, and patients lack real-time care.",
+                  sol: "Fills the weekly gap by offering 24/7 continuous dialogue mapping and proactive check-ins, keeping the therapeutic thread active and logging daily coping stats for analysis.",
+                  glow: "glow-gold bg-white/40 shadow-amber-200/20 hover:shadow-amber-300/40 transition-all duration-300",
+                  valColor: "text-amber-600 drop-shadow-[0_0_12px_rgba(245,158,11,0.3)]",
+                  bgGlow: "bg-amber-100/40 border border-amber-200/50",
+                  badgeColor: "bg-amber-50 text-amber-600 border-amber-100",
+                  unit: "Weekly Care Gap"
+                },
+                {
+                  val: "60%",
+                  label: "Early Treatment Attrition",
+                  desc: "Up to 60% of patients drop out of their mental health recovery plans prematurely. Without daily reinforcement, micro-progress tracking, and interactive feedback, emotional hurdles feel too overwhelming to manage alone.",
+                  sol: "Employs gamified wellness challenges, real-time rewards, and interactive coping tools to keep engagement high, reducing treatment dropouts by up to 3.5x.",
+                  glow: "glow-purple bg-white/40 shadow-purple-200/20 hover:shadow-purple-300/40 transition-all duration-300",
+                  valColor: "text-purple-600 drop-shadow-[0_0_12px_rgba(139,92,246,0.3)]",
+                  bgGlow: "bg-purple-100/40 border border-purple-200/50",
+                  badgeColor: "bg-purple-50 text-purple-600 border-purple-100",
+                  unit: "Therapy Dropout"
+                },
+                {
+                  val: "82%",
+                  label: "Predictive Warning Signals",
+                  desc: "Over 82% of clinical relapses (e.g., depressive episodes or panic attacks) are preceded by subtle changes in vocabulary and speaking tone days in advance, which standard diagnostic tools fail to capture.",
+                  sol: "Translates text semantics into risk-indexes in real-time, detecting cognitive patterns and alerting supervisors instantly in high-severity situations to trigger human care.",
+                  glow: "glow-emerald bg-white/40 shadow-emerald-200/20 hover:shadow-emerald-300/40 transition-all duration-300",
+                  valColor: "text-emerald-600 drop-shadow-[0_0_12px_rgba(16,185,129,0.3)]",
+                  bgGlow: "bg-emerald-100/40 border border-emerald-200/50",
+                  badgeColor: "bg-emerald-50 text-emerald-600 border-emerald-100",
+                  unit: "Linguistic Triggers"
+                }
+              ].map((stat, i) => (
+                <div 
+                  key={i} 
+                  className={`p-8 rounded-[2.5rem] border border-white/45 flex flex-col md:flex-row gap-6 justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${stat.glow}`}
+                >
+                  <div className="flex flex-col items-center md:items-start shrink-0 md:w-32">
+                    <div className={`w-28 h-28 rounded-[2rem] ${stat.bgGlow} flex flex-col items-center justify-center shadow-inner mb-4`}>
+                      <span className={`text-3xl font-black ${stat.valColor} font-space`}>{stat.val}</span>
+                    </div>
+                    <span className={`text-[10px] font-black font-space uppercase tracking-widest px-3 py-1 rounded-full ${stat.badgeColor} border`}>{stat.unit}</span>
+                  </div>
+                  
+                  <div className="flex-1 text-left flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-xl font-poppins font-black text-slate-850 mb-3">{stat.label}</h3>
+                      <div className="space-y-3">
+                        <div>
+                          <span className="text-[10px] font-space font-black uppercase text-slate-400 tracking-wider block mb-1">Clinical Challenge</span>
+                          <p className="text-sm text-slate-600 font-medium leading-relaxed">{stat.desc}</p>
+                        </div>
+                        <div className="p-4 rounded-2xl bg-[#0D7070]/5 border border-[#0D7070]/10 mt-3 shadow-inner">
+                          <span className="text-[10px] font-space font-black uppercase text-[#0D7070] tracking-wider block mb-1">Keffi Intervention</span>
+                          <p className="text-xs text-[#2C5555] font-medium leading-relaxed">{stat.sol}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-4 flex justify-between items-center text-[10px] font-bold font-space uppercase tracking-wider text-slate-500 border-t border-slate-200/30 pt-3">
+                      <span>Scientific Research Study</span>
+                      <span className={stat.valColor}>WHO Guidelines</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Part 2: Real-World Incidents & Severe Tragedies Statistics */}
+            <div className="mb-28">
+              <div className="text-center max-w-[800px] mx-auto mb-16">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 border border-rose-100 text-rose-700 font-space font-bold uppercase tracking-widest text-xs mb-6 shadow-sm">
+                  <Shield size={14} /> Global Impact & Tragic Incidents
+                </div>
+                <h3 className="text-3xl lg:text-4xl font-poppins font-black text-slate-900 mb-6">
+                  The Cost of Silence: Real-World Tragedies
+                </h3>
+                <p className="text-[#475569] font-medium leading-relaxed">
+                  Mental health conditions are not just numbers on a screen; they represent severe, real-world crises that lead to devastating losses of life and human potential.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                {/* Incident 1 */}
+                <div className="glass-panel border border-white/60 p-8 rounded-[2rem] flex flex-col justify-between hover:border-rose-300/50 hover:shadow-2xl transition-all duration-300 bg-white/30">
+                  <div>
+                    <div className="flex justify-between items-center mb-6">
+                      <span className="text-xs font-bold font-space uppercase tracking-widest text-rose-500 bg-rose-50 px-3 py-1 rounded-full border border-rose-100">Every 40 Seconds</span>
+                      <span className="text-[10px] font-space font-bold text-slate-400">WHO REPORT</span>
+                    </div>
+                    <h4 className="text-xl font-poppins font-black text-slate-900 mb-4">800,000+ Annual Suicide Deaths</h4>
+                    <p className="text-sm text-slate-650 leading-relaxed font-medium">
+                      Globally, close to 800,000 people die by suicide every single year. It stands as the 4th leading cause of death among youth aged 15-29. In India, tragic suicide incidents spiked to over 170,000 in 2022, primarily driven by academic pressure, lack of emotional resources, and social isolation.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-slate-200/50 text-xs font-space font-bold text-slate-500">
+                    Target Impact: Immediate Crisis Intervention Routing
+                  </div>
                 </div>
 
-                {/* Step 2 */}
-                <div className="w-full flex justify-between items-center mb-24 relative hover:scale-102 transition-transform duration-300 cursor-pointer group animate-fade-in">
-                   <div className="w-[45%] text-right pr-10 opacity-40 group-hover:opacity-80 group-hover:-translate-x-2 transition-all flex justify-end"><Brain size={64} className="text-[#3A7070]"/></div>
-                   <div className="w-16 h-16 rounded-full bg-[#3A7070] border-4 border-white flex items-center justify-center text-white z-10 shadow-lg font-bold text-xl group-hover:bg-white group-hover:text-[#3A7070] group-hover:border-[#3A7070] transition-all">2</div>
-                   <div className="w-[45%] text-left pl-10">
-                     <h3 className="h3-title font-poppins text-slate-900 mb-3 group-hover:text-[#3A7070] transition-colors">2. Keffi Analyzes.</h3>
-                     <p className="p-small font-medium">Behind the scenes, Keffi's BERT engine detects your exact emotional state across 96 fine-grained categories, pulling from your Pinecone memory history.</p>
-                   </div>
+                {/* Incident 2 */}
+                <div className="glass-panel border border-white/60 p-8 rounded-[2rem] flex flex-col justify-between hover:border-amber-400/50 hover:shadow-2xl transition-all duration-300 bg-white/30">
+                  <div>
+                    <div className="flex justify-between items-center mb-6">
+                      <span className="text-xs font-bold font-space uppercase tracking-widest text-amber-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">75%+ Untreated Deficit</span>
+                      <span className="text-[10px] font-space font-bold text-slate-400">TREATMENT GAP</span>
+                    </div>
+                    <h4 className="text-xl font-poppins font-black text-slate-900 mb-4">Severe Under-Resourced Stigma</h4>
+                    <p className="text-sm text-slate-650 leading-relaxed font-medium">
+                      In low- and middle-income regions, over 75% of individuals suffering from severe psychological distress receive absolutely no clinical treatment. This deficit is exacerbated by an average of just 1 psychiatrist per 100,000 citizens, leaving desperate families without any resource or guidance.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-slate-200/50 text-xs font-space font-bold text-slate-500">
+                    Target Impact: 24/7 Zero-Cost Sanctuary Access
+                  </div>
                 </div>
 
-                {/* Step 3 */}
-                <div className="w-full flex justify-between items-center relative hover:scale-102 transition-transform duration-300 cursor-pointer group animate-fade-in">
-                   <div className="w-[45%] text-right pr-10">
-                     <h3 className="h3-title font-poppins text-slate-900 mb-3 group-hover:text-[#3A7070] transition-colors">3. Immediate Relief.</h3>
-                     <p className="p-small font-medium">Keffi dynamically responds using 1 of 7 therapeutic modes—from guiding a breathing exercise to reframing negative thoughts using CBT principles.</p>
-                   </div>
-                   <div className="w-16 h-16 rounded-full bg-[#8FA989] border-4 border-white flex items-center justify-center text-white z-10 shadow-lg font-bold text-xl group-hover:bg-white group-hover:text-[#8FA989] group-hover:border-[#8FA989] transition-all">3</div>
-                   <div className="w-[45%] text-left pl-10 opacity-40 group-hover:opacity-80 group-hover:translate-x-2 transition-all"><Heart size={64} className="text-[#8FA989]"/></div>
+                {/* Incident 3 */}
+                <div className="glass-panel border border-white/60 p-8 rounded-[2rem] flex flex-col justify-between hover:border-purple-300/50 hover:shadow-2xl transition-all duration-300 bg-white/30">
+                  <div>
+                    <div className="flex justify-between items-center mb-6">
+                      <span className="text-xs font-bold font-space uppercase tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full border border-purple-100">40% Academic Anxiety</span>
+                      <span className="text-[10px] font-space font-bold text-slate-400">STUDENT CRISIS</span>
+                    </div>
+                    <h4 className="text-xl font-poppins font-black text-slate-900 mb-4">Academic Distress & Student Self-Harm</h4>
+                    <p className="text-sm text-slate-650 leading-relaxed font-medium">
+                      Systemic performance pressure has triggered a 40% post-pandemic increase in clinical depression diagnoses among university and high school students. A lack of immediate, private counseling portals leads to weekly preventable tragedies under student exam stress.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-slate-200/50 text-xs font-space font-bold text-slate-500">
+                    Target Impact: Empathetic Peer-Style Active Listening
+                  </div>
                 </div>
-             </div>
-           </div>
-        </section>
 
-        {/* 🚀 NEW SECTION 4: THE SCIENCE (Grid Layout) */}
-        <section className="scroll-3d w-full py-32 bg-[#F2F9F6]/35 backdrop-blur-md border-y border-white/20 transition-all duration-75 ease-out">
-          <div className="max-w-[1200px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-24 relative">
-            <div className="absolute top-10 right-10 text-[300px] font-poppins font-bold text-slate-100 opacity-50 z-[-1] leading-none select-none">02</div>
-            
-            <div className="flex-1 grid grid-cols-2 gap-6 relative">
-              <div className="absolute -inset-4 bg-gradient-to-tr from-[#3A7070]/10 to-[#8FA989]/10 rounded-[3rem] blur-xl z-[-1]"></div>
-              <div style={{animationDelay: '100ms'}} className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 transform translate-y-8 hover:shadow-lg animate-slide-up">
-                <div className="w-12 h-12 bg-[#3A7070]/10 text-[#3A7070] rounded-full flex items-center justify-center"><Activity size={24}/></div>
-                <h4 className="font-poppins font-bold text-lg text-slate-800">96-State BERT</h4>
-                <p className="text-sm text-slate-500 font-medium">Not just "sad". Keffi detects complex states like Atypical Depression.</p>
-              </div>
-              <div style={{animationDelay: '200ms'}} className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 hover:shadow-lg animate-slide-up">
-                <div className="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-full flex items-center justify-center"><Database size={24}/></div>
-                <h4 className="font-poppins font-bold text-lg text-slate-800">Pinecone Memory</h4>
-                <p className="text-sm text-slate-500 font-medium">Vector memory ensures Keffi never forgets your past triggers or progress.</p>
-              </div>
-              <div style={{animationDelay: '300ms'}} className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 transform translate-y-8 hover:shadow-lg animate-slide-up">
-                <div className="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-full flex items-center justify-center"><Target size={24}/></div>
-                <h4 className="font-poppins font-bold text-lg text-slate-800">Dynamic MHQ</h4>
-                <p className="text-sm text-slate-500 font-medium">Silent, continuous evaluation of your Mental Health Quotient during chats.</p>
-              </div>
-              <div style={{animationDelay: '400ms'}} className="glass-card glass-card-hover p-8 rounded-3xl flex flex-col gap-4 hover:shadow-lg animate-slide-up">
-                <div className="w-12 h-12 bg-rose-500/10 text-rose-600 rounded-full flex items-center justify-center"><Zap size={24}/></div>
-                <h4 className="font-poppins font-bold text-lg text-slate-800">7-Mode Engine</h4>
-                <p className="text-sm text-slate-500 font-medium">Switches seamlessly between active listening, CBT reframing, and crisis mode.</p>
+                {/* Incident 4 */}
+                <div className="glass-panel border border-white/60 p-8 rounded-[2rem] flex flex-col justify-between hover:border-emerald-300/50 hover:shadow-2xl transition-all duration-300 bg-white/30">
+                  <div>
+                    <div className="flex justify-between items-center mb-6">
+                      <span className="text-xs font-bold font-space uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">$1 Trillion Economic Loss</span>
+                      <span className="text-[10px] font-space font-bold text-slate-400">PRODUCTIVITY GAP</span>
+                    </div>
+                    <h4 className="text-xl font-poppins font-black text-slate-900 mb-4">Silent Productivity & Social Toll</h4>
+                    <p className="text-sm text-slate-650 leading-relaxed font-medium">
+                      Depression and anxiety result in an estimated $1 trillion USD lost in global workforce productivity every single year. Beyond financial indicators, the human cost is measured in broken social relationships, domestic stress, and chronic isolation in families.
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-slate-200/50 text-xs font-space font-bold text-slate-500">
+                    Target Impact: NLP Warning Log for Supervisor Referral
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="flex-1 flex flex-col items-start text-left">
-              <h2 className="h2-title font-poppins text-slate-900 mb-8">An Engine Built on <span className="cursive-accent">Empathy</span>.</h2>
-              <div className="space-y-6">
-                <p className="p-text">
-                  Behind the calming interface lies a robust Triple-AI Architecture. We don't rely on simple prompts. Keffi is powered by a custom-trained clinical classification system that understands the deepest nuances of human emotion.
-                </p>
-                <p className="p-text">
-                  By combining semantic search with real-time generative capabilities, Keffi replaces tedious weekly assessment forms with natural, empathetic dialogue. It learns your unique psychological profile to offer deeply personalized care.
-                </p>
+            {/* Part 3: Clinical Psychological Foundations */}
+            <div className="mt-24 text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0D7070]/10 border border-[#0D7070]/20 text-[#0D7070] font-space font-bold uppercase tracking-widest text-xs mb-6 shadow-sm">
+                <BookOpen size={14} /> Evidence-Based Foundations
+              </div>
+              <h3 className="text-3xl lg:text-4xl font-poppins font-black text-[#0F172A] mb-6">
+                Clinical Research & Psychological Models
+              </h3>
+              <p className="text-slate-600 font-medium max-w-3xl mx-auto mb-16 leading-relaxed">
+                Keffi's emotional intelligence engine is grounded in peer-reviewed psychotherapeutic frameworks. We translate evidence-based methods into continuous digital support.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                {/* CBT */}
+                <div className="glass-card p-6 rounded-[2rem] border border-white/40 hover:border-[#3A7070]/30 transition-all glow-teal flex flex-col gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070]"><Brain size={24}/></div>
+                  <h4 className="font-space font-bold text-lg text-slate-800">Beck's CBT Model</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">Helps users identify, analyze, and restructure negative cognitive distortions (such as catastrophizing or overgeneralization) in real-time.</p>
+                </div>
+                {/* Somatic */}
+                <div className="glass-card p-6 rounded-[2rem] border border-white/40 hover:border-amber-500/30 transition-all glow-gold flex flex-col gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600"><Activity size={24}/></div>
+                  <h4 className="font-space font-bold text-lg text-slate-800">Somatic Grounding</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">Triggers physiological down-regulation protocols (like 5-4-3-2-1 sensory mapping) based on Polyvagal Theory to reduce nervous arousal.</p>
+                </div>
+                {/* Rogerian */}
+                <div className="glass-card p-6 rounded-[2rem] border border-white/40 hover:border-purple-500/30 transition-all glow-purple flex flex-col gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-600"><Heart size={24}/></div>
+                  <h4 className="font-space font-bold text-lg text-slate-800">Rogerian Reflective Care</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">Applies Rogers' core principles of unconditional positive regard, active listening, and empathetic echoing to provide supportive venting spaces.</p>
+                </div>
+                {/* BERT */}
+                <div className="glass-card p-6 rounded-[2rem] border border-white/40 hover:border-emerald-500/30 transition-all glow-emerald flex flex-col gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-600"><Sparkles size={24}/></div>
+                  <h4 className="font-space font-bold text-lg text-slate-800">Linguistic Shift Analytics</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">BERT transformer pipelines track patient semantic choices (e.g. self-referential 'I/me' shifts) to monitor progressive depressive patterns.</p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* 🚀 SECTION 5: DUAL PLATFORM (True Split-Screen) */}
-        <section className="scroll-3d w-full flex flex-col lg:flex-row mt-20 border-y border-white/20 transition-all duration-75 ease-out bg-white/20 backdrop-blur-md">
+        <section className="scroll-zoom-section w-full flex flex-col lg:flex-row mt-20 border-y border-[#3A7070]/8 bg-gradient-to-r from-[#F0F9F6]/30 via-white/30 to-[#F0F9F6]/30 backdrop-blur-md">
            {/* Left Side: Patient (Light) */}
            <div className="flex-1 bg-[#F2F9F6]/20 p-16 lg:p-24 flex flex-col items-center text-center border-r border-white/10 hover:bg-[#F2F9F6]/40 transition-all duration-500 group">
+             <div className="label-text inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#3A7070]/5 border border-[#3A7070]/10 text-[#3A7070] font-space font-bold uppercase tracking-widest text-xs mb-6">Patient Portal</div>
              <div className="h-48 flex items-end justify-center mb-10 group-hover:scale-105 transition-transform duration-500">
                <img src="https://illustrations.popsy.co/amber/success.svg" alt="Patient Sanctuary" className="h-full drop-shadow-xl" />
              </div>
-              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Patients.<br/>The <span className="cursive-accent text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-[#8FA989]">Sanctuary</span>.</h2>
-             <p className="p-text text-slate-600 mb-10 max-w-sm font-medium">
+              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Patients.<br/>The <span className="cursive-accent-lg text-transparent bg-clip-text bg-gradient-to-r from-[#3A7070] to-[#8FA989]">Sanctuary</span>.</h2>
+             <p className="p-text mb-10 max-w-sm font-medium leading-[1.7]" style={{color:'#2D4040'}}>
                A completely judgment-free zone to vent, track your shifting moods, and receive real-time emotional first-aid without having to wait weeks for an appointment.
              </p>
              <button onClick={() => setView('login-patient')} className={`mt-auto px-10 py-4 rounded-2xl font-inter font-bold text-lg ${theme.btnTeal} cursor-pointer`}>
@@ -383,11 +636,12 @@ const LandingPage = ({ setView }) => {
 
            {/* Right Side: Doctor (Light) */}
            <div className="flex-1 bg-white/15 p-16 lg:p-24 flex flex-col items-center text-center border-l border-white/10 hover:bg-white/30 transition-all duration-500 group">
+             <div className="label-text inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-600/5 border border-teal-600/10 text-teal-700 font-space font-bold uppercase tracking-widest text-xs mb-6">Clinical Access</div>
              <div className="h-48 flex items-end justify-center mb-10 group-hover:scale-105 transition-transform duration-500">
                <img src="https://illustrations.popsy.co/amber/video-call.svg" alt="Clinical Hub" className="h-full drop-shadow-2xl" />
              </div>
-              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Clinicians.<br/>The <span className="cursive-accent text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-teal-700">Hub</span>.</h2>
-             <p className="p-text text-slate-600 mb-10 max-w-sm font-medium">
+              <h2 className="h2-title font-poppins text-slate-900 mb-6">For Clinicians.<br/>The <span className="cursive-accent-lg text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-teal-700">Hub</span>.</h2>
+             <p className="p-text mb-10 max-w-sm font-medium leading-[1.7]" style={{color:'#2D4040'}}>
                A predictive dashboard giving you a real-time view of your entire roster's emotional trajectory. If a patient shows signs of relapse, Keffi alerts you instantly.
              </p>
              <button onClick={() => setView('login-admin')} className={`mt-auto px-10 py-4 rounded-2xl font-inter font-bold text-lg ${theme.btnOutline} cursor-pointer`}>
@@ -397,12 +651,12 @@ const LandingPage = ({ setView }) => {
         </section>
 
         {/* 🚀 SECTION 6: SAFETY (Light Mode Alert Block) */}
-        <section className="scroll-3d w-full bg-[#F2F9F6]/30 backdrop-blur-md py-32 relative overflow-hidden border-y border-red-500/20 transition-all duration-75 ease-out">
+        <section className="scroll-zoom-section w-full bg-gradient-to-br from-rose-50/25 via-[#F2F9F6]/35 to-rose-50/25 backdrop-blur-md py-32 relative overflow-hidden border-y border-rose-300/20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-500/5 rounded-full blur-[120px]"></div>
           <div className="max-w-[800px] mx-auto px-6 text-center relative z-10 flex flex-col items-center">
              <div className="w-24 h-24 mb-10 text-red-500 animate-pulse"><Shield size={96} strokeWidth={1} /></div>
-              <h2 className="h2-title font-poppins text-slate-900 mb-8">Clinical <span className="cursive-accent text-red-500">Safety First</span>. Always.</h2>
-             <p className="p-text text-slate-600 max-w-3xl font-medium">
+              <h2 className="h2-title font-raleway text-slate-900 mb-8"><span className="cursive-accent-lg text-gradient-rose">Clinical Safety</span> First. <span className="text-gradient-slate">Always</span>.</h2>
+             <p className="p-text max-w-3xl font-medium leading-[1.85]" style={{color:'#2D4040'}}>
                Built with strict WHO-compliant crisis protocols and the n8n automation engine, Keffi continuously monitors conversations for high-risk signals. In moments of severe distress or suicidal ideation, it overrides AI independence and instantly triggers an SOS alert to emergency contacts and your clinical supervisor. 
                <br/><br/>
                <span className="text-red-500 font-bold">We prioritize human safety over everything else.</span>
@@ -410,79 +664,361 @@ const LandingPage = ({ setView }) => {
           </div>
         </section>
 
-        {/* 🚀 FINAL CTA */}
-        <section className="w-full py-32 bg-transparent flex flex-col items-center text-center relative overflow-hidden">
-          <div className="w-full max-w-[1000px] mx-auto glass-panel border border-white/35 rounded-[3rem] p-16 lg:p-24 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#3A7070]/5 rounded-full blur-[80px]"></div>
-            <h2 className="h1-title font-poppins text-slate-900 mb-6 relative z-10">Ready to Heal?</h2>
-            <p className="p-text text-slate-600 mb-12 relative z-10 max-w-lg mx-auto font-medium">Whether you are seeking support or providing care, Keffi AI is here to bridge the gap.</p>
-            <button onClick={() => setView('login-patient')} className={`px-12 py-5 rounded-2xl font-inter font-bold text-xl relative z-10 ${theme.btnTeal} cursor-pointer`}>
-              Keffi
-            </button>
+        {/* ─────────── PROJECT OVERVIEW / TECH STACK SECTION ─────────── */}
+        <section className="scroll-zoom-section w-full py-28 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0D2A2A]/95 via-[#0E2424]/92 to-[#0A1F1F]/95" />
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#3A7070]/15 rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8FA989]/10 rounded-full blur-[100px]" />
+
+          <div className="max-w-[1280px] mx-auto px-6 lg:px-16 relative z-10">
+
+            {/* Header */}
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3A7070]/20 border border-[#3A7070]/30 text-[#8FD4C8] font-space font-bold text-xs tracking-[0.18em] uppercase mb-6">
+                <Sparkles size={12} /> Project Overview
+              </div>
+              <h2 className="h2-title mb-4" style={{color:'#F0FAF8'}}>
+                The <span className="cursive-accent-lg text-gradient-aurora">Keffi AI</span> Architecture
+              </h2>
+              <p className="p-text max-w-2xl mx-auto" style={{color:'#8FBFB8'}}>
+                A full-stack, production-ready mental health platform built with modern AI and cloud infrastructure — designed for real clinical impact.
+              </p>
+            </div>
+
+            {/* Tech Category Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+
+              {/* Card 1 - AI Core */}
+              <div className="group relative p-7 rounded-3xl border border-[#3A7070]/25 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-[#3A7070]/50 transition-all duration-400 hover:-translate-y-1 cursor-default">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#3A7070]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#3A7070]/20 flex items-center justify-center text-[#5EC4BC]">
+                    <Brain size={24} />
+                  </div>
+                  <div>
+                    <p className="label-text" style={{color:'#5A9A90'}}>AI Core</p>
+                    <h4 className="font-space font-bold text-lg" style={{color:'#D0F0EC'}}>BERT + Gemini</h4>
+                  </div>
+                </div>
+                <p className="card-text" style={{color:'#7ABAB0'}}>Custom fine-tuned BERT model classifies 96 emotional states. Google Gemini Pro powers empathetic, context-aware conversational responses using 7 therapeutic modes.</p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {['BERT', 'Gemini Pro', '96 States', 'NLP'].map(t => (
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-[#3A7070]/20 border border-[#3A7070]/30 text-[#5EC4BC] font-space font-bold text-xs">{t}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card 2 - Memory */}
+              <div className="group relative p-7 rounded-3xl border border-amber-500/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-amber-500/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-500/15 flex items-center justify-center text-amber-400">
+                    <Database size={24} />
+                  </div>
+                  <div>
+                    <p className="label-text" style={{color:'#8A7A50'}}>Memory Layer</p>
+                    <h4 className="font-space font-bold text-lg" style={{color:'#F5DFA0'}}>Pinecone Vector DB</h4>
+                  </div>
+                </div>
+                <p className="card-text" style={{color:'#A89070'}}>Semantic vector memory stores and retrieves patient emotional history, enabling truly personalized, context-aware conversations that improve over time.</p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {['Pinecone', 'Embeddings', 'Vector Search', 'Memory'].map(t => (
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/25 text-amber-400 font-space font-bold text-xs">{t}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card 3 - Automation */}
+              <div className="group relative p-7 rounded-3xl border border-rose-500/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-rose-500/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-rose-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-rose-500/15 flex items-center justify-center text-rose-400">
+                    <Shield size={24} />
+                  </div>
+                  <div>
+                    <p className="label-text" style={{color:'#8A5050'}}>Safety Automation</p>
+                    <h4 className="font-space font-bold text-lg" style={{color:'#FFBAB8'}}>n8n Workflows</h4>
+                  </div>
+                </div>
+                <p className="card-text" style={{color:'#A07070'}}>n8n orchestrates real-time crisis detection pipelines. When suicidal ideation or severe distress is detected, automated SOS alerts notify emergency contacts instantly.</p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {['n8n', 'Crisis SOS', 'WHO Protocol', 'Automation'].map(t => (
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-rose-500/15 border border-rose-500/25 text-rose-400 font-space font-bold text-xs">{t}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card 4 - Backend */}
+              <div className="group relative p-7 rounded-3xl border border-emerald-500/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-emerald-500/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 flex items-center justify-center text-emerald-400">
+                    <Zap size={24} />
+                  </div>
+                  <div>
+                    <p className="label-text" style={{color:'#5A8A60'}}>Backend API</p>
+                    <h4 className="font-space font-bold text-lg" style={{color:'#AAFFC4'}}>FastAPI + Python</h4>
+                  </div>
+                </div>
+                <p className="card-text" style={{color:'#70A880'}}>High-performance async REST API with clinical routers for patient sessions, MHQ scoring, doctor dashboards, and real-time mood tracking analytics.</p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {['FastAPI', 'Python', 'REST API', 'Async'].map(t => (
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 font-space font-bold text-xs">{t}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card 5 - Frontend */}
+              <div className="group relative p-7 rounded-3xl border border-blue-400/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-blue-400/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-400/15 flex items-center justify-center text-blue-400">
+                    <Activity size={24} />
+                  </div>
+                  <div>
+                    <p className="label-text" style={{color:'#505A8A'}}>Frontend</p>
+                    <h4 className="font-space font-bold text-lg" style={{color:'#A8C4FF'}}>React + Vite + Tailwind</h4>
+                  </div>
+                </div>
+                <p className="card-text" style={{color:'#7080A0'}}>Glassmorphism UI with animated components, real-time mood charts, doctor analytics dashboard, voice input, and a fully responsive design for all devices.</p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {['React 18', 'Vite', 'Tailwind', 'Recharts'].map(t => (
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-blue-400/15 border border-blue-400/25 text-blue-400 font-space font-bold text-xs">{t}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card 6 - Deployment */}
+              <div className="group relative p-7 rounded-3xl border border-violet-400/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-violet-400/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-violet-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-violet-400/15 flex items-center justify-center text-violet-400">
+                    <Target size={24} />
+                  </div>
+                  <div>
+                    <p className="label-text" style={{color:'#70508A'}}>Deployment</p>
+                    <h4 className="font-space font-bold text-lg" style={{color:'#D4AAFF'}}>Hugging Face + Vercel</h4>
+                  </div>
+                </div>
+                <p className="card-text" style={{color:'#9070A0'}}>BERT model hosted on Hugging Face Spaces. FastAPI backend deployed on Hugging Face. React frontend on Vercel CDN — fully cloud-native, zero downtime.</p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {['Hugging Face', 'Vercel', 'Cloud', 'CI/CD'].map(t => (
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-violet-400/15 border border-violet-400/25 text-violet-400 font-space font-bold text-xs">{t}</span>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        {/* ─────────── FINAL CTA ─────────── */}
+        <section className="w-full py-32 flex flex-col items-center text-center relative overflow-hidden bg-gradient-to-b from-transparent via-[#E6F0F0]/20 to-[#d8ede8]/40">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[500px] font-black text-[#3A7070]/3 select-none leading-none pointer-events-none">∞</div>
+          <div className="w-full max-w-[1000px] mx-auto px-6 relative z-10">
+            <div className="glass-panel border border-white/35 rounded-[3rem] p-16 lg:p-24 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-[#3A7070]/8 to-transparent rounded-full blur-[80px]"></div>
+              <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-gradient-to-tr from-[#8FA989]/8 to-transparent rounded-full blur-[60px]"></div>
+              <p className="font-space font-bold text-[#8FA989] uppercase tracking-[0.2em] text-sm mb-4 relative z-10">✦ Your Journey Starts Here ✦</p>
+              <h2 className="h1-title mb-6 relative z-10">Ready to <span className="cursive-accent-lg text-gradient-aurora">Heal</span>?</h2>
+              <p className="p-text text-slate-600 mb-12 relative z-10 max-w-lg mx-auto font-medium">Whether you are seeking support or providing care, Keffi AI is here to bridge the gap with empathy and intelligence.</p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
+                <button onClick={() => setView('login-patient')} className={`group px-10 py-5 rounded-2xl font-inter font-bold text-lg ${theme.btnTeal} cursor-pointer flex items-center gap-3`}>
+                  ✨ <span>Enter Keffi Chat</span> <ArrowRight size={20} className="transform group-hover:translate-x-1 transition-transform"/>
+                </button>
+                <button onClick={() => setView('login-admin')} className={`px-10 py-5 rounded-2xl font-inter font-bold text-lg ${theme.btnOutline} cursor-pointer flex items-center gap-3`}>
+                  🩺 Clinical Hub
+                </button>
+              </div>
+            </div>
           </div>
         </section>
       </main>
 
-      {/* 🚀 ULTIMATE FOOTER */}
-      <footer className="w-full relative z-10 bg-[#E6F0F0]/30 backdrop-blur-md text-slate-900 overflow-hidden mt-10 border-t border-white/20">
+      {/* 🚀 ULTIMATE FOOTER & ABOUT US */}
+      <footer className="w-full relative z-10 bg-gradient-to-b from-[#142A2A]/92 to-[#071616]/99 backdrop-blur-lg text-slate-350 overflow-hidden mt-0 border-t border-[#3A7070]/25 py-24 animate-fade-in">
         {/* Glow Effects */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-px bg-gradient-to-r from-transparent via-[#3A7070]/50 to-transparent"></div>
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-100/50 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[1px] bg-gradient-to-r from-transparent via-[#3A7070]/60 to-transparent"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3a7070]/12 rounded-full blur-[130px] pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#8fa989]/10 rounded-full blur-[130px] pointer-events-none"></div>
+        <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-emerald-500/6 rounded-full blur-[100px] pointer-events-none"></div>
+        
+        <div className="max-w-[1200px] mx-auto px-6 lg:px-12 relative z-10">
+          
+          {/* Part 1: Unified About Us Title & Team Profiles */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#3A7070]/20 to-[#8FA989]/20 border border-[#3A7070]/30 text-[#8FD4C8] font-space font-bold uppercase tracking-widest text-xs mb-6 shadow-md">
+              <Sparkles size={14} className="text-[#8FD4C8]" /> About Us & Hackers Team
+            </div>
+            <h2 className="text-3xl lg:text-4xl font-poppins font-black text-white tracking-tight mb-6">
+              Built with <span className="cursive-accent-lg text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-[#8FA989]">Purpose</span>, by <span className="font-black text-[#8FD4C8]">Hackers Team</span>
+            </h2>
+            <p className="text-slate-400 font-medium max-w-3xl mx-auto leading-relaxed text-sm lg:text-base">
+              We are a passionate team of engineering students from <span className="font-bold text-white font-space">University College of Engineering (UCE) Panruti</span>, Tamil Nadu. What started as a competitive entry became a genuine mission: to make mental healthcare accessible, continuous, and deeply empathetic.
+            </p>
+          </div>
 
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-12 pt-24 pb-12 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-16 lg:gap-8 mb-20">
-            
-            {/* Column 1: Brand & Emergency */}
-            <div className="col-span-1 md:col-span-5 flex flex-col items-start">
-              <div className="flex items-center gap-3 mb-8 glass-card px-6 py-4 rounded-2xl border border-white/30 backdrop-blur-sm w-fit shadow-sm">
-                 <Star size={32} className="text-[#3A7070] fill-[#3A7070]" />
-                 <span className="text-3xl font-poppins font-bold tracking-tight text-[#2C5555]">Keffi AI</span>
+          {/* Hackers Team Profiles Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            {/* Member 1: BALAJI P */}
+            <div className="glass-panel p-8 rounded-[2.5rem] border border-white/10 bg-white/5 hover:bg-white/10 hover:border-[#3A7070]/50 transition-all duration-500 flex flex-col items-center text-center gap-4 glow-teal shadow-xl">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#3A7070]/20 to-[#8FA989]/20 flex items-center justify-center text-[#8FD4C8] font-space font-black text-2xl border-2 border-white/20 mb-2 shadow-inner">
+                BP
               </div>
-              <p className="font-inter text-slate-600 text-lg mb-8 max-w-sm leading-relaxed font-semibold">
-                Bridging the invisible gap in mental healthcare with continuous, empathetic AI tracking.
-              </p>
-              <div className="p-6 rounded-2xl bg-red-500/10 border border-red-200/35 backdrop-blur-sm w-full max-w-md shadow-sm">
-                <div className="flex items-center gap-2 mb-3">
-                  <Shield size={20} className="text-red-500" />
-                  <h4 className="font-poppins font-semibold text-red-600 uppercase tracking-widest text-xs">Emergency Support</h4>
-                </div>
-                <p className="font-inter text-slate-700 text-sm leading-relaxed">
-                  If you are in a life-threatening situation, please call local emergency services immediately. This platform is not a substitute for emergency medical care.
-                </p>
+              <h4 className="font-cursive text-4xl text-[#E6F0F0] mb-0 tracking-wide select-none">BALAJI P</h4>
+              <p className="font-space font-bold text-xs text-[#8FD4C8] uppercase tracking-widest mb-3">AI & Full-Stack Developer</p>
+              <p className="text-slate-400 text-xs leading-relaxed font-medium mb-4">Pioneered Keffi's Triple-AI orchestrations, custom n8n clinical routes, and full-stack responsive architectures.</p>
+              
+              {/* Social Links */}
+              <div className="flex items-center gap-4 mt-auto">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#8FD4C8] hover:bg-[#3A7070] hover:text-white hover:border-[#3A7070] transition-all duration-300" title="LinkedIn Profile">
+                  <Linkedin size={16} />
+                </a>
+                <a href="mailto:balaji.p@keffi.ai" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#8FD4C8] hover:bg-[#3A7070] hover:text-white hover:border-[#3A7070] transition-all duration-300" title="Email Contact">
+                  <Mail size={16} />
+                </a>
+                <a href="tel:+919042512345" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#8FD4C8] hover:bg-[#3A7070] hover:text-white hover:border-[#3A7070] transition-all duration-300" title="Phone Call">
+                  <PhoneCall size={16} />
+                </a>
               </div>
             </div>
 
-            {/* Column 2: Navigation */}
-            <div className="col-span-1 md:col-span-3 lg:col-span-2">
-              <h4 className="font-poppins font-semibold text-slate-900 mb-6 uppercase tracking-wider text-sm">Platform</h4>
-              <ul className="flex flex-col gap-4 font-inter text-slate-600">
-                <li><button onClick={() => setView('login-patient')} className="hover:text-[#3A7070] font-medium transition-colors">Patient Sanctuary</button></li>
-                <li><button onClick={() => setView('login-admin')} className="hover:text-[#3A7070] font-medium transition-colors">Clinical Hub</button></li>
-                <li><button onClick={() => {document.getElementById('story')?.scrollIntoView({behavior: 'smooth'})}} className="hover:text-[#3A7070] font-medium transition-colors">How it Works</button></li>
+            {/* Member 2: MADHUMATHI S */}
+            <div className="glass-panel p-8 rounded-[2.5rem] border border-white/10 bg-white/5 hover:bg-white/10 hover:border-amber-500/50 transition-all duration-500 flex flex-col items-center text-center gap-4 glow-gold shadow-xl">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500/20 to-amber-300/20 flex items-center justify-center text-[#D4A373] font-space font-black text-2xl border-2 border-white/20 mb-2 shadow-inner">
+                MS
+              </div>
+              <h4 className="font-cursive text-4xl text-[#E6F0F0] mb-0 tracking-wide select-none">MADHUMATHI S</h4>
+              <p className="font-space font-bold text-xs text-[#D4A373] uppercase tracking-widest mb-3">UI/UX & Clinical Researcher</p>
+              <p className="text-slate-400 text-xs leading-relaxed font-medium mb-4">Designed the organic glassmorphic layout system, visual color therapy states, and led cognitive safety analysis.</p>
+              
+              {/* Social Links */}
+              <div className="flex items-center gap-4 mt-auto">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#D4A373] hover:bg-amber-500 hover:text-white hover:border-amber-500 transition-all duration-300" title="LinkedIn Profile">
+                  <Linkedin size={16} />
+                </a>
+                <a href="mailto:madhumathi.s@keffi.ai" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#D4A373] hover:bg-amber-500 hover:text-white hover:border-amber-500 transition-all duration-300" title="Email Contact">
+                  <Mail size={16} />
+                </a>
+                <a href="tel:+919876543211" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#D4A373] hover:bg-amber-500 hover:text-white hover:border-amber-500 transition-all duration-300" title="Phone Call">
+                  <PhoneCall size={16} />
+                </a>
+              </div>
+            </div>
+
+            {/* Member 3: MALINI V */}
+            <div className="glass-panel p-8 rounded-[2.5rem] border border-white/10 bg-white/5 hover:bg-white/10 hover:border-emerald-500/50 transition-all duration-500 flex flex-col items-center text-center gap-4 glow-emerald shadow-xl">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500/20 to-[#8FA989]/20 flex items-center justify-center text-emerald-400 font-space font-black text-2xl border-2 border-white/20 mb-2 shadow-inner">
+                MV
+              </div>
+              <h4 className="font-cursive text-4xl text-[#E6F0F0] mb-0 tracking-wide select-none">MALINI V</h4>
+              <p className="font-space font-bold text-xs text-emerald-400 uppercase tracking-widest mb-3">Backend Developer & Integrations</p>
+              <p className="text-slate-400 text-xs leading-relaxed font-medium mb-4">Integrated clinical database adapters, Twilio notification flows, and built real-time analytics dashboards.</p>
+              
+              {/* Social Links */}
+              <div className="flex items-center gap-4 mt-auto">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300" title="LinkedIn Profile">
+                  <Linkedin size={16} />
+                </a>
+                <a href="mailto:malini.v@keffi.ai" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300" title="Email Contact">
+                  <Mail size={16} />
+                </a>
+                <a href="tel:+919876543212" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300" title="Phone Call">
+                  <PhoneCall size={16} />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Part 2: Naan Mudhalvan — Niral Thiruvizha Recognition Box */}
+          <div className="glass-panel border border-white/10 rounded-[2.5rem] p-10 lg:p-12 mb-20 relative overflow-hidden bg-white/5 shadow-2xl glow-teal text-center max-w-4xl mx-auto">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#3A7070]/10 to-amber-500/5 opacity-40 rounded-[2.5rem]"></div>
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div className="relative z-10">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <Star size={20} className="text-[#D4A373] fill-[#D4A373] animate-pulse" />
+                <span className="text-xs font-bold text-[#D4A373] uppercase tracking-widest font-space">State-Level Technical Challenge Recognition</span>
+                <Star size={20} className="text-[#D4A373] fill-[#D4A373] animate-pulse" />
+              </div>
+              <h3 className="text-3xl lg:text-4xl font-raleway font-black text-white mb-6">
+                <span className="cursive-accent-lg text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-[#8FA989]">Naan Mudhalvan</span> <span className="text-slate-300">— Niral Thiruvizha Hackathon</span>
+              </h3>
+              <p className="text-slate-300 font-inter font-medium text-base lg:text-lg leading-relaxed max-w-3xl mx-auto mb-6">
+                Keffi AI was proudly engineered at <span className="font-extrabold text-[#8FD4C8]">University College of Engineering (UCE) Panruti</span> (a constituent college of Anna University) as an entry for the prestigious <span className="font-bold text-white">Naan Mudhalvan - Niral Thiruvizha</span> state hackathon. 
+              </p>
+              <p className="text-slate-400 font-inter text-sm leading-relaxed max-w-2xl mx-auto">
+                Designed to solve real-world student and community mental wellness crises, Keffi integrates advanced clinical routing, semantic text processing, and active somatic regulation to bridge the critical healthcare deficit. Our team dedicated this project to tech-for-good, scaling mental support beyond the boundaries of traditional clinics.
+              </p>
+            </div>
+          </div>
+
+          {/* Part 3: Classic Footer Columns */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-16 pt-12 border-t border-white/5">
+            
+            {/* Left Column: Brand */}
+            <div className="col-span-1 md:col-span-6 flex flex-col items-start text-left">
+              <div className="flex items-center gap-3 mb-5 bg-[#3A7070]/15 border border-[#3A7070]/30 px-6 py-3.5 rounded-2xl backdrop-blur-sm w-fit shadow-xl glow-teal">
+                <Star size={24} className="text-[#8FD4C8] fill-[#8FD4C8]" />
+                <span className="text-2xl font-raleway font-black tracking-tight text-[#E6F0F0]">Keffi AI</span>
+              </div>
+              <p className="font-cursive text-2xl text-[#8FD4C8] mb-3 select-none">Where Empathy meets Intelligence.</p>
+              <p className="font-inter text-[#A3B3B3] text-sm mb-6 max-w-md leading-relaxed font-medium">Bridging the 167-hour gap in mental healthcare with continuous, empathetic, and clinically-guided AI conversations.</p>
+              
+              <div className="flex flex-wrap gap-4 items-center font-space text-[#8FD4C8] font-bold text-xs tracking-wider mb-6">
+                <span>📧 support@keffi.ai</span>
+                <span className="text-[#3A7070]">•</span>
+                <span>📞 +91 90425 12345</span>
+              </div>
+
+              {/* Emergency Support badge */}
+              <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/25 max-w-md shadow-sm">
+                <div className="flex items-center gap-2 text-rose-450 font-space font-bold text-[11px] uppercase tracking-wider mb-1">
+                  <Shield size={14} className="text-rose-500" /> Emergency Support
+                </div>
+                <p className="text-[11px] text-[#A3B3B3] leading-relaxed font-medium">In case of acute distress or clinical emergencies, please call AASRA Helpline at +91 98204 66726 or call 104 immediately. Keffi does not replace active clinical care.</p>
+              </div>
+            </div>
+
+            {/* Middle Column: Quick Nav */}
+            <div className="col-span-1 md:col-span-3 text-left md:pl-8">
+              <h4 className="font-space font-black text-[#E6F0F0] mb-6 uppercase tracking-wider text-xs border-b border-[#3A7070]/20 pb-2">Navigation</h4>
+              <ul className="flex flex-col gap-4 font-space font-bold text-sm text-[#A3B3B3]">
+                <li>
+                  <button onClick={() => setView('login-patient')} className="hover:text-white hover:translate-x-1.5 transition-all duration-300 cursor-pointer flex items-center gap-2">
+                    <ArrowRight size={12} className="opacity-60" /> Patient Sanctuary
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => setView('login-admin')} className="hover:text-white hover:translate-x-1.5 transition-all duration-300 cursor-pointer flex items-center gap-2">
+                    <ArrowRight size={12} className="opacity-60" /> Clinical Hub
+                  </button>
+                </li>
               </ul>
             </div>
 
-            {/* Column 3: Legal */}
-            <div className="col-span-1 md:col-span-4 lg:col-span-5 flex flex-col lg:items-end lg:text-right">
-              <h4 className="font-poppins font-semibold text-slate-900 mb-6 uppercase tracking-wider text-sm">Project Details</h4>
-              <p className="font-inter text-slate-700 font-medium text-xl mb-2">
-                Naan Mudhalvan - Niral Thiruvizha
-              </p>
-              <p className="font-inter text-[#3A7070] font-bold text-lg mb-10">
-                Built with ❤️ by Team Keffi @ UCE Panruti
-              </p>
-              <div className="flex flex-wrap gap-6 font-inter text-sm text-slate-500 mt-auto justify-start lg:justify-end">
-                <a href="#" className="hover:text-slate-900 transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-slate-900 transition-colors">Terms of Service</a>
-                <a href="#" className="hover:text-slate-900 transition-colors">Clinical Guidelines</a>
+            {/* Right Column: UCE Details */}
+            <div className="col-span-1 md:col-span-3 flex flex-col md:items-end text-left md:text-right">
+              <h4 className="font-space font-black text-[#E6F0F0] mb-6 uppercase tracking-wider text-xs border-b border-[#3A7070]/20 pb-2 w-full md:text-right">Hackers Team</h4>
+              <p className="font-cursive text-2xl text-[#D4A373] mb-1 select-none">UCE Panruti, TN</p>
+              <p className="font-space text-slate-400 text-xs font-bold uppercase tracking-widest mb-4">Naan Mudhalvan Competitors</p>
+              
+              <div className="flex flex-wrap gap-4 font-space font-bold text-xs text-[#8FA989] justify-start md:justify-end">
+                <a href="#" className="hover:text-white transition-colors">Privacy</a>
+                <span>•</span>
+                <a href="#" className="hover:text-white transition-colors">Terms</a>
+                <span>•</span>
+                <a href="#" className="hover:text-white transition-colors">Guidelines</a>
               </div>
             </div>
-
+            
           </div>
 
-          <div className="pt-8 border-t border-[#3A7070]/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm font-inter">
-            <p>© 2026 Keffi AI Platform. All rights reserved.</p>
+          {/* Bottom copyright line */}
+          <div className="pt-8 border-t border-[#3A7070]/20 flex flex-col sm:flex-row justify-between items-center gap-4 text-[#A3B3B3] text-xs font-space font-bold uppercase tracking-wider">
+            <p>© 2026 Hackers Team & UCE Panruti. All rights reserved.</p>
             <p className="flex items-center gap-2">Version 3.0.0 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Systems Operational</p>
           </div>
         </div>
@@ -523,13 +1059,17 @@ const PatientLogin = ({ setView, setUserData }) => {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-6 md:p-10 bg-transparent`}>
-      <div className={`max-w-5xl w-full min-h-[700px] lg:h-[700px] rounded-[2.5rem] glass-panel flex flex-col md:flex-row overflow-hidden border border-white/20 animate-scale-up`}>
+    <div className={`min-h-screen flex items-center justify-center p-6 md:p-10 bg-transparent relative overflow-hidden`}>
+      {/* Ambient background glows for richer color combination */}
+      <div className="absolute top-10 left-10 w-[450px] h-[450px] glow-orb-emerald rounded-full blur-[100px] pointer-events-none z-0"></div>
+      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] glow-orb-teal rounded-full blur-[100px] pointer-events-none z-0"></div>
+
+      <div className={`max-w-5xl w-full min-h-[700px] lg:h-[700px] rounded-[2.5rem] glass-panel flex flex-col md:flex-row overflow-hidden glow-teal animate-scale-up relative z-10 hover:shadow-[0_25px_60px_rgba(13,112,112,0.25)] transition-all duration-500`}>
         {/* Left Image Side */}
         <div className="hidden md:flex md:w-5/12 relative overflow-hidden bg-[#E6F0F0]/25 rounded-l-[2.5rem] items-center justify-center p-8 border-r border-white/20 animate-fade-in">
            <DynamicLoginIllustration step={step} className="w-full h-full max-w-[300px] object-contain relative z-10 drop-shadow-2xl transition-all duration-500" />
            <div className="absolute inset-0 bg-gradient-to-t from-[#2C5555]/30 via-transparent to-transparent flex flex-col justify-end p-12 text-[#1E293B] z-20">
-              <h2 className="text-3xl font-black mb-3">
+              <h2 className="text-3xl font-poppins font-black text-[#0D5050] mb-3">
                 {step === 1 && "Secure Entry"}
                 {step === 2 && "Your Sanctuary"}
               </h2>
@@ -551,23 +1091,23 @@ const PatientLogin = ({ setView, setUserData }) => {
           {step === 1 && (
             <div className="space-y-8 animate-fade-in">
               <div>
-                <h2 className="text-3xl font-black text-slate-800 mb-3">Secure Entry</h2>
-                <p className="text-slate-500 text-base font-semibold">Your privacy is our priority. Enter details for a secure OTP.</p>
+                <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-[#3A7070] mb-3">Secure Entry</h2>
+                <p className="text-slate-500 text-base font-space font-semibold leading-relaxed">Your privacy is our priority. Enter details for a secure OTP.</p>
               </div>
               <div className="space-y-5">
                 <div className="animate-slide-up" style={{animationDelay: '100ms'}}>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Mobile Number</label>
-                  <input type="tel" placeholder="+91 98765 43210" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
+                  <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Mobile Number</label>
+                  <input type="tel" placeholder="+91 98765 43210" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
                 </div>
                 <div className="animate-slide-up" style={{animationDelay: '200ms'}}>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                  <input type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
+                  <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Email Address</label>
+                  <input type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
                 </div>
               </div>
-              {error && <div className="text-red-500 text-sm font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
+              {error && <div className="text-red-500 text-sm font-space font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
               <div className="pt-2 space-y-4 animate-slide-up" style={{animationDelay: '300ms'}}>
-                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Continue</button>
-                <button onClick={() => setView('landing')} className="w-full text-center text-slate-400 font-bold text-sm hover:text-[#3A7070] transition-colors">Back to Home</button>
+                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Continue</button>
+                <button onClick={() => setView('landing')} className="w-full text-center text-slate-400 font-space font-bold text-sm hover:text-[#3A7070] transition-colors cursor-pointer">Back to Home</button>
               </div>
             </div>
           )}
@@ -575,28 +1115,28 @@ const PatientLogin = ({ setView, setUserData }) => {
           {step === 2 && (
             <div className="space-y-8 animate-fade-in h-full flex flex-col justify-center">
               <div>
-                <h2 className="text-3xl font-black text-slate-800 mb-3">Your Profile</h2>
-                <p className="text-slate-500 text-base font-semibold">Help Keffi understand you better.</p>
+                <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2AA870] to-[#2C5555] mb-3">Your Profile</h2>
+                <p className="text-slate-500 text-base font-space font-semibold leading-relaxed">Help Keffi understand you better.</p>
               </div>
               <div className="space-y-5">
                 <div className="animate-slide-up" style={{animationDelay: '100ms'}}>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">Preferred Name</label>
-                  <input type="text" placeholder="What should we call you?" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
+                  <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Preferred Name</label>
+                  <input type="text" placeholder="What should we call you?" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
                 </div>
                 <div className="flex gap-5 animate-slide-up" style={{animationDelay: '200ms'}}>
                   <div className="w-1/3">
-                     <label className="block text-sm font-bold text-slate-700 mb-2">Age</label>
-                     <input type="number" placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
+                     <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Age</label>
+                     <input type="number" placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
                   </div>
                   <div className="w-2/3">
-                     <label className="block text-sm font-bold text-slate-700 mb-2">Date of Birth</label>
-                     <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-600 font-medium text-base focus:border-[#3A7070] transition-all`} />
+                     <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Date of Birth</label>
+                     <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-600 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
                   </div>
                 </div>
                 <div className="flex gap-5 animate-slide-up" style={{animationDelay: '300ms'}}>
                   <div className="w-1/2">
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Gender</label>
-                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all appearance-none`}>
+                    <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Gender</label>
+                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all appearance-none`}>
                       <option value="" disabled>Select</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -605,14 +1145,14 @@ const PatientLogin = ({ setView, setUserData }) => {
                     </select>
                   </div>
                   <div className="w-1/2">
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Location</label>
-                    <input type="text" placeholder="City / District" value={formData.place} onChange={e => setFormData({...formData, place: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} />
+                    <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Location</label>
+                    <input type="text" placeholder="City / District" value={formData.place} onChange={e => setFormData({...formData, place: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
                   </div>
                 </div>
               </div>
-              {error && <div className="text-red-500 text-sm font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
+              {error && <div className="text-red-500 text-sm font-space font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
               <div className="pt-2 mt-auto animate-slide-up" style={{animationDelay: '400ms'}}>
-                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Enter Keffi</button>
+                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Enter Keffi</button>
               </div>
             </div>
           )}
@@ -639,47 +1179,51 @@ const AdminLogin = ({ setView }) => {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-6 bg-transparent`}>
-      <div className={`max-w-md w-full rounded-[2rem] glass-panel p-10 flex flex-col gap-8 border border-white/20 animate-scale-up`}>
+    <div className={`min-h-screen flex items-center justify-center p-6 bg-transparent relative overflow-hidden`}>
+      {/* Background orbs for Clinical Hub */}
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] glow-orb-teal rounded-full blur-[110px] pointer-events-none z-0"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] glow-orb-purple rounded-full blur-[110px] pointer-events-none z-0"></div>
+
+      <div className={`max-w-md w-full rounded-[2rem] glass-panel p-10 flex flex-col gap-8 glow-teal animate-scale-up relative z-10 hover:shadow-[0_25px_60px_rgba(13,112,112,0.25)] transition-all duration-500`}>
         <div className="flex justify-center mb-2">
-          <div className={`w-20 h-20 rounded-2xl glass-card flex items-center justify-center text-[#3A7070] border border-white/20`}><Shield size={40} /></div>
+          <div className={`w-20 h-20 rounded-2xl glass-card flex items-center justify-center text-[#3A7070] glow-teal`}><Shield size={40} className="text-[#3A7070]" /></div>
         </div>
         <div className="text-center">
-          <h2 className="text-3xl font-black text-slate-800 mb-3">Clinical Hub</h2>
-          <p className="text-slate-500 font-bold text-sm">Strictly for authorized medical personnel.</p>
+          <h2 className="text-3xl font-raleway font-black text-gradient-teal mb-3">Clinical Hub</h2>
+          <p className="text-slate-500 font-space font-medium text-sm">Strictly for authorized medical personnel.</p>
         </div>
         
         {error && (
-          <div className="p-3 bg-red-500/10 border border-red-200/30 text-red-600 rounded-xl text-center text-sm font-bold backdrop-blur-sm">
+          <div className="p-3 bg-red-500/10 border border-red-200/30 text-red-600 rounded-xl text-center text-sm font-space font-bold backdrop-blur-sm">
             {error}
           </div>
         )}
 
         <div className="space-y-5 mt-2">
           <div>
-            <label className="block text-sm font-bold text-slate-700 mb-2">Doctor ID / Email</label>
+            <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Doctor ID / Email</label>
             <input 
               type="text" 
               value={doctorId}
               onChange={(e) => setDoctorId(e.target.value)}
               placeholder="Doctor ID" 
-              className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} 
+              className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} 
             />
           </div>
           <div>
-             <label className="block text-sm font-bold text-slate-700 mb-2">Secure Passcode</label>
+             <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Secure Passcode</label>
              <input 
                type="password" 
                value={password}
                onChange={(e) => setPassword(e.target.value)}
                placeholder="••••••••" 
-               className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-medium text-base focus:border-[#3A7070] transition-all`} 
+               className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} 
              />
           </div>
         </div>
         <div className="pt-4 space-y-4">
-          <button onClick={handleLogin} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnTeal}`}>Authenticate</button>
-          <button onClick={() => setView('landing')} className="w-full text-center text-slate-400 font-bold text-sm hover:text-slate-600 transition-colors">Back to Home</button>
+          <button onClick={handleLogin} className={`w-full py-4 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Authenticate</button>
+          <button onClick={() => setView('landing')} className="w-full text-center text-slate-400 font-space font-bold text-sm hover:text-slate-600 transition-colors cursor-pointer">Back to Home</button>
         </div>
       </div>
     </div>
@@ -694,11 +1238,11 @@ const DailyMoodCheckIn = ({ patientId, onComplete }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const moods = [
-    { score: 1, label: 'Heavy', emoji: '😔', color: 'text-slate-600', hover: 'hover:bg-slate-100 hover:border-slate-300' },
-    { score: 2, label: 'Anxious', emoji: '😰', color: 'text-orange-500', hover: 'hover:bg-orange-50 hover:border-orange-200' },
-    { score: 3, label: 'Numb', emoji: '😐', color: 'text-slate-500', hover: 'hover:bg-slate-50 hover:border-slate-300' },
-    { score: 4, label: 'Okay', emoji: '🙂', color: 'text-teal-600', hover: 'hover:bg-teal-50 hover:border-teal-200' },
-    { score: 5, label: 'Calm', emoji: '🌿', color: 'text-green-600', hover: 'hover:bg-green-50 hover:border-green-200' }
+    { score: 1, label: 'Heavy', emoji: '😔', color: 'text-slate-600', hoverGlow: 'glow-white hover:shadow-slate-300/30' },
+    { score: 2, label: 'Anxious', emoji: '😰', color: 'text-amber-600', hoverGlow: 'glow-gold hover:shadow-amber-300/30' },
+    { score: 3, label: 'Numb', emoji: '😐', color: 'text-slate-500', hoverGlow: 'glow-white hover:shadow-slate-200/20' },
+    { score: 4, label: 'Okay', emoji: '🙂', color: 'text-teal-600', hoverGlow: 'glow-teal hover:shadow-teal-300/30' },
+    { score: 5, label: 'Calm', emoji: '🌿', color: 'text-emerald-600', hoverGlow: 'glow-emerald hover:shadow-emerald-300/30' }
   ];
 
   const handleMoodSelect = async (mood) => {
@@ -723,11 +1267,11 @@ const DailyMoodCheckIn = ({ patientId, onComplete }) => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-full animate-fade-in p-6">
-      <div className="w-full max-w-3xl p-10 md:p-14 rounded-[2.5rem] glass-panel border border-white/35 flex flex-col items-center shadow-2xl backdrop-blur-xl animate-scale-up">
-        <h2 className="text-3xl font-black text-slate-800 mb-4 text-center">
+      <div className="w-full max-w-3xl p-10 md:p-14 rounded-[2.5rem] glass-panel flex flex-col items-center shadow-2xl backdrop-blur-xl animate-scale-up glow-teal">
+        <h2 className="text-3xl font-raleway font-black text-gradient-teal mb-4 text-center">
           Welcome to your Sanctuary.
         </h2>
-        <p className="text-lg text-slate-600 mb-12 text-center font-semibold">
+        <p className="text-lg text-slate-600 mb-12 text-center font-space font-semibold leading-relaxed">
           Before we begin, how is your mind feeling today?
         </p>
         
@@ -738,14 +1282,14 @@ const DailyMoodCheckIn = ({ patientId, onComplete }) => {
               disabled={isSubmitting}
               onClick={() => handleMoodSelect(m)} 
               style={{animationDelay: `${i * 80}ms`}}
-              className="p-6 md:p-8 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center gap-4 transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:bg-white/60 hover:border-white/40 cursor-pointer animate-slide-up"
+              className={`p-6 md:p-8 rounded-[2rem] bg-white/45 flex flex-col items-center gap-4 transition-all duration-300 hover:-translate-y-2 hover:scale-105 cursor-pointer animate-slide-up ${m.hoverGlow}`}
             >
               <span className="text-5xl transform hover:scale-110 transition-transform">{m.emoji}</span>
-              <span className={`font-bold text-base ${m.color}`}>{m.label}</span>
+              <span className={`font-space font-extrabold text-base tracking-wide ${m.color}`}>{m.label}</span>
             </button>
           ))}
         </div>
-        {isSubmitting && <p className="mt-12 text-sm font-bold text-slate-400 animate-pulse">Syncing with Keffi...</p>}
+        {isSubmitting && <p className="mt-12 text-sm font-space font-bold text-slate-400 animate-pulse">Syncing with Keffi...</p>}
       </div>
     </div>
   );
@@ -881,8 +1425,49 @@ const CameraEmotionTracker = ({ onEmotionDetected, isCameraActive }) => {
 
 // 4.1 Enhanced Chat Page
 const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
+  const [sessions, setSessions] = useState(() => {
+    const saved = localStorage.getItem('keffi_chat_sessions');
+    return saved ? JSON.parse(saved) : [
+      { id: 'session-1', title: 'First Sanctuary Check-in 🌿', date: 'Just now', messages: [] }
+    ];
+  });
+  const [currentSessionId, setCurrentSessionId] = useState(() => {
+    return sessions[0]?.id || 'session-1';
+  });
+
   const [moodSet, setMoodSet] = useState(false);
   const [messages, setMessages] = useState([]);
+  
+  useEffect(() => {
+    const activeSession = sessions.find(s => s.id === currentSessionId);
+    if (activeSession) {
+      setMessages(activeSession.messages || []);
+      setMoodSet(activeSession.messages && activeSession.messages.length > 0);
+    }
+  }, [currentSessionId]);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      setSessions(prev => {
+        const updated = prev.map(s => {
+          if (s.id === currentSessionId) {
+            let title = s.title;
+            if (s.title.startsWith('New Chat') || s.title.startsWith('First Sanctuary') || s.title.startsWith('Feeling')) {
+              const firstUserMsg = messages.find(m => m.sender === 'user');
+              if (firstUserMsg) {
+                title = firstUserMsg.text.slice(0, 26) + (firstUserMsg.text.length > 26 ? '...' : '');
+              }
+            }
+            return { ...s, title, messages };
+          }
+          return s;
+        });
+        localStorage.setItem('keffi_chat_sessions', JSON.stringify(updated));
+        return updated;
+      });
+    }
+  }, [messages, currentSessionId]);
+
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -942,11 +1527,52 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
     }
   };
 
+  const handleNewChat = () => {
+    const newId = 'session-' + Date.now();
+    const newSession = {
+      id: newId,
+      title: `New Chat Session ✨`,
+      date: new Date().toLocaleDateString([], { month: 'short', day: 'numeric' }),
+      messages: []
+    };
+    const updatedSessions = [newSession, ...sessions];
+    setSessions(updatedSessions);
+    localStorage.setItem('keffi_chat_sessions', JSON.stringify(updatedSessions));
+    setCurrentSessionId(newId);
+    setMessages([]);
+    setMoodSet(false);
+  };
+
+  const handleDeleteSession = (e, sessionId) => {
+    e.stopPropagation();
+    if (sessions.length <= 1) {
+      alert("You must keep at least one active chat session.");
+      return;
+    }
+    const updated = sessions.filter(s => s.id !== sessionId);
+    setSessions(updated);
+    localStorage.setItem('keffi_chat_sessions', JSON.stringify(updated));
+    if (currentSessionId === sessionId) {
+      setCurrentSessionId(updated[0].id);
+    }
+  };
+
   const handleMoodSelect = (mood) => {
     setMoodSet(true);
-    setMessages([
-      { id: 1, sender: 'keffi', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), text: `Hi ${userData?.name || 'there'}. I see you're feeling a bit ${mood.label.toLowerCase()}. I'm here for you. Do you want to talk about it?` }
-    ]);
+    const initialMsgs = [
+      { id: Date.now(), sender: 'keffi', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), text: `Hi ${userData?.name || 'there'}. I see you're feeling a bit ${mood.label.toLowerCase()}. I'm here for you. Do you want to talk about it?` }
+    ];
+    setMessages(initialMsgs);
+    setSessions(prev => {
+      const updated = prev.map(s => {
+        if (s.id === currentSessionId) {
+          return { ...s, title: `Feeling ${mood.label} ${mood.emoji}`, messages: initialMsgs };
+        }
+        return s;
+      });
+      localStorage.setItem('keffi_chat_sessions', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   useEffect(() => {
@@ -1070,174 +1696,237 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
   }
 
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] h-full w-full relative animate-fade-in mx-auto overflow-hidden bg-transparent">
-      <div className="flex justify-between items-center px-6 md:px-8 pt-6 pb-4 z-20 border-b border-white/20 bg-white/20 backdrop-blur-md">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
-            <KeffiLogo size="w-7 h-7" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-slate-800">Keffi</h2>
-            <div className="flex items-center gap-2 text-xs text-[#8FA989] font-bold">
-              <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-pulse"></div> Active & Listening
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={() => setIsCameraActive(!isCameraActive)} 
-            className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
-            title="Toggle Visual Emotion Tracking"
-          >
-            {isCameraActive ? <Camera size={16}/> : <CameraOff size={16}/>}
-          </button>
-          <button 
-            onClick={() => {
-              setIsVoiceEnabled(!isVoiceEnabled);
-              if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
-            }} 
-            className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
-            title="Toggle Voice Therapy"
-          >
-            {isVoiceEnabled ? <Volume2 size={16}/> : <VolumeX size={16}/>}
-          </button>
-          <button 
-            onClick={() => setShowMediaPlayer(true)} 
-            className="px-4 py-2 rounded-full bg-emerald-500/12 backdrop-blur-sm border border-emerald-500/20 text-[#2C5555] font-bold text-xs hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
-            title="Open Calming Music Sanctuary"
-          >
-            🎵 Music
-          </button>
-          <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full glass-card text-slate-600 font-bold text-xs hover:bg-white/50 border border-white/30 flex items-center gap-2 transition-colors cursor-pointer">
-            <User size={14}/> Therapist
-          </button>
-          <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/12 border border-red-500/20 text-red-600 font-bold text-xs hover:bg-red-500/20 backdrop-blur-sm flex items-center gap-2 transition-colors cursor-pointer">
-            <PhoneCall size={14}/> SOS
-          </button>
-        </div>
-      </div>
+    <div className="h-full w-full flex relative overflow-hidden bg-transparent">
       
-      <CameraEmotionTracker isCameraActive={isCameraActive} onEmotionDetected={setVisualEmotion} />
+      {/* 📜 CONVERSATION HISTORY SIDEBAR */}
+      <div className="w-80 border-r border-[#3A7070]/10 bg-white/25 backdrop-blur-md flex flex-col p-6 shrink-0 relative z-30 hidden lg:flex">
+        {/* New Chat Button */}
+        <button 
+          onClick={handleNewChat} 
+          className="w-full py-4 mb-6 rounded-2xl font-space font-black text-sm tracking-wider flex items-center justify-center gap-2 cursor-pointer bg-gradient-to-r from-[#3A7070] to-[#2C5555] hover:from-[#2C5555] hover:to-[#1e3d3d] text-white shadow-lg glow-teal transition-all hover:-translate-y-0.5 duration-300"
+        >
+          <span className="text-lg">+</span> New Chat
+        </button>
 
-      {showSOS && (
-        <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 glass-panel p-8 rounded-[2rem] shadow-2xl border border-red-500/20 flex flex-col items-center animate-fade-in w-80 text-center">
-          <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 mb-6"><AlertTriangle size={32}/></div>
-          <h3 className="text-xl font-black text-slate-800 mb-2">Emergency Hotline</h3>
-          <p className="text-sm text-slate-600 mb-6 font-semibold">You are not alone. Please call iCall India for immediate support.</p>
-          <div className="text-2xl font-black text-[#2C5555] mb-6 tracking-widest">9152987821</div>
-          <button onClick={() => setShowSOS(false)} className="px-8 py-3 rounded-xl glass-card border border-white/30 text-slate-700 font-bold text-sm hover:bg-white/50 w-full transition-colors cursor-pointer">Close</button>
+        {/* History Title */}
+        <div className="flex items-center gap-2 text-[10px] font-space font-extrabold text-[#3A7070] uppercase tracking-widest mb-4">
+          <span>🕒 Chat History</span>
         </div>
-      )}
 
-      {showMediaPlayer && <MediaPlayer onClose={() => setShowMediaPlayer(false)} />}
+        {/* Session List */}
+        <div className="flex-1 overflow-y-auto space-y-3 pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/10 scrollbar-track-transparent">
+          {sessions.map(s => {
+            const isActive = s.id === currentSessionId;
+            return (
+              <div 
+                key={s.id}
+                onClick={() => setCurrentSessionId(s.id)}
+                className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 cursor-pointer group hover:-translate-y-0.5 ${
+                  isActive 
+                    ? 'border-[#3A7070]/30 bg-[#3A7070]/12 text-[#2C5555] font-extrabold shadow-sm' 
+                    : 'border-white/20 bg-white/10 hover:bg-white/35 text-slate-700'
+                }`}
+              >
+                <div className="flex flex-col min-w-0 pr-2">
+                  <span className="text-sm font-space leading-tight truncate">{s.title}</span>
+                  <span className="text-[10px] text-slate-400 font-space mt-1 font-semibold">{s.date}</span>
+                </div>
+                <button 
+                  onClick={(e) => handleDeleteSession(e, s.id)}
+                  className="opacity-0 group-hover:opacity-100 w-7 h-7 rounded-xl hover:bg-red-500/10 hover:text-red-500 text-slate-400 flex items-center justify-center transition-all shrink-0 cursor-pointer"
+                  title="Delete conversation history"
+                >
+                  ✕
+                </button>
+              </div>
+            );
+          })}
+        </div>
 
-      {showAppointmentPopup && (
-        <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-[60] glass-panel p-8 rounded-[2rem] shadow-2xl border border-white/30 flex flex-col items-center animate-fade-in w-80 text-center">
-          <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-[#3A7070] mb-6 text-3xl">🫂</div>
-          <h3 className="text-xl font-black text-slate-800 mb-2">You're not alone</h3>
-          <p className="text-sm text-slate-600 mb-8 font-semibold">We noticed you're going through a tough time. Would you like to schedule an automatic appointment with a human therapist?</p>
-          <div className="flex flex-col gap-3 w-full">
-            <button onClick={handleBookAppointment} className={`w-full py-3.5 rounded-xl font-bold text-sm ${theme.btnTeal} cursor-pointer`}>Yes, Book Session</button>
-            <button onClick={() => setShowAppointmentPopup(false)} className={`w-full py-3.5 rounded-xl font-bold text-sm glass-card border border-white/30 text-slate-600 hover:bg-white/50 transition-colors cursor-pointer`}>Not Right Now</button>
+        {/* User Card */}
+        <div className="mt-auto pt-6 border-t border-[#3A7070]/10 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#3A7070]/20 to-[#8FA989]/20 border border-white/40 flex items-center justify-center font-space font-black text-sm text-[#2C5555]">
+            {userData?.name?.slice(0, 2).toUpperCase() || 'US'}
+          </div>
+          <div className="flex flex-col min-w-0">
+            <span className="text-xs font-space font-black text-[#2C5555] truncate">{userData?.name || 'Sanctuary Patient'}</span>
+            <span className="text-[9px] text-[#8FA989] font-space font-bold uppercase tracking-wider">Secure Access</span>
           </div>
         </div>
-      )}
-
-      {/* Biofeedback Watch Simulator */}
-      <div className={`absolute right-6 top-24 z-30 glass-card border p-4 rounded-3xl shadow-lg flex flex-col items-center gap-2 animate-fade-in hidden md:flex transition-all duration-500 ${heartRate > 100 ? 'border-red-500 animate-glow-pulse' : 'border-white/40'}`}>
-        <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-          <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
-          Watch Sync
-        </div>
-        <div className={`text-3xl font-black ${heartRate > 100 ? 'text-red-500' : 'text-slate-800'}`}>
-          {heartRate} <span className="text-sm font-bold text-slate-400">BPM</span>
-        </div>
-        <input 
-          type="range" 
-          min="60" 
-          max="140" 
-          value={heartRate} 
-          onChange={(e) => {
-            const val = parseInt(e.target.value);
-            setHeartRate(val);
-            if (val < 100) setHasTriggeredPanic(false); // Reset panic if they calm down
-          }}
-          className="w-24 mt-2 accent-[#3A7070] cursor-pointer"
-        />
-        <div className="text-[9px] text-slate-400 mt-1 max-w-[100px] text-center leading-tight font-semibold">Drag above 110 BPM to trigger panic.</div>
       </div>
 
-      <div className="overflow-y-auto p-6 md:p-8 flex flex-col gap-6 z-10 min-h-0 relative bg-white/5 backdrop-blur-[6px]">
-        {messages.map(m => {
-          const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
-          return (
-            <div key={m.id} className={`flex w-full ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}>
-              <div className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%]`}>
-                <div className={`whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-medium leading-relaxed rounded-[1.5rem] ${
-                  m.sender === 'user' 
-                  ? 'glass-message-user text-slate-800 rounded-tr-sm shadow-sm' 
-                  : 'glass-message-keffi text-[#1A2E2E] rounded-tl-sm'
-                }`}>
-                  {mainText}
+      {/* 💬 MAIN CHAT AREA */}
+      <div className="flex-1 flex flex-col relative min-w-0">
+        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
+                <KeffiLogo size="w-7 h-7" />
+              </div>
+              <div>
+                <h2 className="text-xl font-raleway font-black text-[#2C5555]">Keffi</h2>
+                <div className="flex items-center gap-2 text-xs text-[#8FA989] font-space font-extrabold tracking-wider">
+                  <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-pulse"></div> Active & Listening
                 </div>
-                
-                <span className={`text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-2 px-1`}>
-                  {m.time}
-                </span>
-
-                {/* Option Buttons beneath Keffi's reply (Horizontal Card Layout) */}
-                {m.sender === 'keffi' && m.options && m.options.length > 0 && (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 w-full">
-                    {m.options.map((qr, i) => (
-                      <button 
-                        key={i} 
-                        onClick={() => handleSend(qr)} 
-                        style={{animationDelay: `${i * 80}ms`}}
-                        className="flex items-start text-left p-4 rounded-2xl glass-card glass-card-hover border border-white/30 shadow-sm group cursor-pointer animate-slide-up"
-                      >
-                        <div className="w-5 h-5 rounded-full bg-white/20 border border-white/30 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#3A7070] group-hover:border-[#3A7070]/30 flex items-center justify-center text-[10px] font-bold shrink-0 mr-3 mt-0.5 transition-colors">
-                           {i + 1}
-                        </div>
-                        <span className="text-[13px] font-bold text-slate-700 group-hover:text-slate-900 leading-snug">
-                          {qr}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
-          );
-        })}
-        {isTyping && (
-          <div className="flex flex-col self-start items-start max-w-[85%]">
-            <div className="p-4 rounded-[1.5rem] glass-message-keffi flex gap-1.5 items-center rounded-tl-sm border border-[#3A7070]/10">
-              <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '0ms' }}></div>
-              <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '150ms' }}></div>
-              <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '300ms' }}></div>
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setIsCameraActive(!isCameraActive)} 
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
+                title="Toggle Visual Emotion Tracking"
+              >
+                {isCameraActive ? <Camera size={16}/> : <CameraOff size={16}/>}
+              </button>
+              <button 
+                onClick={() => {
+                  setIsVoiceEnabled(!isVoiceEnabled);
+                  if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+                }} 
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
+                title="Toggle Voice Therapy"
+              >
+                {isVoiceEnabled ? <Volume2 size={16}/> : <VolumeX size={16}/>}
+              </button>
+              <button 
+                onClick={() => setShowMediaPlayer(true)} 
+                className="px-4 py-2 rounded-full bg-emerald-500/12 backdrop-blur-sm border border-emerald-500/20 text-[#2C5555] font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
+                title="Open Calming Music Sanctuary"
+              >
+                🎵 Music
+              </button>
+              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full glass-card text-slate-600 font-space font-extrabold text-xs tracking-wider hover:bg-white/50 border border-white/30 flex items-center gap-2 transition-colors cursor-pointer">
+                <User size={14}/> Therapist
+              </button>
+              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/12 border border-red-500/20 text-red-600 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/20 backdrop-blur-sm flex items-center gap-2 transition-colors cursor-pointer">
+                <PhoneCall size={14}/> SOS
+              </button>
             </div>
           </div>
-        )}
-        <div ref={chatEndRef} className="h-4" />
-      </div>
-
-      <div className="p-4 md:p-6 bg-white/15 backdrop-blur-md border-t border-white/20 z-20">
-        <div className="flex gap-2 relative">
-          <button onClick={toggleRecording} className={`p-4 rounded-2xl ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'glass-card border border-white/30 text-slate-500 hover:text-[#3A7070] hover:bg-white/50'} shadow-sm transition-colors shrink-0 cursor-pointer`}>
-            <Mic size={20} />
-          </button>
-          <input 
-            value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-            placeholder={isRecording ? "Listening..." : "Type your feelings safely here..."} 
-            className="flex-1 rounded-2xl glass-input px-5 py-4 text-sm focus:ring-2 focus:ring-[#3A7070]/20 shadow-sm transition-all"
-          />
-          <button onClick={() => handleSend()} className="px-6 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-sm shrink-0 cursor-pointer">
-            <Send size={18} />
-          </button>
-        </div>
-        <div className="text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-4">
-          Keffi AI is not a substitute for medical diagnosis.
-        </div>
+          
+          <CameraEmotionTracker isCameraActive={isCameraActive} onEmotionDetected={setVisualEmotion} />
+  
+          {showSOS && (
+            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 glass-panel p-8 rounded-[2rem] shadow-2xl border border-red-500/20 flex flex-col items-center animate-fade-in w-80 text-center glow-rose">
+              <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 mb-6"><AlertTriangle size={32}/></div>
+              <h3 className="text-xl font-space font-black text-slate-800 mb-2">Emergency Hotline</h3>
+              <p className="text-sm text-slate-600 mb-6 font-space font-semibold">You are not alone. Please call iCall India for immediate support.</p>
+              <div className="text-2xl font-space font-black text-[#2C5555] mb-6 tracking-widest">9152987821</div>
+              <button onClick={() => setShowSOS(false)} className="px-8 py-3 rounded-xl glass-card border border-white/30 text-slate-700 font-space font-bold text-sm hover:bg-white/50 w-full transition-colors cursor-pointer">Close</button>
+            </div>
+          )}
+  
+          {showMediaPlayer && <MediaPlayer onClose={() => setShowMediaPlayer(false)} />}
+  
+          {showAppointmentPopup && (
+            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-[60] glass-panel p-8 rounded-[2rem] shadow-2xl border border-white/30 flex flex-col items-center animate-fade-in w-80 text-center glow-teal">
+              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-[#3A7070] mb-6 text-3xl">🫂</div>
+              <h3 className="text-xl font-space font-black text-slate-800 mb-2">You're not alone</h3>
+              <p className="text-sm text-slate-600 mb-8 font-space font-semibold">We noticed you're going through a tough time. Would you like to schedule an automatic appointment with a human therapist?</p>
+              <div className="flex flex-col gap-3 w-full">
+                <button onClick={handleBookAppointment} className={`w-full py-3.5 rounded-xl font-space font-bold text-sm ${theme.btnTeal} cursor-pointer`}>Yes, Book Session</button>
+                <button onClick={() => setShowAppointmentPopup(false)} className={`w-full py-3.5 rounded-xl font-space font-bold text-sm glass-card border border-white/30 text-slate-600 hover:bg-white/50 transition-colors cursor-pointer`}>Not Right Now</button>
+              </div>
+            </div>
+          )}
+  
+          {/* Biofeedback Watch Simulator */}
+          <div className={`absolute right-6 top-24 z-30 glass-card border p-4 rounded-3xl shadow-lg flex flex-col items-center gap-2 animate-fade-in hidden md:flex transition-all duration-500 ${heartRate > 100 ? 'border-red-500 animate-glow-pulse glow-rose' : 'border-white/40 glow-teal'}`}>
+            <div className="flex items-center gap-2 text-xs font-space font-bold text-slate-500 uppercase tracking-widest mb-1">
+              <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
+              Watch Sync
+            </div>
+            <div className={`text-3xl font-space font-black ${heartRate > 100 ? 'text-red-500' : 'text-slate-800'}`}>
+              {heartRate} <span className="text-sm font-bold text-slate-400">BPM</span>
+            </div>
+            <input 
+              type="range" 
+              min="60" 
+              max="140" 
+              value={heartRate} 
+              onChange={(e) => {
+                const val = parseInt(e.target.value);
+                setHeartRate(val);
+                if (val < 100) setHasTriggeredPanic(false); // Reset panic if they calm down
+              }}
+              className="w-24 mt-2 accent-[#3A7070] cursor-pointer"
+            />
+            <div className="text-[9px] text-slate-400 mt-1 max-w-[100px] text-center leading-tight font-space font-semibold">Drag above 110 BPM to trigger panic.</div>
+          </div>
+  
+          {/* Chat message flow container */}
+          <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 relative bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+            {messages.map(m => {
+              const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
+              return (
+                <div key={m.id} className={`flex w-full ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}>
+                  <div className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%]`}>
+                    <div className={`whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-space font-medium leading-relaxed rounded-[1.5rem] shadow-sm transition-all duration-300 ${
+                      m.sender === 'user' 
+                      ? 'glass-message-user text-slate-800 rounded-tr-sm border border-white/60 glow-white' 
+                      : 'glass-message-keffi text-[#1A2E2E] rounded-tl-sm border border-[#3A7070]/15 glow-teal'
+                    }`}>
+                      {mainText}
+                    </div>
+                    
+                    <span className={`text-[10px] text-slate-500 font-space font-bold uppercase tracking-wider mt-2 px-1`}>
+                      {m.time}
+                    </span>
+  
+                    {/* Option Buttons beneath Keffi's reply (Horizontal Card Layout) */}
+                    {m.sender === 'keffi' && m.options && m.options.length > 0 && (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 w-full">
+                        {m.options.map((qr, i) => (
+                          <button 
+                            key={i} 
+                            onClick={() => handleSend(qr)} 
+                            style={{animationDelay: `${i * 80}ms`}}
+                            className={`flex items-start text-left p-4 rounded-2xl bg-white/45 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300 ${[ 'glow-teal hover:shadow-[0_8px_20px_rgba(13,112,112,0.18)]', 'glow-emerald hover:shadow-[0_8px_20px_rgba(16,185,129,0.18)]', 'glow-purple hover:shadow-[0_8px_20px_rgba(139,92,246,0.18)]' ][i % 3]}`}
+                          >
+                            <div className="w-5 h-5 rounded-full bg-white/20 border border-white/30 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#3A7070] group-hover:border-[#3A7070]/30 flex items-center justify-center text-[10px] font-space font-extrabold shrink-0 mr-3 mt-0.5 transition-colors">
+                               {i + 1}
+                            </div>
+                            <span className="text-[13px] font-space font-extrabold text-slate-700 group-hover:text-slate-900 leading-snug">
+                              {qr}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+            {isTyping && (
+              <div className="flex flex-col self-start items-start max-w-[85%]">
+                <div className="p-4 rounded-[1.5rem] glass-message-keffi flex gap-1.5 items-center rounded-tl-sm border border-[#3A7070]/10 glow-teal">
+                  <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                </div>
+              </div>
+            )}
+            <div ref={chatEndRef} className="h-4" />
+          </div>
+  
+          {/* Input box section */}
+          <div className="p-4 md:p-6 bg-white/25 backdrop-blur-md border-t border-[#3A7070]/10 z-20">
+            <div className="flex gap-2 relative">
+              <button onClick={toggleRecording} className={`p-4 rounded-2xl ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20 glow-rose' : 'glass-card border border-white/30 text-slate-500 hover:text-[#3A7070] hover:bg-white/50 glow-teal'} shadow-sm transition-colors shrink-0 cursor-pointer`}>
+                <Mic size={20} />
+              </button>
+              <input 
+                value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                placeholder={isRecording ? "Listening..." : "Type your feelings safely here..."} 
+                className="flex-1 rounded-2xl glass-input px-5 py-4 text-slate-800 font-space font-semibold text-base focus:ring-2 focus:ring-[#3A7070]/20 shadow-sm transition-all focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)]"
+              />
+              <button onClick={() => handleSend()} className="px-6 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-sm shrink-0 cursor-pointer font-space font-extrabold tracking-wider glow-teal">
+                <Send size={18} />
+              </button>
+            </div>
+            <div className="text-center text-[10px] text-slate-400 font-space font-extrabold uppercase tracking-widest mt-4">
+              Keffi AI is not a substitute for medical diagnosis.
+            </div>
+          </div>
       </div>
     </div>
   );
@@ -1245,63 +1934,92 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
 
 // 4.2 Peace Log
 const PeaceLog = () => (
-  <div className="h-full flex flex-col max-w-5xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-hidden my-6 animate-fade-in">
-    <h2 className="text-2xl font-black text-slate-800 mb-8">Peace Log</h2>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto pb-8 pr-2">
-      {[
-        { date: 'Today, 10:00 AM', mood: 'Anxious', title: 'Morning Panic', desc: 'Discussed work pressure and did a quick 4-7-8 breathing session.' },
-        { date: 'Yesterday, 9:00 PM', mood: 'Calm', title: 'Night Reflections', desc: 'Used the gratitude jar. Felt significantly calmer before bed.' },
-        { date: '25 April 2026', mood: 'Heavy', title: 'Trauma Processing', desc: 'Keffi guided through severe anxiety. Grounding techniques used.' },
-        { date: '22 April 2026', mood: 'Stressed', title: 'Work Stress', desc: 'Vented about the upcoming presentation. Keffi helped reframe thoughts.' }
-      ].map((log, i) => (
-        <div key={i} style={{animationDelay: `${i * 100}ms`}} className={`p-8 rounded-[2rem] ${theme.outset} cursor-pointer ${theme.outsetHover} flex flex-col animate-slide-up hover:border-[#3A7070]/20`}>
-          <div className="flex justify-between items-center mb-5">
-            <span className="text-xs text-[#8FA989] font-bold uppercase tracking-widest">{log.date}</span>
-            <span className={`px-3 py-1.5 rounded-full border text-xs font-bold shadow-sm transition-colors ${
-              log.mood === 'Anxious' || log.mood === 'Stressed' ? 'bg-amber-100 border-amber-300 text-amber-700' :
-              log.mood === 'Calm' ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
-              log.mood === 'Heavy' ? 'bg-indigo-100 border-indigo-300 text-indigo-700' :
-              'bg-slate-100 border-slate-300 text-slate-700'
-            }`}>{log.mood}</span>
-          </div>
-          <h3 className="text-lg font-bold text-slate-800 mb-3">{log.title}</h3>
-          <p className="text-slate-500 leading-relaxed text-sm flex-1 font-medium">{log.desc}</p>
-          <div className="mt-6 flex items-center text-[#3A7070] font-bold text-sm group">
-             Read full log <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform"/>
-          </div>
+  <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+    {/* Page Header */}
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
+          <span className="text-2xl">📖</span>
         </div>
-      ))}
+        <div>
+          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Peace Log</h2>
+          <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Your Emotional Archive</div>
+        </div>
+      </div>
+    </div>
+
+    {/* Content Area */}
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8">
+        {[
+          { date: 'Today, 10:00 AM', mood: 'Anxious', title: 'Morning Panic', desc: 'Discussed work pressure and did a quick 4-7-8 breathing session.' },
+          { date: 'Yesterday, 9:00 PM', mood: 'Calm', title: 'Night Reflections', desc: 'Used the gratitude jar. Felt significantly calmer before bed.' },
+          { date: '25 April 2026', mood: 'Heavy', title: 'Trauma Processing', desc: 'Keffi guided through severe anxiety. Grounding techniques used.' },
+          { date: '22 April 2026', mood: 'Stressed', title: 'Work Stress', desc: 'Vented about the upcoming presentation. Keffi helped reframe thoughts.' }
+        ].map((log, i) => (
+          <div key={i} style={{animationDelay: `${i * 100}ms`}} className={`p-8 rounded-[2rem] glass-card backdrop-blur-md border border-white/20 shadow-sm hover:border-[#3A7070]/30 transition-all hover:translate-y-[-2px] duration-300 hover:shadow-md cursor-pointer flex flex-col animate-slide-up`}>
+            <div className="flex justify-between items-center mb-5">
+              <span className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">{log.date}</span>
+              <span className={`px-3 py-1.5 rounded-full border text-xs font-space font-extrabold shadow-sm transition-colors ${
+                log.mood === 'Anxious' || log.mood === 'Stressed' ? 'bg-amber-100 border-amber-300 text-amber-700' :
+                log.mood === 'Calm' ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
+                log.mood === 'Heavy' ? 'bg-indigo-100 border-indigo-300 text-indigo-700' :
+                'bg-slate-100 border-slate-300 text-slate-700'
+              }`}>{log.mood}</span>
+            </div>
+            <h3 className="text-lg font-raleway font-bold text-slate-800 mb-3">{log.title}</h3>
+            <p className="text-slate-500 leading-relaxed text-sm flex-1 font-space font-medium">{log.desc}</p>
+            <div className="mt-6 flex items-center text-[#3A7070] font-space font-extrabold text-sm group tracking-wider">
+               Read full log <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform"/>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 );
 
 // 4.3 My Journey
 const MyJourney = () => (
-  <div className="h-full flex flex-col max-w-5xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-y-auto my-6 animate-fade-in">
-    <h2 className="text-2xl font-black text-slate-800 mb-8">Emotional Landscape</h2>
-    
-    <div className={`w-full h-80 rounded-[2.5rem] glass-panel border border-white/30 mb-8 relative overflow-hidden flex items-end justify-center shadow-inner`}>
-      <div className="absolute top-8 right-12 w-24 h-24 rounded-full bg-gradient-to-tr from-[#D4A373] to-white blur-md shadow-[0_0_40px_#D4A373]"></div>
-      <div className="w-[120%] h-40 bg-[#8FA989] rounded-[100%] absolute -bottom-8 opacity-40 animate-wave-drift"></div>
-      <div className="w-[80%] h-48 bg-[#3A7070] rounded-[100%] absolute -bottom-10 opacity-60 left-[-10%] animate-wave-drift" style={{animationDuration: '16s', animationDelay: '-4s'}}></div>
-      <div className="w-[90%] h-44 bg-[#548a8a] rounded-[100%] absolute -bottom-8 opacity-70 right-[-10%] animate-wave-drift" style={{animationDuration: '20s', animationDelay: '-8s'}}></div>
-      <div className={`absolute top-8 left-8 px-6 py-3 rounded-2xl glass-card border border-white/40 shadow-sm animate-float`}>
-        <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">You are Thriving 🌿</h3>
+  <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+    {/* Page Header */}
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
+          <span className="text-2xl">📈</span>
+        </div>
+        <div>
+          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Emotional Landscape</h2>
+          <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Your Growth Journey</div>
+        </div>
       </div>
     </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div style={{animationDelay: '100ms'}} className="p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3 animate-slide-up hover:scale-105 transition-transform cursor-pointer">
-        <div className="text-4xl font-black text-[#3A7070]">12</div>
-        <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Day Streak</div>
+    {/* Content Area */}
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-8 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+      <div className={`w-full h-80 rounded-[2.5rem] glass-card border border-white/30 relative overflow-hidden flex items-end justify-center shadow-inner shrink-0`}>
+        <div className="absolute top-8 right-12 w-24 h-24 rounded-full bg-gradient-to-tr from-[#D4A373] to-white blur-md shadow-[0_0_40px_#D4A373]"></div>
+        <div className="w-[120%] h-40 bg-[#8FA989] rounded-[100%] absolute -bottom-8 opacity-40 animate-wave-drift"></div>
+        <div className="w-[80%] h-48 bg-[#3A7070] rounded-[100%] absolute -bottom-10 opacity-60 left-[-10%] animate-wave-drift" style={{animationDuration: '16s', animationDelay: '-4s'}}></div>
+        <div className="w-[90%] h-44 bg-[#548a8a] rounded-[100%] absolute -bottom-8 opacity-70 right-[-10%] animate-wave-drift" style={{animationDuration: '20s', animationDelay: '-8s'}}></div>
+        <div className={`absolute top-8 left-8 px-6 py-3 rounded-2xl glass-card border border-white/40 shadow-sm animate-float`}>
+          <h3 className="text-lg font-raleway font-bold text-slate-800 flex items-center gap-2">You are Thriving 🌿</h3>
+        </div>
       </div>
-      <div style={{animationDelay: '200ms'}} className="p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3 animate-slide-up hover:scale-105 transition-transform cursor-pointer">
-        <div className="text-4xl font-black text-[#8FA989]">85%</div>
-        <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Calm Status</div>
-      </div>
-      <div style={{animationDelay: '300ms'}} className="p-8 rounded-[2rem] glass-card border border-white/30 shadow-sm flex flex-col items-center justify-center gap-3 animate-slide-up hover:scale-105 transition-transform cursor-pointer">
-        <div className="text-4xl font-black text-[#D4A373]">4</div>
-        <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Tools Used</div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-8">
+        <div style={{animationDelay: '100ms'}} className="p-8 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center justify-center gap-3 animate-slide-up hover:scale-105 transition-all duration-300 hover:shadow-md cursor-pointer glow-teal">
+          <div className="text-4xl font-space font-black text-[#3A7070]">12</div>
+          <div className="text-xs font-space font-extrabold text-slate-500 uppercase tracking-widest">Day Streak</div>
+        </div>
+        <div style={{animationDelay: '200ms'}} className="p-8 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center justify-center gap-3 animate-slide-up hover:scale-105 transition-all duration-300 hover:shadow-md cursor-pointer glow-emerald">
+          <div className="text-4xl font-space font-black text-[#8FA989]">85%</div>
+          <div className="text-xs font-space font-extrabold text-slate-500 uppercase tracking-widest">Calm Status</div>
+        </div>
+        <div style={{animationDelay: '300ms'}} className="p-8 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center justify-center gap-3 animate-slide-up hover:scale-105 transition-all duration-300 hover:shadow-md cursor-pointer glow-gold">
+          <div className="text-4xl font-space font-black text-[#D4A373]">4</div>
+          <div className="text-xs font-space font-extrabold text-slate-500 uppercase tracking-widest">Tools Used</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1321,37 +2039,57 @@ const MindTools = () => {
     setTimeout(() => { setWorryText(''); setIsBurning(false); setActiveTool(null); }, 2000);
   };
 
+  const getHeader = (toolTitle, toolSubtitle) => (
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex items-center justify-between z-20 shrink-0">
+      <div className="flex items-center gap-4">
+        <button onClick={() => { setActiveTool(null); setGroundingStep(0); }} className="p-2 rounded-full bg-white/40 border border-white/40 text-slate-600 hover:bg-[#3A7070]/20 hover:text-[#3A7070] transition-colors cursor-pointer mr-1">
+          <ArrowRight className="rotate-180" size={16} />
+        </button>
+        <div>
+          <h2 className="text-xl font-raleway font-black text-[#2C5555]">{toolTitle}</h2>
+          <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">{toolSubtitle}</div>
+        </div>
+      </div>
+    </div>
+  );
+
   if (activeTool === 'breathing') {
     return (
-      <div className="h-full flex flex-col items-center justify-center space-y-12 animate-fade-in">
-        <div className="text-center">
-          <h2 className="text-3xl font-black text-slate-800 mb-4">4-7-8 Breathing</h2>
-          <p className="text-slate-500 text-base">Follow the circle to reduce anxiety.</p>
+      <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+        {getHeader('4-7-8 Breathing', 'Interactive Cardiac Coherence')}
+        <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-8 space-y-12 bg-white/5 backdrop-blur-[4px]">
+          <div className="text-center">
+            <h3 className="text-2xl font-raleway font-black text-slate-800 mb-2">Breathe & Reset</h3>
+            <p className="text-slate-500 font-space font-semibold text-sm">Synchronize your breath with the expansion of the orb.</p>
+          </div>
+          <div className="relative w-72 h-72 flex items-center justify-center">
+            <div className="absolute inset-0 bg-[#3A7070] rounded-full opacity-10 animate-ping" style={{animationDuration: '4s'}}></div>
+            <div className="w-44 h-44 rounded-full glass-card shadow-2xl border border-white/40 flex items-center justify-center text-[#3A7070] font-space font-black text-lg z-10 backdrop-blur-md animate-breathing glow-teal">Breathe In</div>
+          </div>
+          <button onClick={() => setActiveTool(null)} className={`px-8 py-3 rounded-xl font-space font-bold text-sm ${theme.btnOutline} cursor-pointer`}>Cancel Session</button>
         </div>
-        <div className="relative w-80 h-80 flex items-center justify-center">
-          <div className="absolute inset-0 bg-[#3A7070] rounded-full opacity-10 animate-ping" style={{animationDuration: '4s'}}></div>
-          <div className="w-48 h-48 rounded-full glass-card shadow-xl border border-white/40 flex items-center justify-center text-[#3A7070] font-black text-xl z-10 backdrop-blur-md animate-breathing">Breathe In</div>
-        </div>
-        <button onClick={() => setActiveTool(null)} className={`px-8 py-3 rounded-xl font-bold text-base ${theme.btnOutline} cursor-pointer`}>Stop & Go Back</button>
       </div>
     );
   }
 
   if (activeTool === 'worry') {
     return (
-      <div className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto space-y-8 w-full animate-fade-in">
-        <div className="text-center">
-          <h2 className="text-3xl font-black text-[#D4A373] mb-4">Worry Burner</h2>
-          <p className="text-slate-500 text-base">Type what's bothering you, and let it go into the ash.</p>
-        </div>
-        <textarea 
-          value={worryText} onChange={(e) => setWorryText(e.target.value)}
-          className={`w-full h-64 p-8 rounded-[2rem] glass-input shadow-inner outline-none text-slate-800 text-base resize-none transition-all duration-1000 ${isBurning ? 'blur-2xl opacity-0 scale-95 border-amber-500 bg-amber-500/5' : ''}`}
-          placeholder="I am worried about..."
-        />
-        <div className="flex gap-4 w-full">
-          <button onClick={() => setActiveTool(null)} className={`flex-1 py-4 rounded-xl font-bold text-base ${theme.btnOutline} cursor-pointer`}>Cancel</button>
-          <button onClick={handleBurn} className={`flex-1 py-4 rounded-xl font-bold text-base bg-[#D4A373] text-white shadow-lg hover:-translate-y-0.5 transition-transform cursor-pointer`}>Burn Worry</button>
+      <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+        {getHeader('Worry Burner', 'Visual Cognitive Release')}
+        <div className="flex-1 flex flex-col items-center justify-center max-w-2xl mx-auto space-y-8 w-full p-6 md:p-8">
+          <div className="text-center">
+            <h3 className="text-2xl font-raleway font-black text-[#D4A373] mb-2">Release What You Hold</h3>
+            <p className="text-slate-500 font-space font-semibold text-sm">Write down your stressors. They will disappear into ashes.</p>
+          </div>
+          <textarea 
+            value={worryText} onChange={(e) => setWorryText(e.target.value)}
+            className={`w-full h-56 p-6 rounded-[2rem] glass-input shadow-inner outline-none text-slate-800 font-space font-medium text-base resize-none transition-all duration-1000 ${isBurning ? 'blur-2xl opacity-0 scale-95 border-amber-500 bg-amber-500/5' : ''}`}
+            placeholder="Write your worries here..."
+          />
+          <div className="flex gap-4 w-full">
+            <button onClick={() => setActiveTool(null)} className={`flex-1 py-4 rounded-xl font-space font-bold text-sm ${theme.btnOutline} cursor-pointer`}>Cancel</button>
+            <button onClick={handleBurn} className={`flex-1 py-4 rounded-xl font-space font-bold text-sm bg-[#D4A373] text-white shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer glow-gold`}>Burn Worry</button>
+          </div>
         </div>
       </div>
     );
@@ -1359,108 +2097,123 @@ const MindTools = () => {
 
   if (activeTool === 'gratitude') {
     return (
-      <div className="h-full flex flex-col items-center max-w-3xl mx-auto space-y-8 w-full animate-fade-in p-6">
-        <div className="text-center">
-          <h2 className="text-3xl font-black text-[#8FA989] mb-4">Gratitude Jar</h2>
-          <p className="text-slate-500 text-base">Drop small moments of joy here.</p>
-        </div>
-        <div className="flex w-full gap-4">
-           <input 
-             value={gratitudeText} onChange={e => setGratitudeText(e.target.value)} 
-             placeholder="I am grateful for..." 
-             className={`flex-1 p-4 rounded-2xl glass-input shadow-sm outline-none text-slate-800 font-medium text-base`}
-             onKeyPress={e => {
-               if(e.key === 'Enter' && gratitudeText) {
+      <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+        {getHeader('Gratitude Jar', 'Perspective Shifting')}
+        <div className="flex-1 flex flex-col items-center max-w-3xl mx-auto space-y-6 w-full p-6 md:p-8 min-h-0">
+          <div className="text-center">
+            <h3 className="text-2xl font-raleway font-black text-[#8FA989] mb-2">Capture Positivity</h3>
+            <p className="text-slate-500 font-space font-semibold text-sm">Document tiny elements of joy to light up your landscape.</p>
+          </div>
+          <div className="flex w-full gap-4 shrink-0">
+             <input 
+               value={gratitudeText} onChange={e => setGratitudeText(e.target.value)} 
+               placeholder="I am grateful for..." 
+               className={`flex-1 p-4 rounded-2xl glass-input shadow-sm outline-none text-slate-800 font-space font-semibold text-base`}
+               onKeyPress={e => {
+                 if(e.key === 'Enter' && gratitudeText) {
+                   setGratitudeList([{id: Date.now(), text: gratitudeText}, ...gratitudeList]);
+                   setGratitudeText('');
+                 }
+               }}
+             />
+             <button onClick={() => {
+               if(gratitudeText) {
                  setGratitudeList([{id: Date.now(), text: gratitudeText}, ...gratitudeList]);
                  setGratitudeText('');
                }
-             }}
-           />
-           <button onClick={() => {
-             if(gratitudeText) {
-               setGratitudeList([{id: Date.now(), text: gratitudeText}, ...gratitudeList]);
-               setGratitudeText('');
-             }
-           }} className={`px-8 py-4 rounded-2xl bg-[#8FA989] text-white font-bold shadow-md hover:-translate-y-0.5 transition-transform text-base cursor-pointer`}>Drop</button>
+             }} className={`px-8 py-4 rounded-2xl bg-[#8FA989] text-white font-space font-bold shadow-md hover:-translate-y-0.5 transition-all text-base cursor-pointer glow-emerald`}>Drop</button>
+          </div>
+          <div className={`flex-1 w-full rounded-[2.5rem] glass-panel border-8 border-[#8FA989]/20 p-8 flex flex-col-reverse items-center justify-start overflow-y-auto relative min-h-0 shadow-inner bg-white/10`}>
+             <div className="w-48 h-8 rounded-[100%] bg-slate-200 absolute -top-4 opacity-50 blur-md"></div>
+             {gratitudeList.length === 0 && <div className="text-slate-500 font-space font-bold text-sm absolute top-1/2">Your jar is empty.</div>}
+             {gratitudeList.map((g, idx) => (
+               <div key={g.id} style={{animationDelay: `${idx * 80}ms`}} className="bg-gradient-to-r from-[#8FA989] to-[#649e9e] text-white px-6 py-3 rounded-full mb-3 shadow-lg transform rotate-[-1.5deg] font-space font-bold text-sm animate-scale-up hover:scale-105 transition-all cursor-pointer">
+                   {g.text}
+               </div>
+             ))}
+          </div>
         </div>
-        <div className={`flex-1 w-full rounded-[2.5rem] glass-panel border-8 border-[#8FA989]/20 p-8 flex flex-col-reverse items-center justify-start overflow-y-auto relative`}>
-           <div className="w-48 h-8 rounded-[100%] bg-slate-200 absolute -top-4 opacity-50 blur-md"></div>
-           {gratitudeList.length === 0 && <div className="text-slate-500 font-bold text-sm absolute top-1/2">Your jar is empty.</div>}
-           {gratitudeList.map((g, idx) => (
-             <div key={g.id} style={{animationDelay: `${idx * 80}ms`}} className="bg-gradient-to-r from-[#8FA989] to-[#649e9e] text-white px-6 py-3.5 rounded-full mb-3 shadow-lg transform rotate-[-2deg] font-bold text-sm animate-scale-up hover:scale-105 transition-transform cursor-pointer">
-                 {g.text}
-             </div>
-           ))}
-        </div>
-        <button onClick={() => setActiveTool(null)} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnOutline} cursor-pointer`}>Back to Tools</button>
       </div>
     );
   }
 
   if (activeTool === 'grounding') {
     const steps = [
-      { num: 5, text: "Things you can SEE", color: "text-[#3A7070]", bg: "bg-[#3A7070]" },
-      { num: 4, text: "Things you can FEEL", color: "text-[#D4A373]", bg: "bg-[#D4A373]" },
-      { num: 3, text: "Things you can HEAR", color: "text-[#8FA989]", bg: "bg-[#8FA989]" },
-      { num: 2, text: "Things you can SMELL", color: "text-slate-600", bg: "bg-slate-600" },
-      { num: 1, text: "Thing you can TASTE", color: "text-[#3A7070]", bg: "bg-[#3A7070]" },
+      { num: 5, text: "Things you can SEE", color: "text-[#3A7070]", bg: "bg-[#3A7070]", glow: "glow-teal" },
+      { num: 4, text: "Things you can FEEL", color: "text-[#D4A373]", bg: "bg-[#D4A373]", glow: "glow-gold" },
+      { num: 3, text: "Things you can HEAR", color: "text-[#8FA989]", bg: "bg-[#8FA989]", glow: "glow-emerald" },
+      { num: 2, text: "Things you can SMELL", color: "text-slate-600", bg: "bg-slate-600", glow: "glow-white" },
+      { num: 1, text: "Thing you can TASTE", color: "text-[#3A7070]", bg: "bg-[#3A7070]", glow: "glow-teal" },
     ];
     const current = steps[groundingStep];
 
     return (
-      <div className="h-full flex flex-col items-center justify-center max-w-3xl mx-auto w-full animate-fade-in">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-black text-slate-800 mb-4">5-4-3-2-1 Grounding</h2>
-          <p className="text-slate-500 text-base">Halt panic and come back to the present.</p>
+      <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+        {getHeader('5-4-3-2-1 Grounding', 'Sensory Centering')}
+        <div className="flex-1 flex flex-col items-center justify-center max-w-2xl mx-auto w-full p-6 md:p-8">
+          {groundingStep < 5 ? (
+            <div className={`p-10 md:p-14 rounded-[3rem] glass-panel border border-white/30 shadow-2xl flex flex-col items-center text-center w-full animate-scale-up ${current.glow}`}>
+              <div className={`text-7xl font-space font-black ${current.color} mb-6 drop-shadow-md animate-pulse`}>{current.num}</div>
+              <h3 className="text-xl md:text-2xl font-space font-black text-slate-800 mb-8 uppercase tracking-widest">{current.text}</h3>
+              <p className="text-slate-600 font-space font-bold text-sm md:text-base mb-10">Take your time. Look around you. Name them silently or out loud.</p>
+              <button onClick={() => setGroundingStep(s => s + 1)} className={`w-full py-4 rounded-xl text-white font-space font-bold text-base ${current.bg} shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer`}>Next Step</button>
+            </div>
+          ) : (
+            <div className={`p-10 md:p-14 rounded-[3rem] glass-panel border border-white/30 shadow-2xl flex flex-col items-center text-center w-full glow-emerald`}>
+              <div className={`w-20 h-20 rounded-2xl bg-[#8FA989]/20 text-[#8FA989] flex items-center justify-center mb-6 border border-white/30`}><Star size={40}/></div>
+              <h3 className="text-2xl font-raleway font-black text-slate-800 mb-4">You did great.</h3>
+              <p className="text-slate-600 font-space font-bold text-sm mb-10">Welcome back to the present moment.</p>
+              <button onClick={() => {setGroundingStep(0); setActiveTool(null);}} className={`w-full py-4 rounded-xl font-space font-bold text-base ${theme.btnOutline} cursor-pointer`}>Finish</button>
+            </div>
+          )}
         </div>
-        
-        {groundingStep < 5 ? (
-          <div className="p-16 rounded-[3rem] glass-panel border border-white/30 shadow-xl flex flex-col items-center text-center w-full animate-scale-up">
-            <div className={`text-7xl font-black ${current.color} mb-6 drop-shadow-md animate-pulse`}>{current.num}</div>
-            <h3 className="text-2xl font-black text-slate-800 mb-10 uppercase tracking-widest">{current.text}</h3>
-            <p className="text-slate-600 font-bold text-base mb-10">Take your time. Look around you. Name them silently or out loud.</p>
-            <button onClick={() => setGroundingStep(s => s + 1)} className={`w-full py-4 rounded-xl text-white font-bold text-base ${current.bg} shadow-lg hover:-translate-y-0.5 transition-transform cursor-pointer`}>Next Step</button>
-          </div>
-        ) : (
-          <div className={`p-16 rounded-[3rem] glass-panel border border-white/30 shadow-xl flex flex-col items-center text-center w-full`}>
-            <div className={`w-24 h-24 rounded-2xl bg-[#8FA989]/20 text-[#8FA989] flex items-center justify-center mb-8 border border-white/30`}><Star size={48}/></div>
-            <h3 className="text-2xl font-black text-slate-800 mb-6">You did great.</h3>
-            <p className="text-slate-600 font-bold text-base mb-10">Welcome back to the present moment.</p>
-            <button onClick={() => {setGroundingStep(0); setActiveTool(null);}} className={`w-full py-4 rounded-xl font-bold text-base ${theme.btnOutline} cursor-pointer`}>Finish</button>
-          </div>
-        )}
       </div>
     );
   }
 
   const allTools = [
-    { id: 'breathing', title: '4-7-8 Breathing', desc: 'Reduce heart rate', icon: Activity, color: 'text-[#3A7070]', active: true },
-    { id: 'worry', title: 'Worry Burner', desc: 'Release anxiety visually', icon: Sparkles, color: 'text-[#D4A373]', active: true },
-    { id: 'gratitude', title: 'Gratitude Jar', desc: 'Shift perspective', icon: Heart, color: 'text-[#8FA989]', active: true },
-    { id: 'grounding', title: '5-4-3-2-1 Grounding', desc: 'Halt panic attacks', icon: Star, color: 'text-[#3A7070]', active: true },
-    { id: 'bodyscan', title: 'Body Scan', desc: 'Release physical tension', icon: User, color: 'text-[#D4A373]', active: false },
-    { id: 'moodtracker', title: 'Mood Tracker', desc: 'Identify daily patterns', icon: PieChart, color: 'text-[#8FA989]', active: false },
-    { id: 'reframing', title: 'Cognitive Reframing', desc: 'Challenge negative thoughts', icon: MessageCircle, color: 'text-[#3A7070]', active: false },
-    { id: 'thermometer', title: 'Anxiety Thermometer', desc: 'Measure distress', icon: AlertTriangle, color: 'text-[#D4A373]', active: false },
-    { id: 'sleep', title: 'Sleep Wind-down', desc: 'Prepare for deep rest', icon: Smile, color: 'text-[#8FA989]', active: false },
-    { id: 'journal', title: 'Guided Journal', desc: 'Unlocks at Level 2', icon: BookOpen, color: 'text-slate-400', active: false, locked: true },
+    { id: 'breathing', title: '4-7-8 Breathing', desc: 'Reduce heart rate', icon: Activity, color: 'text-[#3A7070]', glowClass: 'glow-teal', active: true },
+    { id: 'worry', title: 'Worry Burner', desc: 'Release anxiety visually', icon: Sparkles, color: 'text-[#D4A373]', glowClass: 'glow-gold', active: true },
+    { id: 'gratitude', title: 'Gratitude Jar', desc: 'Shift perspective', icon: Heart, color: 'text-[#8FA989]', glowClass: 'glow-emerald', active: true },
+    { id: 'grounding', title: '5-4-3-2-1 Grounding', desc: 'Halt panic attacks', icon: Star, color: 'text-[#3A7070]', glowClass: 'glow-teal', active: true },
+    { id: 'bodyscan', title: 'Body Scan', desc: 'Release physical tension', icon: User, color: 'text-[#D4A373]', glowClass: 'glow-gold', active: false },
+    { id: 'moodtracker', title: 'Mood Tracker', desc: 'Identify daily patterns', icon: PieChart, color: 'text-[#8FA989]', glowClass: 'glow-emerald', active: false },
+    { id: 'reframing', title: 'Cognitive Reframing', desc: 'Challenge negative thoughts', icon: MessageCircle, color: 'text-[#3A7070]', glowClass: 'glow-teal', active: false },
+    { id: 'thermometer', title: 'Anxiety Thermometer', desc: 'Measure distress', icon: AlertTriangle, color: 'text-[#D4A373]', glowClass: 'glow-gold', active: false },
+    { id: 'sleep', title: 'Sleep Wind-down', desc: 'Prepare for deep rest', icon: Smile, color: 'text-[#8FA989]', glowClass: 'glow-emerald', active: false },
+    { id: 'journal', title: 'Guided Journal', desc: 'Unlocks at Level 2', icon: BookOpen, color: 'text-slate-400', glowClass: 'border-slate-200/50', active: false, locked: true },
   ];
 
   return (
-    <div className="h-full flex flex-col max-w-7xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl overflow-hidden my-6 animate-fade-in">
-      <h2 className="text-2xl font-black text-slate-800 mb-8">Mind Tools Sandbox</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto pb-8 pr-2">
-        {allTools.map((tool, i) => (
-          <div key={tool.id} onClick={() => tool.active ? setActiveTool(tool.id) : null} 
-            style={{animationDelay: `${i * 60}ms`}}
-            className={`p-6 rounded-[2rem] glass-card border border-white/20 shadow-sm flex flex-col items-center justify-center gap-4 text-center animate-slide-up ${tool.active ? theme.outsetHover + ' hover:scale-105' : 'opacity-65'} ${tool.locked ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
-            <div className={`w-14 h-14 rounded-2xl bg-white/20 border border-white/10 flex items-center justify-center ${tool.color}`}><tool.icon size={24} /></div>
-            <div>
-              <h3 className="font-bold text-slate-800 text-base mb-1">{tool.title}</h3>
-              <p className="text-xs text-slate-500 font-medium">{tool.desc}</p>
-            </div>
+    <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+      {/* Page Header */}
+      <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
+            <span className="text-2xl">🧘</span>
           </div>
-        ))}
+          <div>
+            <h2 className="text-xl font-raleway font-black text-[#2C5555]">Mind Tools Sandbox</h2>
+            <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Coping Exercises</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Grid Content Area */}
+      <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-8">
+          {allTools.map((tool, i) => (
+            <div key={tool.id} onClick={() => tool.active ? setActiveTool(tool.id) : null} 
+              style={{animationDelay: `${i * 60}ms`}}
+              className={`p-6 rounded-[2rem] glass-card border shadow-sm flex flex-col items-center justify-center gap-4 text-center animate-slide-up transition-all duration-300 ${tool.active ? `${tool.glowClass} hover:scale-105 hover:shadow-md cursor-pointer` : 'opacity-65 border-white/10'} ${tool.locked ? 'cursor-not-allowed opacity-40' : ''}`}>
+              <div className={`w-14 h-14 rounded-2xl bg-white/20 border border-white/15 flex items-center justify-center shadow-sm ${tool.color}`}><tool.icon size={24} /></div>
+              <div>
+                <h3 className="font-raleway font-extrabold text-slate-800 text-base mb-1">{tool.title}</h3>
+                <p className="text-xs text-slate-500 font-space font-semibold">{tool.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -1468,91 +2221,139 @@ const MindTools = () => {
 
 // 4.5 Rewards
 const Rewards = ({ points }) => (
-  <div className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl my-6 animate-fade-in">
-    <div className="w-full p-10 rounded-[2.5rem] bg-white/20 border border-white/20 flex flex-col items-center text-center mb-10 shadow-sm animate-float">
-      <Gift size={48} className="text-[#D4A373] mb-6 animate-bounce" style={{animationDuration: '3s'}} />
-      <h2 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Total Keffi Points</h2>
-      <div className="text-5xl font-black text-[#3A7070] drop-shadow-sm">{points}</div>
+  <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+    {/* Page Header */}
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
+          <span className="text-2xl">🎁</span>
+        </div>
+        <div>
+          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Rewards</h2>
+          <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Sanctuary Incentives</div>
+        </div>
+      </div>
     </div>
-    
-    <div className="w-full space-y-4 animate-slide-up" style={{animationDelay: '150ms'}}>
-      <h3 className="font-black text-slate-800 text-xl mb-4">Unlock Goals</h3>
-      <div className="p-5 rounded-2xl bg-[#3A7070]/5 border border-[#3A7070]/20 flex justify-between items-center opacity-70 hover:opacity-100 transition-opacity">
-        <span className="font-bold text-slate-600 text-base">Mindfulness Badge</span>
-        <span className="font-bold text-[#3A7070] text-base">100 pts (Unlocked)</span>
+
+    {/* Content Area */}
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col items-center justify-start gap-8 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+      <div className="max-w-2xl w-full p-8 md:p-10 rounded-[2.5rem] glass-card border border-white/20 flex flex-col items-center text-center shadow-sm animate-float glow-teal shrink-0">
+        <Gift size={44} className="text-[#D4A373] mb-4 animate-bounce" style={{animationDuration: '3s'}} />
+        <h3 className="text-xs font-space font-extrabold text-slate-500 uppercase tracking-widest mb-2">Total Keffi Points</h3>
+        <div className="text-5xl font-space font-black text-[#3A7070] drop-shadow-sm">{points}</div>
       </div>
-      <div className="p-5 rounded-2xl border-2 border-dashed border-[#D4A373]/30 bg-white/10 flex justify-between items-center hover:bg-white/20 transition-all cursor-pointer">
-        <span className="font-bold text-slate-800 text-base">Free Therapist Session</span>
-        <span className="font-bold text-[#D4A373] text-base">1000 pts</span>
+      
+      <div className="max-w-2xl w-full space-y-4 animate-slide-up pb-8" style={{animationDelay: '150ms'}}>
+        <h3 className="font-raleway font-black text-slate-800 text-lg mb-4">Unlock Goals</h3>
+        <div className="p-5 rounded-2xl bg-[#3A7070]/5 border border-[#3A7070]/20 flex justify-between items-center opacity-75 hover:opacity-100 transition-opacity">
+          <span className="font-space font-bold text-slate-600 text-sm md:text-base">Mindfulness Badge</span>
+          <span className="font-space font-extrabold text-[#3A7070] text-sm md:text-base">100 pts (Unlocked)</span>
+        </div>
+        <div className="p-5 rounded-2xl border-2 border-dashed border-[#D4A373]/30 bg-white/10 flex justify-between items-center hover:bg-white/20 transition-all cursor-pointer glow-gold">
+          <span className="font-space font-bold text-slate-800 text-sm md:text-base">Free Therapist Session</span>
+          <span className="font-space font-extrabold text-[#D4A373] text-sm md:text-base">1000 pts</span>
+        </div>
+        <div className="w-full bg-white/15 rounded-full h-3 mt-4 overflow-hidden border border-white/20 shadow-inner">
+          <div className="bg-[#3A7070] h-3 transition-all duration-1000 rounded-full" style={{width: `${Math.min((points/1000)*100, 100)}%`}}></div>
+        </div>
+        {points >= 1000 ? (
+          <button className={`w-full py-4 mt-6 rounded-xl font-space font-bold text-base ${theme.btnTeal} cursor-pointer`}>Claim Therapist Session</button>
+        ) : (
+          <button disabled className="w-full py-4 mt-6 rounded-xl font-space font-bold text-sm glass-card border border-white/10 text-slate-500 cursor-not-allowed text-center">Chat more to Unlock</button>
+        )}
       </div>
-      <div className="w-full bg-white/15 rounded-full h-3 mt-4 overflow-hidden border border-white/20 shadow-inner">
-        <div className="bg-[#3A7070] h-3 transition-all duration-1000 rounded-full" style={{width: `${Math.min((points/1000)*100, 100)}%`}}></div>
-      </div>
-      {points >= 1000 ? (
-        <button className={`w-full py-4 mt-6 rounded-xl font-bold text-base ${theme.btnTeal} cursor-pointer`}>Claim Therapist Session</button>
-      ) : (
-        <button disabled className="w-full py-4 mt-6 rounded-xl font-bold text-base glass-card border border-white/10 text-slate-500 cursor-not-allowed text-center">Chat more to Unlock</button>
-      )}
     </div>
   </div>
 );
 
 // 4.6 Friends
 const FriendsSync = () => (
-  <div className="h-full flex flex-col items-center justify-center max-w-3xl mx-auto w-full p-8 md:p-12 rounded-[2.5rem] glass-panel border border-white/20 shadow-xl my-6 animate-fade-in">
-    <div className="text-center mb-10">
-      <h2 className="text-2xl font-black text-slate-800 mb-3">Neighbor Sync</h2>
-      <p className="text-slate-600 text-base font-semibold">You are not alone. See the abstract mood of people near you.</p>
+  <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+    {/* Page Header */}
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
+          <span className="text-2xl">👥</span>
+        </div>
+        <div>
+          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Neighbor Sync</h2>
+          <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Collective Emotional Wave</div>
+        </div>
+      </div>
     </div>
-    
-    <div className="w-80 h-80 rounded-full bg-white/10 border border-white/25 relative flex items-center justify-center shadow-inner overflow-hidden animate-[pulseSlow_6s_ease-in-out_infinite]">
-      {/* Sonar sweep */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-[#3A7070]/15 via-transparent to-transparent animate-radar origin-center pointer-events-none"></div>
-      <div className="absolute w-64 h-64 rounded-full border border-white/15 opacity-70"></div>
-      <div className="absolute w-40 h-40 rounded-full border border-white/15 opacity-70"></div>
+
+    {/* Content Area */}
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col items-center justify-start gap-8 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+      <div className="text-center shrink-0">
+        <p className="text-slate-600 text-sm md:text-base font-space font-semibold">You are not alone. See the abstract mood of people in your network.</p>
+      </div>
       
-      <div className="w-10 h-10 bg-[#3A7070] rounded-full z-10 shadow-lg animate-pulse"></div>
-      <div className="absolute mt-16 font-bold text-xs text-[#3A7070] bg-white/80 px-3 py-1 rounded-full border border-white/30 shadow-sm z-20">You</div>
- 
-      <div className="absolute top-16 left-16 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform animate-pulse z-20" title="Calm Neighbor"></div>
-      <div className="absolute bottom-20 right-16 w-8 h-8 bg-[#D4A373] rounded-full shadow-[0_0_20px_#D4A373] cursor-pointer hover:scale-125 transition-transform animate-pulse z-20" style={{animationDelay: '1s'}} title="Anxious Neighbor"></div>
-      <div className="absolute top-24 right-10 w-8 h-8 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform animate-pulse z-20" style={{animationDelay: '2s'}} title="Calm Neighbor"></div>
-    </div>
- 
-    <div className="mt-12 p-6 rounded-2xl glass-card border border-white/30 shadow-sm flex items-center gap-5 animate-float">
-      <Heart className="text-[#D4A373]" size={24} />
-      <span className="font-bold text-slate-800 text-base">Send a Virtual Hug</span>
-      <button className={`px-5 py-2.5 rounded-xl text-sm font-bold ${theme.btnOutline} cursor-pointer`}>Send Love</button>
+      <div className="w-72 h-72 rounded-full bg-white/10 border border-white/25 relative flex items-center justify-center shadow-inner overflow-hidden animate-[pulseSlow_6s_ease-in-out_infinite] shrink-0 glow-teal">
+        {/* Sonar sweep */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#3A7070]/15 via-transparent to-transparent animate-radar origin-center pointer-events-none"></div>
+        <div className="absolute w-56 h-56 rounded-full border border-white/15 opacity-70"></div>
+        <div className="absolute w-36 h-36 rounded-full border border-white/15 opacity-70"></div>
+        
+        <div className="w-9 h-9 bg-[#3A7070] rounded-full z-10 shadow-lg animate-pulse"></div>
+        <div className="absolute mt-14 font-space font-extrabold text-[10px] text-[#3A7070] bg-white/80 px-3 py-1 rounded-full border border-white/30 shadow-sm z-20">You</div>
+   
+        <div className="absolute top-12 left-12 w-7 h-7 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform animate-pulse z-20" title="Calm Neighbor"></div>
+        <div className="absolute bottom-16 right-12 w-7 h-7 bg-[#D4A373] rounded-full shadow-[0_0_20px_#D4A373] cursor-pointer hover:scale-125 transition-transform animate-pulse z-20" style={{animationDelay: '1s'}} title="Anxious Neighbor"></div>
+        <div className="absolute top-20 right-8 w-7 h-7 bg-[#8FA989] rounded-full shadow-[0_0_20px_#8FA989] cursor-pointer hover:scale-125 transition-transform animate-pulse z-20" style={{animationDelay: '2s'}} title="Calm Neighbor"></div>
+      </div>
+   
+      <div className="p-6 rounded-2xl glass-card border border-white/20 shadow-sm flex items-center gap-5 animate-float glow-gold shrink-0 mb-8">
+        <Heart className="text-[#D4A373]" size={24} />
+        <span className="font-space font-bold text-slate-800 text-sm md:text-base">Send a Virtual Hug</span>
+        <button className={`px-5 py-2.5 rounded-xl text-xs font-space font-bold ${theme.btnOutline} cursor-pointer`}>Send Love</button>
+      </div>
     </div>
   </div>
 );
 
 // 4.7 Profile
 const ProfileVault = ({ userData }) => (
-  <div className="h-full flex flex-col items-center justify-center p-6 animate-fade-in">
-    <div className={`max-w-2xl w-full p-10 rounded-[2.5rem] glass-panel border border-white/30 shadow-sm animate-scale-up`}>
-      <div className="flex flex-col items-center mb-8">
-        <div className={`w-24 h-24 rounded-3xl bg-white/20 border border-white/35 flex items-center justify-center text-[#3A7070] mb-5`}>
-          <User size={40} />
+  <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+    {/* Page Header */}
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
+          <span className="text-2xl">👤</span>
         </div>
-        <h2 className="text-2xl font-black text-slate-800">Identity Vault</h2>
+        <div>
+          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Identity Vault</h2>
+          <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Your Encrypted Profile</div>
+        </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className={`p-5 rounded-2xl glass-card border border-white/20`}>
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Full Name</div>
-          <div className="text-lg font-bold text-slate-800">{userData?.name || 'Guest User'}</div>
+    </div>
+
+    {/* Content Area */}
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col items-center justify-start gap-6 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+      <div className="max-w-2xl w-full p-8 md:p-10 rounded-[2.5rem] glass-card border border-white/20 shadow-lg animate-scale-up glow-teal shrink-0 mb-8">
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-20 h-20 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-[#3A7070] mb-4 shadow-sm">
+            <User size={36} />
+          </div>
+          <h3 className="text-xl font-raleway font-black text-slate-800">Identity Details</h3>
         </div>
-        <div className={`p-5 rounded-2xl glass-card border border-white/20`}>
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Age / DOB / Gender</div>
-          <div className="text-lg font-bold text-slate-800">{userData?.age || '25'} • {userData?.dob || 'Not Set'} • {userData?.gender || 'Not Set'}</div>
-        </div>
-        <div className={`p-5 rounded-2xl glass-card border border-white/20`}>
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Phone / Email</div>
-          <div className="text-lg font-bold text-slate-800">{userData?.phone || '+91 00000000'} <br/><span className="text-sm font-semibold text-slate-600 mt-1 inline-block">{userData?.email || 'email@example.com'}</span></div>
-        </div>
-        <div className={`p-5 rounded-2xl glass-card border border-white/20`}>
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Sanctuary Location</div>
-          <div className="text-lg font-bold text-slate-800 flex items-center gap-2"><MapPin size={20} className="text-[#3A7070]"/> {userData?.place || 'Salem, TN'}</div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-left">
+          <div className="p-4 rounded-xl bg-white/25 border border-white/20">
+            <div className="text-[10px] font-space font-extrabold text-slate-500 uppercase tracking-widest mb-1">Full Name</div>
+            <div className="text-base font-space font-bold text-slate-800">{userData?.name || 'Guest User'}</div>
+          </div>
+          <div className="p-4 rounded-xl bg-white/25 border border-white/20">
+            <div className="text-[10px] font-space font-extrabold text-slate-500 uppercase tracking-widest mb-1">Age / DOB / Gender</div>
+            <div className="text-base font-space font-bold text-slate-800">{userData?.age || '25'} • {userData?.dob || 'Not Set'} • {userData?.gender || 'Not Set'}</div>
+          </div>
+          <div className="p-4 rounded-xl bg-white/25 border border-white/20">
+            <div className="text-[10px] font-space font-extrabold text-slate-500 uppercase tracking-widest mb-1">Phone / Email</div>
+            <div className="text-base font-space font-bold text-slate-800 leading-snug">{userData?.phone || '+91 00000000'} <br/><span className="text-xs text-slate-600 font-semibold">{userData?.email || 'email@example.com'}</span></div>
+          </div>
+          <div className="p-4 rounded-xl bg-white/25 border border-white/20">
+            <div className="text-[10px] font-space font-extrabold text-slate-500 uppercase tracking-widest mb-1">Sanctuary Location</div>
+            <div className="text-base font-space font-bold text-slate-800 flex items-center gap-2"><MapPin size={16} className="text-[#3A7070]"/> {userData?.place || 'Salem, TN'}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1603,24 +2404,24 @@ const PatientDashboard = ({ setView, userData }) => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-transparent overflow-hidden font-inter text-slate-800 relative">
+    <div className="flex h-screen w-screen bg-transparent overflow-hidden p-4 md:p-6 gap-4 md:gap-6 font-inter text-slate-800 relative">
       
       {/* Mobile Overlay */}
       {isMobile && isSidebarOpen && (
-        <div className="absolute inset-0 bg-black/40 z-20 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)}></div>
+        <div className="absolute inset-0 bg-black/40 z-40 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)}></div>
       )}
 
-      {/* Sleek Collapsible Sidebar */}
-      <div className={`${isSidebarOpen ? 'w-64 md:w-72 translate-x-0' : 'w-64 md:w-0 -translate-x-full md:translate-x-0 md:opacity-0'} absolute md:relative z-30 transition-all duration-300 h-full glass-sidebar flex flex-col shrink-0 overflow-hidden`}>
+      {/* Sleek Floating Sidebar */}
+      <div className={`${isSidebarOpen ? 'w-64 md:w-72 translate-x-0' : 'w-64 md:w-0 -translate-x-full md:translate-x-0 md:opacity-0'} absolute md:relative z-30 transition-all duration-300 h-[calc(100vh-2rem)] md:h-full left-4 md:left-0 top-4 md:top-0 rounded-[2.5rem] glass-panel p-6 shrink-0 glow-teal flex flex-col overflow-hidden hover:shadow-[0_20px_50px_rgba(13,112,112,0.18)]`}>
         {/* Light Green Animated Background */}
         <div className="absolute -top-[10%] -left-[10%] w-[120%] h-[50%] bg-[#8FA989] rounded-full mix-blend-multiply blur-[80px] opacity-[0.12] animate-pulse pointer-events-none z-0" style={{animationDuration: '4s'}}></div>
         <div className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[50%] bg-[#EAF4F0] rounded-full mix-blend-multiply blur-[80px] opacity-40 pointer-events-none z-0" style={{animation: 'pulse 8s infinite alternate'}}></div>
 
         {isSidebarOpen && (
-          <div className="flex flex-col h-full w-full p-6 relative z-10">
+          <div className="flex flex-col h-full w-full relative z-10">
             <div className="flex items-center gap-3 cursor-pointer mb-8" onClick={() => setView('landing')}>
                <KeffiLogo size="w-8 h-8" />
-               <h1 className="text-2xl font-black text-[#2C5555] tracking-tight">Keffi AI</h1>
+               <h1 className="text-2xl font-raleway font-black text-[#2C5555] tracking-tight">Keffi AI</h1>
             </div>
             
             <div className="flex-1 space-y-2 overflow-y-auto scrollbar-hide">
@@ -1635,7 +2436,7 @@ const PatientDashboard = ({ setView, userData }) => {
                       if (isMobile) setIsSidebarOpen(false);
                     }}
                     style={{animationDelay: `${i * 50}ms`}}
-                    className={`w-full flex items-center gap-4 px-5 py-4 rounded-[1.2rem] font-bold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
+                    className={`w-full flex items-center gap-4 px-5 py-4 rounded-[1.2rem] font-space font-extrabold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
                       isActive 
                       ? 'bg-[#3A7070] text-white shadow-lg shadow-[#3A7070]/25 scale-102' 
                       : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070] hover:shadow-[0_4px_12px_rgba(58,112,112,0.03)]'
@@ -1648,11 +2449,11 @@ const PatientDashboard = ({ setView, userData }) => {
               })}
             </div>
 
-            <div className="mt-6 px-4 py-4 rounded-[1.2rem] glass-card border border-white/30 font-bold text-xs text-[#D4A373] flex items-center justify-center gap-2 shrink-0">
+            <div className="mt-6 px-4 py-4 rounded-[1.2rem] glass-card border border-white/30 font-space font-extrabold text-xs text-[#D4A373] flex items-center justify-center gap-2 shrink-0 tracking-wider">
               <Star size={16} className="fill-[#D4A373] text-[#D4A373] animate-pulse" /> {globalPoints} Sanctuary Points
             </div>
 
-            <button onClick={() => setView('landing')} className="mt-4 text-slate-500 hover:text-slate-700 font-bold text-sm transition-all w-full text-center shrink-0 cursor-pointer">
+            <button onClick={() => setView('landing')} className="mt-4 text-slate-500 hover:text-slate-700 font-space font-extrabold text-sm transition-all w-full text-center shrink-0 cursor-pointer tracking-wide">
               Exit Sanctuary
             </button>
           </div>
@@ -1664,14 +2465,16 @@ const PatientDashboard = ({ setView, userData }) => {
         {(!isSidebarOpen || isMobile) && (
           <button 
             onClick={() => setIsSidebarOpen(true)}
-            className="absolute top-4 md:top-6 left-4 md:left-6 z-10 p-2.5 text-slate-600 hover:text-[#3A7070] glass-card border border-white/20 rounded-xl hover:bg-white/50 hover:-translate-y-0.5 transition-all cursor-pointer"
+            className="absolute top-4 left-4 z-35 p-2.5 text-slate-600 hover:text-[#3A7070] glass-card border border-white/20 rounded-xl hover:bg-white/50 hover:-translate-y-0.5 transition-all cursor-pointer shadow-md"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
         )}
         
-        {/* Render Active View */}
-        {renderContent()}
+        {/* Render Active View in unified card */}
+        <div className="flex-1 rounded-[2.5rem] glass-panel glow-teal flex flex-col overflow-hidden shadow-2xl relative h-full w-full">
+          {renderContent()}
+        </div>
       </div>
     </div>
   );
@@ -1745,27 +2548,27 @@ const AdminDashboard = ({ setView }) => {
 
   return (
     <div className="flex h-screen w-full bg-transparent overflow-hidden p-6 gap-6 font-sans text-slate-800">
-      <div className="w-72 h-full rounded-[2rem] glass-panel border border-white/20 shadow-sm flex flex-col p-6 shrink-0">
+      <div className="w-72 h-full rounded-[2rem] glass-panel p-6 shrink-0 glow-teal flex flex-col hover:shadow-[0_20px_50px_rgba(13,112,112,0.18)] transition-all">
         <div className="flex flex-col items-center mb-8 pt-4 cursor-pointer" onClick={() => setView('landing')}>
-          <div className="w-12 h-12 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-[#3A7070] mb-4"><Shield size={24} /></div>
-          <h1 className="text-xl font-black text-[#2C5555] tracking-tight text-center">Clinical Hub</h1>
+          <div className="w-12 h-12 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-[#3A7070] mb-4 glow-teal"><Shield size={24} className="text-[#3A7070]" /></div>
+          <h1 className="text-xl font-raleway font-black text-[#2C5555] tracking-tight text-center">Clinical Hub</h1>
         </div>
         
         <div className="flex-1 space-y-2">
           {adminTabs.map((tab, i) => (
             <button key={tab.id} onClick={() => {setActiveTab(tab.id); setSelectedPatient(null);}} 
               style={{animationDelay: `${i * 50}ms`}}
-              className={`w-full flex items-center gap-3 px-5 py-4 rounded-[1.2rem] font-bold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${activeTab === tab.id ? `bg-[#3A7070] text-white shadow-lg shadow-[#3A7070]/25 scale-102` : `text-slate-600 hover:bg-white/50 hover:text-[#3A7070] hover:shadow-[0_4px_12px_rgba(58,112,112,0.03)]`}`}>
+              className={`w-full flex items-center gap-3 px-5 py-4 rounded-[1.2rem] font-space font-extrabold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${activeTab === tab.id ? `bg-[#3A7070] text-white shadow-lg shadow-[#3A7070]/25 scale-102` : `text-slate-600 hover:bg-white/50 hover:text-[#3A7070] hover:shadow-[0_4px_12px_rgba(58,112,112,0.03)]`}`}>
                {activeTab === tab.id && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
                <tab.icon size={18} className="relative z-10" /> <span className="relative z-10">{tab.label}</span>
             </button>
           ))}
         </div>
-        <button onClick={() => setView('landing')} className="mt-auto font-bold text-sm text-slate-500 hover:text-red-500 hover:bg-red-500/10 p-4 rounded-xl transition-all cursor-pointer">Logout</button>
+        <button onClick={() => setView('landing')} className="mt-auto font-space font-extrabold text-sm text-slate-500 hover:text-red-500 hover:bg-red-500/10 p-4 rounded-xl transition-all cursor-pointer tracking-wide">Logout</button>
       </div>
 
       <div className="flex-1 h-full relative">
-        <div className="absolute inset-0 rounded-[2rem] glass-panel border border-white/25 shadow-inner p-8 overflow-hidden">
+        <div className="absolute inset-0 rounded-[2rem] glass-panel shadow-inner p-8 overflow-hidden glow-emerald">
           {selectedPatient ? (
              <div className={`h-full flex flex-col animate-fade-in`}>
                 <div className="flex justify-between items-center mb-6">
@@ -1806,19 +2609,19 @@ const AdminDashboard = ({ setView }) => {
              </div>
           ) : activeTab === 'overview' ? (
             <div className="h-full flex flex-col animate-fade-in">
-               <h2 className="text-2xl font-black text-slate-800 mb-6">System Overview</h2>
+               <h2 className="text-2xl font-poppins font-black text-slate-800 mb-6">System Overview</h2>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-                 <div className={`p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col items-center text-center gap-1`}>
-                    <div className="text-3xl font-black text-[#3A7070]">{analytics?.total_patients || patients.length}</div>
-                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Active Patients</div>
+                 <div className={`p-5 rounded-2xl bg-white/45 flex flex-col items-center text-center gap-1 glow-teal hover:shadow-[0_8px_20px_rgba(13,112,112,0.15)] hover:scale-[1.02] transition-all`}>
+                    <div className="text-3xl font-black text-[#3A7070] drop-shadow-[0_0_10px_rgba(58,112,112,0.2)]">{analytics?.total_patients || patients.length}</div>
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Active Patients</div>
                  </div>
-                 <div className={`p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col items-center text-center gap-1`}>
-                    <div className="text-3xl font-black text-[#8FA989]">{analytics?.safety_score || '0'}%</div>
-                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">AI Safety Score</div>
+                 <div className={`p-5 rounded-2xl bg-white/45 flex flex-col items-center text-center gap-1 glow-emerald hover:shadow-[0_8px_20px_rgba(16,185,129,0.15)] hover:scale-[1.02] transition-all`}>
+                    <div className="text-3xl font-black text-[#8FA989] drop-shadow-[0_0_10px_rgba(16,185,129,0.2)]">{analytics?.safety_score || '0'}%</div>
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">AI Safety Score</div>
                  </div>
-                 <div className={`p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col items-center text-center gap-1`}>
-                    <div className="text-3xl font-black text-red-500">{patients.filter(p => p.risk === 'Critical').length}</div>
-                    <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Critical Interventions</div>
+                 <div className={`p-5 rounded-2xl bg-white/45 flex flex-col items-center text-center gap-1 glow-rose hover:shadow-[0_8px_20px_rgba(244,63,94,0.15)] hover:scale-[1.02] transition-all`}>
+                    <div className="text-3xl font-black text-red-500 drop-shadow-[0_0_10px_rgba(244,63,94,0.2)]">{patients.filter(p => p.risk === 'Critical').length}</div>
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Critical Interventions</div>
                  </div>
                </div>
                <div className={`flex-1 p-5 rounded-2xl glass-card border border-white/25 shadow-sm flex flex-col`}>
@@ -2012,41 +2815,192 @@ export default function App() {
   return (
     <div className="font-inter min-h-screen w-full">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,600;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Raleway:wght@700;800;900&family=Sacramento&display=swap');
         
+        /* ──────────────────────────────────────────────
+           FONT DEFINITIONS
+        ────────────────────────────────────────────── */
+        .font-poppins    { font-family: 'Outfit', sans-serif; }
+        .font-inter      { font-family: 'Inter', sans-serif; }
+        .font-space      { font-family: 'Space Grotesk', sans-serif; }
+        .font-raleway    { font-family: 'Raleway', sans-serif; }
+        .font-playfair   { font-family: 'Playfair Display', serif; }
+        .font-cormorant  { font-family: 'Cormorant Garamond', serif; }
+        .font-sacramento { font-family: 'Sacramento', cursive; }
+
+        /* ──────────────────────────────────────────────
+           CURSIVE ACCENTS — multiple styles
+        ────────────────────────────────────────────── */
+        /* ──────────────────────────────────────────────
+           CURSIVE ACCENTS — same size as context, different font
+        ────────────────────────────────────────────── */
         .cursive-accent {
           font-family: 'Dancing Script', cursive;
           font-weight: 700;
-          font-size: 1.25em;
+          font-size: 1.08em;          /* only slightly larger — no more blowout */
+          display: inline;
+          letter-spacing: 0.015em;
+        }
+        .cursive-accent-lg {
+          font-family: 'Dancing Script', cursive;
+          font-weight: 700;
+          font-size: 1.2em;           /* for standalone decorative use only */
           display: inline-block;
           transform: rotate(-1deg);
+          letter-spacing: 0.02em;
         }
-        
+        .cursive-playfair {
+          font-family: 'Playfair Display', serif;
+          font-style: italic;
+          font-weight: 700;
+          font-size: 1em;             /* same size as surrounding h1 */
+          display: inline;
+          letter-spacing: -0.01em;
+        }
+        .cursive-sacramento {
+          font-family: 'Sacramento', cursive;
+          font-size: 1.4em;
+          display: inline-block;
+        }
+
+        /* ──────────────────────────────────────────────
+           GRADIENT TEXT PRESETS
+        ────────────────────────────────────────────── */
+        .text-gradient-teal {
+          background: linear-gradient(135deg, #2C5555 0%, #3A7070 40%, #5E9E9E 70%, #8FA989 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .text-gradient-gold {
+          background: linear-gradient(135deg, #92600A 0%, #C8882A 35%, #E8B84B 65%, #D4A373 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .text-gradient-forest {
+          background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 50%, #40916C 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .text-gradient-rose {
+          background: linear-gradient(135deg, #881337 0%, #be123c 50%, #f43f5e 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .text-gradient-slate {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #334155 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .text-gradient-aurora {
+          background: linear-gradient(135deg, #2C5555 0%, #3A7070 30%, #5aa0a0 55%, #8FA989 80%, #b5cc90 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        /* ──────────────────────────────────────────────
+           BODY & BASE
+        ────────────────────────────────────────────── */
         body {
           margin: 0;
           padding: 0;
-          background: linear-gradient(135deg, rgba(242, 249, 246, 0.88), rgba(225, 240, 235, 0.85)), url('/keffi-bg.png');
+          background-image:
+            linear-gradient(135deg,
+              rgba(230, 245, 240, 0.82) 0%,
+              rgba(240, 252, 248, 0.75) 40%,
+              rgba(220, 238, 234, 0.80) 100%),
+            url('/keffi-bg.png');
           background-size: cover;
-          background-position: center;
+          background-position: center top;
           background-attachment: fixed;
           background-repeat: no-repeat;
           font-family: 'Inter', sans-serif;
-          color: #1E293B;
+          color: #0D1A1A;
         }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+        h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
         
-        .font-poppins { font-family: 'Outfit', sans-serif; }
-        .font-inter { font-family: 'Inter', sans-serif; }
-        
-        .h1-title { font-size: 64px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
-        .h2-title { font-size: 48px; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
-        .h3-title { font-size: 28px; font-weight: 600; line-height: 1.3; }
-        .p-text { font-size: 20px; font-weight: 400; line-height: 1.7; color: #475569; }
-        .p-small { font-size: 18px; font-weight: 400; line-height: 1.7; color: #64748B; }
-        
-        @media (max-width: 768px) {
-          .h1-title { font-size: 42px; }
-          .h2-title { font-size: 36px; }
+        /* ──────────────────────────────────────────────
+           TYPOGRAPHY SCALE — clear visual hierarchy
+           Hero h1:   clamp(38px → 68px) in JSX
+           Section h2: 48px  — big, impactful
+           Card h3:    26px  — readable subheading
+           Body text:  20px  — comfortable reading
+           Small copy: 17px  — supporting detail
+           Labels:     12px  — uppercase metadata
+        ────────────────────────────────────────────── */
+        .h1-title {
+          font-size: clamp(40px, 5vw, 68px);
+          font-weight: 900;
+          line-height: 1.1;
+          letter-spacing: -0.025em;
+          font-family: 'Raleway', sans-serif;
+          color: #0D1A1A;
+        }
+        .h2-title {
+          font-size: clamp(32px, 4vw, 48px);
+          font-weight: 800;
+          line-height: 1.15;
+          letter-spacing: -0.015em;
+          font-family: 'Raleway', sans-serif;
+          color: #0D1A1A;
+        }
+        .h3-title {
+          font-size: clamp(22px, 2.5vw, 28px);
+          font-weight: 700;
+          line-height: 1.3;
+          letter-spacing: -0.008em;
+          font-family: 'Space Grotesk', sans-serif;
+          color: #1A3030;
+        }
+        .p-text {
+          font-size: clamp(17px, 1.6vw, 20px);
+          font-weight: 400;
+          line-height: 1.85;
+          color: #2D4040;
+          font-family: 'Inter', sans-serif;
+        }
+        .p-small {
+          font-size: clamp(15px, 1.4vw, 17px);
+          font-weight: 400;
+          line-height: 1.75;
+          color: #3D5555;
+          font-family: 'Inter', sans-serif;
+        }
+        .label-text {
+          font-family: 'Space Grotesk', sans-serif;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-size: 11px;
+          color: #5A7E7E;
+        }
+        /* card body text: smaller than p-text */
+        .card-text {
+          font-size: 15px;
+          font-weight: 500;
+          line-height: 1.7;
+          color: #4A6060;
+          font-family: 'Inter', sans-serif;
+        }
+
+        /* ──────────────────────────────────────────────
+           SCROLL ZOOM EFFECT
+        ────────────────────────────────────────────── */
+        .scroll-zoom-section {
+          transform: scale(0.96);
+          opacity: 0.88;
+          transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.85s ease;
+          will-change: transform, opacity;
+        }
+        .scroll-zoom-section.in-view {
+          transform: scale(1);
+          opacity: 1;
         }
 
         .floating-blob {

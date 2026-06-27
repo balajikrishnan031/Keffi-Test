@@ -254,7 +254,13 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
                 "CRITICAL RULES: DO NOT therapize the user. For the option, output EXACTLY: |||OPTION||| Show me the solution 🗝️"
             ),
             "Casual": "Give a warm, short, friendly greeting. Ask how their day is going. Keep it strictly under 3 sentences. DO NOT therapize.",
-            "Factual": "Provide a direct, factual answer clearly and warmly. STRICTLY DO NOT therapize the user. DO NOT validate their feelings. DO NOT mention their emotional context. Just answer the question."
+            "Factual": "Provide a direct, factual answer clearly and warmly. STRICTLY DO NOT therapize the user. DO NOT validate their feelings. DO NOT mention their emotional context. Just answer the question.",
+            "Dynamic_Counselor": (
+                "Rule 1: Deep Validation: Empathize deeply with the user's specific mental health struggle, feeling their pain like a human friend.\n"
+                "Rule 2: Clinical Assessment & Explanation: In your reflection block, dynamically select the optimal clinical framework (CBT, DBT, ACT, somatic, Rogerian, etc.) suited for this specific mental health issue. In your main response, give a brief, literal explanation of the psychological pattern (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
+                "Rule 3: Tailored Grounding: Provide exactly ONE deeply detailed, custom action. Start with a bullet point ( - ) focusing on a real-world physical grounding or cognitive task. No abstract visualizations.\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
+            )
         }
 
         # 4. Map the router's clinical category to the predicted method
@@ -271,19 +277,19 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             predicted_method = "Factual"
             suggested_options = ["I need to vent", "Hear a joke 😄", "Give me a puzzle 🧩"]
         elif clinical_category == "Depression":
-            predicted_method = "CBT"
+            predicted_method = "Dynamic_Counselor"
             suggested_options = ["Help me reframe this thought 💭", "Tell me a story 📖", "Play me a song 🎵"]
         elif clinical_category == "Anxiety":
-            predicted_method = "Somatic"
+            predicted_method = "Dynamic_Counselor"
             suggested_options = ["Guide me through grounding 🌿", "Play me a calming song 🎵", "Tell me a story 📖"]
         elif clinical_category == "Trauma & Stress":
-            predicted_method = "DBT"
+            predicted_method = "Dynamic_Counselor"
             suggested_options = ["Give me a distress skill 🧊", "I need to vent this out", "Play me a calming song 🎵"]
         elif clinical_category in ["Interpersonal", "Attrition Risk"]:
-            predicted_method = "Rogerian"
+            predicted_method = "Dynamic_Counselor"
             suggested_options = ["I want to share more", "Help me understand this feeling", "Tell me a story 📖"]
         elif clinical_category == "Physical-Mental":
-            predicted_method = "ACT"
+            predicted_method = "Dynamic_Counselor"
             suggested_options = ["What small step can I take?", "I want to talk more", "Play me a song 🎵"]
         elif clinical_category == "Positive State":
             predicted_method = "Casual"
