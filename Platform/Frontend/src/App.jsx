@@ -696,11 +696,11 @@ const LandingPage = ({ setView }) => {
                     <Brain size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#5A9A90'}}>AI Core</p>
-                    <h4 className="font-space font-bold text-lg" style={{color:'#D0F0EC'}}>BERT + Gemini</h4>
+                    <p className="label-text" style={{color:'#8FD4C8'}}>AI Core</p>
+                    <h4 className="font-space font-bold text-lg" style={{color:'#F0FAF8'}}>BERT + Gemini</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#7ABAB0'}}>Custom fine-tuned BERT model classifies 96 emotional states. Google Gemini Pro powers empathetic, context-aware conversational responses using 7 therapeutic modes.</p>
+                <p className="card-text" style={{color:'#C0D5D2'}}>Custom fine-tuned BERT model classifies 96 emotional states. Google Gemini Pro powers empathetic, context-aware conversational responses using 7 therapeutic modes.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['BERT', 'Gemini Pro', '96 States', 'NLP'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-[#3A7070]/20 border border-[#3A7070]/30 text-[#5EC4BC] font-space font-bold text-xs">{t}</span>
@@ -716,11 +716,11 @@ const LandingPage = ({ setView }) => {
                     <Database size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#8A7A50'}}>Memory Layer</p>
+                    <p className="label-text" style={{color:'#F5C070'}}>Memory Layer</p>
                     <h4 className="font-space font-bold text-lg" style={{color:'#F5DFA0'}}>Pinecone Vector DB</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#A89070'}}>Semantic vector memory stores and retrieves patient emotional history, enabling truly personalized, context-aware conversations that improve over time.</p>
+                <p className="card-text" style={{color:'#E3D5C5'}}>Semantic vector memory stores and retrieves patient emotional history, enabling truly personalized, context-aware conversations that improve over time.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['Pinecone', 'Embeddings', 'Vector Search', 'Memory'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/25 text-amber-400 font-space font-bold text-xs">{t}</span>
@@ -736,11 +736,11 @@ const LandingPage = ({ setView }) => {
                     <Shield size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#8A5050'}}>Safety Automation</p>
+                    <p className="label-text" style={{color:'#F472B6'}}>Safety Automation</p>
                     <h4 className="font-space font-bold text-lg" style={{color:'#FFBAB8'}}>n8n Workflows</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#A07070'}}>n8n orchestrates real-time crisis detection pipelines. When suicidal ideation or severe distress is detected, automated SOS alerts notify emergency contacts instantly.</p>
+                <p className="card-text" style={{color:'#E2C8C8'}}>n8n orchestrates real-time crisis detection pipelines. When suicidal ideation or severe distress is detected, automated SOS alerts notify emergency contacts instantly.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['n8n', 'Crisis SOS', 'WHO Protocol', 'Automation'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-rose-500/15 border border-rose-500/25 text-rose-400 font-space font-bold text-xs">{t}</span>
@@ -756,11 +756,11 @@ const LandingPage = ({ setView }) => {
                     <Zap size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#5A8A60'}}>Backend API</p>
+                    <p className="label-text" style={{color:'#34D399'}}>Backend API</p>
                     <h4 className="font-space font-bold text-lg" style={{color:'#AAFFC4'}}>FastAPI + Python</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#70A880'}}>High-performance async REST API with clinical routers for patient sessions, MHQ scoring, doctor dashboards, and real-time mood tracking analytics.</p>
+                <p className="card-text" style={{color:'#C8E2D0'}}>High-performance async REST API with clinical routers for patient sessions, MHQ scoring, doctor dashboards, and real-time mood tracking analytics.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['FastAPI', 'Python', 'REST API', 'Async'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 font-space font-bold text-xs">{t}</span>
@@ -776,11 +776,11 @@ const LandingPage = ({ setView }) => {
                     <Activity size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#505A8A'}}>Frontend</p>
+                    <p className="label-text" style={{color:'#60A5FA'}}>Frontend</p>
                     <h4 className="font-space font-bold text-lg" style={{color:'#A8C4FF'}}>React + Vite + Tailwind</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#7080A0'}}>Glassmorphism UI with animated components, real-time mood charts, doctor analytics dashboard, voice input, and a fully responsive design for all devices.</p>
+                <p className="card-text" style={{color:'#C2D0E6'}}>Glassmorphism UI with animated components, real-time mood charts, doctor analytics dashboard, voice input, and a fully responsive design for all devices.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['React 18', 'Vite', 'Tailwind', 'Recharts'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-blue-400/15 border border-blue-400/25 text-blue-400 font-space font-bold text-xs">{t}</span>
@@ -796,11 +796,11 @@ const LandingPage = ({ setView }) => {
                     <Target size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#70508A'}}>Deployment</p>
+                    <p className="label-text" style={{color:'#C084FC'}}>Deployment</p>
                     <h4 className="font-space font-bold text-lg" style={{color:'#D4AAFF'}}>Hugging Face + Vercel</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#9070A0'}}>BERT model hosted on Hugging Face Spaces. FastAPI backend deployed on Hugging Face. React frontend on Vercel CDN — fully cloud-native, zero downtime.</p>
+                <p className="card-text" style={{color:'#DBC8E6'}}>BERT model hosted on Hugging Face Spaces. FastAPI backend deployed on Hugging Face. React frontend on Vercel CDN — fully cloud-native, zero downtime.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['Hugging Face', 'Vercel', 'Cloud', 'CI/CD'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-violet-400/15 border border-violet-400/25 text-violet-400 font-space font-bold text-xs">{t}</span>
@@ -1699,7 +1699,7 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
     <div className="h-full w-full flex relative overflow-hidden bg-transparent">
       
       {/* 📜 CONVERSATION HISTORY SIDEBAR */}
-      <div className="w-80 border-r border-[#3A7070]/10 bg-white/25 backdrop-blur-md flex flex-col p-6 shrink-0 relative z-30 hidden lg:flex">
+      <div className="w-80 border-r border-[#3A7070]/10 bg-white/78 backdrop-blur-md flex flex-col p-6 shrink-0 relative z-30 hidden lg:flex">
         {/* New Chat Button */}
         <button 
           onClick={handleNewChat} 
@@ -1757,7 +1757,7 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
 
       {/* 💬 MAIN CHAT AREA */}
       <div className="flex-1 flex flex-col relative min-w-0">
-        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md">
+        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/75 backdrop-blur-md">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
                 <KeffiLogo size="w-7 h-7" />
