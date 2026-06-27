@@ -48,6 +48,7 @@ const Mail = (p) => <Icon {...p}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2
 const Heart = (p) => <Icon {...p}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></Icon>;
 const HeartPulse = (p) => <Icon {...p}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M22 12h-4l-3 5-3-10-3 8-2-3H2"/></Icon>;
 const Target = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Icon>;
+const Menu = (p) => <Icon {...p}><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></Icon>;
 const Zap = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
 
 const theme = {
@@ -1424,16 +1425,19 @@ const CameraEmotionTracker = ({ onEmotionDetected, isCameraActive }) => {
 };
 
 // 4.1 Enhanced Chat Page
-const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
-  const [sessions, setSessions] = useState(() => {
-    const saved = localStorage.getItem('keffi_chat_sessions');
-    return saved ? JSON.parse(saved) : [
-      { id: 'session-1', title: 'First Sanctuary Check-in 🌿', date: 'Just now', messages: [] }
-    ];
-  });
-  const [currentSessionId, setCurrentSessionId] = useState(() => {
-    return sessions[0]?.id || 'session-1';
-  });
+const ChatArea = ({ 
+  setGlobalPoints, 
+  globalPoints, 
+  userData,
+  sessions,
+  setSessions,
+  currentSessionId,
+  setCurrentSessionId,
+  handleNewChat,
+  handleDeleteSession,
+  isSidebarOpen,
+  setIsSidebarOpen
+}) => {
 
   const [moodSet, setMoodSet] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -1482,6 +1486,7 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
   // Biofeedback & Camera States
   const [heartRate, setHeartRate] = useState(72);
   const [hasTriggeredPanic, setHasTriggeredPanic] = useState(false);
+  const [showWatchControls, setShowWatchControls] = useState(false);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [visualEmotion, setVisualEmotion] = useState('neutral');
   const recognitionRef = useRef(null);
@@ -1527,35 +1532,6 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
     }
   };
 
-  const handleNewChat = () => {
-    const newId = 'session-' + Date.now();
-    const newSession = {
-      id: newId,
-      title: `New Chat Session ✨`,
-      date: new Date().toLocaleDateString([], { month: 'short', day: 'numeric' }),
-      messages: []
-    };
-    const updatedSessions = [newSession, ...sessions];
-    setSessions(updatedSessions);
-    localStorage.setItem('keffi_chat_sessions', JSON.stringify(updatedSessions));
-    setCurrentSessionId(newId);
-    setMessages([]);
-    setMoodSet(false);
-  };
-
-  const handleDeleteSession = (e, sessionId) => {
-    e.stopPropagation();
-    if (sessions.length <= 1) {
-      alert("You must keep at least one active chat session.");
-      return;
-    }
-    const updated = sessions.filter(s => s.id !== sessionId);
-    setSessions(updated);
-    localStorage.setItem('keffi_chat_sessions', JSON.stringify(updated));
-    if (currentSessionId === sessionId) {
-      setCurrentSessionId(updated[0].id);
-    }
-  };
 
   const handleMoodSelect = (mood) => {
     setMoodSet(true);
@@ -1698,67 +1674,19 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
   return (
     <div className="h-full w-full flex relative overflow-hidden bg-transparent">
       
-      {/* 📜 CONVERSATION HISTORY SIDEBAR */}
-      <div className="w-80 border-r border-[#3A7070]/10 bg-white/78 backdrop-blur-md flex flex-col p-6 shrink-0 relative z-30 hidden lg:flex">
-        {/* New Chat Button */}
-        <button 
-          onClick={handleNewChat} 
-          className="w-full py-4 mb-6 rounded-2xl font-space font-black text-sm tracking-wider flex items-center justify-center gap-2 cursor-pointer bg-gradient-to-r from-[#3A7070] to-[#2C5555] hover:from-[#2C5555] hover:to-[#1e3d3d] text-white shadow-lg glow-teal transition-all hover:-translate-y-0.5 duration-300"
-        >
-          <span className="text-lg">+</span> New Chat
-        </button>
-
-        {/* History Title */}
-        <div className="flex items-center gap-2 text-[10px] font-space font-extrabold text-[#3A7070] uppercase tracking-widest mb-4">
-          <span>🕒 Chat History</span>
-        </div>
-
-        {/* Session List */}
-        <div className="flex-1 overflow-y-auto space-y-3 pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/10 scrollbar-track-transparent">
-          {sessions.map(s => {
-            const isActive = s.id === currentSessionId;
-            return (
-              <div 
-                key={s.id}
-                onClick={() => setCurrentSessionId(s.id)}
-                className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 cursor-pointer group hover:-translate-y-0.5 ${
-                  isActive 
-                    ? 'border-[#3A7070]/30 bg-[#3A7070]/12 text-[#2C5555] font-extrabold shadow-sm' 
-                    : 'border-white/20 bg-white/10 hover:bg-white/35 text-slate-700'
-                }`}
-              >
-                <div className="flex flex-col min-w-0 pr-2">
-                  <span className="text-sm font-space leading-tight truncate">{s.title}</span>
-                  <span className="text-[10px] text-slate-400 font-space mt-1 font-semibold">{s.date}</span>
-                </div>
-                <button 
-                  onClick={(e) => handleDeleteSession(e, s.id)}
-                  className="opacity-0 group-hover:opacity-100 w-7 h-7 rounded-xl hover:bg-red-500/10 hover:text-red-500 text-slate-400 flex items-center justify-center transition-all shrink-0 cursor-pointer"
-                  title="Delete conversation history"
-                >
-                  ✕
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* User Card */}
-        <div className="mt-auto pt-6 border-t border-[#3A7070]/10 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#3A7070]/20 to-[#8FA989]/20 border border-white/40 flex items-center justify-center font-space font-black text-sm text-[#2C5555]">
-            {userData?.name?.slice(0, 2).toUpperCase() || 'US'}
-          </div>
-          <div className="flex flex-col min-w-0">
-            <span className="text-xs font-space font-black text-[#2C5555] truncate">{userData?.name || 'Sanctuary Patient'}</span>
-            <span className="text-[9px] text-[#8FA989] font-space font-bold uppercase tracking-wider">Secure Access</span>
-          </div>
-        </div>
-      </div>
-
       {/* 💬 MAIN CHAT AREA */}
       <div className="flex-1 flex flex-col relative min-w-0">
         <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/75 backdrop-blur-md">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
+              {!isSidebarOpen && (
+                <button 
+                  onClick={() => setIsSidebarOpen(true)} 
+                  className="p-2.5 rounded-xl text-slate-600 hover:text-[#3A7070] glass-card border border-white/30 hover:bg-white/50 transition-all cursor-pointer flex items-center justify-center mr-1 shadow-sm"
+                  title="Open Sidebar Menu"
+                >
+                  <Menu size={18} />
+                </button>
+              )}
               <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
                 <KeffiLogo size="w-7 h-7" />
               </div>
@@ -1770,6 +1698,44 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              {/* Watch Sync BPM Simulator Popover */}
+              <div className="relative">
+                <button 
+                  onClick={() => setShowWatchControls(!showWatchControls)} 
+                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-600 animate-pulse glow-rose' : 'glass-card border border-white/30 text-slate-600 hover:bg-white/50'}`}
+                  title="Simulated Watch Biofeedback"
+                >
+                  <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
+                  <span>{heartRate} BPM</span>
+                </button>
+                
+                {showWatchControls && (
+                  <div className="absolute right-0 top-12 z-50 w-56 p-4 rounded-2xl glass-panel border border-white/30 shadow-xl flex flex-col items-center gap-2 animate-fade-in glow-teal">
+                    <div className="text-[10px] font-space font-extrabold text-[#3A7070] uppercase tracking-widest">
+                      BPM Simulator
+                    </div>
+                    <div className="text-xl font-space font-black text-slate-800">
+                      {heartRate} <span className="text-xs font-bold text-slate-400">BPM</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      min="60" 
+                      max="140" 
+                      value={heartRate} 
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value);
+                        setHeartRate(val);
+                        if (val < 100) setHasTriggeredPanic(false);
+                      }}
+                      className="w-full mt-1 accent-[#3A7070] cursor-pointer"
+                    />
+                    <div className="text-[8px] text-slate-400 text-center leading-tight font-space font-semibold mt-1">
+                      Drag above 110 BPM to trigger somatic panic.
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <button 
                 onClick={() => setIsCameraActive(!isCameraActive)} 
                 className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
@@ -1828,31 +1794,6 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
               </div>
             </div>
           )}
-  
-          {/* Biofeedback Watch Simulator */}
-          <div className={`absolute right-6 top-24 z-30 glass-card border p-4 rounded-3xl shadow-lg flex flex-col items-center gap-2 animate-fade-in hidden md:flex transition-all duration-500 ${heartRate > 100 ? 'border-red-500 animate-glow-pulse glow-rose' : 'border-white/40 glow-teal'}`}>
-            <div className="flex items-center gap-2 text-xs font-space font-bold text-slate-500 uppercase tracking-widest mb-1">
-              <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
-              Watch Sync
-            </div>
-            <div className={`text-3xl font-space font-black ${heartRate > 100 ? 'text-red-500' : 'text-slate-800'}`}>
-              {heartRate} <span className="text-sm font-bold text-slate-400">BPM</span>
-            </div>
-            <input 
-              type="range" 
-              min="60" 
-              max="140" 
-              value={heartRate} 
-              onChange={(e) => {
-                const val = parseInt(e.target.value);
-                setHeartRate(val);
-                if (val < 100) setHasTriggeredPanic(false); // Reset panic if they calm down
-              }}
-              className="w-24 mt-2 accent-[#3A7070] cursor-pointer"
-            />
-            <div className="text-[9px] text-slate-400 mt-1 max-w-[100px] text-center leading-tight font-space font-semibold">Drag above 110 BPM to trigger panic.</div>
-          </div>
-  
           {/* Chat message flow container */}
           <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 relative bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
             {messages.map(m => {
@@ -1909,17 +1850,17 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
           </div>
   
           {/* Input box section */}
-          <div className="p-4 md:p-6 bg-white/25 backdrop-blur-md border-t border-[#3A7070]/10 z-20">
-            <div className="flex gap-2 relative">
-              <button onClick={toggleRecording} className={`p-4 rounded-2xl ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20 glow-rose' : 'glass-card border border-white/30 text-slate-500 hover:text-[#3A7070] hover:bg-white/50 glow-teal'} shadow-sm transition-colors shrink-0 cursor-pointer`}>
+          <div className="px-6 pb-6 bg-transparent z-20 relative shrink-0">
+            <div className="max-w-4xl mx-auto glass-panel border border-white/45 shadow-xl rounded-[2rem] p-3 flex items-center gap-3 backdrop-blur-xl hover:shadow-[0_12px_40px_rgba(58,112,112,0.12)] transition-shadow">
+              <button onClick={toggleRecording} className={`p-4 rounded-2xl transition-all cursor-pointer ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-500 hover:text-[#3A7070] hover:bg-slate-100/30'}`}>
                 <Mic size={20} />
               </button>
               <input 
                 value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                 placeholder={isRecording ? "Listening..." : "Type your feelings safely here..."} 
-                className="flex-1 rounded-2xl glass-input px-5 py-4 text-slate-800 font-space font-semibold text-base focus:ring-2 focus:ring-[#3A7070]/20 shadow-sm transition-all focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)]"
+                className="flex-1 bg-transparent border-none outline-none py-3 text-slate-800 font-space font-semibold text-base placeholder-slate-400 focus:ring-0"
               />
-              <button onClick={() => handleSend()} className="px-6 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-sm shrink-0 cursor-pointer font-space font-extrabold tracking-wider glow-teal">
+              <button onClick={() => handleSend()} className="px-6 py-4 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-md cursor-pointer font-space font-extrabold tracking-wider glow-teal">
                 <Send size={18} />
               </button>
             </div>
@@ -1933,42 +1874,51 @@ const ChatArea = ({ setGlobalPoints, globalPoints, userData }) => {
 };
 
 // 4.2 Peace Log
-const PeaceLog = () => (
+const PeaceLog = ({ isSidebarOpen, setIsSidebarOpen }) => (
   <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+    {/* Ambient Glow Orbs */}
+    <div className="absolute top-10 left-10 w-72 h-72 rounded-full bg-[#3A7070]/8 blur-[80px] pointer-events-none"></div>
+    <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-[#8FA989]/8 blur-[100px] pointer-events-none"></div>
+
     {/* Page Header */}
-    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
-      <div className="flex items-center gap-4">
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/75 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-2 md:gap-4">
+        {!isSidebarOpen && (
+          <button onClick={() => setIsSidebarOpen(true)} className="p-2.5 rounded-xl text-slate-600 hover:text-[#3A7070] glass-card border border-white/30 hover:bg-white/50 transition-all cursor-pointer mr-1 shadow-sm flex items-center justify-center" title="Open Sidebar Menu">
+            <Menu size={18} />
+          </button>
+        )}
         <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
           <span className="text-2xl">📖</span>
         </div>
         <div>
-          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Peace Log</h2>
-          <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Your Emotional Archive</div>
+          <h2 className="text-xl font-raleway font-black bg-gradient-to-r from-[#2C5555] via-[#3A7070] to-[#8FA989] bg-clip-text text-transparent">Peace Log</h2>
+          <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Your Personal Emotional Archive</div>
         </div>
       </div>
     </div>
 
     {/* Content Area */}
-    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 bg-transparent scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8">
         {[
-          { date: 'Today, 10:00 AM', mood: 'Anxious', title: 'Morning Panic', desc: 'Discussed work pressure and did a quick 4-7-8 breathing session.' },
-          { date: 'Yesterday, 9:00 PM', mood: 'Calm', title: 'Night Reflections', desc: 'Used the gratitude jar. Felt significantly calmer before bed.' },
-          { date: '25 April 2026', mood: 'Heavy', title: 'Trauma Processing', desc: 'Keffi guided through severe anxiety. Grounding techniques used.' },
-          { date: '22 April 2026', mood: 'Stressed', title: 'Work Stress', desc: 'Vented about the upcoming presentation. Keffi helped reframe thoughts.' }
+          { date: 'Today, 10:00 AM', mood: 'Anxious', title: 'Morning Panic', desc: 'Discussed work pressure and did a quick 4-7-8 breathing session.', color: 'glow-gold' },
+          { date: 'Yesterday, 9:00 PM', mood: 'Calm', title: 'Night Reflections', desc: 'Used the gratitude jar. Felt significantly calmer before bed.', color: 'glow-emerald' },
+          { date: '25 April 2026', mood: 'Heavy', title: 'Trauma Processing', desc: 'Keffi guided through severe anxiety. Grounding techniques used.', color: 'glow-purple' },
+          { date: '22 April 2026', mood: 'Stressed', title: 'Work Stress', desc: 'Vented about the upcoming presentation. Keffi helped reframe thoughts.', color: 'glow-rose' }
         ].map((log, i) => (
-          <div key={i} style={{animationDelay: `${i * 100}ms`}} className={`p-8 rounded-[2rem] glass-card backdrop-blur-md border border-white/20 shadow-sm hover:border-[#3A7070]/30 transition-all hover:translate-y-[-2px] duration-300 hover:shadow-md cursor-pointer flex flex-col animate-slide-up`}>
+          <div key={i} style={{animationDelay: `${i * 100}ms`}} className={`p-8 rounded-[2.5rem] glass-card backdrop-blur-md border border-white/20 shadow-sm transition-all hover:translate-y-[-4px] duration-300 hover:shadow-lg cursor-pointer flex flex-col animate-slide-up ${log.color}`}>
             <div className="flex justify-between items-center mb-5">
-              <span className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">{log.date}</span>
+              <span className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider uppercase">{log.date}</span>
               <span className={`px-3 py-1.5 rounded-full border text-xs font-space font-extrabold shadow-sm transition-colors ${
-                log.mood === 'Anxious' || log.mood === 'Stressed' ? 'bg-amber-100 border-amber-300 text-amber-700' :
-                log.mood === 'Calm' ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
-                log.mood === 'Heavy' ? 'bg-indigo-100 border-indigo-300 text-indigo-700' :
-                'bg-slate-100 border-slate-300 text-slate-700'
+                log.mood === 'Anxious' || log.mood === 'Stressed' ? 'bg-amber-100/70 border-amber-300 text-amber-700' :
+                log.mood === 'Calm' ? 'bg-emerald-100/70 border-emerald-300 text-emerald-700' :
+                log.mood === 'Heavy' ? 'bg-indigo-100/70 border-indigo-300 text-indigo-700' :
+                'bg-slate-100/70 border-slate-300 text-slate-700'
               }`}>{log.mood}</span>
             </div>
-            <h3 className="text-lg font-raleway font-bold text-slate-800 mb-3">{log.title}</h3>
-            <p className="text-slate-500 leading-relaxed text-sm flex-1 font-space font-medium">{log.desc}</p>
+            <h3 className="text-lg font-raleway font-black text-slate-800 mb-3">{log.title}</h3>
+            <p className="text-slate-500 leading-relaxed text-sm flex-1 font-space font-semibold">{log.desc}</p>
             <div className="mt-6 flex items-center text-[#3A7070] font-space font-extrabold text-sm group tracking-wider">
                Read full log <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform"/>
             </div>
@@ -1980,23 +1930,28 @@ const PeaceLog = () => (
 );
 
 // 4.3 My Journey
-const MyJourney = () => (
+const MyJourney = ({ isSidebarOpen, setIsSidebarOpen }) => (
   <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
     {/* Page Header */}
-    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
-      <div className="flex items-center gap-4">
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/75 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-2 md:gap-4">
+        {!isSidebarOpen && (
+          <button onClick={() => setIsSidebarOpen(true)} className="p-2.5 rounded-xl text-slate-600 hover:text-[#3A7070] glass-card border border-white/30 hover:bg-white/50 transition-all cursor-pointer mr-1 shadow-sm flex items-center justify-center" title="Open Sidebar Menu">
+            <Menu size={18} />
+          </button>
+        )}
         <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
           <span className="text-2xl">📈</span>
         </div>
         <div>
-          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Emotional Landscape</h2>
+          <h2 className="text-xl font-raleway font-black bg-gradient-to-r from-[#2C5555] via-[#3A7070] to-[#8FA989] bg-clip-text text-transparent">Emotional Landscape</h2>
           <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Your Growth Journey</div>
         </div>
       </div>
     </div>
 
     {/* Content Area */}
-    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-8 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-8 min-h-0 bg-transparent scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
       <div className={`w-full h-80 rounded-[2.5rem] glass-card border border-white/30 relative overflow-hidden flex items-end justify-center shadow-inner shrink-0`}>
         <div className="absolute top-8 right-12 w-24 h-24 rounded-full bg-gradient-to-tr from-[#D4A373] to-white blur-md shadow-[0_0_40px_#D4A373]"></div>
         <div className="w-[120%] h-40 bg-[#8FA989] rounded-[100%] absolute -bottom-8 opacity-40 animate-wave-drift"></div>
@@ -2026,7 +1981,7 @@ const MyJourney = () => (
 );
 
 // 4.4 Mind Tools
-const MindTools = () => {
+const MindTools = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const [activeTool, setActiveTool] = useState(null); 
   const [worryText, setWorryText] = useState('');
   const [isBurning, setIsBurning] = useState(false);
@@ -2186,26 +2141,35 @@ const MindTools = () => {
 
   return (
     <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
+      {/* Ambient Glow Orbs */}
+      <div className="absolute top-10 left-10 w-72 h-72 rounded-full bg-[#3A7070]/8 blur-[80px] pointer-events-none"></div>
+      <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-[#8FA989]/8 blur-[100px] pointer-events-none"></div>
+
       {/* Page Header */}
-      <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
-        <div className="flex items-center gap-4">
+      <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/75 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+        <div className="flex items-center gap-2 md:gap-4">
+          {!isSidebarOpen && (
+            <button onClick={() => setIsSidebarOpen(true)} className="p-2.5 rounded-xl text-slate-600 hover:text-[#3A7070] glass-card border border-white/30 hover:bg-white/50 transition-all cursor-pointer mr-1 shadow-sm flex items-center justify-center" title="Open Sidebar Menu">
+              <Menu size={18} />
+            </button>
+          )}
           <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
             <span className="text-2xl">🧘</span>
           </div>
           <div>
-            <h2 className="text-xl font-raleway font-black text-[#2C5555]">Mind Tools Sandbox</h2>
+            <h2 className="text-xl font-raleway font-black bg-gradient-to-r from-[#2C5555] via-[#3A7070] to-[#8FA989] bg-clip-text text-transparent">Mind Tools Sandbox</h2>
             <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Coping Exercises</div>
           </div>
         </div>
       </div>
 
       {/* Grid Content Area */}
-      <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+      <div className="flex-1 overflow-y-auto p-6 md:p-8 bg-transparent scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-8">
           {allTools.map((tool, i) => (
             <div key={tool.id} onClick={() => tool.active ? setActiveTool(tool.id) : null} 
               style={{animationDelay: `${i * 60}ms`}}
-              className={`p-6 rounded-[2rem] glass-card border shadow-sm flex flex-col items-center justify-center gap-4 text-center animate-slide-up transition-all duration-300 ${tool.active ? `${tool.glowClass} hover:scale-105 hover:shadow-md cursor-pointer` : 'opacity-65 border-white/10'} ${tool.locked ? 'cursor-not-allowed opacity-40' : ''}`}>
+              className={`p-6 rounded-[2.5rem] glass-card border shadow-sm flex flex-col items-center justify-center gap-4 text-center animate-slide-up transition-all duration-300 ${tool.active ? `${tool.glowClass} hover:scale-105 hover:shadow-md cursor-pointer` : 'opacity-65 border-white/10'} ${tool.locked ? 'cursor-not-allowed opacity-40' : ''}`}>
               <div className={`w-14 h-14 rounded-2xl bg-white/20 border border-white/15 flex items-center justify-center shadow-sm ${tool.color}`}><tool.icon size={24} /></div>
               <div>
                 <h3 className="font-raleway font-extrabold text-slate-800 text-base mb-1">{tool.title}</h3>
@@ -2220,23 +2184,28 @@ const MindTools = () => {
 };
 
 // 4.5 Rewards
-const Rewards = ({ points }) => (
+const Rewards = ({ points, isSidebarOpen, setIsSidebarOpen }) => (
   <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
     {/* Page Header */}
-    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
-      <div className="flex items-center gap-4">
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/75 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-2 md:gap-4">
+        {!isSidebarOpen && (
+          <button onClick={() => setIsSidebarOpen(true)} className="p-2.5 rounded-xl text-slate-600 hover:text-[#3A7070] glass-card border border-white/30 hover:bg-white/50 transition-all cursor-pointer mr-1 shadow-sm flex items-center justify-center" title="Open Sidebar Menu">
+            <Menu size={18} />
+          </button>
+        )}
         <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
           <span className="text-2xl">🎁</span>
         </div>
         <div>
-          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Rewards</h2>
+          <h2 className="text-xl font-raleway font-black bg-gradient-to-r from-[#2C5555] via-[#3A7070] to-[#8FA989] bg-clip-text text-transparent">Rewards</h2>
           <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Sanctuary Incentives</div>
         </div>
       </div>
     </div>
 
     {/* Content Area */}
-    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col items-center justify-start gap-8 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col items-center justify-start gap-8 min-h-0 bg-transparent scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
       <div className="max-w-2xl w-full p-8 md:p-10 rounded-[2.5rem] glass-card border border-white/20 flex flex-col items-center text-center shadow-sm animate-float glow-teal shrink-0">
         <Gift size={44} className="text-[#D4A373] mb-4 animate-bounce" style={{animationDuration: '3s'}} />
         <h3 className="text-xs font-space font-extrabold text-slate-500 uppercase tracking-widest mb-2">Total Keffi Points</h3>
@@ -2267,23 +2236,28 @@ const Rewards = ({ points }) => (
 );
 
 // 4.6 Friends
-const FriendsSync = () => (
+const FriendsSync = ({ isSidebarOpen, setIsSidebarOpen }) => (
   <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
     {/* Page Header */}
-    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
-      <div className="flex items-center gap-4">
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/75 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-2 md:gap-4">
+        {!isSidebarOpen && (
+          <button onClick={() => setIsSidebarOpen(true)} className="p-2.5 rounded-xl text-slate-600 hover:text-[#3A7070] glass-card border border-white/30 hover:bg-white/50 transition-all cursor-pointer mr-1 shadow-sm flex items-center justify-center" title="Open Sidebar Menu">
+            <Menu size={18} />
+          </button>
+        )}
         <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
           <span className="text-2xl">👥</span>
         </div>
         <div>
-          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Neighbor Sync</h2>
+          <h2 className="text-xl font-raleway font-black bg-gradient-to-r from-[#2C5555] via-[#3A7070] to-[#8FA989] bg-clip-text text-transparent">Neighbor Sync</h2>
           <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Collective Emotional Wave</div>
         </div>
       </div>
     </div>
 
     {/* Content Area */}
-    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col items-center justify-start gap-8 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col items-center justify-start gap-8 min-h-0 bg-transparent scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
       <div className="text-center shrink-0">
         <p className="text-slate-600 text-sm md:text-base font-space font-semibold">You are not alone. See the abstract mood of people in your network.</p>
       </div>
@@ -2312,23 +2286,28 @@ const FriendsSync = () => (
 );
 
 // 4.7 Profile
-const ProfileVault = ({ userData }) => (
+const ProfileVault = ({ userData, isSidebarOpen, setIsSidebarOpen }) => (
   <div className="h-full w-full flex flex-col relative overflow-hidden animate-fade-in bg-transparent">
     {/* Page Header */}
-    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/40 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
-      <div className="flex items-center gap-4">
+    <div className="px-6 md:px-8 py-5 border-b border-[#3A7070]/10 bg-white/75 backdrop-blur-md flex justify-between items-center z-20 shrink-0">
+      <div className="flex items-center gap-2 md:gap-4">
+        {!isSidebarOpen && (
+          <button onClick={() => setIsSidebarOpen(true)} className="p-2.5 rounded-xl text-slate-600 hover:text-[#3A7070] glass-card border border-white/30 hover:bg-white/50 transition-all cursor-pointer mr-1 shadow-sm flex items-center justify-center" title="Open Sidebar Menu">
+            <Menu size={18} />
+          </button>
+        )}
         <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
           <span className="text-2xl">👤</span>
         </div>
         <div>
-          <h2 className="text-xl font-raleway font-black text-[#2C5555]">Identity Vault</h2>
+          <h2 className="text-xl font-raleway font-black bg-gradient-to-r from-[#2C5555] via-[#3A7070] to-[#8FA989] bg-clip-text text-transparent">Identity Vault</h2>
           <div className="text-xs text-[#8FA989] font-space font-extrabold tracking-wider">Your Encrypted Profile</div>
         </div>
       </div>
     </div>
 
     {/* Content Area */}
-    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col items-center justify-start gap-6 min-h-0 bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+    <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col items-center justify-start gap-6 min-h-0 bg-transparent scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
       <div className="max-w-2xl w-full p-8 md:p-10 rounded-[2.5rem] glass-card border border-white/20 shadow-lg animate-scale-up glow-teal shrink-0 mb-8">
         <div className="flex flex-col items-center mb-8">
           <div className="w-20 h-20 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-[#3A7070] mb-4 shadow-sm">
@@ -2369,6 +2348,45 @@ const PatientDashboard = ({ setView, userData }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
 
+  const [sessions, setSessions] = useState(() => {
+    const saved = localStorage.getItem('keffi_chat_sessions');
+    return saved ? JSON.parse(saved) : [
+      { id: 'session-1', title: 'First Sanctuary Check-in 🌿', date: 'Just now', messages: [] }
+    ];
+  });
+  const [currentSessionId, setCurrentSessionId] = useState(() => {
+    return sessions[0]?.id || 'session-1';
+  });
+
+  const handleNewChat = () => {
+    const newId = 'session-' + Date.now();
+    const newSession = {
+      id: newId,
+      title: `New Chat Session ✨`,
+      date: new Date().toLocaleDateString([], { month: 'short', day: 'numeric' }),
+      messages: []
+    };
+    const updatedSessions = [newSession, ...sessions];
+    setSessions(updatedSessions);
+    localStorage.setItem('keffi_chat_sessions', JSON.stringify(updatedSessions));
+    setCurrentSessionId(newId);
+    setActivePage('chat');
+  };
+
+  const handleDeleteSession = (e, sessionId) => {
+    e.stopPropagation();
+    if (sessions.length <= 1) {
+      alert("You must keep at least one active chat session.");
+      return;
+    }
+    const updated = sessions.filter(s => s.id !== sessionId);
+    setSessions(updated);
+    localStorage.setItem('keffi_chat_sessions', JSON.stringify(updated));
+    if (currentSessionId === sessionId) {
+      setCurrentSessionId(updated[0].id);
+    }
+  };
+
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
@@ -2391,15 +2409,29 @@ const PatientDashboard = ({ setView, userData }) => {
   ];
 
   const renderContent = () => {
+    const props = { 
+      isSidebarOpen, 
+      setIsSidebarOpen, 
+      setGlobalPoints, 
+      globalPoints, 
+      userData, 
+      points: globalPoints, 
+      sessions, 
+      setSessions, 
+      currentSessionId, 
+      setCurrentSessionId, 
+      handleNewChat, 
+      handleDeleteSession 
+    };
     switch(activePage) {
-      case 'chat': return <ChatArea setGlobalPoints={setGlobalPoints} globalPoints={globalPoints} userData={userData} />;
-      case 'history': return <PeaceLog />;
-      case 'journey': return <MyJourney />;
-      case 'tools': return <MindTools />;
-      case 'rewards': return <Rewards points={globalPoints} />;
-      case 'friends': return <FriendsSync />;
-      case 'account': return <ProfileVault userData={userData} />;
-      default: return <ChatArea setGlobalPoints={setGlobalPoints} globalPoints={globalPoints} userData={userData} />;
+      case 'chat': return <ChatArea {...props} />;
+      case 'history': return <PeaceLog {...props} />;
+      case 'journey': return <MyJourney {...props} />;
+      case 'tools': return <MindTools {...props} />;
+      case 'rewards': return <Rewards {...props} />;
+      case 'friends': return <FriendsSync {...props} />;
+      case 'account': return <ProfileVault {...props} />;
+      default: return <ChatArea {...props} />;
     }
   };
 
@@ -2412,7 +2444,7 @@ const PatientDashboard = ({ setView, userData }) => {
       )}
 
       {/* Sleek Floating Sidebar */}
-      <div className={`${isSidebarOpen ? 'w-64 md:w-72 translate-x-0' : 'w-64 md:w-0 -translate-x-full md:translate-x-0 md:opacity-0'} absolute md:relative z-30 transition-all duration-300 h-[calc(100vh-2rem)] md:h-full left-4 md:left-0 top-4 md:top-0 rounded-[2.5rem] glass-panel p-6 shrink-0 glow-teal flex flex-col overflow-hidden hover:shadow-[0_20px_50px_rgba(13,112,112,0.18)]`}>
+      <div className={`${isSidebarOpen ? 'w-64 md:w-72 p-6 opacity-100 pointer-events-auto' : 'w-0 p-0 opacity-0 pointer-events-none border-none'} absolute md:relative z-30 transition-all duration-300 h-[calc(100vh-2rem)] md:h-full left-4 md:left-0 top-4 md:top-0 rounded-[2.5rem] glass-panel shrink-0 glow-teal flex flex-col overflow-hidden hover:shadow-[0_20px_50px_rgba(13,112,112,0.18)]`}>
         {/* Light Green Animated Background */}
         <div className="absolute -top-[10%] -left-[10%] w-[120%] h-[50%] bg-[#8FA989] rounded-full mix-blend-multiply blur-[80px] opacity-[0.12] animate-pulse pointer-events-none z-0" style={{animationDuration: '4s'}}></div>
         <div className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[50%] bg-[#EAF4F0] rounded-full mix-blend-multiply blur-[80px] opacity-40 pointer-events-none z-0" style={{animation: 'pulse 8s infinite alternate'}}></div>
@@ -2422,6 +2454,13 @@ const PatientDashboard = ({ setView, userData }) => {
             <div className="flex items-center gap-3 cursor-pointer mb-8" onClick={() => setView('landing')}>
                <KeffiLogo size="w-8 h-8" />
                <h1 className="text-2xl font-raleway font-black text-[#2C5555] tracking-tight">Keffi AI</h1>
+               <button 
+                 onClick={(e) => { e.stopPropagation(); setIsSidebarOpen(false); }} 
+                 className="ml-auto p-1.5 rounded-xl hover:bg-[#3A7070]/10 text-[#3A7070] transition-colors cursor-pointer"
+                 title="Collapse Menu"
+               >
+                 ✕
+               </button>
             </div>
             
             <div className="flex-1 space-y-2 overflow-y-auto scrollbar-hide">
@@ -2447,6 +2486,49 @@ const PatientDashboard = ({ setView, userData }) => {
                   </button>
                 )
               })}
+
+              {/* Chat history inside sidebar, visible when active page is chat */}
+              {activePage === 'chat' && sessions.length > 0 && (
+                <div className="mt-8 pt-6 border-t border-[#3A7070]/10 space-y-3">
+                  <div className="flex items-center justify-between text-[10px] font-space font-extrabold text-[#3A7070] uppercase tracking-widest px-2 mb-2">
+                    <span>🕒 History</span>
+                    <button 
+                      onClick={handleNewChat}
+                      className="text-xs hover:text-[#2C5555] font-black cursor-pointer"
+                      title="Start fresh conversation"
+                    >
+                      + New
+                    </button>
+                  </div>
+                  <div className="max-h-48 overflow-y-auto space-y-2 pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/15 scrollbar-track-transparent">
+                    {sessions.map(s => {
+                      const isActive = s.id === currentSessionId;
+                      return (
+                        <div 
+                          key={s.id}
+                          onClick={() => setCurrentSessionId(s.id)}
+                          className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all duration-300 cursor-pointer group hover:-translate-y-0.5 ${
+                            isActive 
+                              ? 'border-[#3A7070]/30 bg-[#3A7070]/12 text-[#2C5555] font-extrabold shadow-sm' 
+                              : 'border-white/10 bg-white/10 hover:bg-white/35 text-slate-700'
+                          }`}
+                        >
+                          <div className="flex flex-col min-w-0 pr-2">
+                            <span className="text-[12px] font-space leading-tight truncate">{s.title}</span>
+                          </div>
+                          <button 
+                            onClick={(e) => handleDeleteSession(e, s.id)}
+                            className="opacity-0 group-hover:opacity-100 w-5 h-5 rounded-lg hover:bg-red-500/10 hover:text-red-500 text-slate-400 flex items-center justify-center transition-all shrink-0 cursor-pointer text-[10px]"
+                            title="Delete history"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="mt-6 px-4 py-4 rounded-[1.2rem] glass-card border border-white/30 font-space font-extrabold text-xs text-[#D4A373] flex items-center justify-center gap-2 shrink-0 tracking-wider">
@@ -2462,15 +2544,6 @@ const PatientDashboard = ({ setView, userData }) => {
 
       {/* Main Content Area */}
       <div className="flex-1 h-full w-full min-w-0 bg-transparent relative flex flex-col overflow-hidden">
-        {(!isSidebarOpen || isMobile) && (
-          <button 
-            onClick={() => setIsSidebarOpen(true)}
-            className="absolute top-4 left-4 z-35 p-2.5 text-slate-600 hover:text-[#3A7070] glass-card border border-white/20 rounded-xl hover:bg-white/50 hover:-translate-y-0.5 transition-all cursor-pointer shadow-md"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
-        )}
-        
         {/* Render Active View in unified card */}
         <div className="flex-1 rounded-[2.5rem] glass-panel glow-teal flex flex-col overflow-hidden shadow-2xl relative h-full w-full">
           {renderContent()}
