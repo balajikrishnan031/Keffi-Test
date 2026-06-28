@@ -364,3 +364,13 @@ h1, h2, h3, h4, h5, h6 {
   transform: rotate(-1deg);
   letter-spacing: normal;
 }
+
+.font-cursive {
+  font-family: 'Dancing Script', cursive !important;
+}
+
+.cursive-accent-lg {
+  font-family: 'Dancing Script', cursive !important;
+  font-weight: 700;
+  display: inline-block;
+}
