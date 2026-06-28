@@ -272,7 +272,7 @@ const LandingPage = ({ setView }) => {
                 letterSpacing:'-0.03em',
                 lineHeight:1.2
               }}>
-                Bridging the <span style={{fontFamily:"'Playball',cursive", fontSize:'1.25em', color:'#10B981', display:'inline-block', transform:'rotate(-1deg)', textShadow:'0 0 16px rgba(16,185,129,0.25)'}}>Invisible Gap</span> in Mental Healthcare
+                Bridging the <span style={{fontFamily:"'Dancing Script',cursive", fontWeight: 700, fontSize:'1.35em', color:'#10B981', display:'inline-block', transform:'rotate(-1.5deg)', textShadow:'0 0 16px rgba(16,185,129,0.3)'}}>Invisible Gap</span> in Mental Healthcare
               </p>
 
               {/* Description - Scientific explanation of Keffi meaning */}
@@ -498,7 +498,7 @@ const LandingPage = ({ setView }) => {
                   <Shield size={14} /> Global Impact & Tragic Incidents
                 </div>
                 <h3 className="text-3xl lg:text-4xl font-poppins font-black text-slate-900 mb-6">
-                  The Cost of Silence: Real-World Tragedies
+                  The <span style={{fontFamily: "'Dancing Script', cursive", fontWeight: 700, color: '#E11D48', fontSize: '1.25em', display: 'inline-block', transform: 'rotate(-0.5deg)'}}>Cost of Silence</span>: Real-World Tragedies
                 </h3>
                 <p className="text-[#475569] font-medium leading-relaxed">
                   Mental health conditions are not just numbers on a screen; they represent severe, real-world crises that lead to devastating losses of life and human potential.
@@ -582,7 +582,7 @@ const LandingPage = ({ setView }) => {
                 <BookOpen size={14} /> Evidence-Based Foundations
               </div>
               <h3 className="text-3xl lg:text-4xl font-poppins font-black text-[#0F172A] mb-6">
-                Clinical Research & Psychological Models
+                <span style={{fontFamily: "'Dancing Script', cursive", fontWeight: 700, color: '#0D7070', fontSize: '1.25em', display: 'inline-block', transform: 'rotate(-0.5deg)'}} className="mr-1">Clinical Research</span> & Psychological Models
               </h3>
               <p className="text-slate-600 font-medium max-w-3xl mx-auto mb-16 leading-relaxed">
                 Keffi's emotional intelligence engine is grounded in peer-reviewed psychotherapeutic frameworks. We translate evidence-based methods into continuous digital support.
@@ -679,7 +679,7 @@ const LandingPage = ({ setView }) => {
                 <Sparkles size={12} /> Project Overview
               </div>
               <h2 className="text-4xl md:text-5xl font-raleway font-black text-slate-800 mb-4 tracking-tight">
-                The <span className="animate-pulse-slow" style={{fontFamily: "'Playball', cursive", color: '#0A3535', fontSize: '1.25em', display: 'inline-block', transform: 'rotate(-0.5deg)'}}>Keffi AI</span> <span style={{fontFamily: "'Playball', cursive", color: '#1B7A7A', fontSize: '1.25em', display: 'inline-block'}}>Architecture</span>
+                The <span className="animate-pulse-slow" style={{fontFamily: "'Dancing Script', cursive", fontWeight: 700, color: '#0A3535', fontSize: '1.35em', display: 'inline-block', transform: 'rotate(-1.5deg)'}}>Keffi AI</span> <span style={{fontFamily: "'Dancing Script', cursive", fontWeight: 700, color: '#1B7A7A', fontSize: '1.35em', display: 'inline-block'}}>Architecture</span>
               </h2>
               <p className="p-text max-w-2xl mx-auto text-slate-650 font-medium">
                 A full-stack, production-ready mental health platform built with modern AI and cloud infrastructure — designed for real clinical impact.
@@ -862,7 +862,7 @@ const LandingPage = ({ setView }) => {
             
             {/* Creator 1: Balaji P */}
             <div className="flex flex-col items-center">
-              <h4 className="select-none mb-1" style={{fontFamily: "'Playball', cursive", color: '#0A3535', fontSize: '2.2rem', fontWeight: 'bold'}}>Balaji P</h4>
+              <h4 className="select-none mb-1" style={{fontFamily: "'Dancing Script', cursive", color: '#0A3535', fontSize: '2.6rem', fontWeight: 'bold'}}>Balaji P</h4>
               <p className="font-inter text-slate-700 text-sm font-semibold max-w-[280px] leading-relaxed text-center mb-6">
                 Passionate developer building conversational AI logic, custom n8n routes, and full-stack responsive web platforms.
               </p>
@@ -882,7 +882,7 @@ const LandingPage = ({ setView }) => {
 
             {/* Creator 2: Madhumathi S */}
             <div className="flex flex-col items-center">
-              <h4 className="select-none mb-1" style={{fontFamily: "'Playball', cursive", color: '#0A3535', fontSize: '2.2rem', fontWeight: 'bold'}}>Madhumathi S</h4>
+              <h4 className="select-none mb-1" style={{fontFamily: "'Dancing Script', cursive", color: '#0A3535', fontSize: '2.6rem', fontWeight: 'bold'}}>Madhumathi S</h4>
               <p className="font-inter text-slate-700 text-sm font-semibold max-w-[280px] leading-relaxed text-center mb-6">
                 Lead researcher designing clinical safety protocols, visual color palettes, and intuitive user experiences.
               </p>
@@ -902,7 +902,7 @@ const LandingPage = ({ setView }) => {
 
             {/* Creator 3: Malini V */}
             <div className="flex flex-col items-center">
-              <h4 className="select-none mb-1" style={{fontFamily: "'Playball', cursive", color: '#0A3535', fontSize: '2.2rem', fontWeight: 'bold'}}>Malini V</h4>
+              <h4 className="select-none mb-1" style={{fontFamily: "'Dancing Script', cursive", color: '#0A3535', fontSize: '2.6rem', fontWeight: 'bold'}}>Malini V</h4>
               <p className="font-inter text-slate-700 text-sm font-semibold max-w-[280px] leading-relaxed text-center mb-6">
                 Backend engineer integrating cloud databases, automated notification services, and real-time dashboard analytics.
               </p>
