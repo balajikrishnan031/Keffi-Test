@@ -667,21 +667,21 @@ const LandingPage = ({ setView }) => {
 
         {/* ─────────── PROJECT OVERVIEW / TECH STACK SECTION ─────────── */}
         <section className="scroll-zoom-section w-full py-28 relative overflow-hidden bg-transparent">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0A1A1A] via-[#0E2626] to-[#061414]" />
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#3A7070]/15 rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8FA989]/10 rounded-full blur-[100px]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#DCF0EC]/35 via-white/20 to-[#E4F5F1]/35 z-0" />
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#3A7070]/5 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8FA989]/5 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="max-w-[1280px] mx-auto px-6 lg:px-16 relative z-10">
 
             {/* Header */}
             <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3A7070]/20 border border-[#3A7070]/30 text-[#8FD4C8] font-space font-bold text-xs tracking-[0.18em] uppercase mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/25 text-[#3A7070] font-space font-bold text-xs tracking-[0.18em] uppercase mb-6">
                 <Sparkles size={12} /> Project Overview
               </div>
-              <h2 className="text-4xl md:text-5xl font-raleway font-black text-[#F0FAF8] mb-4 tracking-tight">
-                The <span className="cursive-accent-lg text-gradient-aurora" style={{fontFamily: "'Dancing Script', cursive", fontStyle: "italic", fontSize: "1.1em"}}>Keffi AI</span> <span className="font-cursive text-gradient-teal" style={{fontSize: "1.15em"}}>Architecture</span>
+              <h2 className="text-4xl md:text-5xl font-raleway font-black text-slate-800 mb-4 tracking-tight">
+                The <span className="cursive-accent-lg text-gradient-aurora animate-pulse-slow" style={{fontFamily: "'Dancing Script', cursive", fontStyle: "italic", fontSize: "1.1em"}}>Keffi AI</span> <span className="font-cursive text-gradient-teal" style={{fontSize: "1.15em"}}>Architecture</span>
               </h2>
-              <p className="p-text max-w-2xl mx-auto" style={{color:'#8FBFB8'}}>
+              <p className="p-text max-w-2xl mx-auto text-slate-650 font-medium">
                 A full-stack, production-ready mental health platform built with modern AI and cloud infrastructure — designed for real clinical impact.
               </p>
             </div>
@@ -690,121 +690,121 @@ const LandingPage = ({ setView }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
 
               {/* Card 1 - AI Core */}
-              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-teal">
-                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-[#3A7070]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/45 backdrop-blur-lg border border-white/65 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:bg-white/70 cursor-default glow-teal">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-[#3A7070]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-[#3A7070]/20 flex items-center justify-center text-[#5EC4BC]">
+                  <div className="w-12 h-12 rounded-2xl bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070]">
                     <Brain size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#8FD4C8] uppercase tracking-wider">AI Core</p>
-                    <h4 className="font-raleway font-black text-xl text-[#F0FAF8]">BERT + Gemini</h4>
+                    <p className="font-space text-xs font-bold text-[#3A7070] uppercase tracking-wider">AI Core</p>
+                    <h4 className="font-raleway font-black text-xl text-[#2C5555]">BERT + Gemini</h4>
                   </div>
                 </div>
-                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#C0D5D2]/85">Custom fine-tuned BERT model classifies 96 emotional states. Google Gemini Pro powers empathetic, context-aware conversational responses using 7 therapeutic modes.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-slate-600">Custom fine-tuned BERT model classifies 96 emotional states. Google Gemini Pro powers empathetic, context-aware conversational responses using 7 therapeutic modes.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['BERT', 'Gemini Pro', '96 States', 'NLP'].map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-[#3A7070]/20 border border-[#3A7070]/30 text-[#5EC4BC] font-space font-bold text-xs">{t}</span>
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-[#3A7070]/10 border border-[#3A7070]/20 text-[#2C5555] font-space font-bold text-xs">{t}</span>
                   ))}
                 </div>
               </div>
 
               {/* Card 2 - Memory */}
-              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-gold">
-                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-amber-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/45 backdrop-blur-lg border border-white/65 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:bg-white/70 cursor-default glow-gold">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-500/15 flex items-center justify-center text-amber-400">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-600">
                     <Database size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#F5C070] uppercase tracking-wider">Memory Layer</p>
-                    <h4 className="font-raleway font-black text-xl text-[#F5DFA0]">Pinecone Vector DB</h4>
+                    <p className="font-space text-xs font-bold text-amber-600 uppercase tracking-wider">Memory Layer</p>
+                    <h4 className="font-raleway font-black text-xl text-amber-750">Pinecone Vector DB</h4>
                   </div>
                 </div>
-                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#E3D5C5]/85">Semantic vector memory stores and retrieves patient emotional history, enabling truly personalized, context-aware conversations that improve over time.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-slate-600">Semantic vector memory stores and retrieves patient emotional history, enabling truly personalized, context-aware conversations that improve over time.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['Pinecone', 'Embeddings', 'Vector Search', 'Memory'].map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/25 text-amber-400 font-space font-bold text-xs">{t}</span>
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-700 font-space font-bold text-xs">{t}</span>
                   ))}
                 </div>
               </div>
 
               {/* Card 3 - Automation */}
-              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-rose">
-                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-rose-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/45 backdrop-blur-lg border border-white/65 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:bg-white/70 cursor-default glow-rose">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-rose-500/15 flex items-center justify-center text-rose-450">
+                  <div className="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center text-rose-600">
                     <Shield size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#F472B6] uppercase tracking-wider">Safety Automation</p>
-                    <h4 className="font-raleway font-black text-xl text-[#FFBAB8]">n8n Workflows</h4>
+                    <p className="font-space text-xs font-bold text-rose-650 uppercase tracking-wider">Safety Automation</p>
+                    <h4 className="font-raleway font-black text-xl text-rose-750">n8n Workflows</h4>
                   </div>
                 </div>
-                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#E2C8C8]/85">n8n orchestrates real-time crisis detection pipelines. When suicidal ideation or severe distress is detected, automated SOS alerts notify emergency contacts instantly.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-slate-600">n8n orchestrates real-time crisis detection pipelines. When suicidal ideation or severe distress is detected, automated SOS alerts notify emergency contacts instantly.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['n8n', 'Crisis SOS', 'WHO Protocol', 'Automation'].map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-rose-500/15 border border-rose-500/25 text-rose-400 font-space font-bold text-xs">{t}</span>
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-700 font-space font-bold text-xs">{t}</span>
                   ))}
                 </div>
               </div>
 
               {/* Card 4 - Backend */}
-              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-emerald">
-                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-emerald-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/45 backdrop-blur-lg border border-white/65 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:bg-white/70 cursor-default glow-emerald">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 flex items-center justify-center text-emerald-450">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-600">
                     <Zap size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#34D399] uppercase tracking-wider">Backend API</p>
-                    <h4 className="font-raleway font-black text-xl text-[#AAFFC4]">FastAPI + Python</h4>
+                    <p className="font-space text-xs font-bold text-emerald-650 uppercase tracking-wider">Backend API</p>
+                    <h4 className="font-raleway font-black text-xl text-emerald-750">FastAPI + Python</h4>
                   </div>
                 </div>
-                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#C8E2D0]/85">High-performance async REST API with clinical routers for patient sessions, MHQ scoring, doctor dashboards, and real-time mood tracking analytics.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-slate-600">High-performance async REST API with clinical routers for patient sessions, MHQ scoring, doctor dashboards, and real-time mood tracking analytics.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['FastAPI', 'Python', 'REST API', 'Async'].map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 font-space font-bold text-xs">{t}</span>
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 font-space font-bold text-xs">{t}</span>
                   ))}
                 </div>
               </div>
 
               {/* Card 5 - Frontend */}
-              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-teal">
-                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-blue-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/45 backdrop-blur-lg border border-white/65 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:bg-white/70 cursor-default glow-teal">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-blue-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-[#3A7070]/20 flex items-center justify-center text-[#5EC4BC]">
+                  <div className="w-12 h-12 rounded-2xl bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070]">
                     <Activity size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#8FD4C8] uppercase tracking-wider">Frontend</p>
-                    <h4 className="font-raleway font-black text-xl text-[#A8C4FF]">React + Vite + Tailwind</h4>
+                    <p className="font-space text-xs font-bold text-[#3A7070] uppercase tracking-wider">Frontend</p>
+                    <h4 className="font-raleway font-black text-xl text-[#2C5555]">React + Vite + Tailwind</h4>
                   </div>
                 </div>
-                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#C2D0E6]/85">Glassmorphism UI with animated components, real-time mood charts, doctor analytics dashboard, voice input, and a fully responsive design for all devices.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-slate-600">Glassmorphism UI with animated components, real-time mood charts, doctor analytics dashboard, voice input, and a fully responsive design for all devices.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['React 18', 'Vite', 'Tailwind', 'Recharts'].map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-[#3A7070]/20 border border-[#3A7070]/30 text-blue-400 font-space font-bold text-xs">{t}</span>
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-[#3A7070]/10 border border-[#3A7070]/20 text-[#2C5555] font-space font-bold text-xs">{t}</span>
                   ))}
                 </div>
               </div>
 
               {/* Card 6 - Deployment */}
-              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-purple">
-                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-violet-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/45 backdrop-blur-lg border border-white/65 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1.5 hover:bg-white/70 cursor-default glow-purple">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-violet-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-violet-400/15 flex items-center justify-center text-violet-400">
+                  <div className="w-12 h-12 rounded-2xl bg-violet-400/10 flex items-center justify-center text-violet-650">
                     <Target size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#C084FC] uppercase tracking-wider">Deployment</p>
-                    <h4 className="font-raleway font-black text-xl text-[#D4AAFF]">Hugging Face + Vercel</h4>
+                    <p className="font-space text-xs font-bold text-violet-650 uppercase tracking-wider">Deployment</p>
+                    <h4 className="font-raleway font-black text-xl text-violet-750">Hugging Face + Vercel</h4>
                   </div>
                 </div>
-                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#DBC8E6]/85">BERT model hosted on Hugging Face Spaces. FastAPI backend deployed on Hugging Face. React frontend on Vercel CDN — fully cloud-native, zero downtime.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-slate-600">BERT model hosted on Hugging Face Spaces. FastAPI backend deployed on Hugging Face. React frontend on Vercel CDN — fully cloud-native, zero downtime.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['Hugging Face', 'Vercel', 'Cloud', 'CI/CD'].map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-violet-400/15 border border-violet-400/25 text-[#C084FC] font-space font-bold text-xs">{t}</span>
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-700 font-space font-bold text-xs">{t}</span>
                   ))}
                 </div>
               </div>
