@@ -272,7 +272,7 @@ const LandingPage = ({ setView }) => {
                 letterSpacing:'-0.03em',
                 lineHeight:1.2
               }}>
-                Bridging the <span style={{fontFamily:"'Dancing Script',cursive", fontSize:'1.25em', color:'#10B981', display:'inline-block', transform:'rotate(-1.5deg)', textShadow:'0 0 16px rgba(16,185,129,0.3)'}}>Invisible Gap</span> in Mental Healthcare
+                Bridging the <span style={{fontFamily:"'Playball',cursive", fontSize:'1.25em', color:'#10B981', display:'inline-block', transform:'rotate(-1deg)', textShadow:'0 0 16px rgba(16,185,129,0.25)'}}>Invisible Gap</span> in Mental Healthcare
               </p>
 
               {/* Description - Scientific explanation of Keffi meaning */}
@@ -679,7 +679,7 @@ const LandingPage = ({ setView }) => {
                 <Sparkles size={12} /> Project Overview
               </div>
               <h2 className="text-4xl md:text-5xl font-raleway font-black text-slate-800 mb-4 tracking-tight">
-                The <span className="cursive-accent-lg text-gradient-aurora animate-pulse-slow" style={{fontFamily: "'Dancing Script', cursive", fontStyle: "italic", fontSize: "1.1em"}}>Keffi AI</span> <span className="font-cursive text-gradient-teal" style={{fontSize: "1.15em"}}>Architecture</span>
+                The <span className="animate-pulse-slow" style={{fontFamily: "'Playball', cursive", color: '#0A3535', fontSize: '1.25em', display: 'inline-block', transform: 'rotate(-0.5deg)'}}>Keffi AI</span> <span style={{fontFamily: "'Playball', cursive", color: '#1B7A7A', fontSize: '1.25em', display: 'inline-block'}}>Architecture</span>
               </h2>
               <p className="p-text max-w-2xl mx-auto text-slate-650 font-medium">
                 A full-stack, production-ready mental health platform built with modern AI and cloud infrastructure — designed for real clinical impact.
@@ -697,7 +697,7 @@ const LandingPage = ({ setView }) => {
                     <Brain size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#3A7070] uppercase tracking-wider">AI Core</p>
+                    <p className="font-space text-xs font-bold text-[#0A3535] uppercase tracking-wider">AI Core</p>
                     <h4 className="font-raleway font-black text-xl text-[#2C5555]">BERT + Gemini</h4>
                   </div>
                 </div>
@@ -717,7 +717,7 @@ const LandingPage = ({ setView }) => {
                     <Database size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-amber-600 uppercase tracking-wider">Memory Layer</p>
+                    <p className="font-space text-xs font-bold text-amber-800 uppercase tracking-wider">Memory Layer</p>
                     <h4 className="font-raleway font-black text-xl text-amber-750">Pinecone Vector DB</h4>
                   </div>
                 </div>
@@ -737,7 +737,7 @@ const LandingPage = ({ setView }) => {
                     <Shield size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-rose-650 uppercase tracking-wider">Safety Automation</p>
+                    <p className="font-space text-xs font-bold text-rose-800 uppercase tracking-wider">Safety Automation</p>
                     <h4 className="font-raleway font-black text-xl text-rose-750">n8n Workflows</h4>
                   </div>
                 </div>
@@ -757,7 +757,7 @@ const LandingPage = ({ setView }) => {
                     <Zap size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-emerald-650 uppercase tracking-wider">Backend API</p>
+                    <p className="font-space text-xs font-bold text-emerald-800 uppercase tracking-wider">Backend API</p>
                     <h4 className="font-raleway font-black text-xl text-emerald-750">FastAPI + Python</h4>
                   </div>
                 </div>
@@ -777,7 +777,7 @@ const LandingPage = ({ setView }) => {
                     <Activity size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#3A7070] uppercase tracking-wider">Frontend</p>
+                    <p className="font-space text-xs font-bold text-[#0A3535] uppercase tracking-wider">Frontend</p>
                     <h4 className="font-raleway font-black text-xl text-[#2C5555]">React + Vite + Tailwind</h4>
                   </div>
                 </div>
@@ -797,7 +797,7 @@ const LandingPage = ({ setView }) => {
                     <Target size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-violet-650 uppercase tracking-wider">Deployment</p>
+                    <p className="font-space text-xs font-bold text-violet-850 uppercase tracking-wider">Deployment</p>
                     <h4 className="font-raleway font-black text-xl text-violet-750">Hugging Face + Vercel</h4>
                   </div>
                 </div>
@@ -862,15 +862,10 @@ const LandingPage = ({ setView }) => {
             
             {/* Creator 1: Balaji P */}
             <div className="flex flex-col items-center">
-              <h4 className="font-raleway font-black text-2xl text-[#2C5555] mb-1 select-none">Balaji P</h4>
-              <p className="font-space font-extrabold text-[11px] text-[#3A7070] uppercase tracking-widest mb-4">AI & Full-Stack Developer</p>
-              
-              {/* Expertise Badges */}
-              <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-[240px]">
-                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#3A7070]/10 text-[#2C5555]">NLP Architect</span>
-                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#3A7070]/10 text-[#2C5555]">Vite & React</span>
-                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#8FA989]/10 text-[#2C5555]">n8n Workflow</span>
-              </div>
+              <h4 className="select-none mb-1" style={{fontFamily: "'Playball', cursive", color: '#0A3535', fontSize: '2.2rem', fontWeight: 'bold'}}>Balaji P</h4>
+              <p className="font-inter text-slate-700 text-sm font-semibold max-w-[280px] leading-relaxed text-center mb-6">
+                Passionate developer building conversational AI logic, custom n8n routes, and full-stack responsive web platforms.
+              </p>
 
               <div className="flex items-center gap-4 mt-auto">
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070] hover:bg-[#3A7070] hover:text-white transition-colors" title="LinkedIn Profile">
@@ -887,15 +882,10 @@ const LandingPage = ({ setView }) => {
 
             {/* Creator 2: Madhumathi S */}
             <div className="flex flex-col items-center">
-              <h4 className="font-raleway font-black text-2xl text-[#2C5555] mb-1 select-none">Madhumathi S</h4>
-              <p className="font-space font-extrabold text-[11px] text-amber-600 uppercase tracking-widest mb-4">UI/UX & Clinical Researcher</p>
-              
-              {/* Expertise Badges */}
-              <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-[240px]">
-                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-amber-500/10 text-amber-700">UI/UX Design</span>
-                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-amber-500/10 text-amber-700">Clinical Safety</span>
-                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#8FA989]/10 text-amber-750">Color Therapy</span>
-              </div>
+              <h4 className="select-none mb-1" style={{fontFamily: "'Playball', cursive", color: '#0A3535', fontSize: '2.2rem', fontWeight: 'bold'}}>Madhumathi S</h4>
+              <p className="font-inter text-slate-700 text-sm font-semibold max-w-[280px] leading-relaxed text-center mb-6">
+                Lead researcher designing clinical safety protocols, visual color palettes, and intuitive user experiences.
+              </p>
 
               <div className="flex items-center gap-4 mt-auto">
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600 hover:bg-amber-500 hover:text-white transition-colors" title="LinkedIn Profile">
@@ -912,15 +902,10 @@ const LandingPage = ({ setView }) => {
 
             {/* Creator 3: Malini V */}
             <div className="flex flex-col items-center">
-              <h4 className="font-raleway font-black text-2xl text-[#2C5555] mb-1 select-none">Malini V</h4>
-              <p className="font-space font-extrabold text-[11px] text-emerald-600 uppercase tracking-widest mb-4">Backend Developer & Integrations</p>
-              
-              {/* Expertise Badges */}
-              <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-[240px]">
-                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-emerald-500/10 text-emerald-700">Database Logic</span>
-                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-emerald-500/10 text-emerald-700">Twilio SMS</span>
-                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#8FA989]/10 text-emerald-750">Live Analytics</span>
-              </div>
+              <h4 className="select-none mb-1" style={{fontFamily: "'Playball', cursive", color: '#0A3535', fontSize: '2.2rem', fontWeight: 'bold'}}>Malini V</h4>
+              <p className="font-inter text-slate-700 text-sm font-semibold max-w-[280px] leading-relaxed text-center mb-6">
+                Backend engineer integrating cloud databases, automated notification services, and real-time dashboard analytics.
+              </p>
 
               <div className="flex items-center gap-4 mt-auto">
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 hover:bg-emerald-500 hover:text-white transition-colors" title="LinkedIn Profile">
@@ -2845,7 +2830,7 @@ export default function App() {
   return (
     <div className="font-inter min-h-screen w-full">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,600;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Raleway:wght@700;800;900&family=Sacramento&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,600;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Raleway:wght@700;800;900&family=Sacramento&family=Playball&family=Caveat:wght@600;700&family=Satisfy&display=swap');
         
         /* ──────────────────────────────────────────────
            FONT DEFINITIONS
