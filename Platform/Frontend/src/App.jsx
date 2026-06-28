@@ -666,8 +666,8 @@ const LandingPage = ({ setView }) => {
         </section>
 
         {/* ─────────── PROJECT OVERVIEW / TECH STACK SECTION ─────────── */}
-        <section className="scroll-zoom-section w-full py-28 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0D2A2A]/95 via-[#0E2424]/92 to-[#0A1F1F]/95" />
+        <section className="scroll-zoom-section w-full py-28 relative overflow-hidden bg-transparent">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0A1A1A] via-[#0E2626] to-[#061414]" />
           <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#3A7070]/15 rounded-full blur-[120px]" />
           <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#8FA989]/10 rounded-full blur-[100px]" />
 
@@ -678,8 +678,8 @@ const LandingPage = ({ setView }) => {
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3A7070]/20 border border-[#3A7070]/30 text-[#8FD4C8] font-space font-bold text-xs tracking-[0.18em] uppercase mb-6">
                 <Sparkles size={12} /> Project Overview
               </div>
-              <h2 className="h2-title mb-4" style={{color:'#F0FAF8'}}>
-                The <span className="cursive-accent-lg text-gradient-aurora">Keffi AI</span> Architecture
+              <h2 className="text-4xl md:text-5xl font-raleway font-black text-[#F0FAF8] mb-4 tracking-tight">
+                The <span className="cursive-accent-lg text-gradient-aurora" style={{fontFamily: "'Dancing Script', cursive", fontStyle: "italic", fontSize: "1.1em"}}>Keffi AI</span> <span className="font-cursive text-gradient-teal" style={{fontSize: "1.15em"}}>Architecture</span>
               </h2>
               <p className="p-text max-w-2xl mx-auto" style={{color:'#8FBFB8'}}>
                 A full-stack, production-ready mental health platform built with modern AI and cloud infrastructure — designed for real clinical impact.
@@ -690,18 +690,18 @@ const LandingPage = ({ setView }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
 
               {/* Card 1 - AI Core */}
-              <div className="group relative p-7 rounded-3xl border border-[#3A7070]/25 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-[#3A7070]/50 transition-all duration-400 hover:-translate-y-1 cursor-default">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#3A7070]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-teal">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-[#3A7070]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-2xl bg-[#3A7070]/20 flex items-center justify-center text-[#5EC4BC]">
                     <Brain size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#8FD4C8'}}>AI Core</p>
-                    <h4 className="font-space font-bold text-lg" style={{color:'#F0FAF8'}}>BERT + Gemini</h4>
+                    <p className="font-space text-xs font-bold text-[#8FD4C8] uppercase tracking-wider">AI Core</p>
+                    <h4 className="font-raleway font-black text-xl text-[#F0FAF8]">BERT + Gemini</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#C0D5D2'}}>Custom fine-tuned BERT model classifies 96 emotional states. Google Gemini Pro powers empathetic, context-aware conversational responses using 7 therapeutic modes.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#C0D5D2]/85">Custom fine-tuned BERT model classifies 96 emotional states. Google Gemini Pro powers empathetic, context-aware conversational responses using 7 therapeutic modes.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['BERT', 'Gemini Pro', '96 States', 'NLP'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-[#3A7070]/20 border border-[#3A7070]/30 text-[#5EC4BC] font-space font-bold text-xs">{t}</span>
@@ -710,18 +710,18 @@ const LandingPage = ({ setView }) => {
               </div>
 
               {/* Card 2 - Memory */}
-              <div className="group relative p-7 rounded-3xl border border-amber-500/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-amber-500/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-gold">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-amber-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-2xl bg-amber-500/15 flex items-center justify-center text-amber-400">
                     <Database size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#F5C070'}}>Memory Layer</p>
-                    <h4 className="font-space font-bold text-lg" style={{color:'#F5DFA0'}}>Pinecone Vector DB</h4>
+                    <p className="font-space text-xs font-bold text-[#F5C070] uppercase tracking-wider">Memory Layer</p>
+                    <h4 className="font-raleway font-black text-xl text-[#F5DFA0]">Pinecone Vector DB</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#E3D5C5'}}>Semantic vector memory stores and retrieves patient emotional history, enabling truly personalized, context-aware conversations that improve over time.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#E3D5C5]/85">Semantic vector memory stores and retrieves patient emotional history, enabling truly personalized, context-aware conversations that improve over time.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['Pinecone', 'Embeddings', 'Vector Search', 'Memory'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/25 text-amber-400 font-space font-bold text-xs">{t}</span>
@@ -730,18 +730,18 @@ const LandingPage = ({ setView }) => {
               </div>
 
               {/* Card 3 - Automation */}
-              <div className="group relative p-7 rounded-3xl border border-rose-500/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-rose-500/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-rose-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-rose">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-rose-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-rose-500/15 flex items-center justify-center text-rose-400">
+                  <div className="w-12 h-12 rounded-2xl bg-rose-500/15 flex items-center justify-center text-rose-450">
                     <Shield size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#F472B6'}}>Safety Automation</p>
-                    <h4 className="font-space font-bold text-lg" style={{color:'#FFBAB8'}}>n8n Workflows</h4>
+                    <p className="font-space text-xs font-bold text-[#F472B6] uppercase tracking-wider">Safety Automation</p>
+                    <h4 className="font-raleway font-black text-xl text-[#FFBAB8]">n8n Workflows</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#E2C8C8'}}>n8n orchestrates real-time crisis detection pipelines. When suicidal ideation or severe distress is detected, automated SOS alerts notify emergency contacts instantly.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#E2C8C8]/85">n8n orchestrates real-time crisis detection pipelines. When suicidal ideation or severe distress is detected, automated SOS alerts notify emergency contacts instantly.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['n8n', 'Crisis SOS', 'WHO Protocol', 'Automation'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-rose-500/15 border border-rose-500/25 text-rose-400 font-space font-bold text-xs">{t}</span>
@@ -750,18 +750,18 @@ const LandingPage = ({ setView }) => {
               </div>
 
               {/* Card 4 - Backend */}
-              <div className="group relative p-7 rounded-3xl border border-emerald-500/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-emerald-500/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-emerald">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-emerald-500/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 flex items-center justify-center text-emerald-400">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 flex items-center justify-center text-emerald-450">
                     <Zap size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#34D399'}}>Backend API</p>
-                    <h4 className="font-space font-bold text-lg" style={{color:'#AAFFC4'}}>FastAPI + Python</h4>
+                    <p className="font-space text-xs font-bold text-[#34D399] uppercase tracking-wider">Backend API</p>
+                    <h4 className="font-raleway font-black text-xl text-[#AAFFC4]">FastAPI + Python</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#C8E2D0'}}>High-performance async REST API with clinical routers for patient sessions, MHQ scoring, doctor dashboards, and real-time mood tracking analytics.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#C8E2D0]/85">High-performance async REST API with clinical routers for patient sessions, MHQ scoring, doctor dashboards, and real-time mood tracking analytics.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['FastAPI', 'Python', 'REST API', 'Async'].map(t => (
                     <span key={t} className="px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 font-space font-bold text-xs">{t}</span>
@@ -770,41 +770,41 @@ const LandingPage = ({ setView }) => {
               </div>
 
               {/* Card 5 - Frontend */}
-              <div className="group relative p-7 rounded-3xl border border-blue-400/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-blue-400/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-teal">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-blue-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-400/15 flex items-center justify-center text-blue-400">
+                  <div className="w-12 h-12 rounded-2xl bg-[#3A7070]/20 flex items-center justify-center text-[#5EC4BC]">
                     <Activity size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#60A5FA'}}>Frontend</p>
-                    <h4 className="font-space font-bold text-lg" style={{color:'#A8C4FF'}}>React + Vite + Tailwind</h4>
+                    <p className="font-space text-xs font-bold text-[#8FD4C8] uppercase tracking-wider">Frontend</p>
+                    <h4 className="font-raleway font-black text-xl text-[#A8C4FF]">React + Vite + Tailwind</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#C2D0E6'}}>Glassmorphism UI with animated components, real-time mood charts, doctor analytics dashboard, voice input, and a fully responsive design for all devices.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#C2D0E6]/85">Glassmorphism UI with animated components, real-time mood charts, doctor analytics dashboard, voice input, and a fully responsive design for all devices.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['React 18', 'Vite', 'Tailwind', 'Recharts'].map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-blue-400/15 border border-blue-400/25 text-blue-400 font-space font-bold text-xs">{t}</span>
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-[#3A7070]/20 border border-[#3A7070]/30 text-blue-400 font-space font-bold text-xs">{t}</span>
                   ))}
                 </div>
               </div>
 
               {/* Card 6 - Deployment */}
-              <div className="group relative p-7 rounded-3xl border border-violet-400/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-violet-400/40 transition-all duration-400 hover:-translate-y-1 cursor-default">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-violet-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="group relative p-8 rounded-[2.5rem] bg-white/5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 cursor-default glow-purple">
+                <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-violet-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-2xl bg-violet-400/15 flex items-center justify-center text-violet-400">
                     <Target size={24} />
                   </div>
                   <div>
-                    <p className="label-text" style={{color:'#C084FC'}}>Deployment</p>
-                    <h4 className="font-space font-bold text-lg" style={{color:'#D4AAFF'}}>Hugging Face + Vercel</h4>
+                    <p className="font-space text-xs font-bold text-[#C084FC] uppercase tracking-wider">Deployment</p>
+                    <h4 className="font-raleway font-black text-xl text-[#D4AAFF]">Hugging Face + Vercel</h4>
                   </div>
                 </div>
-                <p className="card-text" style={{color:'#DBC8E6'}}>BERT model hosted on Hugging Face Spaces. FastAPI backend deployed on Hugging Face. React frontend on Vercel CDN — fully cloud-native, zero downtime.</p>
+                <p className="font-inter font-medium text-[14px] leading-relaxed text-[#DBC8E6]/85">BERT model hosted on Hugging Face Spaces. FastAPI backend deployed on Hugging Face. React frontend on Vercel CDN — fully cloud-native, zero downtime.</p>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {['Hugging Face', 'Vercel', 'Cloud', 'CI/CD'].map(t => (
-                    <span key={t} className="px-2.5 py-1 rounded-lg bg-violet-400/15 border border-violet-400/25 text-violet-400 font-space font-bold text-xs">{t}</span>
+                    <span key={t} className="px-2.5 py-1 rounded-lg bg-violet-400/15 border border-violet-400/25 text-[#C084FC] font-space font-bold text-xs">{t}</span>
                   ))}
                 </div>
               </div>
@@ -932,41 +932,18 @@ const LandingPage = ({ setView }) => {
             </div>
           </div>
 
-          {/* Part 2: Naan Mudhalvan — Niral Thiruvizha Recognition Box */}
-          <div className="glass-panel border border-white/10 rounded-[2.5rem] p-10 lg:p-12 mb-20 relative overflow-hidden bg-white/5 shadow-2xl glow-teal text-center max-w-4xl mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#3A7070]/10 to-amber-500/5 opacity-40 rounded-[2.5rem]"></div>
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div className="relative z-10">
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <Star size={20} className="text-[#D4A373] fill-[#D4A373] animate-pulse" />
-                <span className="text-xs font-bold text-[#D4A373] uppercase tracking-widest font-space">State-Level Technical Challenge Recognition</span>
-                <Star size={20} className="text-[#D4A373] fill-[#D4A373] animate-pulse" />
-              </div>
-              <h3 className="text-3xl lg:text-4xl font-raleway font-black text-white mb-6">
-                <span className="cursive-accent-lg text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-[#8FA989]">Naan Mudhalvan</span> <span className="text-slate-300">— Niral Thiruvizha Hackathon</span>
-              </h3>
-              <p className="text-slate-300 font-inter font-medium text-base lg:text-lg leading-relaxed max-w-3xl mx-auto mb-6">
-                Keffi AI was proudly engineered at <span className="font-extrabold text-[#8FD4C8]">University College of Engineering (UCE) Panruti</span> (a constituent college of Anna University) as an entry for the prestigious <span className="font-bold text-white">Naan Mudhalvan - Niral Thiruvizha</span> state hackathon. 
-              </p>
-              <p className="text-slate-400 font-inter text-sm leading-relaxed max-w-2xl mx-auto">
-                Designed to solve real-world student and community mental wellness crises, Keffi integrates advanced clinical routing, semantic text processing, and active somatic regulation to bridge the critical healthcare deficit. Our team dedicated this project to tech-for-good, scaling mental support beyond the boundaries of traditional clinics.
-              </p>
-            </div>
-          </div>
-
           {/* Part 3: Classic Footer Columns */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-16 pt-12 border-t border-white/5">
             
             {/* Left Column: Brand */}
-            <div className="col-span-1 md:col-span-6 flex flex-col items-start text-left">
+            <div className="col-span-1 md:col-span-5 flex flex-col items-start text-left">
               <div className="flex items-center gap-3 mb-5 bg-[#3A7070]/15 border border-[#3A7070]/30 px-6 py-3.5 rounded-2xl backdrop-blur-sm w-fit shadow-xl glow-teal">
                 <Star size={24} className="text-[#8FD4C8] fill-[#8FD4C8]" />
                 <span className="text-2xl font-raleway font-black tracking-tight text-[#E6F0F0]">Keffi AI</span>
               </div>
-              <p className="font-cursive text-2xl text-[#8FD4C8] mb-3 select-none">Where Empathy meets Intelligence.</p>
-              <p className="font-inter text-[#A3B3B3] text-sm mb-6 max-w-md leading-relaxed font-medium">Bridging the 167-hour gap in mental healthcare with continuous, empathetic, and clinically-guided AI conversations.</p>
+              <p className="font-inter text-[#A3B3B3] text-sm mb-6 max-w-md leading-relaxed font-semibold">
+                An advanced mental health platform designed to provide empathetic, continuous, and private clinical-style AI assistance.
+              </p>
               
               <div className="flex flex-wrap gap-4 items-center font-space text-[#8FD4C8] font-bold text-xs tracking-wider mb-6">
                 <span>📧 support@keffi.ai</span>
@@ -983,35 +960,31 @@ const LandingPage = ({ setView }) => {
               </div>
             </div>
 
-            {/* Middle Column: Quick Nav */}
-            <div className="col-span-1 md:col-span-3 text-left md:pl-8">
-              <h4 className="font-space font-black text-[#E6F0F0] mb-6 uppercase tracking-wider text-xs border-b border-[#3A7070]/20 pb-2">Navigation</h4>
-              <ul className="flex flex-col gap-4 font-space font-bold text-sm text-[#A3B3B3]">
-                <li>
-                  <button onClick={() => setView('login-patient')} className="hover:text-white hover:translate-x-1.5 transition-all duration-300 cursor-pointer flex items-center gap-2">
-                    <ArrowRight size={12} className="opacity-60" /> Patient Sanctuary
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => setView('login-admin')} className="hover:text-white hover:translate-x-1.5 transition-all duration-300 cursor-pointer flex items-center gap-2">
-                    <ArrowRight size={12} className="opacity-60" /> Clinical Hub
-                  </button>
-                </li>
-              </ul>
+            {/* Middle Column: Institution & Department */}
+            <div className="col-span-1 md:col-span-3 text-left">
+              <h4 className="font-space font-black text-[#E6F0F0] mb-6 uppercase tracking-wider text-xs border-b border-[#3A7070]/20 pb-2">Institution</h4>
+              <p className="font-space font-bold text-[#E6F0F0] text-sm mb-1 leading-snug">University College of Engineering Panruti</p>
+              <p className="font-space text-slate-450 text-[11px] font-semibold mb-4 leading-relaxed">(A Constituent College of Anna University, Chennai)</p>
+              <p className="font-space font-bold text-[#8FA989] text-xs uppercase tracking-wider mb-2">Department</p>
+              <p className="font-space font-semibold text-[#A3B3B3] text-xs leading-relaxed">Department of Computer Science and Engineering (CSE)</p>
             </div>
 
-            {/* Right Column: UCE Details */}
-            <div className="col-span-1 md:col-span-3 flex flex-col md:items-end text-left md:text-right">
+            {/* Right Column: Hackers Team Details */}
+            <div className="col-span-1 md:col-span-4 flex flex-col md:items-end text-left md:text-right">
               <h4 className="font-space font-black text-[#E6F0F0] mb-6 uppercase tracking-wider text-xs border-b border-[#3A7070]/20 pb-2 w-full md:text-right">Hackers Team</h4>
-              <p className="font-cursive text-2xl text-[#D4A373] mb-1 select-none">UCE Panruti, TN</p>
-              <p className="font-space text-slate-400 text-xs font-bold uppercase tracking-widest mb-4">Naan Mudhalvan Competitors</p>
-              
-              <div className="flex flex-wrap gap-4 font-space font-bold text-xs text-[#8FA989] justify-start md:justify-end">
-                <a href="#" className="hover:text-white transition-colors">Privacy</a>
-                <span>•</span>
-                <a href="#" className="hover:text-white transition-colors">Terms</a>
-                <span>•</span>
-                <a href="#" className="hover:text-white transition-colors">Guidelines</a>
+              <div className="space-y-3 font-space text-[#A3B3B3] text-sm">
+                <div>
+                  <p className="font-bold text-[#E6F0F0]">Balaji P</p>
+                  <p className="text-xs text-slate-400 font-semibold">AI & Full-Stack Developer</p>
+                </div>
+                <div>
+                  <p className="font-bold text-[#E6F0F0]">Madhumathi S</p>
+                  <p className="text-xs text-slate-400 font-semibold">UI/UX & Clinical Researcher</p>
+                </div>
+                <div>
+                  <p className="font-bold text-[#E6F0F0]">Malini V</p>
+                  <p className="text-xs text-slate-400 font-semibold">Backend Developer & Integrations</p>
+                </div>
               </div>
             </div>
             
@@ -1071,10 +1044,10 @@ const PatientLogin = ({ setView, setUserData }) => {
            <DynamicLoginIllustration step={step} className="w-full h-full max-w-[300px] object-contain relative z-10 drop-shadow-2xl transition-all duration-500" />
            <div className="absolute inset-0 bg-gradient-to-t from-[#2C5555]/30 via-transparent to-transparent flex flex-col justify-end p-12 text-[#1E293B] z-20">
               <h2 className="text-3xl font-poppins font-black text-[#0D5050] mb-3">
-                {step === 1 && "Secure Entry"}
-                {step === 2 && "Your Sanctuary"}
+                {step === 1 && <>Secure <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.2em', textTransform: 'lowercase'}}>entry</span></>}
+                {step === 2 && <>Your <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.2em', textTransform: 'lowercase'}}>sanctuary</span></>}
               </h2>
-              <p className="text-base opacity-90 font-medium">
+              <p className="text-base opacity-90 font-medium font-inter">
                 {step === 1 && "Enter your details below to establish a secure connection."}
                 {step === 2 && "Let's build your personal profile for a better experience."}
               </p>
@@ -1092,8 +1065,10 @@ const PatientLogin = ({ setView, setUserData }) => {
           {step === 1 && (
             <div className="space-y-8 animate-fade-in">
               <div>
-                <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-[#3A7070] mb-3">Secure Entry</h2>
-                <p className="text-slate-500 text-base font-space font-semibold leading-relaxed">Your privacy is our priority. Enter details for a secure OTP.</p>
+                <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-[#3A7070] mb-3">
+                  Secure <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.15em', textTransform: 'lowercase'}}>entry</span>
+                </h2>
+                <p className="text-slate-500 text-base font-inter font-semibold leading-relaxed">Your privacy is our priority. Enter details for a secure OTP.</p>
               </div>
               <div className="space-y-5">
                 <div className="animate-slide-up" style={{animationDelay: '100ms'}}>
@@ -1116,8 +1091,10 @@ const PatientLogin = ({ setView, setUserData }) => {
           {step === 2 && (
             <div className="space-y-8 animate-fade-in h-full flex flex-col justify-center">
               <div>
-                <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2AA870] to-[#2C5555] mb-3">Your Profile</h2>
-                <p className="text-slate-500 text-base font-space font-semibold leading-relaxed">Help Keffi understand you better.</p>
+                <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2AA870] to-[#2C5555] mb-3">
+                  Your <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.15em', textTransform: 'lowercase'}}>profile</span>
+                </h2>
+                <p className="text-slate-500 text-base font-inter font-semibold leading-relaxed">Help Keffi understand you better.</p>
               </div>
               <div className="space-y-5">
                 <div className="animate-slide-up" style={{animationDelay: '100ms'}}>
@@ -2895,11 +2872,19 @@ export default function App() {
         ────────────────────────────────────────────── */
         .font-poppins    { font-family: 'Outfit', sans-serif; }
         .font-inter      { font-family: 'Inter', sans-serif; }
-        .font-space      { font-family: 'Space Grotesk', sans-serif; }
+        .font-space      { font-family: 'Outfit', sans-serif; letter-spacing: 0.015em; }
         .font-raleway    { font-family: 'Raleway', sans-serif; }
         .font-playfair   { font-family: 'Playfair Display', serif; }
         .font-cormorant  { font-family: 'Cormorant Garamond', serif; }
         .font-sacramento { font-family: 'Sacramento', cursive; }
+
+        /* Globally improve legibility of small descriptions and paragraph text */
+        .card-text, .p-text, p {
+          font-family: 'Inter', sans-serif !important;
+          font-size: 14.5px !important;
+          line-height: 1.7 !important;
+          letter-spacing: 0.012em !important;
+        }
 
         /* ──────────────────────────────────────────────
            CURSIVE ACCENTS — multiple styles
