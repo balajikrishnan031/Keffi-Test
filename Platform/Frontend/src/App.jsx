@@ -836,7 +836,7 @@ const LandingPage = ({ setView }) => {
           </div>
         </section>
       </main>
-      <footer className="w-full relative z-10 bg-transparent text-slate-700 overflow-hidden mt-0 border-t border-slate-200/50 py-20 animate-fade-in">
+      <footer className="w-full relative z-10 bg-white/[0.22] backdrop-blur-xl border-t border-white/35 text-slate-700 overflow-hidden mt-0 py-20 animate-fade-in shadow-2xl">
         {/* Glow Effects */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[1px] bg-gradient-to-r from-transparent via-[#3A7070]/20 to-transparent"></div>
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3a7070]/5 rounded-full blur-[130px] pointer-events-none"></div>
@@ -857,89 +857,84 @@ const LandingPage = ({ setView }) => {
             </p>
           </div>
 
-          {/* Hackers Team Profiles Grid (Unified Glass Typography Layout with Light Blur) */}
-          <div className="glass-panel p-8 md:p-10 rounded-[2.5rem] bg-white/[0.22] backdrop-blur-xl border border-white/35 shadow-2xl relative overflow-hidden mt-8">
-            <div className="absolute top-0 left-0 w-64 h-64 bg-[#3A7070]/6 rounded-full blur-[80px] pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-80 h-80 bg-[#8FA989]/8 rounded-full blur-[90px] pointer-events-none"></div>
+          {/* Hackers Team Profiles Grid (Unified Grid - No Nested Box) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-12 border-t border-slate-200/60 relative z-10 text-center">
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10 text-center">
+            {/* Creator 1: Balaji P */}
+            <div className="flex flex-col items-center">
+              <h4 className="font-raleway font-black text-2xl text-[#2C5555] mb-1 select-none">Balaji P</h4>
+              <p className="font-space font-extrabold text-[11px] text-[#3A7070] uppercase tracking-widest mb-4">AI & Full-Stack Developer</p>
               
-              {/* Creator 1: Balaji P */}
-              <div className="flex flex-col items-center">
-                <h4 className="font-raleway font-black text-2xl text-[#2C5555] mb-1 select-none">Balaji P</h4>
-                <p className="font-space font-extrabold text-[11px] text-[#3A7070] uppercase tracking-widest mb-4">AI & Full-Stack Developer</p>
-                
-                {/* Expertise Badges */}
-                <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-[240px]">
-                  <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#3A7070]/10 text-[#2C5555]">NLP Architect</span>
-                  <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#3A7070]/10 text-[#2C5555]">Vite & React</span>
-                  <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#8FA989]/10 text-[#2C5555]">n8n Workflow</span>
-                </div>
-
-                <div className="flex items-center gap-4 mt-auto">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070] hover:bg-[#3A7070] hover:text-white transition-colors" title="LinkedIn Profile">
-                    <Linkedin size={15} />
-                  </a>
-                  <a href="mailto:balaji.p@keffi.ai" className="w-8 h-8 rounded-full bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070] hover:bg-[#3A7070] hover:text-white transition-colors" title="Email Contact">
-                    <Mail size={15} />
-                  </a>
-                  <a href="tel:9152987821" className="w-8 h-8 rounded-full bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070] hover:bg-[#3A7070] hover:text-white transition-colors" title="Crisis Helpline Call">
-                    <PhoneCall size={15} />
-                  </a>
-                </div>
+              {/* Expertise Badges */}
+              <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-[240px]">
+                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#3A7070]/10 text-[#2C5555]">NLP Architect</span>
+                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#3A7070]/10 text-[#2C5555]">Vite & React</span>
+                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#8FA989]/10 text-[#2C5555]">n8n Workflow</span>
               </div>
 
-              {/* Creator 2: Madhumathi S */}
-              <div className="flex flex-col items-center">
-                <h4 className="font-raleway font-black text-2xl text-[#2C5555] mb-1 select-none">Madhumathi S</h4>
-                <p className="font-space font-extrabold text-[11px] text-amber-600 uppercase tracking-widest mb-4">UI/UX & Clinical Researcher</p>
-                
-                {/* Expertise Badges */}
-                <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-[240px]">
-                  <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-amber-500/10 text-amber-700">UI/UX Design</span>
-                  <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-amber-500/10 text-amber-700">Clinical Safety</span>
-                  <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#8FA989]/10 text-amber-750">Color Therapy</span>
-                </div>
-
-                <div className="flex items-center gap-4 mt-auto">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600 hover:bg-amber-500 hover:text-white transition-colors" title="LinkedIn Profile">
-                    <Linkedin size={15} />
-                  </a>
-                  <a href="mailto:madhumathi.s@keffi.ai" className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600 hover:bg-amber-500 hover:text-white transition-colors" title="Email Contact">
-                    <Mail size={15} />
-                  </a>
-                  <a href="tel:9152987821" className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600 hover:bg-amber-500 hover:text-white transition-colors" title="Crisis Helpline Call">
-                    <PhoneCall size={15} />
-                  </a>
-                </div>
+              <div className="flex items-center gap-4 mt-auto">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070] hover:bg-[#3A7070] hover:text-white transition-colors" title="LinkedIn Profile">
+                  <Linkedin size={15} />
+                </a>
+                <a href="mailto:balaji.p@keffi.ai" className="w-8 h-8 rounded-full bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070] hover:bg-[#3A7070] hover:text-white transition-colors" title="Email Contact">
+                  <Mail size={15} />
+                </a>
+                <a href="tel:9152987821" className="w-8 h-8 rounded-full bg-[#3A7070]/10 flex items-center justify-center text-[#3A7070] hover:bg-[#3A7070] hover:text-white transition-colors" title="Crisis Helpline Call">
+                  <PhoneCall size={15} />
+                </a>
               </div>
-
-              {/* Creator 3: Malini V */}
-              <div className="flex flex-col items-center">
-                <h4 className="font-raleway font-black text-2xl text-[#2C5555] mb-1 select-none">Malini V</h4>
-                <p className="font-space font-extrabold text-[11px] text-emerald-600 uppercase tracking-widest mb-4">Backend Developer & Integrations</p>
-                
-                {/* Expertise Badges */}
-                <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-[240px]">
-                  <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-emerald-500/10 text-emerald-700">Database Logic</span>
-                  <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-emerald-500/10 text-emerald-700">Twilio SMS</span>
-                  <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#8FA989]/10 text-emerald-750">Live Analytics</span>
-                </div>
-
-                <div className="flex items-center gap-4 mt-auto">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 hover:bg-emerald-500 hover:text-white transition-colors" title="LinkedIn Profile">
-                    <Linkedin size={15} />
-                  </a>
-                  <a href="mailto:malini.v@keffi.ai" className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 hover:bg-emerald-500 hover:text-white transition-colors" title="Email Contact">
-                    <Mail size={15} />
-                  </a>
-                  <a href="tel:9152987821" className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 hover:bg-emerald-500 hover:text-white transition-colors" title="Crisis Helpline Call">
-                    <PhoneCall size={15} />
-                  </a>
-                </div>
-              </div>
-
             </div>
+
+            {/* Creator 2: Madhumathi S */}
+            <div className="flex flex-col items-center">
+              <h4 className="font-raleway font-black text-2xl text-[#2C5555] mb-1 select-none">Madhumathi S</h4>
+              <p className="font-space font-extrabold text-[11px] text-amber-600 uppercase tracking-widest mb-4">UI/UX & Clinical Researcher</p>
+              
+              {/* Expertise Badges */}
+              <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-[240px]">
+                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-amber-500/10 text-amber-700">UI/UX Design</span>
+                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-amber-500/10 text-amber-700">Clinical Safety</span>
+                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#8FA989]/10 text-amber-750">Color Therapy</span>
+              </div>
+
+              <div className="flex items-center gap-4 mt-auto">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600 hover:bg-amber-500 hover:text-white transition-colors" title="LinkedIn Profile">
+                  <Linkedin size={15} />
+                </a>
+                <a href="mailto:madhumathi.s@keffi.ai" className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600 hover:bg-amber-500 hover:text-white transition-colors" title="Email Contact">
+                  <Mail size={15} />
+                </a>
+                <a href="tel:9152987821" className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600 hover:bg-amber-500 hover:text-white transition-colors" title="Crisis Helpline Call">
+                  <PhoneCall size={15} />
+                </a>
+              </div>
+            </div>
+
+            {/* Creator 3: Malini V */}
+            <div className="flex flex-col items-center">
+              <h4 className="font-raleway font-black text-2xl text-[#2C5555] mb-1 select-none">Malini V</h4>
+              <p className="font-space font-extrabold text-[11px] text-emerald-600 uppercase tracking-widest mb-4">Backend Developer & Integrations</p>
+              
+              {/* Expertise Badges */}
+              <div className="flex flex-wrap justify-center gap-1.5 mb-5 max-w-[240px]">
+                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-emerald-500/10 text-emerald-700">Database Logic</span>
+                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-emerald-500/10 text-emerald-700">Twilio SMS</span>
+                <span className="px-2.5 py-1 text-[9px] font-space font-bold rounded-lg bg-[#8FA989]/10 text-emerald-750">Live Analytics</span>
+              </div>
+
+              <div className="flex items-center gap-4 mt-auto">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 hover:bg-emerald-500 hover:text-white transition-colors" title="LinkedIn Profile">
+                  <Linkedin size={15} />
+                </a>
+                <a href="mailto:malini.v@keffi.ai" className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 hover:bg-emerald-500 hover:text-white transition-colors" title="Email Contact">
+                  <Mail size={15} />
+                </a>
+                <a href="tel:9152987821" className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 hover:bg-emerald-500 hover:text-white transition-colors" title="Crisis Helpline Call">
+                  <PhoneCall size={15} />
+                </a>
+              </div>
+            </div>
+
           </div>
 
           {/* Unified Contact and Disclaimer Grid */}
@@ -2864,7 +2859,7 @@ export default function App() {
         .font-sacramento { font-family: 'Sacramento', cursive; }
 
         /* Globally improve legibility of small descriptions and paragraph text */
-        .card-text, .p-text, p {
+        .card-text, .p-text {
           font-family: 'Inter', sans-serif !important;
           font-size: 14.5px !important;
           line-height: 1.7 !important;
