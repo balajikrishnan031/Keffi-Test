@@ -836,162 +836,132 @@ const LandingPage = ({ setView }) => {
           </div>
         </section>
       </main>
-
-      {/* 🚀 ULTIMATE FOOTER & ABOUT US */}
-      <footer className="w-full relative z-10 bg-gradient-to-b from-[#142A2A]/92 to-[#071616]/99 backdrop-blur-lg text-slate-350 overflow-hidden mt-0 border-t border-[#3A7070]/25 py-24 animate-fade-in">
+      <footer className="w-full relative z-10 bg-transparent text-slate-700 overflow-hidden mt-0 border-t border-slate-200/50 py-20 animate-fade-in">
         {/* Glow Effects */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[1px] bg-gradient-to-r from-transparent via-[#3A7070]/60 to-transparent"></div>
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3a7070]/12 rounded-full blur-[130px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#8fa989]/10 rounded-full blur-[130px] pointer-events-none"></div>
-        <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-emerald-500/6 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[1px] bg-gradient-to-r from-transparent via-[#3A7070]/20 to-transparent"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3a7070]/5 rounded-full blur-[130px] pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#8fa989]/5 rounded-full blur-[130px] pointer-events-none"></div>
         
         <div className="max-w-[1200px] mx-auto px-6 lg:px-12 relative z-10">
           
-          {/* Part 1: Unified About Us Title & Team Profiles */}
+          {/* Part 1: Unified About Us Title & Mission Details */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#3A7070]/20 to-[#8FA989]/20 border border-[#3A7070]/30 text-[#8FD4C8] font-space font-bold uppercase tracking-widest text-xs mb-6 shadow-md">
-              <Sparkles size={14} className="text-[#8FD4C8]" /> About Us & Hackers Team
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/20 text-[#3A7070] font-space font-bold uppercase tracking-widest text-xs mb-6 shadow-sm">
+              <Sparkles size={14} className="text-[#3A7070]" /> About Our Mission & Creators
             </div>
-            <h2 className="text-3xl lg:text-4xl font-poppins font-black text-white tracking-tight mb-6">
-              Built with <span className="cursive-accent-lg text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-[#8FA989]">Purpose</span>, by <span className="font-black text-[#8FD4C8]">Hackers Team</span>
+            <h2 className="text-3xl lg:text-5xl font-poppins font-black text-slate-800 tracking-tight mb-8">
+              Empathetic Mental Healthcare, <span className="cursive-accent-lg text-gradient-aurora">Built with Purpose</span>
             </h2>
-            <p className="text-slate-400 font-medium max-w-3xl mx-auto leading-relaxed text-sm lg:text-base">
-              We are a passionate team of engineering students from <span className="font-bold text-white font-space">University College of Engineering (UCE) Panruti</span>, Tamil Nadu. What started as a competitive entry became a genuine mission: to make mental healthcare accessible, continuous, and deeply empathetic.
+            <p className="text-slate-600 font-medium max-w-4xl mx-auto leading-relaxed text-sm lg:text-base mb-12">
+              We are a passionate team of engineering students from <span className="font-bold text-[#3A7070] font-space">University College of Engineering (UCE) Panruti</span> (A Constituent College of Anna University, Chennai), from the <span className="font-bold text-[#8FA989] font-space">Department of Computer Science and Engineering (CSE)</span>. What started as a competitive entry became a genuine mission: to make mental healthcare accessible, continuous, and deeply empathetic.
             </p>
           </div>
 
-          {/* Hackers Team Profiles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          {/* Hackers Team Profiles Grid (Unified Typography Layout - No Box/Cards) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-12 border-t border-slate-200/60 text-left">
             {/* Member 1: BALAJI P */}
-            <div className="glass-panel p-8 rounded-[2.5rem] border border-white/10 bg-white/5 hover:bg-white/10 hover:border-[#3A7070]/50 transition-all duration-500 flex flex-col items-center text-center gap-4 glow-teal shadow-xl">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#3A7070]/20 to-[#8FA989]/20 flex items-center justify-center text-[#8FD4C8] font-space font-black text-2xl border-2 border-white/20 mb-2 shadow-inner">
-                BP
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl font-space font-black text-[#2C5555]">BP</span>
+                <h4 className="font-cursive text-4xl text-gradient-teal select-none">Balaji P</h4>
               </div>
-              <h4 className="font-cursive text-4xl text-[#E6F0F0] mb-0 tracking-wide select-none">BALAJI P</h4>
-              <p className="font-space font-bold text-xs text-[#8FD4C8] uppercase tracking-widest mb-3">AI & Full-Stack Developer</p>
-              <p className="text-slate-400 text-xs leading-relaxed font-medium mb-4">Pioneered Keffi's Triple-AI orchestrations, custom n8n clinical routes, and full-stack responsive architectures.</p>
-              
-              {/* Social Links */}
-              <div className="flex items-center gap-4 mt-auto">
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#8FD4C8] hover:bg-[#3A7070] hover:text-white hover:border-[#3A7070] transition-all duration-300" title="LinkedIn Profile">
-                  <Linkedin size={16} />
+              <p className="font-space font-bold text-xs text-[#3A7070] uppercase tracking-wider">AI & Full-Stack Developer</p>
+              <p className="text-slate-600 text-sm font-medium leading-relaxed mt-2">
+                Pioneered Keffi's Triple-AI orchestrations, custom n8n clinical routes, and full-stack responsive architectures.
+              </p>
+              <div className="flex items-center gap-4 mt-3">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-[#3A7070] hover:text-[#2C5555] transition-colors" title="LinkedIn Profile">
+                  <Linkedin size={18} />
                 </a>
-                <a href="mailto:balaji.p@keffi.ai" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#8FD4C8] hover:bg-[#3A7070] hover:text-white hover:border-[#3A7070] transition-all duration-300" title="Email Contact">
-                  <Mail size={16} />
+                <a href="mailto:balaji.p@keffi.ai" className="text-[#3A7070] hover:text-[#2C5555] transition-colors" title="Email Contact">
+                  <Mail size={18} />
                 </a>
-                <a href="tel:+919042512345" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#8FD4C8] hover:bg-[#3A7070] hover:text-white hover:border-[#3A7070] transition-all duration-300" title="Phone Call">
-                  <PhoneCall size={16} />
+                <a href="tel:+919042512345" className="text-[#3A7070] hover:text-[#2C5555] transition-colors" title="Phone Call">
+                  <PhoneCall size={18} />
                 </a>
               </div>
             </div>
 
             {/* Member 2: MADHUMATHI S */}
-            <div className="glass-panel p-8 rounded-[2.5rem] border border-white/10 bg-white/5 hover:bg-white/10 hover:border-amber-500/50 transition-all duration-500 flex flex-col items-center text-center gap-4 glow-gold shadow-xl">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500/20 to-amber-300/20 flex items-center justify-center text-[#D4A373] font-space font-black text-2xl border-2 border-white/20 mb-2 shadow-inner">
-                MS
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl font-space font-black text-amber-600">MS</span>
+                <h4 className="font-cursive text-4xl text-gradient-gold select-none">Madhumathi S</h4>
               </div>
-              <h4 className="font-cursive text-4xl text-[#E6F0F0] mb-0 tracking-wide select-none">MADHUMATHI S</h4>
-              <p className="font-space font-bold text-xs text-[#D4A373] uppercase tracking-widest mb-3">UI/UX & Clinical Researcher</p>
-              <p className="text-slate-400 text-xs leading-relaxed font-medium mb-4">Designed the organic glassmorphic layout system, visual color therapy states, and led cognitive safety analysis.</p>
-              
-              {/* Social Links */}
-              <div className="flex items-center gap-4 mt-auto">
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#D4A373] hover:bg-amber-500 hover:text-white hover:border-amber-500 transition-all duration-300" title="LinkedIn Profile">
-                  <Linkedin size={16} />
+              <p className="font-space font-bold text-xs text-amber-600 uppercase tracking-wider">UI/UX & Clinical Researcher</p>
+              <p className="text-slate-600 text-sm font-medium leading-relaxed mt-2">
+                Designed the organic glassmorphic layout system, visual color therapy states, and led cognitive safety analysis.
+              </p>
+              <div className="flex items-center gap-4 mt-3">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-amber-600 hover:text-amber-700 transition-colors" title="LinkedIn Profile">
+                  <Linkedin size={18} />
                 </a>
-                <a href="mailto:madhumathi.s@keffi.ai" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#D4A373] hover:bg-amber-500 hover:text-white hover:border-amber-500 transition-all duration-300" title="Email Contact">
-                  <Mail size={16} />
+                <a href="mailto:madhumathi.s@keffi.ai" className="text-amber-600 hover:text-amber-700 transition-colors" title="Email Contact">
+                  <Mail size={18} />
                 </a>
-                <a href="tel:+919876543211" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[#D4A373] hover:bg-amber-500 hover:text-white hover:border-amber-500 transition-all duration-300" title="Phone Call">
-                  <PhoneCall size={16} />
+                <a href="tel:+919876543211" className="text-amber-600 hover:text-amber-700 transition-colors" title="Phone Call">
+                  <PhoneCall size={18} />
                 </a>
               </div>
             </div>
 
             {/* Member 3: MALINI V */}
-            <div className="glass-panel p-8 rounded-[2.5rem] border border-white/10 bg-white/5 hover:bg-white/10 hover:border-emerald-500/50 transition-all duration-500 flex flex-col items-center text-center gap-4 glow-emerald shadow-xl">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-500/20 to-[#8FA989]/20 flex items-center justify-center text-emerald-400 font-space font-black text-2xl border-2 border-white/20 mb-2 shadow-inner">
-                MV
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl font-space font-black text-emerald-600">MV</span>
+                <h4 className="font-cursive text-4xl text-gradient-emerald select-none">Malini V</h4>
               </div>
-              <h4 className="font-cursive text-4xl text-[#E6F0F0] mb-0 tracking-wide select-none">MALINI V</h4>
-              <p className="font-space font-bold text-xs text-emerald-400 uppercase tracking-widest mb-3">Backend Developer & Integrations</p>
-              <p className="text-slate-400 text-xs leading-relaxed font-medium mb-4">Integrated clinical database adapters, Twilio notification flows, and built real-time analytics dashboards.</p>
-              
-              {/* Social Links */}
-              <div className="flex items-center gap-4 mt-auto">
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300" title="LinkedIn Profile">
-                  <Linkedin size={16} />
+              <p className="font-space font-bold text-xs text-emerald-600 uppercase tracking-wider">Backend Developer & Integrations</p>
+              <p className="text-slate-600 text-sm font-medium leading-relaxed mt-2">
+                Integrated clinical database adapters, Twilio notification flows, and built real-time analytics dashboards.
+              </p>
+              <div className="flex items-center gap-4 mt-3">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 transition-colors" title="LinkedIn Profile">
+                  <Linkedin size={18} />
                 </a>
-                <a href="mailto:malini.v@keffi.ai" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300" title="Email Contact">
-                  <Mail size={16} />
+                <a href="mailto:malini.v@keffi.ai" className="text-emerald-600 hover:text-emerald-700 transition-colors" title="Email Contact">
+                  <Mail size={18} />
                 </a>
-                <a href="tel:+919876543212" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-300" title="Phone Call">
-                  <PhoneCall size={16} />
+                <a href="tel:+919876543212" className="text-emerald-600 hover:text-emerald-700 transition-colors" title="Phone Call">
+                  <PhoneCall size={18} />
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Part 3: Classic Footer Columns */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-16 pt-12 border-t border-white/5">
-            
-            {/* Left Column: Brand */}
-            <div className="col-span-1 md:col-span-5 flex flex-col items-start text-left">
-              <div className="flex items-center gap-3 mb-5 bg-[#3A7070]/15 border border-[#3A7070]/30 px-6 py-3.5 rounded-2xl backdrop-blur-sm w-fit shadow-xl glow-teal">
-                <Star size={24} className="text-[#8FD4C8] fill-[#8FD4C8]" />
-                <span className="text-2xl font-raleway font-black tracking-tight text-[#E6F0F0]">Keffi AI</span>
+          {/* Unified Contact and Disclaimer Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-16 mt-16 border-t border-slate-200/60 text-left">
+            {/* Left Brand Details */}
+            <div className="flex flex-col items-start gap-4">
+              <div className="flex items-center gap-3 bg-[#3A7070]/10 border border-[#3A7070]/20 px-6 py-3.5 rounded-2xl w-fit shadow-sm">
+                <Star size={24} className="text-[#3A7070] fill-[#3A7070]" />
+                <span className="text-2xl font-raleway font-black tracking-tight text-[#2C5555]">Keffi Sanctuary</span>
               </div>
-              <p className="font-inter text-[#A3B3B3] text-sm mb-6 max-w-md leading-relaxed font-semibold">
+              <p className="font-inter text-slate-600 text-sm max-w-md leading-relaxed font-semibold">
                 An advanced mental health platform designed to provide empathetic, continuous, and private clinical-style AI assistance.
               </p>
-              
-              <div className="flex flex-wrap gap-4 items-center font-space text-[#8FD4C8] font-bold text-xs tracking-wider mb-6">
+              <div className="flex flex-wrap gap-4 items-center font-space text-[#2C5555] font-bold text-xs tracking-wider">
                 <span>📧 support@keffi.ai</span>
-                <span className="text-[#3A7070]">•</span>
+                <span>•</span>
                 <span>📞 +91 90425 12345</span>
               </div>
+            </div>
 
-              {/* Emergency Support badge */}
-              <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/25 max-w-md shadow-sm">
-                <div className="flex items-center gap-2 text-rose-450 font-space font-bold text-[11px] uppercase tracking-wider mb-1">
-                  <Shield size={14} className="text-rose-500" /> Emergency Support
+            {/* Right: Emergency Disclaimer */}
+            <div className="flex flex-col justify-center">
+              <div className="p-5 rounded-2xl bg-rose-500/5 border border-rose-500/15">
+                <div className="flex items-center gap-2 text-rose-600 font-space font-bold text-[12px] uppercase tracking-wider mb-2">
+                  <Shield size={14} className="text-rose-500" /> Emergency Support Info
                 </div>
-                <p className="text-[11px] text-[#A3B3B3] leading-relaxed font-medium">In case of acute distress or clinical emergencies, please call AASRA Helpline at +91 98204 66726 or call 104 immediately. Keffi does not replace active clinical care.</p>
+                <p className="text-[12px] text-slate-500 leading-relaxed font-semibold">
+                  In case of acute distress or clinical emergencies, please call AASRA Helpline at +91 98204 66726 or call 104 immediately. Keffi does not replace active clinical care.
+                </p>
               </div>
             </div>
-
-            {/* Middle Column: Institution & Department */}
-            <div className="col-span-1 md:col-span-3 text-left">
-              <h4 className="font-space font-black text-[#E6F0F0] mb-6 uppercase tracking-wider text-xs border-b border-[#3A7070]/20 pb-2">Institution</h4>
-              <p className="font-space font-bold text-[#E6F0F0] text-sm mb-1 leading-snug">University College of Engineering Panruti</p>
-              <p className="font-space text-slate-450 text-[11px] font-semibold mb-4 leading-relaxed">(A Constituent College of Anna University, Chennai)</p>
-              <p className="font-space font-bold text-[#8FA989] text-xs uppercase tracking-wider mb-2">Department</p>
-              <p className="font-space font-semibold text-[#A3B3B3] text-xs leading-relaxed">Department of Computer Science and Engineering (CSE)</p>
-            </div>
-
-            {/* Right Column: Hackers Team Details */}
-            <div className="col-span-1 md:col-span-4 flex flex-col md:items-end text-left md:text-right">
-              <h4 className="font-space font-black text-[#E6F0F0] mb-6 uppercase tracking-wider text-xs border-b border-[#3A7070]/20 pb-2 w-full md:text-right">Hackers Team</h4>
-              <div className="space-y-3 font-space text-[#A3B3B3] text-sm">
-                <div>
-                  <p className="font-bold text-[#E6F0F0]">Balaji P</p>
-                  <p className="text-xs text-slate-400 font-semibold">AI & Full-Stack Developer</p>
-                </div>
-                <div>
-                  <p className="font-bold text-[#E6F0F0]">Madhumathi S</p>
-                  <p className="text-xs text-slate-400 font-semibold">UI/UX & Clinical Researcher</p>
-                </div>
-                <div>
-                  <p className="font-bold text-[#E6F0F0]">Malini V</p>
-                  <p className="text-xs text-slate-400 font-semibold">Backend Developer & Integrations</p>
-                </div>
-              </div>
-            </div>
-            
           </div>
 
           {/* Bottom copyright line */}
-          <div className="pt-8 border-t border-[#3A7070]/20 flex flex-col sm:flex-row justify-between items-center gap-4 text-[#A3B3B3] text-xs font-space font-bold uppercase tracking-wider">
+          <div className="pt-8 mt-12 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500 text-xs font-space font-bold uppercase tracking-wider">
             <p>© 2026 Hackers Team & UCE Panruti. All rights reserved.</p>
             <p className="flex items-center gap-2">Version 3.0.0 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Systems Operational</p>
           </div>
@@ -2421,7 +2391,7 @@ const PatientDashboard = ({ setView, userData }) => {
       )}
 
       {/* Sleek Floating Sidebar */}
-      <div className={`${isSidebarOpen ? 'w-64 md:w-72 p-6 opacity-100 pointer-events-auto' : 'w-0 p-0 opacity-0 pointer-events-none border-none'} absolute md:relative z-30 transition-all duration-300 h-[calc(100vh-2rem)] md:h-full left-4 md:left-0 top-4 md:top-0 rounded-[2.5rem] glass-panel shrink-0 glow-teal flex flex-col overflow-hidden hover:shadow-[0_20px_50px_rgba(13,112,112,0.18)]`}>
+      <div className={`${isSidebarOpen ? 'w-64 md:w-72 p-6 opacity-100 pointer-events-auto' : 'w-0 p-0 opacity-0 pointer-events-none border-none'} absolute md:relative z-30 transition-all duration-300 h-[calc(100vh-2rem)] md:h-full left-4 md:left-0 top-4 md:top-0 rounded-[2.5rem] bg-white/[0.16] backdrop-blur-3xl border border-white/20 shrink-0 glow-teal flex flex-col overflow-hidden hover:shadow-[0_20px_50px_rgba(13,112,112,0.18)]`}>
         {/* Light Green Animated Background */}
         <div className="absolute -top-[10%] -left-[10%] w-[120%] h-[50%] bg-[#8FA989] rounded-full mix-blend-multiply blur-[80px] opacity-[0.12] animate-pulse pointer-events-none z-0" style={{animationDuration: '4s'}}></div>
         <div className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[50%] bg-[#EAF4F0] rounded-full mix-blend-multiply blur-[80px] opacity-40 pointer-events-none z-0" style={{animation: 'pulse 8s infinite alternate'}}></div>
@@ -2440,34 +2410,36 @@ const PatientDashboard = ({ setView, userData }) => {
                </button>
             </div>
             
-            <div className="flex-1 space-y-2 overflow-y-auto scrollbar-hide">
-              {menuItems.map((item, i) => {
-                const IconComponent = item.icon;
-                const isActive = activePage === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      setActivePage(item.id);
-                      if (isMobile) setIsSidebarOpen(false);
-                    }}
-                    style={{animationDelay: `${i * 50}ms`}}
-                    className={`w-full flex items-center gap-4 px-5 py-4 rounded-[1.2rem] font-space font-extrabold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
-                      isActive 
-                      ? 'bg-[#3A7070] text-white shadow-lg shadow-[#3A7070]/25 scale-102' 
-                      : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070] hover:shadow-[0_4px_12px_rgba(58,112,112,0.03)]'
-                    }`}
-                  >
-                    {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
-                    <IconComponent size={18} className="relative z-10" /> <span className="relative z-10">{item.label}</span>
-                  </button>
-                )
-              })}
+            <div className="flex-1 flex flex-col space-y-2 overflow-hidden">
+              <div className="space-y-1 shrink-0">
+                {menuItems.map((item, i) => {
+                  const IconComponent = item.icon;
+                  const isActive = activePage === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        setActivePage(item.id);
+                        if (isMobile) setIsSidebarOpen(false);
+                      }}
+                      style={{animationDelay: `${i * 50}ms`}}
+                      className={`w-full flex items-center gap-4 px-5 py-3 rounded-[1.2rem] font-space font-extrabold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
+                        isActive 
+                        ? 'bg-[#3A7070] text-white shadow-lg shadow-[#3A7070]/25 scale-102' 
+                        : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070] hover:shadow-[0_4px_12px_rgba(58,112,112,0.03)]'
+                      }`}
+                    >
+                      {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
+                      <IconComponent size={18} className="relative z-10" /> <span className="relative z-10">{item.label}</span>
+                    </button>
+                  )
+                })}
+              </div>
 
               {/* Chat history inside sidebar, visible when active page is chat */}
               {activePage === 'chat' && sessions.length > 0 && (
-                <div className="mt-8 pt-6 border-t border-[#3A7070]/10 space-y-3">
-                  <div className="flex items-center justify-between text-[10px] font-space font-extrabold text-[#3A7070] uppercase tracking-widest px-2 mb-2">
+                <div className="flex-1 flex flex-col min-h-0 mt-4 pt-4 border-t border-[#3A7070]/10 overflow-hidden">
+                  <div className="flex items-center justify-between text-[10px] font-space font-extrabold text-[#3A7070] uppercase tracking-widest px-2 mb-2 shrink-0">
                     <span>🕒 History</span>
                     <button 
                       onClick={handleNewChat}
@@ -2477,7 +2449,7 @@ const PatientDashboard = ({ setView, userData }) => {
                       + New
                     </button>
                   </div>
-                  <div className="max-h-48 overflow-y-auto space-y-2 pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/15 scrollbar-track-transparent">
+                  <div className="flex-1 overflow-y-auto space-y-2 pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/15 scrollbar-track-transparent">
                     {sessions.map(s => {
                       const isActive = s.id === currentSessionId;
                       return (
