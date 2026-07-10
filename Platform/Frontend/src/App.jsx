@@ -2479,96 +2479,103 @@ const PatientDashboard = ({ setView, userData }) => {
         <div className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[50%] bg-[#EAF4F0] rounded-full mix-blend-multiply blur-[80px] opacity-40 pointer-events-none z-0" style={{animation: 'pulse 8s infinite alternate'}}></div>
 
         {isSidebarOpen && (
-          <div className="flex flex-col h-full w-full relative z-10">
-            <div className="flex items-center gap-3 cursor-pointer mb-8" onClick={() => setView('landing')}>
+          <div className="flex flex-col h-full w-full relative z-10 gap-4">
+            {/* Header */}
+            <div className="flex items-center gap-3 cursor-pointer shrink-0" onClick={() => setView('landing')}>
                <KeffiLogo size="w-8 h-8" />
                <h1 className="text-2xl font-raleway font-black text-[#2C5555] tracking-tight">Keffi AI</h1>
-               <button 
-                 onClick={(e) => { e.stopPropagation(); setIsSidebarOpen(false); }} 
-                 className="ml-auto p-1.5 rounded-xl hover:bg-[#3A7070]/10 text-[#3A7070] transition-colors cursor-pointer"
-                 title="Collapse Menu"
-               >
-                 ✕
-               </button>
+               {isMobile && (
+                 <button 
+                   onClick={(e) => { e.stopPropagation(); setIsSidebarOpen(false); }} 
+                   className="ml-auto p-1.5 rounded-xl hover:bg-[#3A7070]/10 text-[#3A7070] transition-colors cursor-pointer"
+                   title="Collapse Menu"
+                 >
+                   ✕
+                 </button>
+               )}
             </div>
             
-            <div className="flex-1 flex flex-col space-y-2 overflow-hidden">
-              <div className="space-y-1 shrink-0">
-                {menuItems.map((item, i) => {
-                  const IconComponent = item.icon;
-                  const isActive = activePage === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => {
-                        setActivePage(item.id);
-                        if (isMobile) setIsSidebarOpen(false);
-                      }}
-                      style={{animationDelay: `${i * 50}ms`}}
-                      className={`w-full flex items-center gap-4 px-5 py-3 rounded-[1.2rem] font-space font-extrabold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
-                        isActive 
-                        ? 'bg-[#3A7070] text-white shadow-lg shadow-[#3A7070]/25 scale-102' 
-                        : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070] hover:shadow-[0_4px_12px_rgba(58,112,112,0.03)]'
-                      }`}
-                    >
-                      {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
-                      <IconComponent size={18} className="relative z-10" /> <span className="relative z-10">{item.label}</span>
-                    </button>
-                  )
-                })}
-              </div>
+            {/* Main Menu Card Wrapper */}
+            <div className="bg-white/20 border border-white/30 rounded-2xl p-2.5 space-y-0.5 shadow-sm shrink-0">
+              {menuItems.map((item, i) => {
+                const IconComponent = item.icon;
+                const isActive = activePage === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setActivePage(item.id);
+                      if (isMobile) setIsSidebarOpen(false);
+                    }}
+                    style={{animationDelay: `${i * 50}ms`}}
+                    className={`w-full flex items-center gap-3.5 px-4 py-2.5 rounded-xl font-space font-extrabold text-xs tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
+                      isActive 
+                      ? 'bg-[#3A7070] text-white shadow-md shadow-[#3A7070]/20 scale-[1.01]' 
+                      : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070]'
+                    }`}
+                  >
+                    {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
+                    <IconComponent size={16} className="relative z-10 shrink-0" /> <span className="relative z-10">{item.label}</span>
+                  </button>
+                )
+              })}
+            </div>
 
-              {/* Chat history inside sidebar, visible when active page is chat */}
-              {activePage === 'chat' && sessions.length > 0 && (
-                <div className="flex-1 flex flex-col min-h-0 mt-4 pt-4 border-t border-[#3A7070]/10 overflow-hidden">
-                  <div className="flex items-center justify-between text-[10px] font-space font-extrabold text-[#3A7070] uppercase tracking-widest px-2 mb-2 shrink-0">
-                    <span>🕒 History</span>
-                    <button 
-                      onClick={handleNewChat}
-                      className="text-xs hover:text-[#2C5555] font-black cursor-pointer"
-                      title="Start fresh conversation"
-                    >
-                      + New
-                    </button>
-                  </div>
-                  <div className="flex-1 overflow-y-auto space-y-2 pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/15 scrollbar-track-transparent">
-                    {sessions.map(s => {
-                      const isActive = s.id === currentSessionId;
-                      return (
-                        <div 
-                          key={s.id}
-                          onClick={() => setCurrentSessionId(s.id)}
-                          className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all duration-300 cursor-pointer group hover:-translate-y-0.5 ${
-                            isActive 
-                              ? 'border-[#3A7070]/30 bg-[#3A7070]/12 text-[#2C5555] font-extrabold shadow-sm' 
-                              : 'border-white/10 bg-white/10 hover:bg-white/35 text-slate-700'
-                          }`}
-                        >
-                          <div className="flex flex-col min-w-0 pr-2">
-                            <span className="text-[12px] font-space leading-tight truncate">{s.title}</span>
-                          </div>
-                          <button 
-                            onClick={(e) => handleDeleteSession(e, s.id)}
-                            className="opacity-0 group-hover:opacity-100 w-5 h-5 rounded-lg hover:bg-red-500/10 hover:text-red-500 text-slate-400 flex items-center justify-center transition-all shrink-0 cursor-pointer text-[10px]"
-                            title="Delete history"
-                          >
-                            ✕
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
+            {/* Chat history inside sidebar, visible when active page is chat */}
+            {activePage === 'chat' && sessions.length > 0 && (
+              <div className="flex-1 flex flex-col min-h-[180px] bg-white/10 border border-white/20 rounded-2xl p-3.5 overflow-hidden shadow-sm animate-fade-in">
+                <div className="flex items-center justify-between text-[10px] font-space font-extrabold text-[#2C5555] uppercase tracking-widest px-1 mb-2 shrink-0">
+                  <span>🕒 Session History</span>
+                  <button 
+                    onClick={handleNewChat}
+                    className="text-[10px] px-2 py-0.5 rounded-lg bg-white/40 hover:bg-white/60 border border-[#3A7070]/20 text-[#3A7070] font-black transition-all cursor-pointer shadow-sm"
+                    title="Start fresh conversation"
+                  >
+                    + New
+                  </button>
                 </div>
-              )}
-            </div>
+                <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/15 scrollbar-track-transparent">
+                  {sessions.map(s => {
+                    const isActive = s.id === currentSessionId;
+                    return (
+                      <div 
+                        key={s.id}
+                        onClick={() => setCurrentSessionId(s.id)}
+                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all duration-300 cursor-pointer group hover:-translate-y-0.5 ${
+                          isActive 
+                            ? 'border-[#3A7070]/30 bg-[#3A7070]/12 text-[#2C5555] font-extrabold shadow-sm' 
+                            : 'border-white/10 bg-white/10 hover:bg-white/35 text-slate-700 font-semibold'
+                        }`}
+                      >
+                        <div className="flex flex-col min-w-0 pr-2">
+                          <span className="text-[11px] font-space leading-tight truncate">{s.title}</span>
+                        </div>
+                        <button 
+                          onClick={(e) => handleDeleteSession(e, s.id)}
+                          className="opacity-0 group-hover:opacity-100 w-4 h-4 rounded-md hover:bg-red-500/10 hover:text-red-500 text-slate-400 flex items-center justify-center transition-all shrink-0 cursor-pointer text-[9px]"
+                          title="Delete history"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
-            <div className="mt-6 px-4 py-4 rounded-[1.2rem] glass-card border border-white/30 font-space font-extrabold text-xs text-[#D4A373] flex items-center justify-center gap-2 shrink-0 tracking-wider">
-              <Star size={16} className="fill-[#D4A373] text-[#D4A373] animate-pulse" /> {globalPoints} Sanctuary Points
+            {/* Footer Items (Points & Exit) */}
+            <div className="mt-auto pt-3 border-t border-[#3A7070]/10 flex flex-col gap-2 shrink-0">
+              <div className="px-4 py-3 rounded-xl bg-white/20 border border-white/30 font-space font-extrabold text-[11px] text-[#D4A373] flex items-center justify-center gap-2 shadow-sm tracking-wider">
+                <Star size={14} className="fill-[#D4A373] text-[#D4A373] animate-pulse" /> {globalPoints} Sanctuary Points
+              </div>
+              <button 
+                onClick={() => setView('landing')} 
+                className="py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-700 font-space font-extrabold text-[10px] tracking-widest transition-all w-full text-center cursor-pointer uppercase"
+              >
+                Exit Sanctuary
+              </button>
             </div>
-
-            <button onClick={() => setView('landing')} className="mt-4 text-slate-500 hover:text-slate-700 font-space font-extrabold text-sm transition-all w-full text-center shrink-0 cursor-pointer tracking-wide">
-              Exit Sanctuary
-            </button>
           </div>
         )}
       </div>
