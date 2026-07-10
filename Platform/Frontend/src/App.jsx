@@ -970,23 +970,81 @@ const LandingPage = ({ setView }) => {
 // ==========================================
 const PatientLogin = ({ setView, setUserData }) => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({ phone: '', email: '', otp: '', name: '', age: '', dob: '', gender: '', place: '' });
+  const [formData, setFormData] = useState({
+    phone: '',
+    email: '',
+    otp: '',
+    name: '',
+    age: '',
+    dob: '',
+    gender: '',
+    place: '',
+    emergencyName: '',
+    emergencyPhone: '',
+    language: 'English',
+    focusTags: [],
+    consent: false
+  });
+  const [timer, setTimer] = useState(59);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    let interval;
+    if (step === 2 && timer > 0) {
+      interval = setInterval(() => {
+        setTimer(t => t - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [step, timer]);
+
+  const handleResendOTP = () => {
+    setTimer(59);
+    alert("A new secure verification code has been resent to your mobile number.");
+  };
+
+  const toggleTag = (tag) => {
+    setFormData(prev => {
+      const active = prev.focusTags.includes(tag);
+      return {
+        ...prev,
+        focusTags: active 
+          ? prev.focusTags.filter(t => t !== tag) 
+          : [...prev.focusTags, tag]
+      };
+    });
+  };
 
   const handleNext = () => {
     setError('');
+    const phoneClean = formData.phone.replace(/\D/g, '');
+
     if (step === 1) {
-      const phoneClean = formData.phone.replace(/\D/g, '');
       if (!formData.phone) return setError('Please enter your mobile number.');
       if (phoneClean.length !== 10) return setError('Mobile number must be exactly 10 digits.');
       if (!formData.email) return setError('Please enter your email address.');
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return setError('Please enter a valid email address.');
+      if (!formData.consent) return setError('You must agree to the WHO-compliant crisis response protocols to proceed.');
+      
+      // Move to OTP Step
+      setTimer(59);
       setStep(2);
     } else if (step === 2) {
+      if (!formData.otp) return setError('Please enter the 6-digit OTP code.');
+      if (formData.otp.length !== 6 || isNaN(formData.otp)) return setError('OTP must be a 6-digit number.');
+      setStep(3);
+    } else if (step === 3) {
       if (!formData.name.trim()) return setError('Please enter your preferred name.');
       if (!formData.age || isNaN(formData.age) || +formData.age < 5 || +formData.age > 120) return setError('Please enter a valid age (5–120).');
+      if (!formData.dob) return setError('Please enter your Date of Birth.');
       if (!formData.gender) return setError('Please select your gender.');
-      const phoneClean = formData.phone.replace(/\D/g, '');
+      if (!formData.place.trim()) return setError('Please enter your location.');
+      if (!formData.emergencyName.trim()) return setError('Please enter an emergency contact name.');
+      if (!formData.emergencyPhone) return setError('Please enter an emergency contact mobile number.');
+      
+      const emerPhoneClean = formData.emergencyPhone.replace(/\D/g, '');
+      if (emerPhoneClean.length !== 10) return setError('Emergency contact number must be exactly 10 digits.');
+
       const patientId = 'P-' + phoneClean.slice(-6);
       const fullData = { ...formData, patient_id: patientId };
       localStorage.setItem('keffi_user', JSON.stringify(fullData));
@@ -995,24 +1053,28 @@ const PatientLogin = ({ setView, setUserData }) => {
     }
   };
 
+  const focusOptions = ["Anxiety", "Stress", "Panic Attacks", "Depression", "Grief", "Venting Space", "Self-Care"];
+
   return (
     <div className={`min-h-screen flex items-center justify-center p-6 md:p-10 bg-transparent relative overflow-hidden`}>
       {/* Ambient background glows for richer color combination */}
       <div className="absolute top-10 left-10 w-[450px] h-[450px] glow-orb-emerald rounded-full blur-[100px] pointer-events-none z-0"></div>
       <div className="absolute bottom-10 right-10 w-[450px] h-[450px] glow-orb-teal rounded-full blur-[100px] pointer-events-none z-0"></div>
 
-      <div className={`max-w-5xl w-full min-h-[700px] lg:h-[700px] rounded-[2.5rem] glass-panel flex flex-col md:flex-row overflow-hidden glow-teal animate-scale-up relative z-10 hover:shadow-[0_25px_60px_rgba(13,112,112,0.25)] transition-all duration-500`}>
+      <div className={`max-w-5xl w-full min-h-[700px] rounded-[2.5rem] glass-panel flex flex-col md:flex-row overflow-hidden glow-teal animate-scale-up relative z-10 hover:shadow-[0_25px_60px_rgba(13,112,112,0.25)] transition-all duration-500`}>
         {/* Left Image Side */}
         <div className="hidden md:flex md:w-5/12 relative overflow-hidden bg-[#E6F0F0]/25 rounded-l-[2.5rem] items-center justify-center p-8 border-r border-white/20 animate-fade-in">
            <DynamicLoginIllustration step={step} className="w-full h-full max-w-[300px] object-contain relative z-10 drop-shadow-2xl transition-all duration-500" />
            <div className="absolute inset-0 bg-gradient-to-t from-[#2C5555]/30 via-transparent to-transparent flex flex-col justify-end p-12 text-[#1E293B] z-20">
               <h2 className="text-3xl font-poppins font-black text-[#0D5050] mb-3">
                 {step === 1 && <>Secure <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.55em', textTransform: 'none'}}>Sanctuary</span></>}
-                {step === 2 && <>Your <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.55em', textTransform: 'none'}}>Sanctuary</span></>}
+                {step === 2 && <>Verify <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.55em', textTransform: 'none'}}>Identity</span></>}
+                {step === 3 && <>Your <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.55em', textTransform: 'none'}}>Profile</span></>}
               </h2>
               <p className="text-base opacity-90 font-medium font-inter">
                 {step === 1 && "Enter your details below to establish a secure connection."}
-                {step === 2 && "Let's build your personal profile for a better experience."}
+                {step === 2 && "Enter the verification code sent to your phone."}
+                {step === 3 && "Let's build your personal profile for a better experience."}
               </p>
            </div>
         </div>
@@ -1020,7 +1082,7 @@ const PatientLogin = ({ setView, setUserData }) => {
         {/* Right Form Side */}
         <div className="w-full md:w-7/12 p-10 md:p-16 flex flex-col justify-center bg-white/25 backdrop-blur-sm animate-fade-in" style={{animationDelay: '100ms'}}>
           <div className="flex justify-start gap-3 mb-10">
-            {[1,2].map(i => (
+            {[1,2,3].map(i => (
               <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === step ? 'w-12 bg-[#3A7070]' : 'w-4 bg-white/40'}`}></div>
             ))}
           </div>
@@ -1042,42 +1104,105 @@ const PatientLogin = ({ setView, setUserData }) => {
                   <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Email Address</label>
                   <input type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
                 </div>
+                
+                {/* Checkbox for WHO guidelines compliance */}
+                <div className="animate-slide-up flex items-start gap-3 pt-2" style={{animationDelay: '250ms'}}>
+                  <input 
+                    type="checkbox" 
+                    id="consent-check" 
+                    checked={formData.consent} 
+                    onChange={e => setFormData({...formData, consent: e.target.checked})} 
+                    className="mt-1 w-5 h-5 rounded border-white/50 text-[#3A7070] focus:ring-[#3A7070] cursor-pointer" 
+                  />
+                  <label htmlFor="consent-check" className="text-xs text-slate-600 font-space font-bold leading-normal cursor-pointer select-none">
+                    I consent to WHO-compliant clinical safety protocols. I understand Keffi AI automatically triggers an SOS alert to my emergency contact if acute distress is detected.
+                  </label>
+                </div>
               </div>
               {error && <div className="text-red-500 text-sm font-space font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
               <div className="pt-2 space-y-4 animate-slide-up" style={{animationDelay: '300ms'}}>
-                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Continue</button>
+                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Send Code</button>
                 <button onClick={() => setView('landing')} className="w-full text-center text-slate-400 font-space font-bold text-sm hover:text-[#3A7070] transition-colors cursor-pointer">Back to Home</button>
               </div>
             </div>
           )}
 
           {step === 2 && (
-            <div className="space-y-8 animate-fade-in h-full flex flex-col justify-center">
+            <div className="space-y-8 animate-fade-in">
               <div>
-                <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2AA870] to-[#2C5555] mb-3">
-                  Your <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.45em', textTransform: 'none'}}>Profile</span>
+                <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-[#3A7070] mb-3">
+                  Verify <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.45em', textTransform: 'none'}}>Identity</span>
                 </h2>
-                <p className="text-slate-500 text-base font-inter font-semibold leading-relaxed">Help Keffi understand you better.</p>
+                <p className="text-slate-500 text-base font-inter font-semibold leading-relaxed">
+                  We've sent a 6-digit secure code to <span className="text-[#3A7070] font-bold">{formData.phone}</span>.
+                </p>
               </div>
+              
               <div className="space-y-5">
                 <div className="animate-slide-up" style={{animationDelay: '100ms'}}>
-                  <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Preferred Name</label>
-                  <input type="text" placeholder="What should we call you?" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
+                  <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Verification OTP Code</label>
+                  <input 
+                    type="text" 
+                    maxLength={6} 
+                    placeholder="123456" 
+                    value={formData.otp} 
+                    onChange={e => setFormData({...formData, otp: e.target.value.replace(/\D/g, '')})} 
+                    className="w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-center text-2xl tracking-[0.4em] focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all" 
+                  />
                 </div>
-                <div className="flex gap-5 animate-slide-up" style={{animationDelay: '200ms'}}>
+                
+                <div className="text-center font-space text-sm font-bold text-slate-500 animate-slide-up" style={{animationDelay: '200ms'}}>
+                  {timer > 0 ? (
+                    <span>Resend code in <strong className="text-[#3A7070]">0:{timer < 10 ? `0${timer}` : timer}</strong></span>
+                  ) : (
+                    <button onClick={handleResendOTP} className="text-[#3A7070] hover:text-[#2C5555] underline cursor-pointer">
+                      Resend Verification Code
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {error && <div className="text-red-500 text-sm font-space font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
+              <div className="pt-2 space-y-4 animate-slide-up" style={{animationDelay: '300ms'}}>
+                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Verify OTP</button>
+                <button onClick={() => setStep(1)} className="w-full text-center text-slate-400 font-space font-bold text-sm hover:text-[#3A7070] transition-colors cursor-pointer">Go Back</button>
+              </div>
+            </div>
+          )}
+
+          {step === 3 && (
+            <div className="space-y-6 animate-fade-in max-h-[600px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+              <div>
+                <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2AA870] to-[#2C5555] mb-2">
+                  Your <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.45em', textTransform: 'none'}}>Profile</span>
+                </h2>
+                <p className="text-slate-500 text-sm font-inter font-semibold leading-relaxed">Let's refine your details for custom mood calibration.</p>
+              </div>
+              
+              <div className="space-y-4">
+                {/* Name */}
+                <div>
+                  <label className="block text-xs font-space font-extrabold text-slate-600 mb-1 tracking-wide">Preferred Name</label>
+                  <input type="text" placeholder="What should we call you?" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className={`w-full p-3 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-sm focus:border-[#3A7070] transition-all`} />
+                </div>
+                
+                {/* Age & DOB */}
+                <div className="flex gap-4">
                   <div className="w-1/3">
-                     <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Age</label>
-                     <input type="number" placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
+                     <label className="block text-xs font-space font-extrabold text-slate-600 mb-1 tracking-wide">Age</label>
+                     <input type="number" placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} className={`w-full p-3 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-sm focus:border-[#3A7070] transition-all`} />
                   </div>
                   <div className="w-2/3">
-                     <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Date of Birth</label>
-                     <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-600 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
+                     <label className="block text-xs font-space font-extrabold text-slate-600 mb-1 tracking-wide">Date of Birth</label>
+                     <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full p-3 rounded-xl glass-input outline-none text-slate-600 font-space font-semibold text-sm focus:border-[#3A7070] transition-all`} />
                   </div>
                 </div>
-                <div className="flex gap-5 animate-slide-up" style={{animationDelay: '300ms'}}>
+
+                {/* Gender & Location */}
+                <div className="flex gap-4">
                   <div className="w-1/2">
-                    <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Gender</label>
-                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all appearance-none`}>
+                    <label className="block text-xs font-space font-extrabold text-slate-600 mb-1 tracking-wide">Gender</label>
+                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className={`w-full p-3 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-sm focus:border-[#3A7070] transition-all appearance-none`}>
                       <option value="" disabled>Select</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -1086,14 +1211,63 @@ const PatientLogin = ({ setView, setUserData }) => {
                     </select>
                   </div>
                   <div className="w-1/2">
-                    <label className="block text-sm font-space font-extrabold text-slate-600 mb-2 tracking-wide">Location</label>
-                    <input type="text" placeholder="City / District" value={formData.place} onChange={e => setFormData({...formData, place: e.target.value})} className={`w-full p-4 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
+                    <label className="block text-xs font-space font-extrabold text-slate-600 mb-1 tracking-wide">Location</label>
+                    <input type="text" placeholder="City / District" value={formData.place} onChange={e => setFormData({...formData, place: e.target.value})} className={`w-full p-3 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-sm focus:border-[#3A7070] transition-all`} />
+                  </div>
+                </div>
+
+                {/* Multilingual Support Choice */}
+                <div>
+                  <label className="block text-xs font-space font-extrabold text-slate-600 mb-1 tracking-wide">Preferred Chat Language</label>
+                  <select value={formData.language} onChange={e => setFormData({...formData, language: e.target.value})} className="w-full p-3 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-sm focus:border-[#3A7070] transition-all appearance-none">
+                    <option value="English">English</option>
+                    <option value="Tamil">Tamil (தமிழ்)</option>
+                    <option value="Hindi">Hindi (हिन्दी)</option>
+                    <option value="Spanish">Spanish (Español)</option>
+                  </select>
+                </div>
+
+                {/* Emergency Contact Name & Mobile */}
+                <div className="flex gap-4">
+                  <div className="w-1/2">
+                     <label className="block text-xs font-space font-extrabold text-slate-600 mb-1 tracking-wide">Emergency Contact Name</label>
+                     <input type="text" placeholder="Name" value={formData.emergencyName} onChange={e => setFormData({...formData, emergencyName: e.target.value})} className={`w-full p-3 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-sm focus:border-[#3A7070] transition-all`} />
+                  </div>
+                  <div className="w-1/2">
+                     <label className="block text-xs font-space font-extrabold text-slate-600 mb-1 tracking-wide">Emergency Phone</label>
+                     <input type="tel" placeholder="10-digit Mobile" value={formData.emergencyPhone} onChange={e => setFormData({...formData, emergencyPhone: e.target.value})} className={`w-full p-3 rounded-xl glass-input outline-none text-slate-800 font-space font-semibold text-sm focus:border-[#3A7070] transition-all`} />
+                  </div>
+                </div>
+
+                {/* Primary Distress Mood Focus Area Pills */}
+                <div>
+                  <label className="block text-xs font-space font-extrabold text-slate-600 mb-2 tracking-wide">Primary Focus Areas</label>
+                  <div className="flex flex-wrap gap-2">
+                    {focusOptions.map(tag => {
+                      const isActive = formData.focusTags.includes(tag);
+                      return (
+                        <button
+                          key={tag}
+                          type="button"
+                          onClick={() => toggleTag(tag)}
+                          className={`px-3 py-1.5 rounded-lg border text-xs font-space font-extrabold transition-all cursor-pointer ${
+                            isActive 
+                            ? 'bg-[#3A7070] text-white border-[#3A7070] shadow-sm' 
+                            : 'bg-white/45 text-slate-600 border-white/60 hover:bg-white/60'
+                          }`}
+                        >
+                          {tag}
+                        </button>
+                      )
+                    })}
                   </div>
                 </div>
               </div>
+
               {error && <div className="text-red-500 text-sm font-space font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-3">{error}</div>}
-              <div className="pt-2 mt-auto animate-slide-up" style={{animationDelay: '400ms'}}>
-                <button onClick={handleNext} className={`w-full py-4 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Enter Keffi</button>
+              <div className="pt-2 flex flex-col gap-3">
+                <button onClick={handleNext} className={`w-full py-3.5 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Enter Keffi</button>
+                <button onClick={() => setStep(2)} className="w-full text-center text-slate-400 font-space font-bold text-sm hover:text-[#3A7070] transition-colors cursor-pointer">Back to Verification</button>
               </div>
             </div>
           )}
