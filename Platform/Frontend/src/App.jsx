@@ -697,7 +697,7 @@ const LandingPage = ({ setView }) => {
                     <Brain size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#0A3535] uppercase tracking-wider">AI Core</p>
+                    <p className="font-space text-sm md:text-base font-black text-[#0A3535] uppercase tracking-widest mb-1">AI Core</p>
                     <h4 className="font-raleway font-black text-xl text-[#2C5555]">BERT + Gemini</h4>
                   </div>
                 </div>
@@ -717,7 +717,7 @@ const LandingPage = ({ setView }) => {
                     <Database size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-amber-800 uppercase tracking-wider">Memory Layer</p>
+                    <p className="font-space text-sm md:text-base font-black text-amber-800 uppercase tracking-widest mb-1">Memory Layer</p>
                     <h4 className="font-raleway font-black text-xl text-amber-750">Pinecone Vector DB</h4>
                   </div>
                 </div>
@@ -737,7 +737,7 @@ const LandingPage = ({ setView }) => {
                     <Shield size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-rose-800 uppercase tracking-wider">Safety Automation</p>
+                    <p className="font-space text-sm md:text-base font-black text-rose-800 uppercase tracking-widest mb-1">Safety Automation</p>
                     <h4 className="font-raleway font-black text-xl text-rose-750">n8n Workflows</h4>
                   </div>
                 </div>
@@ -757,7 +757,7 @@ const LandingPage = ({ setView }) => {
                     <Zap size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-emerald-800 uppercase tracking-wider">Backend API</p>
+                    <p className="font-space text-sm md:text-base font-black text-emerald-800 uppercase tracking-widest mb-1">Backend API</p>
                     <h4 className="font-raleway font-black text-xl text-emerald-750">FastAPI + Python</h4>
                   </div>
                 </div>
@@ -777,7 +777,7 @@ const LandingPage = ({ setView }) => {
                     <Activity size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-[#0A3535] uppercase tracking-wider">Frontend</p>
+                    <p className="font-space text-sm md:text-base font-black text-[#0A3535] uppercase tracking-widest mb-1">Frontend</p>
                     <h4 className="font-raleway font-black text-xl text-[#2C5555]">React + Vite + Tailwind</h4>
                   </div>
                 </div>
@@ -797,7 +797,7 @@ const LandingPage = ({ setView }) => {
                     <Target size={24} />
                   </div>
                   <div>
-                    <p className="font-space text-xs font-bold text-violet-850 uppercase tracking-wider">Deployment</p>
+                    <p className="font-space text-sm md:text-base font-black text-violet-850 uppercase tracking-widest mb-1">Deployment</p>
                     <h4 className="font-raleway font-black text-xl text-violet-750">Hugging Face + Vercel</h4>
                   </div>
                 </div>
@@ -1007,8 +1007,8 @@ const PatientLogin = ({ setView, setUserData }) => {
            <DynamicLoginIllustration step={step} className="w-full h-full max-w-[300px] object-contain relative z-10 drop-shadow-2xl transition-all duration-500" />
            <div className="absolute inset-0 bg-gradient-to-t from-[#2C5555]/30 via-transparent to-transparent flex flex-col justify-end p-12 text-[#1E293B] z-20">
               <h2 className="text-3xl font-poppins font-black text-[#0D5050] mb-3">
-                {step === 1 && <>Secure <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.2em', textTransform: 'lowercase'}}>entry</span></>}
-                {step === 2 && <>Your <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.2em', textTransform: 'lowercase'}}>sanctuary</span></>}
+                {step === 1 && <>Secure <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.55em', textTransform: 'none'}}>Sanctuary</span></>}
+                {step === 2 && <>Your <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.55em', textTransform: 'none'}}>Sanctuary</span></>}
               </h2>
               <p className="text-base opacity-90 font-medium font-inter">
                 {step === 1 && "Enter your details below to establish a secure connection."}
@@ -1029,7 +1029,7 @@ const PatientLogin = ({ setView, setUserData }) => {
             <div className="space-y-8 animate-fade-in">
               <div>
                 <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-[#3A7070] mb-3">
-                  Secure <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.15em', textTransform: 'lowercase'}}>entry</span>
+                  Secure <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.45em', textTransform: 'none'}}>Sanctuary</span>
                 </h2>
                 <p className="text-slate-500 text-base font-inter font-semibold leading-relaxed">Your privacy is our priority. Enter details for a secure OTP.</p>
               </div>
@@ -1055,7 +1055,7 @@ const PatientLogin = ({ setView, setUserData }) => {
             <div className="space-y-8 animate-fade-in h-full flex flex-col justify-center">
               <div>
                 <h2 className="text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2AA870] to-[#2C5555] mb-3">
-                  Your <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.15em', textTransform: 'lowercase'}}>profile</span>
+                  Your <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.45em', textTransform: 'none'}}>Profile</span>
                 </h2>
                 <p className="text-slate-500 text-base font-inter font-semibold leading-relaxed">Help Keffi understand you better.</p>
               </div>
@@ -1616,7 +1616,7 @@ const ChatArea = ({
       
       {/* 💬 MAIN CHAT AREA */}
       <div className="flex-1 flex flex-col relative min-w-0">
-        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/75 backdrop-blur-md">
+        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/[0.18] backdrop-blur-3xl">
             <div className="flex items-center gap-2 md:gap-4">
               {!isSidebarOpen && (
                 <button 
@@ -1735,7 +1735,7 @@ const ChatArea = ({
             </div>
           )}
           {/* Chat message flow container */}
-          <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 relative bg-white/5 backdrop-blur-[4px] scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+          <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 relative bg-white/[0.12] backdrop-blur-3xl scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
             {messages.map(m => {
               const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
               return (
@@ -1790,8 +1790,8 @@ const ChatArea = ({
           </div>
   
           {/* Input box section */}
-          <div className="px-6 pb-6 bg-transparent z-20 relative shrink-0">
-            <div className="max-w-4xl mx-auto glass-panel border border-white/45 shadow-xl rounded-[2rem] p-3 flex items-center gap-3 backdrop-blur-xl hover:shadow-[0_12px_40px_rgba(58,112,112,0.12)] transition-shadow">
+          <div className="px-6 pb-6 bg-white/[0.08] backdrop-blur-2xl border-t border-[#3A7070]/5 pt-6 z-20 relative shrink-0">
+            <div className="max-w-4xl mx-auto bg-white/45 border border-white/50 shadow-xl rounded-[2rem] p-3 flex items-center gap-3 backdrop-blur-2xl hover:shadow-[0_12px_40px_rgba(58,112,112,0.15)] transition-shadow">
               <button onClick={toggleRecording} className={`p-4 rounded-2xl transition-all cursor-pointer ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-500 hover:text-[#3A7070] hover:bg-slate-100/30'}`}>
                 <Mic size={20} />
               </button>
@@ -3016,13 +3016,27 @@ export default function App() {
            SCROLL ZOOM EFFECT
         ────────────────────────────────────────────── */
         .scroll-zoom-section {
-          transform: scale(0.96);
-          opacity: 0.88;
-          transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.85s ease;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        
+        .scroll-zoom-section h2, 
+        .scroll-zoom-section h3, 
+        .scroll-zoom-section p:not(.chat-message-text), 
+        .scroll-zoom-section .glass-card, 
+        .scroll-zoom-section .glass-panel {
+          transform: translateY(40px) scale(0.92);
+          opacity: 0;
+          transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
           will-change: transform, opacity;
         }
-        .scroll-zoom-section.in-view {
-          transform: scale(1);
+
+        .scroll-zoom-section.in-view h2, 
+        .scroll-zoom-section.in-view h3, 
+        .scroll-zoom-section.in-view p:not(.chat-message-text), 
+        .scroll-zoom-section.in-view .glass-card, 
+        .scroll-zoom-section.in-view .glass-panel {
+          transform: translateY(0) scale(1);
           opacity: 1;
         }
 
