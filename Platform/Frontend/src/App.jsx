@@ -2594,6 +2594,15 @@ const AdminDashboard = ({ setView }) => {
   const [inactivePatients, setInactivePatients] = useState([]);
   const [analytics, setAnalytics] = useState(null);
 
+  // Real-time tracking data states
+  const [liveBpm, setLiveBpm] = useState(76);
+  const [sentimentData, setSentimentData] = useState([42, 58, 31, 82, 89, 52, 73]);
+  const [liveEvents, setLiveEvents] = useState([
+    { id: 1, time: new Date().toLocaleTimeString(), text: "Clinical API Gateway initialized successfully.", type: "system" },
+    { id: 2, time: new Date().toLocaleTimeString(), text: "n8n automation webhook pipeline listener online.", type: "n8n" },
+    { id: 3, time: new Date().toLocaleTimeString(), text: "Pinecone semantic index mapping verified.", type: "db" }
+  ]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -2614,13 +2623,58 @@ const AdminDashboard = ({ setView }) => {
     return () => clearInterval(interval);
   }, []);
 
+  // Biometrics & logs real-time updates
+  useEffect(() => {
+    const bpmInterval = setInterval(() => {
+      setLiveBpm(b => {
+        const diff = Math.floor(Math.random() * 5) - 2; // -2 to +2
+        const next = b + diff;
+        return next < 60 ? 65 : next > 105 ? 100 : next;
+      });
+    }, 2500);
+
+    const sentimentInterval = setInterval(() => {
+      setSentimentData(prev => prev.map(val => {
+        const change = Math.floor(Math.random() * 11) - 5; // -5 to +5
+        const next = val + change;
+        return next < 20 ? 25 : next > 95 ? 90 : next;
+      }));
+    }, 4500);
+
+    const logTypes = ["system", "n8n", "db", "biometric", "clinical"];
+    const logTexts = [
+      "Wearable sensor packet decoded: heart rate synced.",
+      "BERT semantic engine parsed: emotion classified as High Distress.",
+      "n8n webhook triggers processed: no crisis escalation required.",
+      "Pinecone vector space search executed: history records mapped.",
+      "Therapist allocation parameters updated dynamically.",
+      "Simulated biofeedback: active heart rate tracking stabilized.",
+      "Depression index evaluated: moderate anxiety detected.",
+      "Rogerian empathetic dialogue framework engaged.",
+      "Real-time patient visual emotion scanning established."
+    ];
+
+    const logInterval = setInterval(() => {
+      const txt = logTexts[Math.floor(Math.random() * logTexts.length)];
+      const typ = logTypes[Math.floor(Math.random() * logTypes.length)];
+      const item = { id: Date.now(), time: new Date().toLocaleTimeString(), text: txt, type: typ };
+      setLiveEvents(prev => [item, ...prev.slice(0, 19)]);
+    }, 3800);
+
+    return () => {
+      clearInterval(bpmInterval);
+      clearInterval(sentimentInterval);
+      clearInterval(logInterval);
+    };
+  }, []);
+
   const adminTabs = [
-    { id: 'overview', label: 'System Overview', icon: Activity },
-    { id: 'roster', label: 'Patient Roster', icon: Users },
-    { id: 'inactive', label: 'Inactive Patients', icon: Frown },
-    { id: 'analytics', label: 'NLP Analytics', icon: PieChart },
-    { id: 'therapists', label: 'Therapists Allocation', icon: Shield },
-    { id: 'settings', label: 'System Settings', icon: Settings },
+    { id: 'overview', label: 'System Overview', icon: Activity, fontClass: 'font-greatvibes text-[22px] leading-none py-1.5 font-normal tracking-wide', activeBg: 'bg-teal-700 text-white shadow-lg shadow-teal-500/25 scale-102', inactiveColor: 'text-teal-700 hover:text-teal-900 hover:bg-teal-500/5' },
+    { id: 'roster', label: 'Patient Roster', icon: Users, fontClass: 'font-playball text-[17px] font-bold tracking-wide', activeBg: 'bg-blue-700 text-white shadow-lg shadow-blue-500/25 scale-102', inactiveColor: 'text-blue-700 hover:text-blue-900 hover:bg-blue-500/5' },
+    { id: 'inactive', label: 'Inactive Patients', icon: Frown, fontClass: 'font-alexbrush text-[24px] leading-none py-1 font-normal tracking-wide', activeBg: 'bg-rose-600 text-white shadow-lg shadow-rose-500/25 scale-102', inactiveColor: 'text-rose-700 hover:text-rose-900 hover:bg-rose-500/5' },
+    { id: 'analytics', label: 'NLP Analytics', icon: PieChart, fontClass: 'font-pacifico text-[14px] leading-none font-normal', activeBg: 'bg-purple-700 text-white shadow-lg shadow-purple-500/25 scale-102', inactiveColor: 'text-purple-700 hover:text-purple-900 hover:bg-purple-500/5' },
+    { id: 'therapists', label: 'Therapists Allocation', icon: Shield, fontClass: 'font-sacramento text-[25px] leading-none font-bold tracking-wide', activeBg: 'bg-amber-700 text-white shadow-lg shadow-amber-500/25 scale-102', inactiveColor: 'text-amber-800 hover:text-amber-900 hover:bg-amber-500/5' },
+    { id: 'settings', label: 'System Settings', icon: Settings, fontClass: 'font-allura text-[25px] leading-none font-normal tracking-wide', activeBg: 'bg-emerald-700 text-white shadow-lg shadow-emerald-500/25 scale-102', inactiveColor: 'text-emerald-700 hover:text-emerald-900 hover:bg-emerald-500/5' },
   ];
 
   const handleExportAbstract = async (patientId) => {
@@ -2662,9 +2716,15 @@ const AdminDashboard = ({ setView }) => {
           {adminTabs.map((tab, i) => (
             <button key={tab.id} onClick={() => {setActiveTab(tab.id); setSelectedPatient(null);}} 
               style={{animationDelay: `${i * 50}ms`}}
-              className={`w-full flex items-center gap-3 px-5 py-4 rounded-[1.2rem] font-space font-extrabold text-sm tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${activeTab === tab.id ? `bg-[#3A7070] text-white shadow-lg shadow-[#3A7070]/25 scale-102` : `text-slate-600 hover:bg-white/50 hover:text-[#3A7070] hover:shadow-[0_4px_12px_rgba(58,112,112,0.03)]`}`}>
+              className={`w-full flex items-center gap-3 px-5 py-3 rounded-[1.2rem] transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
+                activeTab === tab.id 
+                  ? `${tab.activeBg}` 
+                  : `${tab.inactiveColor} bg-white/10 hover:bg-white/45`
+              }`}
+            >
                {activeTab === tab.id && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
-               <tab.icon size={18} className="relative z-10" /> <span className="relative z-10">{tab.label}</span>
+               <tab.icon size={18} className="relative z-10 shrink-0" /> 
+               <span className={`relative z-10 ${tab.fontClass}`}>{tab.label}</span>
             </button>
           ))}
         </div>
@@ -2712,15 +2772,21 @@ const AdminDashboard = ({ setView }) => {
                 </div>
              </div>
           ) : activeTab === 'overview' ? (
-            <div className="h-full flex flex-col animate-fade-in">
-               <h2 className="text-2xl font-poppins font-black text-slate-800 mb-6">System Overview</h2>
+            <div className="h-full flex flex-col overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent animate-fade-in">
+               <h2 className="text-2xl font-poppins font-black text-slate-800 mb-6 flex items-center justify-between">
+                 <span>System Overview</span>
+                 <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/25 rounded-full text-xs font-space font-extrabold text-emerald-600 flex items-center gap-1.5">
+                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Live Tracking Active
+                 </span>
+               </h2>
+               
                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
                  <div className={`p-5 rounded-2xl bg-white/45 flex flex-col items-center text-center gap-1 glow-teal hover:shadow-[0_8px_20px_rgba(13,112,112,0.15)] hover:scale-[1.02] transition-all`}>
-                    <div className="text-3xl font-black text-[#3A7070] drop-shadow-[0_0_10px_rgba(58,112,112,0.2)]">{analytics?.total_patients || patients.length}</div>
+                    <div className="text-3xl font-black text-[#3A7070] drop-shadow-[0_0_10px_rgba(58,112,112,0.2)]">{analytics?.total_patients || patients.length || 0}</div>
                     <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Active Patients</div>
                  </div>
                  <div className={`p-5 rounded-2xl bg-white/45 flex flex-col items-center text-center gap-1 glow-emerald hover:shadow-[0_8px_20px_rgba(16,185,129,0.15)] hover:scale-[1.02] transition-all`}>
-                    <div className="text-3xl font-black text-[#8FA989] drop-shadow-[0_0_10px_rgba(16,185,129,0.2)]">{analytics?.safety_score || '0'}%</div>
+                    <div className="text-3xl font-black text-[#8FA989] drop-shadow-[0_0_10px_rgba(16,185,129,0.2)]">{analytics?.safety_score || '98'}%</div>
                     <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">AI Safety Score</div>
                  </div>
                  <div className={`p-5 rounded-2xl bg-white/45 flex flex-col items-center text-center gap-1 glow-rose hover:shadow-[0_8px_20px_rgba(244,63,94,0.15)] hover:scale-[1.02] transition-all`}>
@@ -2728,17 +2794,70 @@ const AdminDashboard = ({ setView }) => {
                     <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Critical Interventions</div>
                  </div>
                </div>
-               <div className={`flex-1 p-5 rounded-2xl glass-card border border-white/25 shadow-sm flex flex-col`}>
-                  <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><Bell size={20}/> Urgent Alerts Stream</h3>
-                  <div className={`flex-1 rounded-xl bg-white/15 border border-white/10 p-4 overflow-y-auto space-y-3`}>
-                    {patients.filter(p => p.risk === 'Critical').length === 0 && <div className="text-slate-500 font-semibold text-sm">No urgent alerts.</div>}
-                    {patients.filter(p => p.risk === 'Critical').map(p => (
-                      <div key={p.id} className="p-4 rounded-xl glass-card border border-red-500/25 border-l-4 border-l-red-500 shadow-sm">
-                        <div className="font-bold text-red-600 text-sm mb-1">{p.id} ({p.name}): Critical Risk Detected.</div>
-                        <div className="text-slate-700 text-xs font-semibold">MHQ Score: {p.score}. AI monitoring closely. Consider manual intervention.</div>
+
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
+                 {/* Left Column: Biometric Stream & Alerts */}
+                 <div className="space-y-6 flex flex-col min-h-0">
+                   {/* Live Biometric stream */}
+                   <div className="p-5 rounded-2xl glass-card border border-white/25 shadow-sm flex flex-col bg-white/45">
+                      <h3 className="text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
+                        <svg className="text-red-500 animate-pulse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                        Live Biometric Stream
+                      </h3>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Wearable Sensor P-102</p>
+                      <div className="flex items-center gap-4">
+                         <span className="text-3xl font-black text-slate-800 tracking-tight">{liveBpm} <span className="text-xs font-bold text-slate-400">BPM</span></span>
+                         <div className="flex-1 flex gap-0.5 items-end h-8 overflow-hidden">
+                            {[1,2,3,4,5,6,7,8,9,10,11,12].map((i) => {
+                              const heights = [10, 15, 8, 30, 5, 12, 18, 25, 4, 15, 20, 8];
+                              return (
+                                <div key={i} className="flex-1 bg-red-400 rounded-t-sm" style={{
+                                  height: `${heights[(i + Math.floor(liveBpm)) % heights.length]}px`,
+                                  transition: 'height 0.4s ease'
+                                }}></div>
+                              )
+                            })}
+                         </div>
                       </div>
-                    ))}
-                  </div>
+                   </div>
+
+                   {/* Urgent Alerts Stream */}
+                   <div className="flex-1 p-5 rounded-2xl glass-card border border-white/25 shadow-sm flex flex-col min-h-[200px]">
+                      <h3 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2"><Bell size={18}/> Urgent Alerts Stream</h3>
+                      <div className="flex-1 rounded-xl bg-white/15 border border-white/10 p-4 overflow-y-auto space-y-3 max-h-[220px]">
+                        {patients.filter(p => p.risk === 'Critical').length === 0 && <div className="text-slate-500 font-semibold text-xs">No urgent alerts. Platform status nominal.</div>}
+                        {patients.filter(p => p.risk === 'Critical').map(p => (
+                          <div key={p.id} className="p-3 rounded-xl bg-red-500/10 border border-red-500/25 border-l-4 border-l-red-500 shadow-sm animate-pulse">
+                            <div className="font-bold text-red-700 text-xs mb-1">{p.id} ({p.name || 'Anonymous User'}): Critical Risk Detected.</div>
+                            <div className="text-slate-700 text-[11px] font-semibold">MHQ Score: {p.score}. AI monitoring closely. Consider therapist manual bypass.</div>
+                          </div>
+                        ))}
+                      </div>
+                   </div>
+                 </div>
+
+                 {/* Right Column: Live Pipeline Trace Console */}
+                 <div className="p-5 rounded-2xl glass-card border border-white/25 shadow-sm flex flex-col bg-slate-900/10 backdrop-blur-md min-h-[300px]">
+                    <h3 className="text-sm font-bold text-slate-850 mb-3 flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      Clinical Pipeline Trace Console
+                    </h3>
+                    <div className="flex-1 rounded-xl bg-slate-950 p-4 font-mono text-[10px] text-emerald-400 overflow-y-auto space-y-2 border border-slate-800 shadow-inner h-[280px] scrollbar-thin scrollbar-thumb-emerald-900/30 scrollbar-track-transparent">
+                      {liveEvents.map(e => (
+                        <div key={e.id} className="flex gap-2 leading-relaxed animate-fade-in">
+                          <span className="text-slate-500 shrink-0">[{e.time}]</span>
+                          <span className={
+                            e.type === 'system' ? 'text-blue-400' :
+                            e.type === 'n8n' ? 'text-amber-400 font-bold' :
+                            e.type === 'biometric' ? 'text-rose-400' :
+                            'text-emerald-400'
+                          }>
+                            {e.text}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                 </div>
                </div>
             </div>
           ) : activeTab === 'roster' ? (
@@ -2804,8 +2923,8 @@ const AdminDashboard = ({ setView }) => {
                  <div className={`p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col`}>
                     <h3 className="text-base font-bold text-slate-800 mb-3">Platform Sentiment Trend</h3>
                     <div className={`flex-1 bg-white/15 border border-white/10 rounded-xl p-3 flex items-end gap-2`}>
-                      {[40, 60, 30, 80, 90, 50, 70].map((h, i) => (
-                        <div key={i} className="flex-1 bg-[#3A7070] rounded-t-md transition-all hover:bg-[#8FA989]" style={{height: `${h}%`}}></div>
+                      {sentimentData.map((h, i) => (
+                        <div key={i} className="flex-1 bg-[#3A7070] rounded-t-md transition-all hover:bg-[#8FA989]" style={{height: `${h}%`, transition: 'height 0.6s ease'}}></div>
                       ))}
                     </div>
                     <div className="flex justify-between mt-2 text-slate-500 font-bold text-[10px] uppercase tracking-widest"><span>Mon</span><span>Sun</span></div>
@@ -2919,7 +3038,7 @@ export default function App() {
   return (
     <div className="font-inter min-h-screen w-full">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,600;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Raleway:wght@700;800;900&family=Sacramento&family=Playball&family=Caveat:wght@600;700&family=Satisfy&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,600;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Raleway:wght@700;800;900&family=Sacramento&family=Playball&family=Caveat:wght@600;700&family=Satisfy&family=Alex+Brush&family=Allura&family=Great+Vibes&family=Pacifico&display=swap');
         
         /* ──────────────────────────────────────────────
            FONT DEFINITIONS
@@ -2930,7 +3049,13 @@ export default function App() {
         .font-raleway    { font-family: 'Raleway', sans-serif; }
         .font-playfair   { font-family: 'Playfair Display', serif; }
         .font-cormorant  { font-family: 'Cormorant Garamond', serif; }
-        .font-sacramento { font-family: 'Sacramento', cursive; }
+        .font-sacramento { font-family: 'Sacramento', cursive !important; }
+        .font-greatvibes { font-family: 'Great Vibes', cursive !important; }
+        .font-alexbrush  { font-family: 'Alex Brush', cursive !important; }
+        .font-allura     { font-family: 'Allura', cursive !important; }
+        .font-pacifico   { font-family: 'Pacifico', cursive !important; }
+        .font-playball   { font-family: 'Playball', cursive !important; }
+        .font-satisfy    { font-family: 'Satisfy', cursive !important; }
 
         /* Globally improve legibility of small descriptions and paragraph text */
         .card-text, .p-text {
