@@ -4,6 +4,7 @@ FROM python:3.10-slim
 RUN useradd -m -u 1000 user
 USER user
 ENV PATH="/home/user/.local/bin:$PATH"
+ENV HF_HOME="/home/user/.cache"
 
 # Set the working directory
 WORKDIR /app

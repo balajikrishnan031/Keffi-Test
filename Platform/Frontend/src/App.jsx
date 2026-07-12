@@ -2570,7 +2570,7 @@ const PatientDashboard = ({ setView, userData }) => {
                 <Star size={14} className="fill-[#D4A373] text-[#D4A373] animate-pulse" /> {globalPoints} Sanctuary Points
               </div>
               <button 
-                onClick={() => setView('landing')} 
+                onClick={() => { localStorage.removeItem('keffi_user'); setView('landing'); }} 
                 className="py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-700 font-space font-extrabold text-[10px] tracking-widest transition-all w-full text-center cursor-pointer uppercase"
               >
                 Exit Sanctuary

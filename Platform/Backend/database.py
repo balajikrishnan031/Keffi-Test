@@ -3,8 +3,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-# Use absolute path pointing to the active database in the root folder
-db_path = "e:/Keffi Ai/keffi_clinical.db"
+# Use absolute path resolving relative to the folder to prevent Windows drive errors on Linux
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "keffi_clinical.db")
 SQLALCHEMY_DATABASE_URL = f"sqlite:///{db_path}"
 
 # Engine setup
