@@ -1823,22 +1823,21 @@ const ChatArea = ({
               </div>
             </div>
           )}
-          {/* Chat message flow container */}
-          <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 relative bg-white/[0.12] backdrop-blur-3xl scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+          <div className="flex-1 overflow-y-auto p-4 md:p-5 flex flex-col gap-4 min-h-0 relative bg-white/[0.12] backdrop-blur-3xl scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
             {messages.map(m => {
               const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
               return (
                 <div key={m.id} className={`flex w-full ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}>
                   <div className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%]`}>
-                    <div className={`whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-space font-medium leading-relaxed rounded-[1.5rem] shadow-sm transition-all duration-300 ${
+                    <div className={`whitespace-pre-wrap p-3.5 md:p-4 text-sm md:text-base font-space font-medium leading-relaxed rounded-[1.5rem] transition-all duration-300 ${
                       m.sender === 'user' 
-                      ? 'glass-message-user text-slate-800 rounded-tr-sm border border-white/60 glow-white' 
-                      : 'glass-message-keffi text-[#1A2E2E] rounded-tl-sm border border-[#3A7070]/15 glow-teal'
+                      ? 'glass-message-user text-slate-800 rounded-tr-sm' 
+                      : 'glass-message-keffi text-slate-800 rounded-tl-sm'
                     }`}>
                       {mainText}
                     </div>
                     
-                    <span className={`text-[10px] text-slate-500 font-space font-bold uppercase tracking-wider mt-2 px-1`}>
+                    <span className={`text-[10px] text-slate-500 font-space font-bold uppercase tracking-wider mt-1 px-1`}>
                       {m.time}
                     </span>
   
@@ -1879,21 +1878,21 @@ const ChatArea = ({
           </div>
   
           {/* Input box section */}
-          <div className="px-6 pb-6 bg-white/[0.08] backdrop-blur-2xl border-t border-[#3A7070]/5 pt-6 z-20 relative shrink-0">
-            <div className="max-w-4xl mx-auto bg-white/45 border border-white/50 shadow-xl rounded-[2rem] p-3 flex items-center gap-3 backdrop-blur-2xl hover:shadow-[0_12px_40px_rgba(58,112,112,0.15)] transition-shadow">
-              <button onClick={toggleRecording} className={`p-4 rounded-2xl transition-all cursor-pointer ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-500 hover:text-[#3A7070] hover:bg-slate-100/30'}`}>
+          <div className="px-5 pb-4 bg-white/[0.08] backdrop-blur-2xl border-t border-[#3A7070]/5 pt-4 z-20 relative shrink-0">
+            <div className="max-w-4xl mx-auto bg-white/45 border border-white/50 shadow-xl rounded-[2rem] p-2 flex items-center gap-2.5 backdrop-blur-2xl hover:shadow-[0_12px_40px_rgba(58,112,112,0.15)] transition-shadow">
+              <button onClick={toggleRecording} className={`p-3.5 rounded-2xl transition-all cursor-pointer ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-500 hover:text-[#3A7070] hover:bg-slate-100/30'}`}>
                 <Mic size={20} />
               </button>
               <input 
                 value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                 placeholder={isRecording ? "Listening..." : "Type your feelings safely here..."} 
-                className="flex-1 bg-transparent border-none outline-none py-3 text-slate-800 font-space font-semibold text-base placeholder-slate-400 focus:ring-0"
+                className="flex-1 bg-transparent border-none outline-none py-2 text-slate-800 font-space font-semibold text-base placeholder-slate-400 focus:ring-0"
               />
-              <button onClick={() => handleSend()} className="px-6 py-4 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-md cursor-pointer font-space font-extrabold tracking-wider glow-teal">
+              <button onClick={() => handleSend()} className="px-5 py-3.5 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-md cursor-pointer font-space font-extrabold tracking-wider glow-teal">
                 <Send size={18} />
               </button>
             </div>
-            <div className="text-center text-[10px] text-slate-400 font-space font-extrabold uppercase tracking-widest mt-4">
+            <div className="text-center text-[10px] text-slate-400 font-space font-extrabold uppercase tracking-widest mt-3">
               Keffi AI is not a substitute for medical diagnosis.
             </div>
           </div>
@@ -2532,8 +2531,8 @@ const PatientDashboard = ({ setView, userData }) => {
                     style={{animationDelay: `${i * 50}ms`}}
                     className={`w-full flex items-center gap-3.5 px-4 py-2.5 rounded-xl font-space font-extrabold text-xs tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
                       isActive 
-                      ? 'bg-[#3A7070] text-white shadow-md shadow-[#3A7070]/20 scale-[1.01]' 
-                      : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070]'
+                      ? 'bg-white/45 backdrop-blur-md text-[#2C5555] border border-white/60 shadow-sm translate-x-1 scale-[1.01]' 
+                      : 'text-slate-600 hover:bg-white/25 hover:text-[#2C5555] border border-transparent hover:border-white/20 hover:shadow-sm'
                     }`}
                   >
                     {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
