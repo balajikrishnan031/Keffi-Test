@@ -157,9 +157,9 @@ body {
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', sans-serif;
   color: #1e293b;
-  background: linear-gradient(135deg, rgba(242, 249, 246, 0.85), rgba(225, 240, 235, 0.8));
+  background: linear-gradient(135deg, rgba(242, 249, 246, 0.15), rgba(225, 240, 235, 0.1));
 }
 
 body::before {
@@ -243,12 +243,20 @@ body::before {
   to { transform: rotate(0deg); }
 }
 
-/* Typography styles */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', sans-serif;
+/* Typography styles & Universal Font */
+h1, h2, h3, h4, h5, h6, body, input, select, textarea, button {
+  font-family: 'Outfit', sans-serif !important;
   letter-spacing: -0.01em;
 }
 
+/* Override all font family utility classes to ensure absolute typography uniformity */
+.font-inter, .font-space, .font-raleway, .font-outfit {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+.font-cursive, .cursive-accent, .cursive-accent-lg {
+  font-family: 'Dancing Script', cursive !important;
+}
 
 /* Hide scrollbar for a clean app look */
 .no-scrollbar::-webkit-scrollbar {
@@ -265,112 +273,108 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Standard card for grids, dashboard cards, check-in options */
 .glass-card {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  box-shadow: 0 8px 32px 0 rgba(58, 112, 112, 0.06);
+  background: rgba(255, 255, 255, 0.48) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 8px 32px 0 rgba(13, 112, 112, 0.05) !important;
 }
 
 /* hover animation for cards */
 .glass-card-hover {
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .glass-card-hover:hover {
-  background: rgba(255, 255, 255, 0.88);
-  border-color: rgba(58, 112, 112, 0.3);
-  box-shadow: 0 16px 48px 0 rgba(58, 112, 112, 0.12);
-  transform: translateY(-4px) scale(1.01);
+  background: rgba(255, 255, 255, 0.65) !important;
+  border-color: rgba(58, 112, 112, 0.35) !important;
+  box-shadow: 0 16px 48px 0 rgba(13, 112, 112, 0.12) !important;
+  transform: translateY(-4px) scale(1.01) !important;
 }
 
 /* Large panels e.g., onboarding form, dashboard main panels, admin center */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(24px) saturate(145%);
-  -webkit-backdrop-filter: blur(24px) saturate(145%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 12px 40px 0 rgba(58, 112, 112, 0.1);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(36px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 12px 40px 0 rgba(13, 112, 112, 0.08) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* Transparent panel for dashboard main body wrap */
 .glass-panel-main {
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.22) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
 }
 
 /* Floating Navigation Header */
 .glass-nav {
-  background: rgba(255, 255, 255, 0.38);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(58, 112, 112, 0.04);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 8px 32px 0 rgba(13, 112, 112, 0.04) !important;
+  transition: all 0.3s ease !important;
 }
 .glass-nav:hover {
-  background: rgba(255, 255, 255, 0.5);
-  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
 }
 
 /* Form controls and inputs */
 .glass-input {
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(4px);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .glass-input:focus {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(58, 112, 112, 0.6);
-  box-shadow: 0 0 0 4px rgba(58, 112, 112, 0.15);
-  outline: none;
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(58, 112, 112, 0.5) !important;
+  box-shadow: 0 0 0 4px rgba(58, 112, 112, 0.12) !important;
+  outline: none !important;
 }
 
 /* Dashboard Sidebar background */
 .glass-sidebar {
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(24px) saturate(125%);
-  -webkit-backdrop-filter: blur(24px) saturate(125%);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.16) !important;
+  backdrop-filter: blur(32px) saturate(130%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(130%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 
 /* Chat Message Bubbles */
 .glass-message-user {
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(12px) saturate(110%);
-  -webkit-backdrop-filter: blur(12px) saturate(110%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 4px 16px 0 rgba(30, 41, 59, 0.04);
-  animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(16px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 16px 0 rgba(30, 41, 59, 0.03) !important;
+  animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
 }
 
 .glass-message-keffi {
-  background: rgba(224, 251, 244, 0.45);
-  backdrop-filter: blur(12px) saturate(110%);
-  -webkit-backdrop-filter: blur(12px) saturate(110%);
-  border: 1px solid rgba(58, 112, 112, 0.2);
-  box-shadow: 0 4px 16px 0 rgba(58, 112, 112, 0.04);
-  animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  background: rgba(224, 251, 244, 0.35) !important;
+  backdrop-filter: blur(16px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+  border: 1px solid rgba(58, 112, 112, 0.18) !important;
+  box-shadow: 0 4px 16px 0 rgba(13, 112, 112, 0.03) !important;
+  animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
 }
 
 /* Mixed Cursive/Serif Typography Highlight */
 .cursive-accent {
-  font-family: 'Dancing Script', cursive;
-  font-weight: 700;
-  font-size: 1.25em;
-  display: inline-block;
-  transform: rotate(-1deg);
-  letter-spacing: normal;
-}
-
-.font-cursive {
   font-family: 'Dancing Script', cursive !important;
+  font-weight: 700 !important;
+  font-size: 1.25em !important;
+  display: inline-block !important;
+  transform: rotate(-1deg) !important;
+  letter-spacing: normal !important;
 }
 
 .cursive-accent-lg {
   font-family: 'Dancing Script', cursive !important;
-  font-weight: 700;
-  display: inline-block;
+  font-weight: 700 !important;
+  display: inline-block !important;
 }

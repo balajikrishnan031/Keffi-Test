@@ -2467,6 +2467,11 @@ const PatientDashboard = ({ setView, userData }) => {
   return (
     <div className="flex h-screen w-screen bg-transparent overflow-hidden p-4 md:p-6 gap-4 md:gap-6 font-inter text-slate-800 relative">
       
+      {/* Dynamic Floating Orbs in Background */}
+      <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full glow-orb-teal blur-[130px] animate-pulse-slow pointer-events-none z-0"></div>
+      <div className="absolute bottom-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full glow-orb-purple blur-[140px] animate-pulse-slow pointer-events-none z-0" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-[30%] right-[20%] w-[500px] h-[500px] rounded-full glow-orb-rose blur-[120px] animate-pulse-slow pointer-events-none z-0" style={{ animationDelay: '1s' }}></div>
+
       {/* Mobile Overlay */}
       {isMobile && isSidebarOpen && (
         <div className="absolute inset-0 bg-black/40 z-40 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)}></div>
