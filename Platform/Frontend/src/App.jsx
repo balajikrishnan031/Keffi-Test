@@ -1704,8 +1704,8 @@ const ChatArea = ({
     <div className="h-full w-full flex relative overflow-hidden bg-transparent">
       
       {/* 💬 MAIN CHAT AREA */}
-      <div className="flex-1 h-full flex flex-col relative min-w-0 overflow-hidden">
-        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-white/15 bg-white/[0.18] backdrop-blur-3xl">
+      <div className="flex-1 flex flex-col relative min-w-0">
+        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/[0.18] backdrop-blur-3xl">
             <div className="flex items-center gap-2 md:gap-4">
               {!isSidebarOpen && (
                 <button 
@@ -1731,7 +1731,7 @@ const ChatArea = ({
               <div className="relative">
                 <button 
                   onClick={() => setShowWatchControls(!showWatchControls)} 
-                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-600 animate-pulse glow-rose' : 'bg-white/30 text-[#2C5555] border border-white/40 shadow-sm hover:bg-white/45'}`}
+                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-600 animate-pulse glow-rose' : 'glass-card border border-white/30 text-slate-600 hover:bg-white/50'}`}
                   title="Simulated Watch Biofeedback"
                 >
                   <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
@@ -1767,7 +1767,7 @@ const ChatArea = ({
 
               <button 
                 onClick={() => setIsCameraActive(!isCameraActive)} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/30 text-[#2C5555] border border-white/40 shadow-sm hover:bg-white/45'}`}
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
                 title="Toggle Visual Emotion Tracking"
               >
                 {isCameraActive ? <Camera size={16}/> : <CameraOff size={16}/>}
@@ -1777,22 +1777,22 @@ const ChatArea = ({
                   setIsVoiceEnabled(!isVoiceEnabled);
                   if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
                 }} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/30 text-[#2C5555] border border-white/40 shadow-sm hover:bg-white/45'}`}
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
                 title="Toggle Voice Therapy"
               >
                 {isVoiceEnabled ? <Volume2 size={16}/> : <VolumeX size={16}/>}
               </button>
               <button 
                 onClick={() => setShowMediaPlayer(true)} 
-                className="px-4 py-2 rounded-full bg-emerald-500/15 backdrop-blur-sm border border-emerald-500/25 text-[#1b4332] font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/25 flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
+                className="px-4 py-2 rounded-full bg-emerald-500/12 backdrop-blur-sm border border-emerald-500/20 text-[#2C5555] font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
                 title="Open Calming Music Sanctuary"
               >
                 🎵 Music
               </button>
-              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full bg-white/30 text-[#2C5555] border border-white/40 shadow-sm hover:bg-white/45 font-space font-extrabold text-xs tracking-wider flex items-center gap-2 transition-colors cursor-pointer">
+              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full glass-card text-slate-600 font-space font-extrabold text-xs tracking-wider hover:bg-white/50 border border-white/30 flex items-center gap-2 transition-colors cursor-pointer">
                 <User size={14}/> Therapist
               </button>
-              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/15 border border-red-500/25 text-red-700 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/25 backdrop-blur-sm flex items-center gap-2 transition-colors cursor-pointer shadow-sm">
+              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/12 border border-red-500/20 text-red-600 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/20 backdrop-blur-sm flex items-center gap-2 transition-colors cursor-pointer">
                 <PhoneCall size={14}/> SOS
               </button>
             </div>
@@ -1823,21 +1823,22 @@ const ChatArea = ({
               </div>
             </div>
           )}
-          <div className="flex-1 overflow-y-auto p-4 md:p-5 flex flex-col gap-4 min-h-0 relative bg-white/[0.12] backdrop-blur-3xl scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
+          {/* Chat message flow container */}
+          <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 relative bg-white/[0.12] backdrop-blur-3xl scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
             {messages.map(m => {
               const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
               return (
                 <div key={m.id} className={`flex w-full ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}>
                   <div className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%]`}>
-                    <div className={`whitespace-pre-wrap p-3.5 md:p-4 text-sm md:text-base font-space font-medium leading-relaxed rounded-[1.5rem] transition-all duration-300 ${
+                    <div className={`whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-space font-medium leading-relaxed rounded-[1.5rem] shadow-sm transition-all duration-300 ${
                       m.sender === 'user' 
-                      ? 'glass-message-user text-slate-800 rounded-tr-sm' 
-                      : 'glass-message-keffi text-slate-800 rounded-tl-sm'
+                      ? 'glass-message-user text-slate-800 rounded-tr-sm border border-white/60 glow-white' 
+                      : 'glass-message-keffi text-[#1A2E2E] rounded-tl-sm border border-[#3A7070]/15 glow-teal'
                     }`}>
                       {mainText}
                     </div>
                     
-                    <span className={`text-[10px] text-slate-500 font-space font-bold uppercase tracking-wider mt-1 px-1`}>
+                    <span className={`text-[10px] text-slate-500 font-space font-bold uppercase tracking-wider mt-2 px-1`}>
                       {m.time}
                     </span>
   
@@ -1878,21 +1879,21 @@ const ChatArea = ({
           </div>
   
           {/* Input box section */}
-          <div className="px-5 pb-4 bg-white/[0.08] backdrop-blur-2xl border-t border-[#3A7070]/5 pt-4 z-20 relative shrink-0">
-            <div className="max-w-4xl mx-auto bg-white/45 border border-white/50 shadow-xl rounded-[2rem] p-2 flex items-center gap-2.5 backdrop-blur-2xl hover:shadow-[0_12px_40px_rgba(58,112,112,0.15)] transition-shadow">
-              <button onClick={toggleRecording} className={`p-3.5 rounded-2xl transition-all cursor-pointer ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-500 hover:text-[#3A7070] hover:bg-slate-100/30'}`}>
+          <div className="px-6 pb-6 bg-white/[0.08] backdrop-blur-2xl border-t border-[#3A7070]/5 pt-6 z-20 relative shrink-0">
+            <div className="max-w-4xl mx-auto bg-white/45 border border-white/50 shadow-xl rounded-[2rem] p-3 flex items-center gap-3 backdrop-blur-2xl hover:shadow-[0_12px_40px_rgba(58,112,112,0.15)] transition-shadow">
+              <button onClick={toggleRecording} className={`p-4 rounded-2xl transition-all cursor-pointer ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-500 hover:text-[#3A7070] hover:bg-slate-100/30'}`}>
                 <Mic size={20} />
               </button>
               <input 
                 value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                 placeholder={isRecording ? "Listening..." : "Type your feelings safely here..."} 
-                className="flex-1 bg-transparent border-none outline-none py-2 text-slate-800 font-space font-semibold text-base placeholder-slate-400 focus:ring-0"
+                className="flex-1 bg-transparent border-none outline-none py-3 text-slate-800 font-space font-semibold text-base placeholder-slate-400 focus:ring-0"
               />
-              <button onClick={() => handleSend()} className="px-5 py-3.5 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-md cursor-pointer font-space font-extrabold tracking-wider glow-teal">
+              <button onClick={() => handleSend()} className="px-6 py-4 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-md cursor-pointer font-space font-extrabold tracking-wider glow-teal">
                 <Send size={18} />
               </button>
             </div>
-            <div className="text-center text-[10px] text-slate-400 font-space font-extrabold uppercase tracking-widest mt-3">
+            <div className="text-center text-[10px] text-slate-400 font-space font-extrabold uppercase tracking-widest mt-4">
               Keffi AI is not a substitute for medical diagnosis.
             </div>
           </div>
@@ -2372,23 +2373,6 @@ const ProfileVault = ({ userData, isSidebarOpen, setIsSidebarOpen }) => (
 // ==========================================
 const PatientDashboard = ({ setView, userData }) => {
   const [activePage, setActivePage] = useState('chat');
-
-  useEffect(() => {
-    const resetScrolls = () => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      const root = document.getElementById('root');
-      if (root) root.scrollTop = 0;
-      const wrap = document.querySelector('.font-inter');
-      if (wrap) wrap.scrollTop = 0;
-      const dashboard = document.querySelector('.font-inter > div');
-      if (dashboard) dashboard.scrollTop = 0;
-    };
-    resetScrolls();
-    const timer = setTimeout(resetScrolls, 100);
-    return () => clearTimeout(timer);
-  }, [activePage]);
   const [globalPoints, setGlobalPoints] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
@@ -2481,13 +2465,8 @@ const PatientDashboard = ({ setView, userData }) => {
   };
 
   return (
-    <div onScroll={(e) => { e.target.scrollTop = 0; }} className="flex h-screen w-screen bg-transparent overflow-hidden p-4 md:p-6 gap-4 md:gap-6 font-inter text-slate-800 relative">
+    <div className="flex h-screen w-screen bg-transparent overflow-hidden p-4 md:p-6 gap-4 md:gap-6 font-inter text-slate-800 relative">
       
-      {/* Dynamic Floating Orbs in Background */}
-      <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full glow-orb-teal blur-[130px] animate-pulse-slow pointer-events-none z-0"></div>
-      <div className="absolute bottom-[-20%] right-[-10%] w-[700px] h-[700px] rounded-full glow-orb-purple blur-[140px] animate-pulse-slow pointer-events-none z-0" style={{ animationDelay: '2s' }}></div>
-      <div className="absolute top-[30%] right-[20%] w-[500px] h-[500px] rounded-full glow-orb-rose blur-[120px] animate-pulse-slow pointer-events-none z-0" style={{ animationDelay: '1s' }}></div>
-
       {/* Mobile Overlay */}
       {isMobile && isSidebarOpen && (
         <div className="absolute inset-0 bg-black/40 z-40 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)}></div>
@@ -2531,8 +2510,8 @@ const PatientDashboard = ({ setView, userData }) => {
                     style={{animationDelay: `${i * 50}ms`}}
                     className={`w-full flex items-center gap-3.5 px-4 py-2.5 rounded-xl font-space font-extrabold text-xs tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
                       isActive 
-                      ? 'bg-white/15 backdrop-blur-lg text-[#2C5555] border border-white/30 shadow-sm translate-x-1 scale-[1.01]' 
-                      : 'text-slate-600 hover:bg-white/25 hover:text-[#2C5555] border border-transparent hover:border-white/20 hover:shadow-sm'
+                      ? 'bg-[#3A7070] text-white shadow-md shadow-[#3A7070]/20 scale-[1.01]' 
+                      : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070]'
                     }`}
                   >
                     {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
@@ -3046,44 +3025,6 @@ export default function App() {
   const [view, setView] = useState(saved ? 'patient-dashboard' : 'landing');
   const [userData, setUserData] = useState(saved || null);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    const rootEl = document.getElementById('root');
-    if (rootEl) rootEl.scrollTop = 0;
-    const mainWrap = document.querySelector('.font-inter');
-    if (mainWrap) {
-      mainWrap.scrollTop = 0;
-      const allDivs = mainWrap.querySelectorAll('div');
-      allDivs.forEach(d => {
-        if (d.scrollTop > 0) d.scrollTop = 0;
-      });
-    }
-
-    // Dynamic viewport and layout configuration for body and root containers
-    const isScrollLocked = view === 'patient-dashboard' || view === 'admin-dashboard';
-    if (isScrollLocked) {
-      document.documentElement.style.setProperty('height', '100vh', 'important');
-      document.documentElement.style.setProperty('overflow', 'hidden', 'important');
-      document.body.style.setProperty('height', '100vh', 'important');
-      document.body.style.setProperty('overflow', 'hidden', 'important');
-      if (rootEl) {
-        rootEl.style.setProperty('height', '100vh', 'important');
-        rootEl.style.setProperty('overflow', 'hidden', 'important');
-      }
-    } else {
-      document.documentElement.style.setProperty('height', 'auto', 'important');
-      document.documentElement.style.setProperty('overflow', 'visible', 'important');
-      document.body.style.setProperty('height', 'auto', 'important');
-      document.body.style.setProperty('overflow', 'visible', 'important');
-      if (rootEl) {
-        rootEl.style.setProperty('height', 'auto', 'important');
-        rootEl.style.setProperty('overflow', 'visible', 'important');
-      }
-    }
-  }, [view]);
-
   const handleLogout = () => {
     localStorage.removeItem('keffi_user');
     setUserData(null);
@@ -3101,25 +3042,20 @@ export default function App() {
     }
   };
 
-  const isScrollLockedView = view === 'patient-dashboard' || view === 'admin-dashboard';
-
   return (
-    <div 
-      onScroll={(e) => { if (isScrollLockedView) e.target.scrollTop = 0; }} 
-      className={`font-inter w-screen relative ${isScrollLockedView ? 'h-screen overflow-hidden' : 'min-h-screen'}`}
-    >
+    <div className="font-inter min-h-screen w-full">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Raleway:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,600;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Raleway:wght@700;800;900&family=Sacramento&family=Playball&family=Caveat:wght@600;700&family=Satisfy&family=Alex+Brush&family=Allura&family=Great+Vibes&family=Pacifico&display=swap');
+        
         /* ──────────────────────────────────────────────
-           FONT DEFINITIONS (Standardized globally to Outfit)
+           FONT DEFINITIONS
         ────────────────────────────────────────────── */
         .font-poppins    { font-family: 'Outfit', sans-serif; }
-        .font-inter      { font-family: 'Outfit', sans-serif; }
+        .font-inter      { font-family: 'Inter', sans-serif; }
         .font-space      { font-family: 'Outfit', sans-serif; letter-spacing: 0.015em; }
-        .font-raleway    { font-family: 'Outfit', sans-serif; }
-        .font-playfair   { font-family: 'Outfit', sans-serif; }
-        .font-cormorant  { font-family: 'Outfit', sans-serif; }
+        .font-raleway    { font-family: 'Raleway', sans-serif; }
+        .font-playfair   { font-family: 'Playfair Display', serif; }
+        .font-cormorant  { font-family: 'Cormorant Garamond', serif; }
         .font-sacramento { font-family: 'Sacramento', cursive !important; }
         .font-greatvibes { font-family: 'Great Vibes', cursive !important; }
         .font-alexbrush  { font-family: 'Alex Brush', cursive !important; }
@@ -3130,7 +3066,7 @@ export default function App() {
 
         /* Globally improve legibility of small descriptions and paragraph text */
         .card-text, .p-text {
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Inter', sans-serif !important;
           font-size: 14.5px !important;
           line-height: 1.7 !important;
           letter-spacing: 0.012em !important;
@@ -3139,25 +3075,29 @@ export default function App() {
         /* ──────────────────────────────────────────────
            CURSIVE ACCENTS — multiple styles
         ────────────────────────────────────────────── */
+        /* ──────────────────────────────────────────────
+           CURSIVE ACCENTS — same size as context, different font
+        ────────────────────────────────────────────── */
         .cursive-accent {
           font-family: 'Dancing Script', cursive;
           font-weight: 700;
-          font-size: 1.08em;
+          font-size: 1.08em;          /* only slightly larger — no more blowout */
           display: inline;
           letter-spacing: 0.015em;
         }
         .cursive-accent-lg {
           font-family: 'Dancing Script', cursive;
           font-weight: 700;
-          font-size: 1.2em;
+          font-size: 1.2em;           /* for standalone decorative use only */
           display: inline-block;
           transform: rotate(-1deg);
           letter-spacing: 0.02em;
         }
         .cursive-playfair {
-          font-family: 'Outfit', sans-serif;
+          font-family: 'Playfair Display', serif;
+          font-style: italic;
           font-weight: 700;
-          font-size: 1em;
+          font-size: 1em;             /* same size as surrounding h1 */
           display: inline;
           letter-spacing: -0.01em;
         }
@@ -3208,19 +3148,42 @@ export default function App() {
         }
 
         /* ──────────────────────────────────────────────
-           BODY & BASE (Enforce viewport limits and transparent glass refraction overlay)
+           BODY & BASE
         ────────────────────────────────────────────── */
-        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif !important; }
+        body {
+          margin: 0;
+          padding: 0;
+          background-image:
+            linear-gradient(135deg,
+              rgba(230, 245, 240, 0.82) 0%,
+              rgba(240, 252, 248, 0.75) 40%,
+              rgba(220, 238, 234, 0.80) 100%),
+            url('/keffi-bg.png');
+          background-size: cover;
+          background-position: center top;
+          background-attachment: fixed;
+          background-repeat: no-repeat;
+          font-family: 'Inter', sans-serif;
+          color: #0D1A1A;
+        }
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+        h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
         
         /* ──────────────────────────────────────────────
-           TYPOGRAPHY SCALE
+           TYPOGRAPHY SCALE — clear visual hierarchy
+           Hero h1:   clamp(38px → 68px) in JSX
+           Section h2: 48px  — big, impactful
+           Card h3:    26px  — readable subheading
+           Body text:  20px  — comfortable reading
+           Small copy: 17px  — supporting detail
+           Labels:     12px  — uppercase metadata
         ────────────────────────────────────────────── */
         .h1-title {
           font-size: clamp(40px, 5vw, 68px);
           font-weight: 900;
           line-height: 1.1;
           letter-spacing: -0.025em;
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Raleway', sans-serif;
           color: #0D1A1A;
         }
         .h2-title {
@@ -3228,7 +3191,7 @@ export default function App() {
           font-weight: 800;
           line-height: 1.15;
           letter-spacing: -0.015em;
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Raleway', sans-serif;
           color: #0D1A1A;
         }
         .h3-title {
@@ -3236,7 +3199,7 @@ export default function App() {
           font-weight: 700;
           line-height: 1.3;
           letter-spacing: -0.008em;
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Space Grotesk', sans-serif;
           color: #1A3030;
         }
         .p-text {
@@ -3244,29 +3207,30 @@ export default function App() {
           font-weight: 400;
           line-height: 1.85;
           color: #2D4040;
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Inter', sans-serif;
         }
         .p-small {
           font-size: clamp(15px, 1.4vw, 17px);
           font-weight: 400;
           line-height: 1.75;
           color: #3D5555;
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Inter', sans-serif;
         }
         .label-text {
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Space Grotesk', sans-serif;
           font-weight: 700;
           letter-spacing: 0.15em;
           text-transform: uppercase;
           font-size: 11px;
           color: #5A7E7E;
         }
+        /* card body text: smaller than p-text */
         .card-text {
           font-size: 15px;
           font-weight: 500;
           line-height: 1.7;
           color: #4A6060;
-          font-family: 'Outfit', sans-serif !important;
+          font-family: 'Inter', sans-serif;
         }
 
         /* ──────────────────────────────────────────────
