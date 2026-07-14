@@ -3084,7 +3084,7 @@ export default function App() {
   return (
     <div 
       onScroll={(e) => { if (isScrollLockedView) e.target.scrollTop = 0; }} 
-      className={`font-inter w-screen relative ${isScrollLockedView ? 'h-screen overflow-hidden' : 'min-h-screen overflow-y-auto'}`}
+      className={`font-inter w-screen relative ${isScrollLockedView ? 'h-screen overflow-hidden' : 'min-h-screen'}`}
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,w        /* ──────────────────────────────────────────────
@@ -3190,8 +3190,8 @@ export default function App() {
           margin: 0 !important;
           padding: 0 !important;
           width: 100vw !important;
-          height: 100vh !important;
-          overflow: hidden !important;
+          height: ${isScrollLockedView ? '100vh' : 'auto'} !important;
+          overflow: ${isScrollLockedView ? 'hidden' : 'visible'} !important;
           position: relative !important;
           box-sizing: border-box !important;
         }
