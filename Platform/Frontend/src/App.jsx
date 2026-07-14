@@ -3060,6 +3060,28 @@ export default function App() {
         if (d.scrollTop > 0) d.scrollTop = 0;
       });
     }
+
+    // Dynamic viewport and layout configuration for body and root containers
+    const isScrollLocked = view === 'patient-dashboard' || view === 'admin-dashboard';
+    if (isScrollLocked) {
+      document.documentElement.style.setProperty('height', '100vh', 'important');
+      document.documentElement.style.setProperty('overflow', 'hidden', 'important');
+      document.body.style.setProperty('height', '100vh', 'important');
+      document.body.style.setProperty('overflow', 'hidden', 'important');
+      if (rootEl) {
+        rootEl.style.setProperty('height', '100vh', 'important');
+        rootEl.style.setProperty('overflow', 'hidden', 'important');
+      }
+    } else {
+      document.documentElement.style.setProperty('height', 'auto', 'important');
+      document.documentElement.style.setProperty('overflow', 'visible', 'important');
+      document.body.style.setProperty('height', 'auto', 'important');
+      document.body.style.setProperty('overflow', 'visible', 'important');
+      if (rootEl) {
+        rootEl.style.setProperty('height', 'auto', 'important');
+        rootEl.style.setProperty('overflow', 'visible', 'important');
+      }
+    }
   }, [view]);
 
   const handleLogout = () => {
@@ -3087,7 +3109,9 @@ export default function App() {
       className={`font-inter w-screen relative ${isScrollLockedView ? 'h-screen overflow-hidden' : 'min-h-screen'}`}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,w        /* ──────────────────────────────────────────────
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Raleway:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+        /* ──────────────────────────────────────────────
            FONT DEFINITIONS (Standardized globally to Outfit)
         ────────────────────────────────────────────── */
         .font-poppins    { font-family: 'Outfit', sans-serif; }
@@ -3186,29 +3210,6 @@ export default function App() {
         /* ──────────────────────────────────────────────
            BODY & BASE (Enforce viewport limits and transparent glass refraction overlay)
         ────────────────────────────────────────────── */
-        html, body, #root {
-          margin: 0 !important;
-          padding: 0 !important;
-          width: 100vw !important;
-          height: ${isScrollLockedView ? '100vh' : 'auto'} !important;
-          overflow: ${isScrollLockedView ? 'hidden' : 'visible'} !important;
-          position: relative !important;
-          box-sizing: border-box !important;
-        }
-        body {
-          background-image:
-            linear-gradient(135deg,
-              rgba(230, 245, 240, 0.15) 0%,
-              rgba(240, 252, 248, 0.1) 40%,
-              rgba(220, 238, 234, 0.12) 100%),
-            url('/keffi-bg.png');
-          background-size: cover;
-          background-position: center top;
-          background-attachment: fixed;
-          background-repeat: no-repeat;
-          font-family: 'Outfit', sans-serif !important;
-          color: #0D1A1A;
-        }
         h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif !important; }
         
         /* ──────────────────────────────────────────────
