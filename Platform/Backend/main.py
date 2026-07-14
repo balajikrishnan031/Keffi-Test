@@ -1,3 +1,5 @@
+import os
+os.environ["HF_HUB_OFFLINE"] = "1"
 import traceback
 from fastapi import FastAPI, BackgroundTasks, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
