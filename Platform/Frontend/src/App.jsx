@@ -1705,7 +1705,7 @@ const ChatArea = ({
       
       {/* 💬 MAIN CHAT AREA */}
       <div className="flex-1 h-full flex flex-col relative min-w-0 overflow-hidden">
-        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/[0.18] backdrop-blur-3xl">
+        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-white/15 bg-white/[0.18] backdrop-blur-3xl">
             <div className="flex items-center gap-2 md:gap-4">
               {!isSidebarOpen && (
                 <button 
@@ -1731,7 +1731,7 @@ const ChatArea = ({
               <div className="relative">
                 <button 
                   onClick={() => setShowWatchControls(!showWatchControls)} 
-                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-600 animate-pulse glow-rose' : 'glass-card border border-white/30 text-slate-600 hover:bg-white/50'}`}
+                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-600 animate-pulse glow-rose' : 'bg-white/30 text-[#2C5555] border border-white/40 shadow-sm hover:bg-white/45'}`}
                   title="Simulated Watch Biofeedback"
                 >
                   <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
@@ -1767,7 +1767,7 @@ const ChatArea = ({
 
               <button 
                 onClick={() => setIsCameraActive(!isCameraActive)} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/30 text-[#2C5555] border border-white/40 shadow-sm hover:bg-white/45'}`}
                 title="Toggle Visual Emotion Tracking"
               >
                 {isCameraActive ? <Camera size={16}/> : <CameraOff size={16}/>}
@@ -1777,22 +1777,22 @@ const ChatArea = ({
                   setIsVoiceEnabled(!isVoiceEnabled);
                   if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
                 }} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/30 text-[#2C5555] border border-white/40 shadow-sm hover:bg-white/45'}`}
                 title="Toggle Voice Therapy"
               >
                 {isVoiceEnabled ? <Volume2 size={16}/> : <VolumeX size={16}/>}
               </button>
               <button 
                 onClick={() => setShowMediaPlayer(true)} 
-                className="px-4 py-2 rounded-full bg-emerald-500/12 backdrop-blur-sm border border-emerald-500/20 text-[#2C5555] font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-full bg-emerald-500/15 backdrop-blur-sm border border-emerald-500/25 text-[#1b4332] font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/25 flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
                 title="Open Calming Music Sanctuary"
               >
                 🎵 Music
               </button>
-              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full glass-card text-slate-600 font-space font-extrabold text-xs tracking-wider hover:bg-white/50 border border-white/30 flex items-center gap-2 transition-colors cursor-pointer">
+              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full bg-white/30 text-[#2C5555] border border-white/40 shadow-sm hover:bg-white/45 font-space font-extrabold text-xs tracking-wider flex items-center gap-2 transition-colors cursor-pointer">
                 <User size={14}/> Therapist
               </button>
-              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/12 border border-red-500/20 text-red-600 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/20 backdrop-blur-sm flex items-center gap-2 transition-colors cursor-pointer">
+              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/15 border border-red-500/25 text-red-700 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/25 backdrop-blur-sm flex items-center gap-2 transition-colors cursor-pointer shadow-sm">
                 <PhoneCall size={14}/> SOS
               </button>
             </div>
