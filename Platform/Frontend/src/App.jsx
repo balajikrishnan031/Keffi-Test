@@ -3079,8 +3079,13 @@ export default function App() {
     }
   };
 
+  const isScrollLockedView = view === 'patient-dashboard' || view === 'admin-dashboard';
+
   return (
-    <div onScroll={(e) => { e.target.scrollTop = 0; }} className="font-inter h-screen w-screen overflow-hidden relative">
+    <div 
+      onScroll={(e) => { if (isScrollLockedView) e.target.scrollTop = 0; }} 
+      className={`font-inter w-screen relative ${isScrollLockedView ? 'h-screen overflow-hidden' : 'min-h-screen overflow-y-auto'}`}
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,w        /* ──────────────────────────────────────────────
            FONT DEFINITIONS (Standardized globally to Outfit)
