@@ -150,13 +150,14 @@
 }
 
 /* Body background with slightly blurred screen-fitted image overlay */
-body {
+html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow: hidden !important;
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   font-family: 'Outfit', sans-serif;
   color: #1e293b;
   background: linear-gradient(135deg, rgba(242, 249, 246, 0.15), rgba(225, 240, 235, 0.1));

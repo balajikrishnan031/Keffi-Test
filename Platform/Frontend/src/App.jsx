@@ -1704,7 +1704,7 @@ const ChatArea = ({
     <div className="h-full w-full flex relative overflow-hidden bg-transparent">
       
       {/* 💬 MAIN CHAT AREA */}
-      <div className="flex-1 flex flex-col relative min-w-0">
+      <div className="flex-1 h-full flex flex-col relative min-w-0 overflow-hidden">
         <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/[0.18] backdrop-blur-3xl">
             <div className="flex items-center gap-2 md:gap-4">
               {!isSidebarOpen && (
@@ -2373,6 +2373,23 @@ const ProfileVault = ({ userData, isSidebarOpen, setIsSidebarOpen }) => (
 // ==========================================
 const PatientDashboard = ({ setView, userData }) => {
   const [activePage, setActivePage] = useState('chat');
+
+  useEffect(() => {
+    const resetScrolls = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      const root = document.getElementById('root');
+      if (root) root.scrollTop = 0;
+      const wrap = document.querySelector('.font-inter');
+      if (wrap) wrap.scrollTop = 0;
+      const dashboard = document.querySelector('.font-inter > div');
+      if (dashboard) dashboard.scrollTop = 0;
+    };
+    resetScrolls();
+    const timer = setTimeout(resetScrolls, 100);
+    return () => clearTimeout(timer);
+  }, [activePage]);
   const [globalPoints, setGlobalPoints] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
@@ -2465,7 +2482,7 @@ const PatientDashboard = ({ setView, userData }) => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-transparent overflow-hidden p-4 md:p-6 gap-4 md:gap-6 font-inter text-slate-800 relative">
+    <div onScroll={(e) => { e.target.scrollTop = 0; }} className="flex h-screen w-screen bg-transparent overflow-hidden p-4 md:p-6 gap-4 md:gap-6 font-inter text-slate-800 relative">
       
       {/* Dynamic Floating Orbs in Background */}
       <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full glow-orb-teal blur-[130px] animate-pulse-slow pointer-events-none z-0"></div>
@@ -3030,6 +3047,22 @@ export default function App() {
   const [view, setView] = useState(saved ? 'patient-dashboard' : 'landing');
   const [userData, setUserData] = useState(saved || null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    const rootEl = document.getElementById('root');
+    if (rootEl) rootEl.scrollTop = 0;
+    const mainWrap = document.querySelector('.font-inter');
+    if (mainWrap) {
+      mainWrap.scrollTop = 0;
+      const allDivs = mainWrap.querySelectorAll('div');
+      allDivs.forEach(d => {
+        if (d.scrollTop > 0) d.scrollTop = 0;
+      });
+    }
+  }, [view]);
+
   const handleLogout = () => {
     localStorage.removeItem('keffi_user');
     setUserData(null);
@@ -3048,19 +3081,17 @@ export default function App() {
   };
 
   return (
-    <div className="font-inter min-h-screen w-full">
+    <div onScroll={(e) => { e.target.scrollTop = 0; }} className="font-inter h-screen w-screen overflow-hidden relative">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,600;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Raleway:wght@700;800;900&family=Sacramento&family=Playball&family=Caveat:wght@600;700&family=Satisfy&family=Alex+Brush&family=Allura&family=Great+Vibes&family=Pacifico&display=swap');
-        
-        /* ──────────────────────────────────────────────
-           FONT DEFINITIONS
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,w        /* ──────────────────────────────────────────────
+           FONT DEFINITIONS (Standardized globally to Outfit)
         ────────────────────────────────────────────── */
         .font-poppins    { font-family: 'Outfit', sans-serif; }
-        .font-inter      { font-family: 'Inter', sans-serif; }
+        .font-inter      { font-family: 'Outfit', sans-serif; }
         .font-space      { font-family: 'Outfit', sans-serif; letter-spacing: 0.015em; }
-        .font-raleway    { font-family: 'Raleway', sans-serif; }
-        .font-playfair   { font-family: 'Playfair Display', serif; }
-        .font-cormorant  { font-family: 'Cormorant Garamond', serif; }
+        .font-raleway    { font-family: 'Outfit', sans-serif; }
+        .font-playfair   { font-family: 'Outfit', sans-serif; }
+        .font-cormorant  { font-family: 'Outfit', sans-serif; }
         .font-sacramento { font-family: 'Sacramento', cursive !important; }
         .font-greatvibes { font-family: 'Great Vibes', cursive !important; }
         .font-alexbrush  { font-family: 'Alex Brush', cursive !important; }
@@ -3071,7 +3102,7 @@ export default function App() {
 
         /* Globally improve legibility of small descriptions and paragraph text */
         .card-text, .p-text {
-          font-family: 'Inter', sans-serif !important;
+          font-family: 'Outfit', sans-serif !important;
           font-size: 14.5px !important;
           line-height: 1.7 !important;
           letter-spacing: 0.012em !important;
@@ -3080,29 +3111,25 @@ export default function App() {
         /* ──────────────────────────────────────────────
            CURSIVE ACCENTS — multiple styles
         ────────────────────────────────────────────── */
-        /* ──────────────────────────────────────────────
-           CURSIVE ACCENTS — same size as context, different font
-        ────────────────────────────────────────────── */
         .cursive-accent {
           font-family: 'Dancing Script', cursive;
           font-weight: 700;
-          font-size: 1.08em;          /* only slightly larger — no more blowout */
+          font-size: 1.08em;
           display: inline;
           letter-spacing: 0.015em;
         }
         .cursive-accent-lg {
           font-family: 'Dancing Script', cursive;
           font-weight: 700;
-          font-size: 1.2em;           /* for standalone decorative use only */
+          font-size: 1.2em;
           display: inline-block;
           transform: rotate(-1deg);
           letter-spacing: 0.02em;
         }
         .cursive-playfair {
-          font-family: 'Playfair Display', serif;
-          font-style: italic;
+          font-family: 'Outfit', sans-serif;
           font-weight: 700;
-          font-size: 1em;             /* same size as surrounding h1 */
+          font-size: 1em;
           display: inline;
           letter-spacing: -0.01em;
         }
@@ -3153,42 +3180,42 @@ export default function App() {
         }
 
         /* ──────────────────────────────────────────────
-           BODY & BASE
+           BODY & BASE (Enforce viewport limits and transparent glass refraction overlay)
         ────────────────────────────────────────────── */
+        html, body, #root {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          overflow: hidden !important;
+          position: relative !important;
+          box-sizing: border-box !important;
+        }
         body {
-          margin: 0;
-          padding: 0;
           background-image:
             linear-gradient(135deg,
-              rgba(230, 245, 240, 0.82) 0%,
-              rgba(240, 252, 248, 0.75) 40%,
-              rgba(220, 238, 234, 0.80) 100%),
+              rgba(230, 245, 240, 0.15) 0%,
+              rgba(240, 252, 248, 0.1) 40%,
+              rgba(220, 238, 234, 0.12) 100%),
             url('/keffi-bg.png');
           background-size: cover;
           background-position: center top;
           background-attachment: fixed;
           background-repeat: no-repeat;
-          font-family: 'Inter', sans-serif;
+          font-family: 'Outfit', sans-serif !important;
           color: #0D1A1A;
         }
-        h1, h2, h3 { font-family: 'Outfit', sans-serif; }
-        h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif !important; }
         
         /* ──────────────────────────────────────────────
-           TYPOGRAPHY SCALE — clear visual hierarchy
-           Hero h1:   clamp(38px → 68px) in JSX
-           Section h2: 48px  — big, impactful
-           Card h3:    26px  — readable subheading
-           Body text:  20px  — comfortable reading
-           Small copy: 17px  — supporting detail
-           Labels:     12px  — uppercase metadata
+           TYPOGRAPHY SCALE
         ────────────────────────────────────────────── */
         .h1-title {
           font-size: clamp(40px, 5vw, 68px);
           font-weight: 900;
           line-height: 1.1;
           letter-spacing: -0.025em;
-          font-family: 'Raleway', sans-serif;
+          font-family: 'Outfit', sans-serif !important;
           color: #0D1A1A;
         }
         .h2-title {
@@ -3196,7 +3223,7 @@ export default function App() {
           font-weight: 800;
           line-height: 1.15;
           letter-spacing: -0.015em;
-          font-family: 'Raleway', sans-serif;
+          font-family: 'Outfit', sans-serif !important;
           color: #0D1A1A;
         }
         .h3-title {
@@ -3204,7 +3231,7 @@ export default function App() {
           font-weight: 700;
           line-height: 1.3;
           letter-spacing: -0.008em;
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: 'Outfit', sans-serif !important;
           color: #1A3030;
         }
         .p-text {
@@ -3212,30 +3239,29 @@ export default function App() {
           font-weight: 400;
           line-height: 1.85;
           color: #2D4040;
-          font-family: 'Inter', sans-serif;
+          font-family: 'Outfit', sans-serif !important;
         }
         .p-small {
           font-size: clamp(15px, 1.4vw, 17px);
           font-weight: 400;
           line-height: 1.75;
           color: #3D5555;
-          font-family: 'Inter', sans-serif;
+          font-family: 'Outfit', sans-serif !important;
         }
         .label-text {
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: 'Outfit', sans-serif !important;
           font-weight: 700;
           letter-spacing: 0.15em;
           text-transform: uppercase;
           font-size: 11px;
           color: #5A7E7E;
         }
-        /* card body text: smaller than p-text */
         .card-text {
           font-size: 15px;
           font-weight: 500;
           line-height: 1.7;
           color: #4A6060;
-          font-family: 'Inter', sans-serif;
+          font-family: 'Outfit', sans-serif !important;
         }
 
         /* ──────────────────────────────────────────────
