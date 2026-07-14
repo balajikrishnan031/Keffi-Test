@@ -5,6 +5,8 @@ RUN useradd -m -u 1000 user
 USER user
 ENV PATH="/home/user/.local/bin:$PATH"
 ENV HF_HOME="/home/user/.cache"
+ENV HF_HUB_OFFLINE=1
+ENV PYTHONUNBUFFERED=1
 
 # Set the working directory
 WORKDIR /app

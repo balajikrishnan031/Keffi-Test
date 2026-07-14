@@ -8,7 +8,7 @@ import json
 class KeffiMemory:
     def __init__(self):
         print("Loading Multilingual Memory Embedding Model...")
-        self.encoder = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2', local_files_only=False)
+        self.encoder = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2', local_files_only=True)
         self.db_path = "user_state.json"
         if not os.path.exists(self.db_path):
             with open(self.db_path, "w") as f:
