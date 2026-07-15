@@ -1515,6 +1515,7 @@ const ChatArea = ({
   const [heartRate, setHeartRate] = useState(72);
   const [hasTriggeredPanic, setHasTriggeredPanic] = useState(false);
   const [showWatchControls, setShowWatchControls] = useState(false);
+  const [showControlsPopover, setShowControlsPopover] = useState(false);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [visualEmotion, setVisualEmotion] = useState('neutral');
   const recognitionRef = useRef(null);
@@ -1696,7 +1697,7 @@ const ChatArea = ({
   };
 
   const renderInputBox = (isCentered = false) => (
-    <div className={`${isCentered ? 'bg-transparent pt-2' : 'px-4 md:px-6 pb-6 bg-white/15 backdrop-blur-xl border-t border-white/25 pt-6 z-20 shrink-0'} relative w-full`}>
+    <div className={`${isCentered ? 'bg-transparent pt-2' : 'px-4 md:px-6 pb-3 bg-transparent pt-3 z-20 shrink-0'} relative w-full`}>
       <div className="max-w-3xl mx-auto bg-white/35 border border-white/45 shadow-lg rounded-[2rem] p-2.5 flex items-center gap-3 focus-within:bg-white/50 transition-all duration-300">
         
         {/* Utility Plus button */}
@@ -1713,11 +1714,11 @@ const ChatArea = ({
           onChange={(e) => setInput(e.target.value)} 
           onKeyPress={(e) => e.key === 'Enter' && handleSend()}
           placeholder={isRecording ? "Listening..." : "Ask Keffi..."} 
-          className="flex-1 bg-transparent border-none outline-none py-3 text-slate-800 font-space font-semibold text-base placeholder-slate-400 focus:ring-0"
+          className="flex-1 bg-transparent border-none outline-none py-3 text-[#1B3B3B] font-inter font-medium text-base placeholder-slate-500 focus:ring-0"
         />
 
         {/* Model Selector dropdown capsule */}
-        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-[10px] font-space font-extrabold text-[#3A7070] tracking-wider shrink-0">
+        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-[10px] font-inter font-bold text-[#3A7070] tracking-wider shrink-0">
           <span>Keffi V3 Pro</span>
           <span className="text-[8px]">▼</span>
         </div>
@@ -1742,7 +1743,7 @@ const ChatArea = ({
         )}
 
       </div>
-      <div className="text-center text-[10px] text-slate-500 font-space font-semibold mt-4">
+      <div className="mx-auto w-fit px-3.5 py-1.5 rounded-full bg-white/45 backdrop-blur-md border border-white/30 text-center text-[10px] text-[#1B3B3B] font-inter font-semibold mt-3 shadow-sm">
         Keffi AI can make mistakes. Consider checking important info.
       </div>
     </div>
@@ -1762,98 +1763,135 @@ const ChatArea = ({
       <div className="flex-1 flex flex-col relative min-w-0 z-10">
         
         {/* Top Header */}
-        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-white/20 bg-white/30 backdrop-blur-md shrink-0">
+        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 bg-transparent shrink-0">
             <div className="flex items-center gap-2 md:gap-4">
               {!isSidebarOpen && (
                 <button 
                   onClick={() => setIsSidebarOpen(true)} 
-                  className="p-2.5 rounded-xl text-slate-700 hover:text-[#3A7070] bg-white/20 border border-white/30 hover:bg-white/45 transition-all cursor-pointer flex items-center justify-center mr-1 shadow-sm"
+                  className="p-2.5 rounded-full text-slate-700 hover:text-[#3A7070] bg-white/20 border border-white/30 hover:bg-white/45 transition-all cursor-pointer flex items-center justify-center mr-1 shadow-sm"
                   title="Open Sidebar Menu"
                 >
                   <Menu size={18} />
                 </button>
               )}
-              <div className="w-12 h-12 bg-white/20 border border-white/30 rounded-full flex items-center justify-center shadow-sm">
+              <div className="w-10 h-10 bg-white/20 border border-white/30 rounded-full flex items-center justify-center shadow-sm">
                 <KeffiLogo size="w-7 h-7" />
               </div>
               <div>
-                <h2 className="text-xl font-raleway font-black text-[#2C5555]">Keffi</h2>
-                <div className="flex items-center gap-2 text-xs text-[#8FA989] font-space font-extrabold tracking-wider">
-                  <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-pulse"></div> Active & Listening
+                <h2 className="text-lg font-inter font-bold text-[#2C5555]">Keffi</h2>
+                <div className="flex items-center gap-2 text-[10px] text-[#8FA989] font-inter font-bold tracking-wider">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#8FA989] animate-pulse"></div> Active
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              {/* Watch Sync BPM Simulator Popover */}
-              <div className="relative">
-                <button 
-                  onClick={() => setShowWatchControls(!showWatchControls)} 
-                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-600 animate-pulse' : 'bg-white/20 border border-white/30 text-slate-700 hover:bg-white/45'}`}
-                  title="Simulated Watch Biofeedback"
-                >
-                  <HeartPulse size={14} className={heartRate > 100 ? 'text-red-600 animate-pulse' : 'text-[#3A7070]'} />
-                  <span>{heartRate} BPM</span>
-                </button>
-                
-                {showWatchControls && (
-                  <div className="absolute right-0 top-12 z-50 w-56 p-4 rounded-2xl bg-white/80 border border-white/35 backdrop-blur-md shadow-2xl flex flex-col items-center gap-2 animate-fade-in">
-                    <div className="text-[10px] font-space font-extrabold text-[#3A7070] uppercase tracking-widest">
-                      BPM Simulator
-                    </div>
-                    <div className="text-xl font-space font-black text-[#2C5555]">
-                      {heartRate} <span className="text-xs font-bold text-slate-400">BPM</span>
-                    </div>
-                    <input 
-                      type="range" 
-                      min="60" 
-                      max="140" 
-                      value={heartRate} 
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value);
-                        setHeartRate(val);
-                        if (val < 100) setHasTriggeredPanic(false);
-                      }}
-                      className="w-full mt-1 accent-[#3A7070] cursor-pointer"
-                    />
-                    <div className="text-[8px] text-slate-400 text-center leading-tight font-space font-semibold mt-1">
-                      Drag above 110 BPM to trigger somatic panic.
-                    </div>
-                  </div>
-                )}
-              </div>
+            
+            {/* Top-Right Control Popover Dropdown (Gemini style) */}
+            <div className="relative">
+              <button 
+                onClick={() => setShowControlsPopover(!showControlsPopover)}
+                className="w-10 h-10 rounded-full bg-white/20 border border-white/30 hover:bg-white/45 text-slate-700 flex items-center justify-center transition-all cursor-pointer shadow-sm hover:scale-102"
+                title="Sanctuary Controls & Settings"
+              >
+                <Settings size={18} />
+              </button>
 
-              <button 
-                onClick={() => setIsCameraActive(!isCameraActive)} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/20 text-slate-700 hover:bg-white/45 border border-white/30'}`}
-                title="Toggle Visual Emotion Tracking"
-              >
-                {isCameraActive ? <Camera size={16}/> : <CameraOff size={16}/>}
-              </button>
-              <button 
-                onClick={() => {
-                  setIsVoiceEnabled(!isVoiceEnabled);
-                  if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
-                }} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/20 text-slate-700 hover:bg-white/45 border border-white/30'}`}
-                title="Toggle Voice Therapy"
-              >
-                {isVoiceEnabled ? <Volume2 size={16}/> : <VolumeX size={16}/>}
-              </button>
-              <button 
-                onClick={() => setShowMediaPlayer(true)} 
-                className="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
-                title="Open Calming Music Sanctuary"
-              >
-                🎵 Music
-              </button>
-              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full bg-white/20 text-slate-700 font-space font-extrabold text-xs tracking-wider hover:bg-white/45 border border-white/30 flex items-center gap-2 transition-colors cursor-pointer">
-                <User size={14}/> Therapist
-              </button>
-              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-700 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/20 flex items-center gap-2 transition-colors cursor-pointer">
-                <PhoneCall size={14}/> SOS
-              </button>
+              {showControlsPopover && (
+                <div className="absolute right-0 top-12 z-50 w-64 p-4 rounded-2xl bg-white/90 border border-white/40 backdrop-blur-md shadow-2xl flex flex-col gap-3 animate-fade-in text-slate-700">
+                  <div className="text-[10px] font-inter font-bold text-[#3A7070] uppercase tracking-widest border-b border-slate-100 pb-1.5">
+                    Sanctuary Controls
+                  </div>
+                  
+                  {/* Heart Sync Control */}
+                  <div className="flex flex-col gap-1.5 bg-[#3A7070]/5 p-2.5 rounded-xl border border-[#3A7070]/10">
+                    <div className="flex items-center justify-between text-xs font-semibold text-slate-700">
+                      <span className="flex items-center gap-1.5">
+                        <HeartPulse size={13} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
+                        Bio-Sync: {heartRate} BPM
+                      </span>
+                      <button 
+                        onClick={() => setShowWatchControls(!showWatchControls)}
+                        className="text-[9px] px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 hover:bg-slate-50"
+                      >
+                        {showWatchControls ? 'Hide Slider' : 'Simulate'}
+                      </button>
+                    </div>
+                    {showWatchControls && (
+                      <input 
+                        type="range" 
+                        min="60" 
+                        max="140" 
+                        value={heartRate} 
+                        onChange={(e) => {
+                          const val = parseInt(e.target.value);
+                          setHeartRate(val);
+                          if (val < 100) setHasTriggeredPanic(false);
+                        }}
+                        className="w-full accent-[#3A7070] cursor-pointer mt-1"
+                      />
+                    )}
+                  </div>
+
+                  {/* Camera Tracking Toggle */}
+                  <button 
+                    onClick={() => setIsCameraActive(!isCameraActive)}
+                    className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-xs font-semibold text-left cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Camera size={14} className="text-slate-500" />
+                      Visual Tracking
+                    </span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${isCameraActive ? 'bg-[#3A7070]/10 text-[#3A7070]' : 'bg-slate-100 text-slate-400'}`}>
+                      {isCameraActive ? 'On' : 'Off'}
+                    </span>
+                  </button>
+
+                  {/* Voice Therapy Toggle */}
+                  <button 
+                    onClick={() => {
+                      setIsVoiceEnabled(!isVoiceEnabled);
+                      if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+                    }}
+                    className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-xs font-semibold text-left cursor-pointer"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Volume2 size={14} className="text-slate-500" />
+                      Voice Readout
+                    </span>
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${isVoiceEnabled ? 'bg-[#3A7070]/10 text-[#3A7070]' : 'bg-slate-100 text-slate-400'}`}>
+                      {isVoiceEnabled ? 'On' : 'Off'}
+                    </span>
+                  </button>
+
+                  {/* Music Sanctuary */}
+                  <button 
+                    onClick={() => { setShowMediaPlayer(true); setShowControlsPopover(false); }}
+                    className="w-full flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-xs font-semibold text-left cursor-pointer"
+                  >
+                    <span>🎵</span>
+                    <span>Music Sanctuary</span>
+                  </button>
+
+                  {/* Therapist Scheduler */}
+                  <button 
+                    onClick={() => { setShowAppointmentPopup(true); setShowControlsPopover(false); }}
+                    className="w-full flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all text-xs font-semibold text-left cursor-pointer"
+                  >
+                    <User size={14} className="text-slate-500" />
+                    <span>Therapist Booking</span>
+                  </button>
+
+                  {/* SOS Trigger */}
+                  <button 
+                    onClick={() => { setShowSOS(true); setShowControlsPopover(false); }}
+                    className="w-full flex items-center gap-2 p-2 rounded-xl bg-red-500/5 hover:bg-red-500/10 border border-red-500/10 hover:border-red-500/20 text-red-700 transition-all text-xs font-bold text-left cursor-pointer"
+                  >
+                    <PhoneCall size={14} className="text-red-500" />
+                    <span>SOS Crisis Line</span>
+                  </button>
+                </div>
+              )}
             </div>
-          </div>
+        </div>
           
           <CameraEmotionTracker isCameraActive={isCameraActive} onEmotionDetected={setVisualEmotion} />
   
@@ -1883,7 +1921,7 @@ const ChatArea = ({
           {messages.length === 0 ? (
             /* 🌌 GEMINI EMPTY STATE START PAGE (Screenshot 625) */
             <div className="flex-1 flex flex-col items-center justify-center px-6 text-center animate-fade-in relative z-10">
-              <h1 className="text-4xl md:text-5xl font-raleway font-black bg-gradient-to-r from-[#2C5555] via-[#3A7070] to-slate-700 bg-clip-text text-transparent mb-12 tracking-tight">
+              <h1 className="text-4xl md:text-5xl font-inter font-semibold text-[#1B3B3B] mb-12 tracking-tight">
                 What can I help with, {userData?.name || "Balaji"}?
               </h1>
               
@@ -1911,7 +1949,7 @@ const ChatArea = ({
                               <Sparkles size={14} className="text-[#3A7070]" />
                             </div>
                             <div className="flex-1 flex flex-col">
-                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-space font-medium leading-relaxed text-slate-800">
+                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-inter font-medium leading-relaxed text-[#1B3B3B]">
                                 {mainText}
                               </div>
                               
@@ -1925,10 +1963,10 @@ const ChatArea = ({
                                       style={{animationDelay: `${i * 80}ms`}}
                                       className={`flex items-start text-left p-4 rounded-2xl bg-white/30 border border-white/45 hover:border-[#3A7070]/30 hover:bg-white/50 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300`}
                                     >
-                                      <div className="w-5 h-5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#2C5555] group-hover:border-[#3A7070]/25 flex items-center justify-center text-[10px] font-space font-extrabold shrink-0 mr-3 mt-0.5 transition-colors">
+                                      <div className="w-5 h-5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#2C5555] group-hover:border-[#3A7070]/25 flex items-center justify-center text-[10px] font-inter font-bold shrink-0 mr-3 mt-0.5 transition-colors">
                                          {i + 1}
                                       </div>
-                                      <span className="text-[13px] font-space font-extrabold text-slate-600 group-hover:text-[#2C5555] leading-snug">
+                                      <span className="text-[13px] font-inter font-bold text-[#1B3B3B] leading-snug">
                                         {qr}
                                       </span>
                                     </button>
@@ -1964,7 +2002,7 @@ const ChatArea = ({
                                 </button>
                                 <button className="gemini-action-btn-light" title="Good Response">👍</button>
                                 <button className="gemini-action-btn-light" title="Bad Response">👎</button>
-                                <span className="text-[10px] uppercase font-space font-extrabold tracking-wider ml-auto text-slate-500">
+                                <span className="text-[10px] uppercase font-inter font-semibold tracking-wider ml-auto text-slate-500">
                                   {m.time}
                                 </span>
                               </div>
@@ -1973,10 +2011,10 @@ const ChatArea = ({
                         ) : (
                           /* User message (glassmorphic capsule) */
                           <div className="flex flex-col items-end max-w-[85%]">
-                            <div className="whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-space font-semibold leading-relaxed rounded-[1.5rem] rounded-tr-sm bg-white/45 text-slate-800 border border-white/50 shadow-sm">
+                            <div className="whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-inter font-medium leading-relaxed rounded-[1.5rem] rounded-tr-sm bg-white/45 text-[#1B3B3B] border border-white/50 shadow-sm">
                               {mainText}
                             </div>
-                            <span className="text-[9px] text-slate-500 font-space font-bold uppercase tracking-wider mt-2 px-1">
+                            <span className="text-[9px] text-slate-500 font-inter font-bold uppercase tracking-wider mt-2 px-1">
                               {m.time}
                             </span>
                           </div>
