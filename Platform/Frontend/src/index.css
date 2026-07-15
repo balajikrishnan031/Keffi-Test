@@ -447,3 +447,20 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
 }
 
+/* Action button icons under bot replies for light background */
+.gemini-action-btn-light {
+  color: #5f6368 !important;
+  padding: 0.5rem !important;
+  border-radius: 9999px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.gemini-action-btn-light:hover {
+  background-color: rgba(58, 112, 112, 0.08) !important;
+  color: #2C5555 !important;
+}
+

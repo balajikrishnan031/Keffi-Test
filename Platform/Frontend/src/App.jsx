@@ -1695,13 +1695,13 @@ const ChatArea = ({
   };
 
   const renderInputBox = (isCentered = false) => (
-    <div className={`${isCentered ? 'bg-transparent pt-2' : 'px-4 md:px-6 pb-6 bg-[#131314]/80 border-t border-white/5 pt-6 z-20 shrink-0'} relative w-full`}>
-      <div className="max-w-3xl mx-auto bg-[#1E1F20] border border-white/5 shadow-2xl rounded-[2rem] p-2.5 flex items-center gap-3 focus-within:bg-[#232426] transition-all duration-300">
+    <div className={`${isCentered ? 'bg-transparent pt-2' : 'px-4 md:px-6 pb-6 bg-white/15 backdrop-blur-xl border-t border-white/25 pt-6 z-20 shrink-0'} relative w-full`}>
+      <div className="max-w-3xl mx-auto bg-white/35 border border-white/45 shadow-lg rounded-[2rem] p-2.5 flex items-center gap-3 focus-within:bg-white/50 transition-all duration-300">
         
         {/* Utility Plus button */}
         <button 
           onClick={() => setShowWatchControls(!showWatchControls)} 
-          className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 transition-colors flex items-center justify-center cursor-pointer font-bold text-lg shrink-0"
+          className="w-10 h-10 rounded-full bg-[#3A7070]/10 hover:bg-[#3A7070]/20 text-[#3A7070] transition-colors flex items-center justify-center cursor-pointer font-bold text-lg shrink-0"
           title="Biofeedback Sync Simulator"
         >
           +
@@ -1712,11 +1712,11 @@ const ChatArea = ({
           onChange={(e) => setInput(e.target.value)} 
           onKeyPress={(e) => e.key === 'Enter' && handleSend()}
           placeholder={isRecording ? "Listening..." : "Ask Keffi..."} 
-          className="flex-1 bg-transparent border-none outline-none py-3 text-[#E3E3E3] font-space font-semibold text-base placeholder-slate-500 focus:ring-0"
+          className="flex-1 bg-transparent border-none outline-none py-3 text-slate-800 font-space font-semibold text-base placeholder-slate-400 focus:ring-0"
         />
 
         {/* Model Selector dropdown capsule */}
-        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-[10px] font-space font-extrabold text-slate-400 tracking-wider shrink-0">
+        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-[10px] font-space font-extrabold text-[#3A7070] tracking-wider shrink-0">
           <span>Keffi V3 Pro</span>
           <span className="text-[8px]">▼</span>
         </div>
@@ -1733,7 +1733,7 @@ const ChatArea = ({
         ) : (
           <button 
             onClick={toggleRecording} 
-            className={`w-10 h-10 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
+            className={`w-10 h-10 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-500 hover:text-[#3A7070] hover:bg-[#3A7070]/10'}`}
             title="Voice Microphone Input"
           >
             <Mic size={18} />
@@ -1752,7 +1752,7 @@ const ChatArea = ({
   }
 
   return (
-    <div className="h-full w-full flex relative overflow-hidden bg-[#131314] text-[#E3E3E3]">
+    <div className="h-full w-full flex relative overflow-hidden bg-transparent text-slate-800">
       
       {/* Ambient Radial Gradient behind input box */}
       <div className="absolute inset-0 gemini-radial-glow z-0"></div>
@@ -1761,23 +1761,23 @@ const ChatArea = ({
       <div className="flex-1 flex flex-col relative min-w-0 z-10">
         
         {/* Top Header */}
-        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-white/5 bg-[#131314]/80 backdrop-blur-md shrink-0">
+        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-white/20 bg-white/30 backdrop-blur-md shrink-0">
             <div className="flex items-center gap-2 md:gap-4">
               {!isSidebarOpen && (
                 <button 
                   onClick={() => setIsSidebarOpen(true)} 
-                  className="p-2.5 rounded-xl text-slate-300 hover:text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-all cursor-pointer flex items-center justify-center mr-1 shadow-sm"
+                  className="p-2.5 rounded-xl text-slate-700 hover:text-[#3A7070] bg-white/20 border border-white/30 hover:bg-white/45 transition-all cursor-pointer flex items-center justify-center mr-1 shadow-sm"
                   title="Open Sidebar Menu"
                 >
                   <Menu size={18} />
                 </button>
               )}
-              <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center shadow-sm">
+              <div className="w-12 h-12 bg-white/20 border border-white/30 rounded-full flex items-center justify-center shadow-sm">
                 <KeffiLogo size="w-7 h-7" />
               </div>
               <div>
-                <h2 className="text-xl font-raleway font-black text-white">Keffi</h2>
-                <div className="flex items-center gap-2 text-xs text-[#8A8A8A] font-space font-extrabold tracking-wider">
+                <h2 className="text-xl font-raleway font-black text-[#2C5555]">Keffi</h2>
+                <div className="flex items-center gap-2 text-xs text-[#8FA989] font-space font-extrabold tracking-wider">
                   <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-pulse"></div> Active & Listening
                 </div>
               </div>
@@ -1787,19 +1787,19 @@ const ChatArea = ({
               <div className="relative">
                 <button 
                   onClick={() => setShowWatchControls(!showWatchControls)} 
-                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-400 animate-pulse' : 'bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10'}`}
+                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-600 animate-pulse' : 'bg-white/20 border border-white/30 text-slate-700 hover:bg-white/45'}`}
                   title="Simulated Watch Biofeedback"
                 >
-                  <HeartPulse size={14} className={heartRate > 100 ? 'text-red-400 animate-pulse' : 'text-[#8FA989]'} />
+                  <HeartPulse size={14} className={heartRate > 100 ? 'text-red-600 animate-pulse' : 'text-[#3A7070]'} />
                   <span>{heartRate} BPM</span>
                 </button>
                 
                 {showWatchControls && (
-                  <div className="absolute right-0 top-12 z-50 w-56 p-4 rounded-2xl glass-panel border border-white/30 shadow-xl flex flex-col items-center gap-2 animate-fade-in glow-teal">
+                  <div className="absolute right-0 top-12 z-50 w-56 p-4 rounded-2xl bg-white/80 border border-white/35 backdrop-blur-md shadow-2xl flex flex-col items-center gap-2 animate-fade-in">
                     <div className="text-[10px] font-space font-extrabold text-[#3A7070] uppercase tracking-widest">
                       BPM Simulator
                     </div>
-                    <div className="text-xl font-space font-black text-slate-800">
+                    <div className="text-xl font-space font-black text-[#2C5555]">
                       {heartRate} <span className="text-xs font-bold text-slate-400">BPM</span>
                     </div>
                     <input 
@@ -1823,7 +1823,7 @@ const ChatArea = ({
 
               <button 
                 onClick={() => setIsCameraActive(!isCameraActive)} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10'}`}
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/20 text-slate-700 hover:bg-white/45 border border-white/30'}`}
                 title="Toggle Visual Emotion Tracking"
               >
                 {isCameraActive ? <Camera size={16}/> : <CameraOff size={16}/>}
@@ -1833,22 +1833,22 @@ const ChatArea = ({
                   setIsVoiceEnabled(!isVoiceEnabled);
                   if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
                 }} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10'}`}
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/20 text-slate-700 hover:bg-white/45 border border-white/30'}`}
                 title="Toggle Voice Therapy"
               >
                 {isVoiceEnabled ? <Volume2 size={16}/> : <VolumeX size={16}/>}
               </button>
               <button 
                 onClick={() => setShowMediaPlayer(true)} 
-                className="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[#8FA989] font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
                 title="Open Calming Music Sanctuary"
               >
                 🎵 Music
               </button>
-              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full bg-white/5 text-slate-300 font-space font-extrabold text-xs tracking-wider hover:bg-white/10 border border-white/10 flex items-center gap-2 transition-colors cursor-pointer">
+              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full bg-white/20 text-slate-700 font-space font-extrabold text-xs tracking-wider hover:bg-white/45 border border-white/30 flex items-center gap-2 transition-colors cursor-pointer">
                 <User size={14}/> Therapist
               </button>
-              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/20 flex items-center gap-2 transition-colors cursor-pointer">
+              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-700 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/20 flex items-center gap-2 transition-colors cursor-pointer">
                 <PhoneCall size={14}/> SOS
               </button>
             </div>
@@ -1857,33 +1857,33 @@ const ChatArea = ({
           <CameraEmotionTracker isCameraActive={isCameraActive} onEmotionDetected={setVisualEmotion} />
   
           {showSOS && (
-            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 bg-[#1e1f20] p-8 rounded-[2rem] shadow-2xl border border-red-500/20 flex flex-col items-center animate-fade-in w-80 text-center">
+            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 bg-white/80 backdrop-blur-md border border-red-500/20 p-8 rounded-[2rem] shadow-2xl flex flex-col items-center animate-fade-in w-80 text-center">
               <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 mb-6"><AlertTriangle size={32}/></div>
-              <h3 className="text-xl font-space font-black text-white mb-2">Emergency Hotline</h3>
-              <p className="text-sm text-slate-400 mb-6 font-space font-semibold">You are not alone. Please call iCall India for immediate support.</p>
-              <div className="text-2xl font-space font-black text-[#8FA989] mb-6 tracking-widest">9152987821</div>
-              <button onClick={() => setShowSOS(false)} className="px-8 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-space font-bold text-sm hover:bg-white/10 w-full transition-colors cursor-pointer">Close</button>
+              <h3 className="text-xl font-space font-black text-slate-800 mb-2">Emergency Hotline</h3>
+              <p className="text-sm text-slate-600 mb-6 font-space font-semibold">You are not alone. Please call iCall India for immediate support.</p>
+              <div className="text-2xl font-space font-black text-[#2C5555] mb-6 tracking-widest">9152987821</div>
+              <button onClick={() => setShowSOS(false)} className="px-8 py-3 rounded-xl bg-white/20 border border-white/30 text-slate-700 font-space font-bold text-sm hover:bg-white/45 w-full transition-colors cursor-pointer">Close</button>
             </div>
           )}
   
           {showMediaPlayer && <MediaPlayer onClose={() => setShowMediaPlayer(false)} />}
   
           {showAppointmentPopup && (
-            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-[60] bg-[#1e1f20] p-8 rounded-[2rem] shadow-2xl border border-white/10 flex flex-col items-center animate-fade-in w-80 text-center">
-              <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-[#8FA989] mb-6 text-3xl">🫂</div>
-              <h3 className="text-xl font-space font-black text-white mb-2">You're not alone</h3>
-              <p className="text-sm text-slate-400 mb-8 font-space font-semibold">We noticed you're going through a tough time. Would you like to schedule an automatic appointment with a human therapist?</p>
+            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-[60] bg-white/80 backdrop-blur-md border border-white/30 p-8 rounded-[2rem] shadow-2xl flex flex-col items-center animate-fade-in w-80 text-center">
+              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-[#3A7070] mb-6 text-3xl">🫂</div>
+              <h3 className="text-xl font-space font-black text-slate-800 mb-2">You're not alone</h3>
+              <p className="text-sm text-slate-600 mb-8 font-space font-semibold">We noticed you're going through a tough time. Would you like to schedule an automatic appointment with a human therapist?</p>
               <div className="flex flex-col gap-3 w-full">
                 <button onClick={handleBookAppointment} className={`w-full py-3.5 rounded-xl font-space font-bold text-sm bg-[#3A7070] text-white hover:bg-[#2C5555] cursor-pointer`}>Yes, Book Session</button>
-                <button onClick={() => setShowAppointmentPopup(false)} className={`w-full py-3.5 rounded-xl font-space font-bold text-sm bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors cursor-pointer`}>Not Right Now</button>
+                <button onClick={() => setShowAppointmentPopup(false)} className={`w-full py-3.5 rounded-xl font-space font-bold text-sm bg-white/20 border border-white/30 text-slate-700 hover:bg-white/45 transition-colors cursor-pointer`}>Not Right Now</button>
               </div>
             </div>
           )}
           {messages.length === 0 ? (
             /* 🌌 GEMINI EMPTY STATE START PAGE (Screenshot 625) */
             <div className="flex-1 flex flex-col items-center justify-center px-6 text-center animate-fade-in relative z-10">
-              <h1 className="text-4xl md:text-5xl font-raleway font-black bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent mb-12 tracking-tight">
-                Where should we start?
+              <h1 className="text-4xl md:text-5xl font-raleway font-black bg-gradient-to-r from-[#2C5555] via-[#3A7070] to-slate-700 bg-clip-text text-transparent mb-12 tracking-tight">
+                What can I help with, {userData?.name || "Balaji"}?
               </h1>
               
               {/* Bottom centered floating input box */}
@@ -1894,7 +1894,7 @@ const ChatArea = ({
           ) : (
             /* 💬 GEMINI MESSAGE STREAM (Screenshot 626) */
             <>
-              <div className="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col gap-8 min-h-0 relative scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+              <div className="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col gap-8 min-h-0 relative scrollbar-thin scrollbar-thumb-[#3A7070]/10 scrollbar-track-transparent">
                 <div className="max-w-3xl mx-auto w-full flex flex-col gap-8">
                   {messages.map(m => {
                     const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
@@ -1906,11 +1906,11 @@ const ChatArea = ({
                         {isKeffi ? (
                           /* Bot response (no bubble, star logo on the left) */
                           <div className="flex items-start gap-4 w-full">
-                            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 shadow-sm mt-1">
-                              <Sparkles size={14} className="text-[#8FA989]" />
+                            <div className="w-8 h-8 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 flex items-center justify-center shrink-0 shadow-sm mt-1">
+                              <Sparkles size={14} className="text-[#3A7070]" />
                             </div>
                             <div className="flex-1 flex flex-col">
-                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-space font-medium leading-relaxed text-[#E3E3E3]">
+                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-space font-medium leading-relaxed text-slate-800">
                                 {mainText}
                               </div>
                               
@@ -1922,12 +1922,12 @@ const ChatArea = ({
                                       key={i} 
                                       onClick={() => handleSend(qr)} 
                                       style={{animationDelay: `${i * 80}ms`}}
-                                      className={`flex items-start text-left p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300`}
+                                      className={`flex items-start text-left p-4 rounded-2xl bg-white/30 border border-white/45 hover:border-[#3A7070]/30 hover:bg-white/50 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300`}
                                     >
-                                      <div className="w-5 h-5 rounded-full bg-white/10 border border-white/10 text-slate-300 group-hover:bg-[#3A7070]/20 group-hover:text-[#8FA989] group-hover:border-[#3A7070]/30 flex items-center justify-center text-[10px] font-space font-extrabold shrink-0 mr-3 mt-0.5 transition-colors">
+                                      <div className="w-5 h-5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#2C5555] group-hover:border-[#3A7070]/25 flex items-center justify-center text-[10px] font-space font-extrabold shrink-0 mr-3 mt-0.5 transition-colors">
                                          {i + 1}
                                       </div>
-                                      <span className="text-[13px] font-space font-extrabold text-slate-300 group-hover:text-white leading-snug">
+                                      <span className="text-[13px] font-space font-extrabold text-slate-600 group-hover:text-[#2C5555] leading-snug">
                                         {qr}
                                       </span>
                                     </button>
@@ -1942,7 +1942,7 @@ const ChatArea = ({
                                     navigator.clipboard.writeText(mainText);
                                     alert("Copied to clipboard!");
                                   }}
-                                  className="gemini-action-btn"
+                                  className="gemini-action-btn-light"
                                   title="Copy Response"
                                 >
                                   📋
@@ -1956,23 +1956,23 @@ const ChatArea = ({
                                       window.speechSynthesis.speak(utterance);
                                     }
                                   }}
-                                  className="gemini-action-btn"
+                                  className="gemini-action-btn-light"
                                   title="Read Aloud"
                                 >
                                   🔊
                                 </button>
-                                <button className="gemini-action-btn" title="Good Response">👍</button>
-                                <button className="gemini-action-btn" title="Bad Response">👎</button>
-                                <span className="text-[10px] uppercase font-space font-extrabold tracking-wider ml-auto">
+                                <button className="gemini-action-btn-light" title="Good Response">👍</button>
+                                <button className="gemini-action-btn-light" title="Bad Response">👎</button>
+                                <span className="text-[10px] uppercase font-space font-extrabold tracking-wider ml-auto text-slate-500">
                                   {m.time}
                                 </span>
                               </div>
                             </div>
                           </div>
                         ) : (
-                          /* User message (deep charcoal pill) */
+                          /* User message (glassmorphic capsule) */
                           <div className="flex flex-col items-end max-w-[85%]">
-                            <div className="whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-space font-semibold leading-relaxed rounded-[1.5rem] bg-[#1E1F20] text-[#E3E3E3] border border-white/5 shadow-sm">
+                            <div className="whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-space font-semibold leading-relaxed rounded-[1.5rem] rounded-tr-sm bg-white/45 text-slate-800 border border-white/50 shadow-sm">
                               {mainText}
                             </div>
                             <span className="text-[9px] text-slate-500 font-space font-bold uppercase tracking-wider mt-2 px-1">
@@ -1986,13 +1986,13 @@ const ChatArea = ({
                   })}
                   {isTyping && (
                     <div className="flex items-start gap-4 w-full">
-                      <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-1">
-                        <Sparkles size={14} className="text-[#8FA989]" />
+                      <div className="w-8 h-8 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 flex items-center justify-center shrink-0 mt-1">
+                        <Sparkles size={14} className="text-[#3A7070]" />
                       </div>
-                      <div className="p-4 rounded-[1.5rem] bg-white/5 flex gap-1.5 items-center border border-white/5">
-                        <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                        <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                        <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      <div className="p-4 rounded-[1.5rem] bg-white/30 flex gap-1.5 items-center border border-white/35">
+                        <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '300ms' }}></div>
                       </div>
                     </div>
                   )}
@@ -2570,7 +2570,7 @@ const PatientDashboard = ({ setView, userData }) => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-transparent overflow-hidden p-4 md:p-6 gap-4 md:gap-6 font-inter text-slate-800 relative">
+    <div className="flex h-screen w-screen bg-transparent overflow-hidden font-inter text-slate-800 relative">
       
       {/* Mobile Overlay */}
       {isMobile && isSidebarOpen && (
@@ -2578,7 +2578,7 @@ const PatientDashboard = ({ setView, userData }) => {
       )}
 
       {/* Sleek Floating Sidebar */}
-      <div className={`${isSidebarOpen ? 'w-64 md:w-72 p-6 opacity-100 pointer-events-auto' : 'w-0 p-0 opacity-0 pointer-events-none border-none'} absolute md:relative z-30 transition-all duration-300 h-[calc(100vh-2rem)] md:h-full left-4 md:left-0 top-4 md:top-0 rounded-[2.5rem] bg-white/[0.16] backdrop-blur-3xl border border-white/20 shrink-0 glow-teal flex flex-col overflow-hidden hover:shadow-[0_20px_50px_rgba(13,112,112,0.18)]`}>
+      <div className={`${isSidebarOpen ? 'w-64 md:w-72 p-5 opacity-100 pointer-events-auto' : 'w-0 p-0 opacity-0 pointer-events-none border-none'} absolute md:relative z-30 transition-all duration-300 h-full left-0 top-0 rounded-none bg-white/20 border-r border-white/20 backdrop-blur-3xl shrink-0 flex flex-col overflow-hidden`}>
         {/* Light Green Animated Background */}
         <div className="absolute -top-[10%] -left-[10%] w-[120%] h-[50%] bg-[#8FA989] rounded-full mix-blend-multiply blur-[80px] opacity-[0.12] animate-pulse pointer-events-none z-0" style={{animationDuration: '4s'}}></div>
         <div className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[50%] bg-[#EAF4F0] rounded-full mix-blend-multiply blur-[80px] opacity-40 pointer-events-none z-0" style={{animation: 'pulse 8s infinite alternate'}}></div>
@@ -2602,28 +2602,28 @@ const PatientDashboard = ({ setView, userData }) => {
             
             {/* Main Menu Card Wrapper */}
             <div className="bg-white/20 border border-white/30 rounded-2xl p-2.5 space-y-0.5 shadow-sm shrink-0">
-              {menuItems.map((item, i) => {
-                const IconComponent = item.icon;
-                const isActive = activePage === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      setActivePage(item.id);
-                      if (isMobile) setIsSidebarOpen(false);
-                    }}
-                    style={{animationDelay: `${i * 50}ms`}}
-                    className={`w-full flex items-center gap-3.5 px-4 py-2.5 rounded-xl font-space font-extrabold text-xs tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
-                      isActive 
-                      ? 'bg-[#3A7070] text-white shadow-md shadow-[#3A7070]/20 scale-[1.01]' 
-                      : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070]'
-                    }`}
-                  >
-                    {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
-                    <IconComponent size={16} className="relative z-10 shrink-0" /> <span className="relative z-10">{item.label}</span>
-                  </button>
-                )
-              })}
+               {menuItems.map((item, i) => {
+                 const IconComponent = item.icon;
+                 const isActive = activePage === item.id;
+                 return (
+                   <button
+                     key={item.id}
+                     onClick={() => {
+                       setActivePage(item.id);
+                       if (isMobile) setIsSidebarOpen(false);
+                     }}
+                     style={{animationDelay: `${i * 50}ms`}}
+                     className={`w-full flex items-center gap-3.5 px-4 py-2.5 rounded-xl font-space font-extrabold text-xs tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
+                       isActive 
+                       ? 'bg-[#3A7070] text-white shadow-md shadow-[#3A7070]/20 scale-[1.01]' 
+                       : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070]'
+                     }`}
+                   >
+                     {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
+                     <IconComponent size={16} className="relative z-10 shrink-0" /> <span className="relative z-10">{item.label}</span>
+                   </button>
+                 )
+               })}
             </div>
 
             {/* Chat history inside sidebar, visible when active page is chat */}
@@ -2670,27 +2670,43 @@ const PatientDashboard = ({ setView, userData }) => {
             )}
 
             {/* Footer Items (Points & Exit) */}
-            <div className="mt-auto pt-3 border-t border-[#3A7070]/10 flex flex-col gap-2 shrink-0">
-              <div className="px-4 py-3 rounded-xl bg-white/20 border border-white/30 font-space font-extrabold text-[11px] text-[#D4A373] flex items-center justify-center gap-2 shadow-sm tracking-wider">
-                <Star size={14} className="fill-[#D4A373] text-[#D4A373] animate-pulse" /> {globalPoints} Sanctuary Points
+            <div className="mt-auto pt-3 border-t border-white/20 flex flex-col gap-2.5 shrink-0">
+              <div className="px-3.5 py-2.5 rounded-xl bg-white/25 border border-white/30 font-space font-extrabold text-[10px] text-[#2C5555] flex items-center justify-center gap-2 shadow-sm tracking-wider">
+                <Star size={13} className="fill-[#D4A373] text-[#D4A373] animate-pulse" /> {globalPoints} Sanctuary Points
               </div>
-              <button 
-                onClick={() => { localStorage.removeItem('keffi_user'); setView('landing'); }} 
-                className="py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-700 font-space font-extrabold text-[10px] tracking-widest transition-all w-full text-center cursor-pointer uppercase"
-              >
-                Exit Sanctuary
-              </button>
+              
+              {/* Bottom Profile Account Section matching Gemini's User profile layout */}
+              <div className="flex items-center justify-between p-2 rounded-xl bg-white/20 border border-white/35 shadow-sm">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-full bg-[#3A7070] text-white flex items-center justify-center font-space font-black text-xs shrink-0 shadow-sm uppercase">
+                    {(userData?.name || "Balaji")[0]}
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[11px] font-space font-black text-[#2C5555] truncate leading-tight">
+                      {userData?.name || "Balaji"}
+                    </span>
+                    <span className="text-[9px] font-space font-extrabold text-slate-500 truncate">
+                      Patient
+                    </span>
+                  </div>
+                </div>
+                
+                <button 
+                  onClick={() => { localStorage.removeItem('keffi_user'); setView('landing'); }} 
+                  className="w-7 h-7 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-600 flex items-center justify-center transition-all cursor-pointer border border-red-500/20"
+                  title="Exit Sanctuary (Logout)"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
           </div>
         )}
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 h-full w-full min-w-0 bg-transparent relative flex flex-col overflow-hidden">
-        {/* Render Active View in unified card */}
-        <div className="flex-1 rounded-[2.5rem] glass-panel glow-teal flex flex-col overflow-hidden shadow-2xl relative h-full w-full">
-          {renderContent()}
-        </div>
+      <div className="flex-1 h-full w-full min-w-0 relative flex flex-col overflow-hidden bg-transparent z-10">
+        {renderContent()}
       </div>
     </div>
   );
