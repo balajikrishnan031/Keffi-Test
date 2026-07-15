@@ -50,6 +50,7 @@ const HeartPulse = (p) => <Icon {...p}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.
 const Target = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Icon>;
 const Menu = (p) => <Icon {...p}><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></Icon>;
 const Zap = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
+const HelpCircle = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></Icon>;
 
 const theme = {
   bg: 'bg-[#F2F9F6]/25 backdrop-blur-md', 
@@ -2599,9 +2600,19 @@ const PatientDashboard = ({ setView, userData }) => {
                  </button>
                )}
             </div>
+
+            {/* New Chat Button */}
+            <button 
+              onClick={handleNewChat}
+              className="w-full py-3 px-5 rounded-full bg-white/20 border border-white/30 hover:bg-white/45 text-slate-700 font-inter font-semibold text-xs tracking-wider flex items-center gap-3.5 shadow-sm transition-all cursor-pointer shrink-0"
+              title="Start fresh conversation"
+            >
+              <span className="text-lg font-light shrink-0">+</span>
+              <span>New chat</span>
+            </button>
             
-            {/* Main Menu Card Wrapper */}
-            <div className="bg-white/20 border border-white/30 rounded-2xl p-2.5 space-y-0.5 shadow-sm shrink-0">
+            {/* Main Menu Links (Gemini Flat style) */}
+            <div className="space-y-1 shrink-0 px-1">
                {menuItems.map((item, i) => {
                  const IconComponent = item.icon;
                  const isActive = activePage === item.id;
@@ -2613,14 +2624,14 @@ const PatientDashboard = ({ setView, userData }) => {
                        if (isMobile) setIsSidebarOpen(false);
                      }}
                      style={{animationDelay: `${i * 50}ms`}}
-                     className={`w-full flex items-center gap-3.5 px-4 py-2.5 rounded-xl font-space font-extrabold text-xs tracking-wide transition-all duration-300 hover:translate-x-1 active:scale-98 cursor-pointer relative overflow-hidden group animate-slide-up ${
+                     className={`w-full flex items-center gap-3.5 px-4.5 py-2.5 rounded-full font-inter font-medium text-xs tracking-wide transition-all duration-200 cursor-pointer ${
                        isActive 
-                       ? 'bg-[#3A7070] text-white shadow-md shadow-[#3A7070]/20 scale-[1.01]' 
-                       : 'text-slate-600 hover:bg-white/50 hover:text-[#3A7070]'
+                       ? 'bg-white/35 text-[#2C5555] font-bold shadow-sm border border-white/20' 
+                       : 'text-slate-600 hover:bg-white/20'
                      }`}
                    >
-                     {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-[#8FA989] rounded-r-md animate-slide-in-left"></div>}
-                     <IconComponent size={16} className="relative z-10 shrink-0" /> <span className="relative z-10">{item.label}</span>
+                     <IconComponent size={15} className="shrink-0 text-slate-500" /> 
+                     <span>{item.label}</span>
                    </button>
                  )
                })}
@@ -2628,32 +2639,26 @@ const PatientDashboard = ({ setView, userData }) => {
 
             {/* Chat history inside sidebar, visible when active page is chat */}
             {activePage === 'chat' && sessions.length > 0 && (
-              <div className="flex-1 flex flex-col min-h-[180px] bg-white/10 border border-white/20 rounded-2xl p-3.5 overflow-hidden shadow-sm animate-fade-in">
-                <div className="flex items-center justify-between text-[10px] font-space font-extrabold text-[#2C5555] uppercase tracking-widest px-1 mb-2 shrink-0">
-                  <span>🕒 Session History</span>
-                  <button 
-                    onClick={handleNewChat}
-                    className="text-[10px] px-2 py-0.5 rounded-lg bg-white/40 hover:bg-white/60 border border-[#3A7070]/20 text-[#3A7070] font-black transition-all cursor-pointer shadow-sm"
-                    title="Start fresh conversation"
-                  >
-                    + New
-                  </button>
+              <div className="flex-1 flex flex-col min-h-[150px] overflow-hidden animate-fade-in px-1.5 mt-2">
+                <div className="text-[10px] font-inter font-bold text-[#2C5555]/60 uppercase tracking-widest px-4 mb-2 shrink-0">
+                  Recent
                 </div>
-                <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/15 scrollbar-track-transparent">
+                <div className="flex-1 overflow-y-auto space-y-1 pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/15 scrollbar-track-transparent">
                   {sessions.map(s => {
                     const isActive = s.id === currentSessionId;
                     return (
                       <div 
                         key={s.id}
                         onClick={() => setCurrentSessionId(s.id)}
-                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl border transition-all duration-300 cursor-pointer group hover:-translate-y-0.5 ${
+                        className={`w-full flex items-center justify-between px-4 py-2 rounded-full border transition-all duration-200 cursor-pointer group ${
                           isActive 
-                            ? 'border-[#3A7070]/30 bg-[#3A7070]/12 text-[#2C5555] font-extrabold shadow-sm' 
-                            : 'border-white/10 bg-white/10 hover:bg-white/35 text-slate-700 font-semibold'
+                            ? 'border-white/20 bg-white/35 text-[#2C5555] font-bold shadow-sm' 
+                            : 'border-transparent text-slate-600 hover:bg-white/20'
                         }`}
                       >
-                        <div className="flex flex-col min-w-0 pr-2">
-                          <span className="text-[11px] font-space leading-tight truncate">{s.title}</span>
+                        <div className="flex items-center gap-3 min-w-0 pr-2">
+                          <MessageCircle size={14} className="shrink-0 text-slate-500" />
+                          <span className="text-xs font-inter leading-tight truncate">{s.title}</span>
                         </div>
                         <button 
                           onClick={(e) => handleDeleteSession(e, s.id)}
@@ -2669,24 +2674,48 @@ const PatientDashboard = ({ setView, userData }) => {
               </div>
             )}
 
-            {/* Footer Items (Points & Exit) */}
-            <div className="mt-auto pt-3 border-t border-white/20 flex flex-col gap-2.5 shrink-0">
-              <div className="px-3.5 py-2.5 rounded-xl bg-white/25 border border-white/30 font-space font-extrabold text-[10px] text-[#2C5555] flex items-center justify-center gap-2 shadow-sm tracking-wider">
-                <Star size={13} className="fill-[#D4A373] text-[#D4A373] animate-pulse" /> {globalPoints} Sanctuary Points
-              </div>
+            {/* Footer Items (Help, Activity, Settings & Profile) */}
+            <div className="mt-auto pt-3 border-t border-white/20 flex flex-col gap-1 shrink-0 px-1">
               
-              {/* Bottom Profile Account Section matching Gemini's User profile layout */}
-              <div className="flex items-center justify-between p-2 rounded-xl bg-white/20 border border-white/35 shadow-sm">
+              {/* Help Item */}
+              <button 
+                onClick={() => setShowSOS(true)}
+                className="w-full flex items-center gap-3.5 px-4.5 py-2.5 rounded-full font-inter font-medium text-xs text-slate-600 hover:bg-white/20 transition-all duration-200 cursor-pointer text-left"
+              >
+                <HelpCircle size={15} className="shrink-0 text-slate-500" />
+                <span>Help & SOS</span>
+              </button>
+              
+              {/* Activity Item */}
+              <button 
+                onClick={() => setActivePage('journey')}
+                className={`w-full flex items-center gap-3.5 px-4.5 py-2.5 rounded-full font-inter font-medium text-xs transition-all duration-200 cursor-pointer text-left ${activePage === 'journey' ? 'bg-white/35 text-[#2C5555] font-bold shadow-sm border border-white/20' : 'text-slate-600 hover:bg-white/20'}`}
+              >
+                <Activity size={15} className="shrink-0 text-slate-500" />
+                <span>Activity</span>
+              </button>
+              
+              {/* Settings Item */}
+              <button 
+                onClick={() => setActivePage('account')}
+                className={`w-full flex items-center gap-3.5 px-4.5 py-2.5 rounded-full font-inter font-medium text-xs transition-all duration-200 cursor-pointer text-left ${activePage === 'account' ? 'bg-white/35 text-[#2C5555] font-bold shadow-sm border border-white/20' : 'text-slate-600 hover:bg-white/20'}`}
+              >
+                <Settings size={15} className="shrink-0 text-slate-500" />
+                <span>Settings</span>
+              </button>
+
+              {/* User Profile avatar info with Logout option inside */}
+              <div className="flex items-center justify-between p-2 mt-2 rounded-xl bg-white/20 border border-white/35 shadow-sm">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-full bg-[#3A7070] text-white flex items-center justify-center font-space font-black text-xs shrink-0 shadow-sm uppercase">
+                  <div className="w-8 h-8 rounded-full bg-[#3A7070] text-white flex items-center justify-center font-inter font-semibold text-xs shrink-0 shadow-sm uppercase">
                     {(userData?.name || "Balaji")[0]}
                   </div>
                   <div className="flex flex-col min-w-0">
-                    <span className="text-[11px] font-space font-black text-[#2C5555] truncate leading-tight">
+                    <span className="text-[11px] font-inter font-semibold text-[#2C5555] truncate leading-tight">
                       {userData?.name || "Balaji"}
                     </span>
-                    <span className="text-[9px] font-space font-extrabold text-slate-500 truncate">
-                      Patient
+                    <span className="text-[9px] font-inter font-medium text-slate-500 truncate">
+                      {userData?.email || "test@keffi.ai"}
                     </span>
                   </div>
                 </div>
@@ -2694,7 +2723,7 @@ const PatientDashboard = ({ setView, userData }) => {
                 <button 
                   onClick={() => { localStorage.removeItem('keffi_user'); setView('landing'); }} 
                   className="w-7 h-7 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-600 flex items-center justify-center transition-all cursor-pointer border border-red-500/20"
-                  title="Exit Sanctuary (Logout)"
+                  title="Logout"
                 >
                   ✕
                 </button>
