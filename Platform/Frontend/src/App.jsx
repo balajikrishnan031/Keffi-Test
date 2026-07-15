@@ -1765,22 +1765,20 @@ const ChatArea = ({
         {/* Top Header */}
         <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 bg-transparent shrink-0">
             <div className="flex items-center gap-2 md:gap-4">
-              {!isSidebarOpen && (
-                <button 
-                  onClick={() => setIsSidebarOpen(true)} 
-                  className="p-2.5 rounded-full text-slate-700 hover:text-[#3A7070] bg-white/20 border border-white/30 hover:bg-white/45 transition-all cursor-pointer flex items-center justify-center mr-1 shadow-sm"
-                  title="Open Sidebar Menu"
-                >
-                  <Menu size={18} />
-                </button>
-              )}
+              <button 
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
+                className="p-2.5 rounded-full text-slate-700 hover:text-[#3A7070] bg-white/20 border border-white/30 hover:bg-white/45 transition-all cursor-pointer flex items-center justify-center mr-1 shadow-sm"
+                title={isSidebarOpen ? "Hide Sidebar Menu" : "Show Sidebar Menu"}
+              >
+                <Menu size={18} />
+              </button>
               <div className="w-10 h-10 bg-white/20 border border-white/30 rounded-full flex items-center justify-center shadow-sm">
                 <KeffiLogo size="w-7 h-7" />
               </div>
               <div>
-                <h2 className="text-lg font-inter font-bold text-[#2C5555]">Keffi</h2>
-                <div className="flex items-center gap-2 text-[10px] text-[#8FA989] font-inter font-bold tracking-wider">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#8FA989] animate-pulse"></div> Active
+                <h2 className="text-2xl font-raleway font-black bg-gradient-to-r from-[#2C5555] via-[#3A7070] to-[#8FA989] bg-clip-text text-transparent drop-shadow-sm tracking-tight leading-none">Keffi</h2>
+                <div className="flex items-center gap-2 text-[10px] text-[#3A7070] font-inter font-bold tracking-wider mt-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#8FA989] animate-pulse"></div> Active & Listening
                 </div>
               </div>
             </div>
@@ -1943,13 +1941,13 @@ const ChatArea = ({
                       <div key={m.id} className={`flex w-full ${isKeffi ? 'justify-start' : 'justify-end'} animate-fade-in-up`}>
                         
                         {isKeffi ? (
-                          /* Bot response (no bubble, star logo on the left) */
+                          /* Bot response (Frosted glass bubble for superb contrast) */
                           <div className="flex items-start gap-4 w-full">
-                            <div className="w-8 h-8 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 flex items-center justify-center shrink-0 shadow-sm mt-1">
-                              <Sparkles size={14} className="text-[#3A7070]" />
+                            <div className="w-8 h-8 rounded-full bg-[#3A7070]/20 border border-[#3A7070]/30 flex items-center justify-center shrink-0 shadow-sm mt-3 animate-pulse">
+                              <Sparkles size={14} className="text-[#2C5555]" />
                             </div>
                             <div className="flex-1 flex flex-col">
-                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-inter font-medium leading-relaxed text-[#1B3B3B]">
+                              <div className="whitespace-pre-wrap p-5 rounded-[1.5rem] rounded-tl-sm bg-white/50 backdrop-blur-md border border-white/60 text-[15px] md:text-base font-inter font-bold leading-relaxed text-[#0D2222] shadow-[0_8px_32px_rgba(58,112,112,0.08)]">
                                 {mainText}
                               </div>
                               
@@ -1961,12 +1959,12 @@ const ChatArea = ({
                                       key={i} 
                                       onClick={() => handleSend(qr)} 
                                       style={{animationDelay: `${i * 80}ms`}}
-                                      className={`flex items-start text-left p-4 rounded-2xl bg-white/30 border border-white/45 hover:border-[#3A7070]/30 hover:bg-white/50 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300`}
+                                      className={`flex items-start text-left p-4 rounded-2xl bg-white/35 border border-white/50 hover:border-[#3A7070]/30 hover:bg-white/55 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300`}
                                     >
                                       <div className="w-5 h-5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#2C5555] group-hover:border-[#3A7070]/25 flex items-center justify-center text-[10px] font-inter font-bold shrink-0 mr-3 mt-0.5 transition-colors">
                                          {i + 1}
                                       </div>
-                                      <span className="text-[13px] font-inter font-bold text-[#1B3B3B] leading-snug">
+                                      <span className="text-[13px] font-inter font-bold text-[#0D2222] leading-snug">
                                         {qr}
                                       </span>
                                     </button>
@@ -2009,9 +2007,9 @@ const ChatArea = ({
                             </div>
                           </div>
                         ) : (
-                          /* User message (glassmorphic capsule) */
+                          /* User message (Stronger white glass capsule) */
                           <div className="flex flex-col items-end max-w-[85%]">
-                            <div className="whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-inter font-medium leading-relaxed rounded-[1.5rem] rounded-tr-sm bg-white/45 text-[#1B3B3B] border border-white/50 shadow-sm">
+                            <div className="whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-inter font-bold leading-relaxed rounded-[1.5rem] rounded-tr-sm bg-white/70 backdrop-blur-md border border-white/80 text-[#0D2222] shadow-[0_8px_32px_rgba(58,112,112,0.12)]">
                               {mainText}
                             </div>
                             <span className="text-[9px] text-slate-500 font-inter font-bold uppercase tracking-wider mt-2 px-1">
