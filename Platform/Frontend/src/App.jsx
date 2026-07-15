@@ -1941,13 +1941,13 @@ const ChatArea = ({
                       <div key={m.id} className={`flex w-full ${isKeffi ? 'justify-start' : 'justify-end'} animate-fade-in-up`}>
                         
                         {isKeffi ? (
-                          /* Bot response (Flat text for modern cardless look) */
+                          /* Bot response (Frosted glass bubble for superb contrast) */
                           <div className="flex items-start gap-4 w-full">
-                            <div className="w-8 h-8 rounded-full bg-[#3A7070]/20 border border-[#3A7070]/30 flex items-center justify-center shrink-0 shadow-sm mt-1 animate-pulse">
+                            <div className="w-8 h-8 rounded-full bg-[#3A7070]/20 border border-[#3A7070]/30 flex items-center justify-center shrink-0 shadow-sm mt-3 animate-pulse">
                               <Sparkles size={14} className="text-[#2C5555]" />
                             </div>
                             <div className="flex-1 flex flex-col">
-                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-inter font-medium leading-relaxed text-[#1B3B3B] chat-text-pop">
+                              <div className="whitespace-pre-wrap p-5 rounded-[1.5rem] rounded-tl-sm bg-white/45 backdrop-blur-md border border-white/50 text-[15px] md:text-base font-inter font-medium leading-relaxed text-[#1B3B3B] shadow-[0_8px_32px_rgba(58,112,112,0.06)]">
                                 {mainText}
                               </div>
                               
@@ -2007,9 +2007,9 @@ const ChatArea = ({
                             </div>
                           </div>
                         ) : (
-                          /* User message (Flat text aligned right) */
-                          <div className="flex flex-col items-end w-full">
-                            <div className="whitespace-pre-wrap text-sm md:text-base font-inter font-medium leading-relaxed text-[#1B3B3B] text-right chat-text-pop">
+                          /* User message (Frosted glass bubble for superb contrast) */
+                          <div className="flex flex-col items-end max-w-[85%]">
+                            <div className="whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-inter font-medium leading-relaxed rounded-[1.5rem] rounded-tr-sm bg-white/55 backdrop-blur-md border border-white/60 text-[#1B3B3B] shadow-[0_8px_32px_rgba(58,112,112,0.08)]">
                               {mainText}
                             </div>
                             <span className="text-[9px] text-slate-500 font-inter font-medium uppercase tracking-wider mt-2 px-1">
@@ -2607,7 +2607,7 @@ const PatientDashboard = ({ setView, userData }) => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-white/20 backdrop-blur-lg overflow-hidden font-inter text-slate-800 relative">
+    <div className="flex h-screen w-screen bg-transparent overflow-hidden font-inter text-slate-800 relative">
       
       {/* Mobile Overlay */}
       {isMobile && isSidebarOpen && (
