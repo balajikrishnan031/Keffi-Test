@@ -1698,7 +1698,7 @@ const ChatArea = ({
 
   const renderInputBox = (isCentered = false) => (
     <div className={`${isCentered ? 'bg-transparent pt-2' : 'px-4 md:px-6 pb-3 bg-transparent pt-3 z-20 shrink-0'} relative w-full`}>
-      <div className="max-w-3xl mx-auto bg-white/35 border border-white/45 shadow-lg rounded-[2rem] p-2.5 flex items-center gap-3 focus-within:bg-white/50 transition-all duration-300">
+      <div className="max-w-[90%] mx-auto bg-white/35 border border-white/45 shadow-lg rounded-[2rem] p-2.5 flex items-center gap-3 focus-within:bg-white/50 transition-all duration-300">
         
         {/* Utility Plus button */}
         <button 
@@ -1924,7 +1924,7 @@ const ChatArea = ({
               </h1>
               
               {/* Bottom centered floating input box */}
-              <div className="w-full max-w-3xl">
+              <div className="w-full max-w-[90%]">
                 {renderInputBox(true)}
               </div>
             </div>
@@ -1932,7 +1932,7 @@ const ChatArea = ({
             /* 💬 GEMINI MESSAGE STREAM (Screenshot 626) */
             <>
               <div className="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col gap-8 min-h-0 relative scrollbar-thin scrollbar-thumb-[#3A7070]/10 scrollbar-track-transparent">
-                <div className="max-w-3xl mx-auto w-full flex flex-col gap-8">
+                <div className="max-w-[90%] mx-auto w-full flex flex-col gap-6">
                   {messages.map(m => {
                     const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
                     const isKeffi = m.sender === 'keffi';
@@ -1941,13 +1941,13 @@ const ChatArea = ({
                       <div key={m.id} className={`flex w-full ${isKeffi ? 'justify-start' : 'justify-end'} animate-fade-in-up`}>
                         
                         {isKeffi ? (
-                          /* Bot response (Frosted glass bubble for superb contrast) */
+                          /* Bot response (Flat text for modern cardless look) */
                           <div className="flex items-start gap-4 w-full">
-                            <div className="w-8 h-8 rounded-full bg-[#3A7070]/20 border border-[#3A7070]/30 flex items-center justify-center shrink-0 shadow-sm mt-3 animate-pulse">
+                            <div className="w-8 h-8 rounded-full bg-[#3A7070]/20 border border-[#3A7070]/30 flex items-center justify-center shrink-0 shadow-sm mt-1 animate-pulse">
                               <Sparkles size={14} className="text-[#2C5555]" />
                             </div>
                             <div className="flex-1 flex flex-col">
-                              <div className="whitespace-pre-wrap p-5 rounded-[1.5rem] rounded-tl-sm bg-white/50 backdrop-blur-md border border-white/60 text-[15px] md:text-base font-inter font-bold leading-relaxed text-[#0D2222] shadow-[0_8px_32px_rgba(58,112,112,0.08)]">
+                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-inter font-bold leading-relaxed text-[#0D2222] chat-text-pop">
                                 {mainText}
                               </div>
                               
@@ -1959,7 +1959,7 @@ const ChatArea = ({
                                       key={i} 
                                       onClick={() => handleSend(qr)} 
                                       style={{animationDelay: `${i * 80}ms`}}
-                                      className={`flex items-start text-left p-4 rounded-2xl bg-white/35 border border-white/50 hover:border-[#3A7070]/30 hover:bg-white/55 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300`}
+                                      className={`flex items-start text-left p-4 rounded-2xl bg-white/20 border border-white/30 hover:border-[#3A7070]/20 hover:bg-white/35 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300`}
                                     >
                                       <div className="w-5 h-5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#2C5555] group-hover:border-[#3A7070]/25 flex items-center justify-center text-[10px] font-inter font-bold shrink-0 mr-3 mt-0.5 transition-colors">
                                          {i + 1}
@@ -2007,9 +2007,9 @@ const ChatArea = ({
                             </div>
                           </div>
                         ) : (
-                          /* User message (Stronger white glass capsule) */
-                          <div className="flex flex-col items-end max-w-[85%]">
-                            <div className="whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-inter font-bold leading-relaxed rounded-[1.5rem] rounded-tr-sm bg-white/70 backdrop-blur-md border border-white/80 text-[#0D2222] shadow-[0_8px_32px_rgba(58,112,112,0.12)]">
+                          /* User message (Flat text aligned right) */
+                          <div className="flex flex-col items-end w-full">
+                            <div className="whitespace-pre-wrap text-sm md:text-base font-inter font-bold leading-relaxed text-[#0D2222] text-right chat-text-pop">
                               {mainText}
                             </div>
                             <span className="text-[9px] text-slate-500 font-inter font-bold uppercase tracking-wider mt-2 px-1">
@@ -2607,7 +2607,7 @@ const PatientDashboard = ({ setView, userData }) => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-transparent overflow-hidden font-inter text-slate-800 relative">
+    <div className="flex h-screen w-screen bg-white/5 backdrop-blur-md overflow-hidden font-inter text-slate-800 relative">
       
       {/* Mobile Overlay */}
       {isMobile && isSidebarOpen && (
