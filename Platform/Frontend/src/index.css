@@ -374,3 +374,76 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   display: inline-block;
 }
+
+/* ==========================================================================
+   GOOGLE GEMINI DESIGN STYLE UTILITIES
+   ========================================================================== */
+
+/* Dark backgrounds */
+.gemini-dark-bg {
+  background-color: #131314 !important;
+}
+
+.gemini-card-bg {
+  background-color: #1e1f20 !important;
+}
+
+.gemini-sidebar-bg {
+  background-color: #0e0e10 !important;
+}
+
+/* Floating gradient glow behind Gemini input box */
+.gemini-radial-glow {
+  background: radial-gradient(circle at 50% 90%, rgba(66, 92, 140, 0.12) 0%, rgba(30, 36, 52, 0.04) 50%, transparent 100%) !important;
+  pointer-events: none;
+}
+
+/* User chat bubble */
+.gemini-user-bubble {
+  background-color: #1e1f20 !important;
+  color: #e3e3e3 !important;
+  border-radius: 1.5rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Assistant text alignment */
+.gemini-bot-text {
+  color: #e3e3e3 !important;
+  line-height: 1.8 !important;
+  font-size: 15.5px !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Action button icons under bot replies */
+.gemini-action-btn {
+  color: #c4c7c5 !important;
+  padding: 0.5rem !important;
+  border-radius: 9999px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.gemini-action-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+/* Input pill capsule */
+.gemini-input-capsule {
+  background-color: #1e1f20 !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  border-radius: 2rem !important;
+  color: #e3e3e3 !important;
+  transition: all 0.2s ease !important;
+}
+
+.gemini-input-capsule:focus-within {
+  background-color: #232426 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+}
+

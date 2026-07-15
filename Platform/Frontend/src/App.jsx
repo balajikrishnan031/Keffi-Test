@@ -1275,24 +1275,22 @@ const DailyMoodCheckIn = ({ patientId, onComplete }) => {
     { score: 5, label: 'Calm', emoji: '🌿', color: 'text-emerald-600', hoverGlow: 'glow-emerald hover:shadow-emerald-300/30' }
   ];
 
-  const handleMoodSelect = async (mood) => {
+  const handleMoodSelect = (mood) => {
     setIsSubmitting(true);
-    try {
-      const response = await fetch('https://balajikrishnan031-keffi-backend.hf.space/api/patient/check-in', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          patient_id: patientId || "P-102",
-          emoji_score: mood.score,
-          sentiment_label: mood.label
-        })
-      });
-      await response.json();
-      onComplete(mood);
-    } catch (error) {
-      console.error("Failed to log mood", error);
-      onComplete(mood);
-    }
+    fetch('https://balajikrishnan031-keffi-backend.hf.space/api/patient/check-in', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        patient_id: patientId || "P-102",
+        emoji_score: mood.score,
+        sentiment_label: mood.label
+      })
+    })
+    .then(res => res.json())
+    .catch(error => console.error("Failed to log mood", error));
+    
+    // Proceed immediately to chatbot sanctuary
+    onComplete(mood);
   };
 
   return (
@@ -1696,32 +1694,90 @@ const ChatArea = ({
     }
   };
 
+  const renderInputBox = (isCentered = false) => (
+    <div className={`${isCentered ? 'bg-transparent pt-2' : 'px-4 md:px-6 pb-6 bg-[#131314]/80 border-t border-white/5 pt-6 z-20 shrink-0'} relative w-full`}>
+      <div className="max-w-3xl mx-auto bg-[#1E1F20] border border-white/5 shadow-2xl rounded-[2rem] p-2.5 flex items-center gap-3 focus-within:bg-[#232426] transition-all duration-300">
+        
+        {/* Utility Plus button */}
+        <button 
+          onClick={() => setShowWatchControls(!showWatchControls)} 
+          className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 text-slate-300 transition-colors flex items-center justify-center cursor-pointer font-bold text-lg shrink-0"
+          title="Biofeedback Sync Simulator"
+        >
+          +
+        </button>
+
+        <input 
+          value={input} 
+          onChange={(e) => setInput(e.target.value)} 
+          onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+          placeholder={isRecording ? "Listening..." : "Ask Keffi..."} 
+          className="flex-1 bg-transparent border-none outline-none py-3 text-[#E3E3E3] font-space font-semibold text-base placeholder-slate-500 focus:ring-0"
+        />
+
+        {/* Model Selector dropdown capsule */}
+        <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-[10px] font-space font-extrabold text-slate-400 tracking-wider shrink-0">
+          <span>Keffi V3 Pro</span>
+          <span className="text-[8px]">▼</span>
+        </div>
+
+        {/* Micro-interaction Microphone / Send button */}
+        {input.trim() ? (
+          <button 
+            onClick={() => handleSend()} 
+            className="w-10 h-10 rounded-full bg-[#3A7070] text-white hover:bg-[#2C5555] transition-all cursor-pointer shadow-md flex items-center justify-center shrink-0"
+            title="Send message"
+          >
+            <Send size={16} />
+          </button>
+        ) : (
+          <button 
+            onClick={toggleRecording} 
+            className={`w-10 h-10 rounded-full transition-all cursor-pointer flex items-center justify-center shrink-0 ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
+            title="Voice Microphone Input"
+          >
+            <Mic size={18} />
+          </button>
+        )}
+
+      </div>
+      <div className="text-center text-[10px] text-slate-500 font-space font-semibold mt-4">
+        Keffi AI can make mistakes. Consider checking important info.
+      </div>
+    </div>
+  );
+
   if (!moodSet) {
     return <DailyMoodCheckIn patientId="P-102" onComplete={handleMoodSelect} />;
   }
 
   return (
-    <div className="h-full w-full flex relative overflow-hidden bg-transparent">
+    <div className="h-full w-full flex relative overflow-hidden bg-[#131314] text-[#E3E3E3]">
       
+      {/* Ambient Radial Gradient behind input box */}
+      <div className="absolute inset-0 gemini-radial-glow z-0"></div>
+
       {/* 💬 MAIN CHAT AREA */}
-      <div className="flex-1 flex flex-col relative min-w-0">
-        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-[#3A7070]/10 bg-white/[0.18] backdrop-blur-3xl">
+      <div className="flex-1 flex flex-col relative min-w-0 z-10">
+        
+        {/* Top Header */}
+        <div className="flex justify-between items-center px-6 md:px-8 py-5 z-20 border-b border-white/5 bg-[#131314]/80 backdrop-blur-md shrink-0">
             <div className="flex items-center gap-2 md:gap-4">
               {!isSidebarOpen && (
                 <button 
                   onClick={() => setIsSidebarOpen(true)} 
-                  className="p-2.5 rounded-xl text-slate-600 hover:text-[#3A7070] glass-card border border-white/30 hover:bg-white/50 transition-all cursor-pointer flex items-center justify-center mr-1 shadow-sm"
+                  className="p-2.5 rounded-xl text-slate-300 hover:text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-all cursor-pointer flex items-center justify-center mr-1 shadow-sm"
                   title="Open Sidebar Menu"
                 >
                   <Menu size={18} />
                 </button>
               )}
-              <div className="w-12 h-12 glass-card border border-white/45 rounded-full flex items-center justify-center shadow-sm">
+              <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center shadow-sm">
                 <KeffiLogo size="w-7 h-7" />
               </div>
               <div>
-                <h2 className="text-xl font-raleway font-black text-[#2C5555]">Keffi</h2>
-                <div className="flex items-center gap-2 text-xs text-[#8FA989] font-space font-extrabold tracking-wider">
+                <h2 className="text-xl font-raleway font-black text-white">Keffi</h2>
+                <div className="flex items-center gap-2 text-xs text-[#8A8A8A] font-space font-extrabold tracking-wider">
                   <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-pulse"></div> Active & Listening
                 </div>
               </div>
@@ -1731,10 +1787,10 @@ const ChatArea = ({
               <div className="relative">
                 <button 
                   onClick={() => setShowWatchControls(!showWatchControls)} 
-                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-600 animate-pulse glow-rose' : 'glass-card border border-white/30 text-slate-600 hover:bg-white/50'}`}
+                  className={`px-4 py-2 rounded-full font-space font-extrabold text-xs flex items-center gap-2 transition-all cursor-pointer ${heartRate > 100 ? 'bg-red-500/10 border border-red-500/30 text-red-400 animate-pulse' : 'bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10'}`}
                   title="Simulated Watch Biofeedback"
                 >
-                  <HeartPulse size={14} className={heartRate > 100 ? 'text-red-500 animate-pulse' : 'text-[#3A7070]'} />
+                  <HeartPulse size={14} className={heartRate > 100 ? 'text-red-400 animate-pulse' : 'text-[#8FA989]'} />
                   <span>{heartRate} BPM</span>
                 </button>
                 
@@ -1767,7 +1823,7 @@ const ChatArea = ({
 
               <button 
                 onClick={() => setIsCameraActive(!isCameraActive)} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors hidden md:flex cursor-pointer ${isCameraActive ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10'}`}
                 title="Toggle Visual Emotion Tracking"
               >
                 {isCameraActive ? <Camera size={16}/> : <CameraOff size={16}/>}
@@ -1777,22 +1833,22 @@ const ChatArea = ({
                   setIsVoiceEnabled(!isVoiceEnabled);
                   if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
                 }} 
-                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'glass-card text-slate-600 hover:bg-white/50 border border-white/30'}`}
+                className={`px-3 py-2 rounded-full font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer ${isVoiceEnabled ? 'bg-[#3A7070] text-white border border-white/20' : 'bg-white/5 text-slate-300 hover:bg-white/10 border border-white/10'}`}
                 title="Toggle Voice Therapy"
               >
                 {isVoiceEnabled ? <Volume2 size={16}/> : <VolumeX size={16}/>}
               </button>
               <button 
                 onClick={() => setShowMediaPlayer(true)} 
-                className="px-4 py-2 rounded-full bg-emerald-500/12 backdrop-blur-sm border border-emerald-500/20 text-[#2C5555] font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[#8FA989] font-space font-extrabold text-xs tracking-wider hover:bg-emerald-500/20 flex items-center gap-2 transition-colors cursor-pointer"
                 title="Open Calming Music Sanctuary"
               >
                 🎵 Music
               </button>
-              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full glass-card text-slate-600 font-space font-extrabold text-xs tracking-wider hover:bg-white/50 border border-white/30 flex items-center gap-2 transition-colors cursor-pointer">
+              <button onClick={() => setShowAppointmentPopup(true)} className="px-4 py-2 rounded-full bg-white/5 text-slate-300 font-space font-extrabold text-xs tracking-wider hover:bg-white/10 border border-white/10 flex items-center gap-2 transition-colors cursor-pointer">
                 <User size={14}/> Therapist
               </button>
-              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/12 border border-red-500/20 text-red-600 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/20 backdrop-blur-sm flex items-center gap-2 transition-colors cursor-pointer">
+              <button onClick={() => setShowSOS(true)} className="px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-space font-extrabold text-xs tracking-wider hover:bg-red-500/20 flex items-center gap-2 transition-colors cursor-pointer">
                 <PhoneCall size={14}/> SOS
               </button>
             </div>
@@ -1801,102 +1857,151 @@ const ChatArea = ({
           <CameraEmotionTracker isCameraActive={isCameraActive} onEmotionDetected={setVisualEmotion} />
   
           {showSOS && (
-            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 glass-panel p-8 rounded-[2rem] shadow-2xl border border-red-500/20 flex flex-col items-center animate-fade-in w-80 text-center glow-rose">
+            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 bg-[#1e1f20] p-8 rounded-[2rem] shadow-2xl border border-red-500/20 flex flex-col items-center animate-fade-in w-80 text-center">
               <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-500 mb-6"><AlertTriangle size={32}/></div>
-              <h3 className="text-xl font-space font-black text-slate-800 mb-2">Emergency Hotline</h3>
-              <p className="text-sm text-slate-600 mb-6 font-space font-semibold">You are not alone. Please call iCall India for immediate support.</p>
-              <div className="text-2xl font-space font-black text-[#2C5555] mb-6 tracking-widest">9152987821</div>
-              <button onClick={() => setShowSOS(false)} className="px-8 py-3 rounded-xl glass-card border border-white/30 text-slate-700 font-space font-bold text-sm hover:bg-white/50 w-full transition-colors cursor-pointer">Close</button>
+              <h3 className="text-xl font-space font-black text-white mb-2">Emergency Hotline</h3>
+              <p className="text-sm text-slate-400 mb-6 font-space font-semibold">You are not alone. Please call iCall India for immediate support.</p>
+              <div className="text-2xl font-space font-black text-[#8FA989] mb-6 tracking-widest">9152987821</div>
+              <button onClick={() => setShowSOS(false)} className="px-8 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-space font-bold text-sm hover:bg-white/10 w-full transition-colors cursor-pointer">Close</button>
             </div>
           )}
   
           {showMediaPlayer && <MediaPlayer onClose={() => setShowMediaPlayer(false)} />}
   
           {showAppointmentPopup && (
-            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-[60] glass-panel p-8 rounded-[2rem] shadow-2xl border border-white/30 flex flex-col items-center animate-fade-in w-80 text-center glow-teal">
-              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-[#3A7070] mb-6 text-3xl">🫂</div>
-              <h3 className="text-xl font-space font-black text-slate-800 mb-2">You're not alone</h3>
-              <p className="text-sm text-slate-600 mb-8 font-space font-semibold">We noticed you're going through a tough time. Would you like to schedule an automatic appointment with a human therapist?</p>
+            <div className="absolute top-24 left-1/2 transform -translate-x-1/2 z-[60] bg-[#1e1f20] p-8 rounded-[2rem] shadow-2xl border border-white/10 flex flex-col items-center animate-fade-in w-80 text-center">
+              <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-[#8FA989] mb-6 text-3xl">🫂</div>
+              <h3 className="text-xl font-space font-black text-white mb-2">You're not alone</h3>
+              <p className="text-sm text-slate-400 mb-8 font-space font-semibold">We noticed you're going through a tough time. Would you like to schedule an automatic appointment with a human therapist?</p>
               <div className="flex flex-col gap-3 w-full">
-                <button onClick={handleBookAppointment} className={`w-full py-3.5 rounded-xl font-space font-bold text-sm ${theme.btnTeal} cursor-pointer`}>Yes, Book Session</button>
-                <button onClick={() => setShowAppointmentPopup(false)} className={`w-full py-3.5 rounded-xl font-space font-bold text-sm glass-card border border-white/30 text-slate-600 hover:bg-white/50 transition-colors cursor-pointer`}>Not Right Now</button>
+                <button onClick={handleBookAppointment} className={`w-full py-3.5 rounded-xl font-space font-bold text-sm bg-[#3A7070] text-white hover:bg-[#2C5555] cursor-pointer`}>Yes, Book Session</button>
+                <button onClick={() => setShowAppointmentPopup(false)} className={`w-full py-3.5 rounded-xl font-space font-bold text-sm bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors cursor-pointer`}>Not Right Now</button>
               </div>
             </div>
           )}
-          {/* Chat message flow container */}
-          <div className="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-6 min-h-0 relative bg-white/[0.12] backdrop-blur-3xl scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent">
-            {messages.map(m => {
-              const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
-              return (
-                <div key={m.id} className={`flex w-full ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}>
-                  <div className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%]`}>
-                    <div className={`whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-space font-medium leading-relaxed rounded-[1.5rem] shadow-sm transition-all duration-300 ${
-                      m.sender === 'user' 
-                      ? 'glass-message-user text-slate-800 rounded-tr-sm border border-white/60 glow-white' 
-                      : 'glass-message-keffi text-[#1A2E2E] rounded-tl-sm border border-[#3A7070]/15 glow-teal'
-                    }`}>
-                      {mainText}
-                    </div>
+          {messages.length === 0 ? (
+            /* 🌌 GEMINI EMPTY STATE START PAGE (Screenshot 625) */
+            <div className="flex-1 flex flex-col items-center justify-center px-6 text-center animate-fade-in relative z-10">
+              <h1 className="text-4xl md:text-5xl font-raleway font-black bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent mb-12 tracking-tight">
+                Where should we start?
+              </h1>
+              
+              {/* Bottom centered floating input box */}
+              <div className="w-full max-w-3xl">
+                {renderInputBox(true)}
+              </div>
+            </div>
+          ) : (
+            /* 💬 GEMINI MESSAGE STREAM (Screenshot 626) */
+            <>
+              <div className="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col gap-8 min-h-0 relative scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                <div className="max-w-3xl mx-auto w-full flex flex-col gap-8">
+                  {messages.map(m => {
+                    const { mainText } = m.sender === 'keffi' ? parseMessageText(m.text) : { mainText: m.text };
+                    const isKeffi = m.sender === 'keffi';
                     
-                    <span className={`text-[10px] text-slate-500 font-space font-bold uppercase tracking-wider mt-2 px-1`}>
-                      {m.time}
-                    </span>
-  
-                    {/* Option Buttons beneath Keffi's reply (Horizontal Card Layout) */}
-                    {m.sender === 'keffi' && m.options && m.options.length > 0 && (
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 w-full">
-                        {m.options.map((qr, i) => (
-                          <button 
-                            key={i} 
-                            onClick={() => handleSend(qr)} 
-                            style={{animationDelay: `${i * 80}ms`}}
-                            className={`flex items-start text-left p-4 rounded-2xl bg-white/45 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300 ${[ 'glow-teal hover:shadow-[0_8px_20px_rgba(13,112,112,0.18)]', 'glow-emerald hover:shadow-[0_8px_20px_rgba(16,185,129,0.18)]', 'glow-purple hover:shadow-[0_8px_20px_rgba(139,92,246,0.18)]' ][i % 3]}`}
-                          >
-                            <div className="w-5 h-5 rounded-full bg-white/20 border border-white/30 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#3A7070] group-hover:border-[#3A7070]/30 flex items-center justify-center text-[10px] font-space font-extrabold shrink-0 mr-3 mt-0.5 transition-colors">
-                               {i + 1}
+                    return (
+                      <div key={m.id} className={`flex w-full ${isKeffi ? 'justify-start' : 'justify-end'} animate-fade-in-up`}>
+                        
+                        {isKeffi ? (
+                          /* Bot response (no bubble, star logo on the left) */
+                          <div className="flex items-start gap-4 w-full">
+                            <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 shadow-sm mt-1">
+                              <Sparkles size={14} className="text-[#8FA989]" />
                             </div>
-                            <span className="text-[13px] font-space font-extrabold text-slate-700 group-hover:text-slate-900 leading-snug">
-                              {qr}
+                            <div className="flex-1 flex flex-col">
+                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-space font-medium leading-relaxed text-[#E3E3E3]">
+                                {mainText}
+                              </div>
+                              
+                              {/* Option Buttons beneath Keffi's reply */}
+                              {m.options && m.options.length > 0 && (
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 w-full">
+                                  {m.options.map((qr, i) => (
+                                    <button 
+                                      key={i} 
+                                      onClick={() => handleSend(qr)} 
+                                      style={{animationDelay: `${i * 80}ms`}}
+                                      className={`flex items-start text-left p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300`}
+                                    >
+                                      <div className="w-5 h-5 rounded-full bg-white/10 border border-white/10 text-slate-300 group-hover:bg-[#3A7070]/20 group-hover:text-[#8FA989] group-hover:border-[#3A7070]/30 flex items-center justify-center text-[10px] font-space font-extrabold shrink-0 mr-3 mt-0.5 transition-colors">
+                                         {i + 1}
+                                      </div>
+                                      <span className="text-[13px] font-space font-extrabold text-slate-300 group-hover:text-white leading-snug">
+                                        {qr}
+                                      </span>
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+
+                              {/* Action Buttons beneath bot reply */}
+                              <div className="flex items-center gap-1 mt-4 text-[#8A8A8A]">
+                                <button 
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(mainText);
+                                    alert("Copied to clipboard!");
+                                  }}
+                                  className="gemini-action-btn"
+                                  title="Copy Response"
+                                >
+                                  📋
+                                </button>
+                                <button 
+                                  onClick={() => {
+                                    if ('speechSynthesis' in window) {
+                                      window.speechSynthesis.cancel();
+                                      const utterance = new SpeechSynthesisUtterance(mainText.replace(/[#*]/g, ''));
+                                      utterance.lang = 'en-US';
+                                      window.speechSynthesis.speak(utterance);
+                                    }
+                                  }}
+                                  className="gemini-action-btn"
+                                  title="Read Aloud"
+                                >
+                                  🔊
+                                </button>
+                                <button className="gemini-action-btn" title="Good Response">👍</button>
+                                <button className="gemini-action-btn" title="Bad Response">👎</button>
+                                <span className="text-[10px] uppercase font-space font-extrabold tracking-wider ml-auto">
+                                  {m.time}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          /* User message (deep charcoal pill) */
+                          <div className="flex flex-col items-end max-w-[85%]">
+                            <div className="whitespace-pre-wrap p-4 md:p-5 text-sm md:text-base font-space font-semibold leading-relaxed rounded-[1.5rem] bg-[#1E1F20] text-[#E3E3E3] border border-white/5 shadow-sm">
+                              {mainText}
+                            </div>
+                            <span className="text-[9px] text-slate-500 font-space font-bold uppercase tracking-wider mt-2 px-1">
+                              {m.time}
                             </span>
-                          </button>
-                        ))}
+                          </div>
+                        )}
+
                       </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-            {isTyping && (
-              <div className="flex flex-col self-start items-start max-w-[85%]">
-                <div className="p-4 rounded-[1.5rem] glass-message-keffi flex gap-1.5 items-center rounded-tl-sm border border-[#3A7070]/10 glow-teal">
-                  <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-[#3A7070] animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                    );
+                  })}
+                  {isTyping && (
+                    <div className="flex items-start gap-4 w-full">
+                      <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-1">
+                        <Sparkles size={14} className="text-[#8FA989]" />
+                      </div>
+                      <div className="p-4 rounded-[1.5rem] bg-white/5 flex gap-1.5 items-center border border-white/5">
+                        <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 rounded-full bg-[#8FA989] animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      </div>
+                    </div>
+                  )}
+                  <div ref={chatEndRef} className="h-4" />
                 </div>
               </div>
-            )}
-            <div ref={chatEndRef} className="h-4" />
-          </div>
-  
-          {/* Input box section */}
-          <div className="px-6 pb-6 bg-white/[0.08] backdrop-blur-2xl border-t border-[#3A7070]/5 pt-6 z-20 relative shrink-0">
-            <div className="max-w-4xl mx-auto bg-white/45 border border-white/50 shadow-xl rounded-[2rem] p-3 flex items-center gap-3 backdrop-blur-2xl hover:shadow-[0_12px_40px_rgba(58,112,112,0.15)] transition-shadow">
-              <button onClick={toggleRecording} className={`p-4 rounded-2xl transition-all cursor-pointer ${isRecording ? 'bg-red-500/10 text-red-500 animate-pulse border border-red-500/20' : 'bg-transparent text-slate-500 hover:text-[#3A7070] hover:bg-slate-100/30'}`}>
-                <Mic size={20} />
-              </button>
-              <input 
-                value={input} onChange={(e) => setInput(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                placeholder={isRecording ? "Listening..." : "Type your feelings safely here..."} 
-                className="flex-1 bg-transparent border-none outline-none py-3 text-slate-800 font-space font-semibold text-base placeholder-slate-400 focus:ring-0"
-              />
-              <button onClick={() => handleSend()} className="px-6 py-4 rounded-2xl bg-[#3A7070] hover:bg-[#2C5555] text-white flex items-center justify-center transition-colors shadow-md cursor-pointer font-space font-extrabold tracking-wider glow-teal">
-                <Send size={18} />
-              </button>
-            </div>
-            <div className="text-center text-[10px] text-slate-400 font-space font-extrabold uppercase tracking-widest mt-4">
-              Keffi AI is not a substitute for medical diagnosis.
-            </div>
-          </div>
+              {renderInputBox(false)}
+            </>
+          )}
       </div>
     </div>
   );
