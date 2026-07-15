@@ -1947,7 +1947,7 @@ const ChatArea = ({
                               <Sparkles size={14} className="text-[#2C5555]" />
                             </div>
                             <div className="flex-1 flex flex-col">
-                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-inter font-bold leading-relaxed text-[#0D2222] chat-text-pop">
+                              <div className="whitespace-pre-wrap text-[15px] md:text-base font-inter font-medium leading-relaxed text-[#1B3B3B] chat-text-pop">
                                 {mainText}
                               </div>
                               
@@ -1961,10 +1961,10 @@ const ChatArea = ({
                                       style={{animationDelay: `${i * 80}ms`}}
                                       className={`flex items-start text-left p-4 rounded-2xl bg-white/20 border border-white/30 hover:border-[#3A7070]/20 hover:bg-white/35 shadow-sm group cursor-pointer animate-slide-up hover:scale-[1.02] duration-300`}
                                     >
-                                      <div className="w-5 h-5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#2C5555] group-hover:border-[#3A7070]/25 flex items-center justify-center text-[10px] font-inter font-bold shrink-0 mr-3 mt-0.5 transition-colors">
+                                      <div className="w-5 h-5 rounded-full bg-[#3A7070]/10 border border-[#3A7070]/15 text-slate-600 group-hover:bg-[#3A7070]/20 group-hover:text-[#2C5555] group-hover:border-[#3A7070]/25 flex items-center justify-center text-[10px] font-inter font-medium shrink-0 mr-3 mt-0.5 transition-colors">
                                          {i + 1}
                                       </div>
-                                      <span className="text-[13px] font-inter font-bold text-[#0D2222] leading-snug">
+                                      <span className="text-[13px] font-inter font-medium text-[#1B3B3B] leading-snug">
                                         {qr}
                                       </span>
                                     </button>
@@ -2009,10 +2009,10 @@ const ChatArea = ({
                         ) : (
                           /* User message (Flat text aligned right) */
                           <div className="flex flex-col items-end w-full">
-                            <div className="whitespace-pre-wrap text-sm md:text-base font-inter font-bold leading-relaxed text-[#0D2222] text-right chat-text-pop">
+                            <div className="whitespace-pre-wrap text-sm md:text-base font-inter font-medium leading-relaxed text-[#1B3B3B] text-right chat-text-pop">
                               {mainText}
                             </div>
-                            <span className="text-[9px] text-slate-500 font-inter font-bold uppercase tracking-wider mt-2 px-1">
+                            <span className="text-[9px] text-slate-500 font-inter font-medium uppercase tracking-wider mt-2 px-1">
                               {m.time}
                             </span>
                           </div>
@@ -2607,7 +2607,7 @@ const PatientDashboard = ({ setView, userData }) => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-white/5 backdrop-blur-md overflow-hidden font-inter text-slate-800 relative">
+    <div className="flex h-screen w-screen bg-white/20 backdrop-blur-lg overflow-hidden font-inter text-slate-800 relative">
       
       {/* Mobile Overlay */}
       {isMobile && isSidebarOpen && (
