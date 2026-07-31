@@ -1,7 +1,4 @@
-# Keffi Clinical Database Engine
-# Install: pip install sqlalchemy
-
-from sqlalchemy import create_engine, Column, String, Integer, Float, DateTime, Text
+from sqlalchemy import create_engine, Column, String, Integer, Float, DateTime, Text, Boolean, event
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
@@ -17,9 +14,11 @@ class Patient(Base):
     __tablename__ = "patients"
     patient_id = Column(String, primary_key=True, index=True)
     name = Column(String, default="Anonymous")
+    dob = Column(String, default="2000-01-01")
+    gender = Column(String, default="Not Specified")
     mhq_score = Column(Float, default=50.0)  # 0-100: lower = more depressed
     depression_level = Column(String, default="Moderate")  # Low / Moderate / High / Critical
-    assigned_doctor = Column(String, default="Unassigned")
+    assigned_doctor = Column(String, default="Dr. R. Sivanesh")
     mhq_trend = Column(String, default="Stable")
     attrition_probability = Column(Float, default=0.0)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -32,12 +31,9 @@ class ChatMessage(Base):
     patient_id = Column(String, index=True)
     message = Column(Text)
     ai_reply = Column(Text)
-    # BERT 6 basic emotions
     bert_emotion = Column(String)
-    # Gemini 96 clinical states
     clinical_state = Column(String)
     clinical_category = Column(String)  # e.g. "Depression", "Attrition Risk", "Anxiety"
-    # Live MHQ change per message
     mhq_before = Column(Float)
     mhq_after = Column(Float)
     mhq_delta = Column(Float)  # +ve = improving, -ve = worsening
@@ -53,15 +49,66 @@ class MoodCheckIn(Base):
     sentiment_label = Column(String)
     timestamp = Column(DateTime, default=datetime.utcnow)
 
+class CognitiveDistortionLog(Base):
+    """Log of detected CBT psychological distortions"""
+    __tablename__ = "cognitive_distortion_logs"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    patient_id = Column(String, index=True)
+    distortion_type = Column(String)  # Catastrophizing, All-or-Nothing, etc.
+    user_thought = Column(Text)
+    reframed_thought = Column(Text)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+class BiometricTelemetryLog(Base):
+    """ESP32 Heart Rate (BPM), HRV (ms), and GSR sensor streams"""
+    __tablename__ = "biometric_telemetry_logs"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    patient_id = Column(String, index=True)
+    heart_rate_bpm = Column(Float)
+    hrv_ms = Column(Float)
+    gsr_microsiemens = Column(Float)
+    panic_flag = Column(Boolean, default=False)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+class VoiceProsodyLog(Base):
+    """Voice sentiment, pitch, speech rate, and pause gap analysis"""
+    __tablename__ = "voice_prosody_logs"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    patient_id = Column(String, index=True)
+    pitch_hz = Column(Float)
+    speech_rate_wpm = Column(Float)
+    energy_db = Column(Float)
+    pause_gap_sec = Column(Float)
+    detected_state = Column(String)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+class ExplainableAILog(Base):
+    """SHAP and LIME feature attributions for clinical transparency audit"""
+    __tablename__ = "explainable_ai_logs"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    patient_id = Column(String, index=True)
+    message_id = Column(Integer)
+    shap_top_features = Column(Text)  # JSON string
+    lime_explanation = Column(Text)   # JSON string
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
 # ----------------------------------------------------------
-# DATABASE SETUP
+# HIGH-PERFORMANCE DATABASE SETUP (WAL MODE)
 # ----------------------------------------------------------
 
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# Let's use the exact absolute path to prevent CWD bugs
 db_path = os.path.join(BASE_DIR, "keffi_clinical.db")
-engine = create_engine(f"sqlite:///{db_path}", connect_args={"check_same_thread": False})
+engine = create_engine(f"sqlite:///{db_path}", connect_args={"check_same_thread": False}, pool_size=20, max_overflow=30)
+
+# Enable WAL Mode for high-concurrency multi-threaded access
+@event.listens_for(engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA journal_mode=WAL")
+    cursor.execute("PRAGMA synchronous=NORMAL")
+    cursor.close()
+
 Base.metadata.create_all(bind=engine)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
