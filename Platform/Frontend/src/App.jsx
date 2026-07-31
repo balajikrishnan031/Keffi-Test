@@ -1011,13 +1011,21 @@ const PatientLogin = ({ setView, setUserData }) => {
       setStep(2);
     } else if (step === 2) {
       if (!formData.name.trim()) return setError('Please enter your preferred name.');
-      if (!formData.age || isNaN(formData.age) || +formData.age < 5 || +formData.age > 120) return setError('Please enter a valid age (5–120).');
-      if (!formData.dob) return setError('Please enter your Date of Birth.');
+      if (!formData.dob) return setError('Please select your Date of Birth.');
       if (!formData.gender) return setError('Please select your gender.');
-      if (!formData.place.trim()) return setError('Please enter your location.');
+      if (!formData.place.trim()) return setError('Please enter your city / location.');
+
+      let computedAge = 25;
+      if (formData.dob) {
+        const birthYear = new Date(formData.dob).getFullYear();
+        const currentYear = new Date().getFullYear();
+        if (!isNaN(birthYear) && birthYear > 1900 && birthYear <= currentYear) {
+          computedAge = currentYear - birthYear;
+        }
+      }
 
       const patientId = 'P-' + phoneClean.slice(-6);
-      const fullData = { ...formData, patient_id: patientId };
+      const fullData = { ...formData, age: computedAge, patient_id: patientId };
       localStorage.setItem('keffi_user', JSON.stringify(fullData));
       setUserData(fullData);
       setView('patient-dashboard');
@@ -1037,21 +1045,21 @@ const PatientLogin = ({ setView, setUserData }) => {
         <div className="hidden md:flex md:w-5/12 relative overflow-hidden bg-[#E6F0F0]/25 rounded-l-[2.5rem] items-center justify-center p-8 border-r border-white/20 animate-fade-in">
            <DynamicLoginIllustration step={step === 1 ? 1 : 3} className="w-full h-full max-w-[280px] object-contain relative z-10 drop-shadow-2xl transition-all duration-500" />
            <div className="absolute inset-0 bg-gradient-to-t from-[#2C5555]/30 via-transparent to-transparent flex flex-col justify-end p-8 text-[#1E293B] z-20">
-              <h2 className="text-2xl font-poppins font-black text-[#0D5050] mb-2">
+              <h2 className="text-2xl font-poppins font-bold text-[#0D5050] mb-2">
                 {step === 1 ? (
                   <>Secure <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.55em', textTransform: 'none'}}>Sanctuary</span></>
                 ) : (
                   <>Your <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.55em', textTransform: 'none'}}>Profile</span></>
                 )}
               </h2>
-              <p className="text-sm opacity-90 font-medium font-inter">
+              <p className="text-sm opacity-90 font-medium font-inter text-slate-700">
                 {step === 1 ? "Enter your details below to establish a secure connection." : "Enter your personal profile details to start your session."}
               </p>
            </div>
         </div>
         
         {/* Right Form Side */}
-        <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white/25 backdrop-blur-sm animate-fade-in overflow-hidden" style={{animationDelay: '100ms'}}>
+        <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center bg-white/40 backdrop-blur-md animate-fade-in overflow-hidden" style={{animationDelay: '100ms'}}>
           <div className="flex justify-start gap-3 mb-6">
             {[1,2].map(i => (
               <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === step ? 'w-12 bg-[#3A7070]' : 'w-4 bg-white/40'}`}></div>
@@ -1061,19 +1069,19 @@ const PatientLogin = ({ setView, setUserData }) => {
           {step === 1 && (
             <div className="space-y-6 animate-fade-in">
               <div>
-                <h2 className="text-2xl md:text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-[#3A7070] mb-2">
-                  Secure <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.45em', textTransform: 'none'}}>Sanctuary</span>
+                <h2 className="text-2xl md:text-3xl font-raleway font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#2C5555] to-[#3A7070] mb-2">
+                  Secure <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.45em', textTransform: 'none'}}>Sanctuary</span>
                 </h2>
-                <p className="text-slate-600 text-sm font-inter font-bold leading-relaxed">Your privacy is our priority. Enter details for secure access.</p>
+                <p className="text-slate-600 text-sm font-inter font-medium leading-relaxed">Your privacy is our priority. Enter details for secure access.</p>
               </div>
               <div className="space-y-4">
                 <div className="animate-slide-up" style={{animationDelay: '100ms'}}>
-                  <label className="block text-sm font-space font-black text-slate-700 mb-1.5 tracking-wide">Mobile Number</label>
-                  <input type="tel" placeholder="+91 98765 43210" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className={`w-full p-3.5 rounded-xl glass-input outline-none text-slate-900 font-space font-bold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
+                  <label className="block text-sm font-poppins font-semibold text-slate-700 mb-1.5 tracking-wide">Mobile Number</label>
+                  <input type="tel" placeholder="+91 98765 43210" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className={`w-full px-4 py-3 rounded-xl bg-white/90 border border-slate-200/80 outline-none text-slate-800 font-sans font-semibold text-base focus:bg-white focus:ring-2 focus:ring-[#3A7070]/30 focus:border-[#3A7070] transition-all shadow-sm`} />
                 </div>
                 <div className="animate-slide-up" style={{animationDelay: '200ms'}}>
-                  <label className="block text-sm font-space font-black text-slate-700 mb-1.5 tracking-wide">Email Address</label>
-                  <input type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={`w-full p-3.5 rounded-xl glass-input outline-none text-slate-900 font-space font-bold text-base focus:border-[#3A7070] focus:shadow-[0_0_15px_rgba(58,112,112,0.15)] transition-all`} />
+                  <label className="block text-sm font-poppins font-semibold text-slate-700 mb-1.5 tracking-wide">Email Address</label>
+                  <input type="email" placeholder="you@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className={`w-full px-4 py-3 rounded-xl bg-white/90 border border-slate-200/80 outline-none text-slate-800 font-sans font-semibold text-base focus:bg-white focus:ring-2 focus:ring-[#3A7070]/30 focus:border-[#3A7070] transition-all shadow-sm`} />
                 </div>
                 
                 {/* Checkbox for WHO guidelines compliance */}
@@ -1083,17 +1091,17 @@ const PatientLogin = ({ setView, setUserData }) => {
                     id="consent-check" 
                     checked={formData.consent} 
                     onChange={e => setFormData({...formData, consent: e.target.checked})} 
-                    className="mt-1 w-5 h-5 rounded border-white/50 text-[#3A7070] focus:ring-[#3A7070] cursor-pointer" 
+                    className="mt-1 w-5 h-5 rounded border-slate-300 text-[#3A7070] focus:ring-[#3A7070] cursor-pointer" 
                   />
-                  <label htmlFor="consent-check" className="text-xs text-slate-700 font-space font-bold leading-snug cursor-pointer select-none">
+                  <label htmlFor="consent-check" className="text-xs text-slate-700 font-inter font-medium leading-snug cursor-pointer select-none">
                     I consent to WHO-compliant clinical safety protocols. I understand Keffi AI provides supportive care resources when distress is detected.
                   </label>
                 </div>
               </div>
-              {error && <div className="text-red-600 text-sm font-space font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-2">{error}</div>}
+              {error && <div className="text-red-600 text-sm font-inter font-semibold bg-red-50 border border-red-200 rounded-xl px-4 py-2">{error}</div>}
               <div className="pt-2 space-y-3 animate-slide-up" style={{animationDelay: '300ms'}}>
-                <button onClick={handleNext} className={`w-full py-3.5 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Continue</button>
-                <button onClick={() => setView('landing')} className="w-full text-center text-slate-500 font-space font-bold text-sm hover:text-[#3A7070] transition-colors cursor-pointer">Back to Home</button>
+                <button onClick={handleNext} className={`w-full py-3.5 rounded-xl font-poppins font-bold text-base tracking-wider ${theme.btnTeal}`}>Continue</button>
+                <button onClick={() => setView('landing')} className="w-full text-center text-slate-500 font-inter font-semibold text-sm hover:text-[#3A7070] transition-colors cursor-pointer">Back to Home</button>
               </div>
             </div>
           )}
@@ -1101,28 +1109,28 @@ const PatientLogin = ({ setView, setUserData }) => {
           {step === 2 && (
             <div className="space-y-5 animate-fade-in">
               <div>
-                <h2 className="text-2xl md:text-3xl font-raleway font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2AA870] to-[#2C5555] mb-1">
-                  Your <span className="font-cursive text-[#8FA989]" style={{fontSize: '1.45em', textTransform: 'none'}}>Profile</span>
+                <h2 className="text-2xl md:text-3xl font-raleway font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#2AA870] to-[#2C5555] mb-1">
+                  Your <span className="font-cursive text-[#3A7070]" style={{fontSize: '1.45em', textTransform: 'none'}}>Profile</span>
                 </h2>
-                <p className="text-slate-600 text-sm font-inter font-bold leading-relaxed">Enter your basic information to enter Keffi.</p>
+                <p className="text-slate-600 text-sm font-inter font-medium leading-relaxed">Enter your basic information to enter Keffi.</p>
               </div>
               
               <div className="space-y-4">
                 {/* Preferred Name */}
                 <div>
-                  <label className="block text-sm font-space font-black text-slate-700 mb-1 tracking-wide">Preferred Name</label>
-                  <input type="text" placeholder="Enter your name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className={`w-full p-3.5 rounded-xl glass-input outline-none text-slate-900 font-space font-bold text-base focus:border-[#3A7070] transition-all`} />
+                  <label className="block text-sm font-poppins font-semibold text-slate-700 mb-1.5 tracking-wide">Preferred Name</label>
+                  <input type="text" placeholder="Enter your name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className={`w-full px-4 py-3 rounded-xl bg-white/90 border border-slate-200/80 outline-none text-slate-800 font-sans font-semibold text-base focus:bg-white focus:ring-2 focus:ring-[#3A7070]/30 focus:border-[#3A7070] transition-all shadow-sm`} />
                 </div>
 
                 {/* Date of Birth & Gender */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                     <label className="block text-sm font-space font-black text-slate-700 mb-1 tracking-wide">Date of Birth</label>
-                     <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full p-3.5 rounded-xl glass-input outline-none text-slate-900 font-space font-bold text-base focus:border-[#3A7070] transition-all`} />
+                     <label className="block text-sm font-poppins font-semibold text-slate-700 mb-1.5 tracking-wide">Date of Birth</label>
+                     <input type="date" value={formData.dob} onChange={e => setFormData({...formData, dob: e.target.value})} className={`w-full px-4 py-3 rounded-xl bg-white/90 border border-slate-200/80 outline-none text-slate-800 font-sans font-semibold text-base focus:bg-white focus:ring-2 focus:ring-[#3A7070]/30 focus:border-[#3A7070] transition-all shadow-sm`} />
                   </div>
                   <div>
-                    <label className="block text-sm font-space font-black text-slate-700 mb-1 tracking-wide">Gender</label>
-                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className={`w-full p-3.5 rounded-xl glass-input outline-none text-slate-900 font-space font-bold text-base focus:border-[#3A7070] transition-all appearance-none bg-white/80`}>
+                    <label className="block text-sm font-poppins font-semibold text-slate-700 mb-1.5 tracking-wide">Gender</label>
+                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className={`w-full px-4 py-3 rounded-xl bg-white/90 border border-slate-200/80 outline-none text-slate-800 font-sans font-semibold text-base focus:bg-white focus:ring-2 focus:ring-[#3A7070]/30 focus:border-[#3A7070] transition-all appearance-none shadow-sm`}>
                       <option value="" disabled>Select Gender</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -1134,15 +1142,15 @@ const PatientLogin = ({ setView, setUserData }) => {
 
                 {/* Place / Location */}
                 <div>
-                  <label className="block text-sm font-space font-black text-slate-700 mb-1 tracking-wide">Place / City</label>
-                  <input type="text" placeholder="Enter your city or district" value={formData.place} onChange={e => setFormData({...formData, place: e.target.value})} className={`w-full p-3.5 rounded-xl glass-input outline-none text-slate-900 font-space font-bold text-base focus:border-[#3A7070] transition-all`} />
+                  <label className="block text-sm font-poppins font-semibold text-slate-700 mb-1.5 tracking-wide">Place / City</label>
+                  <input type="text" placeholder="Enter your city or district" value={formData.place} onChange={e => setFormData({...formData, place: e.target.value})} className={`w-full px-4 py-3 rounded-xl bg-white/90 border border-slate-200/80 outline-none text-slate-800 font-sans font-semibold text-base focus:bg-white focus:ring-2 focus:ring-[#3A7070]/30 focus:border-[#3A7070] transition-all shadow-sm`} />
                 </div>
               </div>
 
-              {error && <div className="text-red-600 text-sm font-space font-bold bg-red-50 border border-red-200 rounded-xl px-4 py-2">{error}</div>}
+              {error && <div className="text-red-600 text-sm font-inter font-semibold bg-red-50 border border-red-200 rounded-xl px-4 py-2">{error}</div>}
               <div className="pt-2 flex flex-col gap-2.5">
-                <button onClick={handleNext} className={`w-full py-3.5 rounded-xl font-space font-extrabold text-base tracking-wider ${theme.btnTeal}`}>Enter Keffi</button>
-                <button onClick={() => setStep(1)} className="w-full text-center text-slate-500 font-space font-bold text-sm hover:text-[#3A7070] transition-colors cursor-pointer">Back to Credentials</button>
+                <button onClick={handleNext} className={`w-full py-3.5 rounded-xl font-poppins font-bold text-base tracking-wider ${theme.btnTeal}`}>Enter Keffi</button>
+                <button onClick={() => setStep(1)} className="w-full text-center text-slate-500 font-inter font-semibold text-sm hover:text-[#3A7070] transition-colors cursor-pointer">Back to Credentials</button>
               </div>
             </div>
           )}
