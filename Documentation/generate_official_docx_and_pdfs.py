@@ -39,8 +39,8 @@ TEAM_METADATA = {
     "guide": "Dr. R. Sivanesh",
     "guide_designation": "Associate Professor",
     "guide_dept": "Computer Science and Engineering",
-    "sanctioned_amount": "Rs. 15,000/-",
-    "amount_words": "Rupees Fifteen Thousand Only",
+    "sanctioned_amount": "Rs. 2,500/-",
+    "amount_words": "Rupees Two Thousand Five Hundred Only",
     "acc_name": "The Dean, University College of Engineering, Panruti",
     "acc_no": "39820100001234",
     "bank_branch": "State Bank of India, Panruti Branch",
@@ -56,11 +56,8 @@ STUDENTS = [
 ]
 
 BILLS = [
-    {"sl": "1", "no": "CASH-01", "date": "05-05-2026", "desc": "Cloud Server Infrastructure & FastAPI/BERT Backend Hosting", "amount": "Rs. 5,800/-"},
-    {"sl": "2", "no": "CASH-02", "date": "18-05-2026", "desc": "Groq 70B & OpenAI Cloud LLM API Inference Tokens", "amount": "Rs. 4,250/-"},
-    {"sl": "3", "no": "CASH-03", "date": "02-06-2026", "desc": "Clinical Psychiatry Corpora & DSM-5-TR Data Licensing", "amount": "Rs. 2,450/-"},
-    {"sl": "4", "no": "CASH-04", "date": "15-06-2026", "desc": "Project Report Binding (3 copies) & Architecture Banner", "amount": "Rs. 1,500/-"},
-    {"sl": "5", "no": "CASH-05", "date": "28-06-2026", "desc": "Local Review Venue Transport & Equipment Logistics", "amount": "Rs. 1,000/-"}
+    {"sl": "1", "no": "CASH-01", "date": "15-06-2026", "desc": "Project Report Binding (3 copies) & Presentation Banner", "amount": "Rs. 1,500/-"},
+    {"sl": "2", "no": "CASH-02", "date": "28-06-2026", "desc": "Local Review Venue Transport & Equipment Logistics", "amount": "Rs. 1,000/-"}
 ]
 
 # Helper for docx cell borders
