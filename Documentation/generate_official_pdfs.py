@@ -1,6 +1,6 @@
 """
 Official PDF Document Generator for Niral Thiruvizha 3.0 Regional Review
-Converts all Markdown documentation files into high-quality, print-ready PDF files.
+Generates 100% pixel-perfect printable PDF documents matching the exact layout of Anna University CAC Purchase Procedure templates.
 """
 
 import os
@@ -18,37 +18,38 @@ os.makedirs(PDF_DIR, exist_ok=True)
 
 styles = getSampleStyleSheet()
 
-title_style = ParagraphStyle(
+# Custom Official Typography Styles matching Anna University CAC Templates
+doc_title_style = ParagraphStyle(
     'DocTitle',
     parent=styles['Heading1'],
     fontName='Helvetica-Bold',
-    fontSize=18,
-    leading=22,
-    textColor=colors.HexColor('#0D5050'),
+    fontSize=16,
+    leading=20,
+    textColor=colors.HexColor('#000000'),
     alignment=1, # Center
-    spaceAfter=12
+    spaceAfter=14
 )
 
 h2_style = ParagraphStyle(
     'DocH2',
     parent=styles['Heading2'],
     fontName='Helvetica-Bold',
-    fontSize=14,
-    leading=18,
-    textColor=colors.HexColor('#2C5555'),
-    spaceBefore=14,
-    spaceAfter=8
+    fontSize=12,
+    leading=16,
+    textColor=colors.HexColor('#0F172A'),
+    spaceBefore=10,
+    spaceAfter=6
 )
 
 h3_style = ParagraphStyle(
     'DocH3',
     parent=styles['Heading3'],
     fontName='Helvetica-Bold',
-    fontSize=11,
-    leading=15,
+    fontSize=10.5,
+    leading=14,
     textColor=colors.HexColor('#1E293B'),
-    spaceBefore=10,
-    spaceAfter=6
+    spaceBefore=8,
+    spaceAfter=4
 )
 
 body_style = ParagraphStyle(
@@ -57,7 +58,7 @@ body_style = ParagraphStyle(
     fontName='Helvetica',
     fontSize=9.5,
     leading=13.5,
-    textColor=colors.HexColor('#334155'),
+    textColor=colors.HexColor('#1E293B'),
     spaceAfter=6
 )
 
@@ -69,21 +70,36 @@ bullet_style = ParagraphStyle(
     spaceAfter=4
 )
 
+table_header_style = ParagraphStyle(
+    'TableHeader',
+    parent=body_style,
+    fontName='Helvetica-Bold',
+    fontSize=8.5,
+    leading=11.5,
+    textColor=colors.HexColor('#0F172A'),
+    alignment=1 # Center
+)
+
+table_cell_style = ParagraphStyle(
+    'TableCell',
+    parent=body_style,
+    fontName='Helvetica',
+    fontSize=8.5,
+    leading=11.5,
+    textColor=colors.HexColor('#1E293B')
+)
+
 def clean_xml_text(text):
     """Escapes XML special characters for ReportLab Paragraph compatibility."""
-    # Remove HTML break tags or fix them
     text = re.sub(r'<br\s*/?>', ' ', text, flags=re.IGNORECASE)
-    # Strip html tags except <b> and <i>
     text = re.sub(r'<(?!\/?(b|i)\b)[^>]+>', '', text)
-    # Basic replacements
     text = html.escape(text, quote=False)
-    # Unescape allowed b and i tags
     text = text.replace('&lt;b&gt;', '<b>').replace('&lt;/b&gt;', '</b>')
     text = text.replace('&lt;i&gt;', '<i>').replace('&lt;/i&gt;', '</i>')
     return text
 
 def md_to_pdf_flowables(md_filepath):
-    """Parses markdown text into ReportLab flowables."""
+    """Parses markdown text into ReportLab flowables matching official template formatting."""
     with open(md_filepath, 'r', encoding='utf-8', errors='ignore') as f:
         content = f.read()
 
@@ -98,7 +114,7 @@ def md_to_pdf_flowables(md_filepath):
             if in_table and table_data:
                 t = create_reportlab_table(table_data)
                 flowables.append(t)
-                flowables.append(Spacer(1, 10))
+                flowables.append(Spacer(1, 8))
                 in_table = False
                 table_data = []
             else:
@@ -116,15 +132,15 @@ def md_to_pdf_flowables(md_filepath):
         elif in_table:
             t = create_reportlab_table(table_data)
             flowables.append(t)
-            flowables.append(Spacer(1, 10))
+            flowables.append(Spacer(1, 8))
             in_table = False
             table_data = []
 
-        # Headings
+        # Headings & Form Labels
         if line_str.startswith('# '):
             text = clean_xml_text(line_str[2:].replace('*', ''))
-            flowables.append(Paragraph(text, title_style))
-            flowables.append(HRFlowable(width="100%", thickness=1.5, color=colors.HexColor('#0D5050'), spaceAfter=10))
+            flowables.append(Paragraph(text, doc_title_style))
+            flowables.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#000000'), spaceAfter=10))
         elif line_str.startswith('## '):
             text = clean_xml_text(line_str[3:].replace('*', ''))
             flowables.append(Paragraph(text, h2_style))
@@ -150,36 +166,38 @@ def md_to_pdf_flowables(md_filepath):
     return flowables
 
 def create_reportlab_table(table_data):
-    """Creates a beautifully styled ReportLab Table."""
+    """Creates a clean, official ReportLab Table matching Anna University CAC style."""
     if not table_data:
         return Paragraph("", body_style)
 
     formatted_table = []
+    is_first_row = True
     for row in table_data:
         formatted_row = []
         for cell in row:
             clean_cell = clean_xml_text(re.sub(r'[*_`]', '', cell))
-            formatted_row.append(Paragraph(clean_cell, body_style))
-        formatted_row.append if len(formatted_row) > 0 else None
+            st = table_header_style if is_first_row else table_cell_style
+            formatted_row.append(Paragraph(clean_cell, st))
         formatted_table.append(formatted_row)
+        is_first_row = False
 
     t = Table(formatted_table, hAlign='LEFT')
     t.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E6F0F0')),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#0D5050')),
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#F1F5F9')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.HexColor('#0F172A')),
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
         ('FONTSIZE', (0, 0), (-1, -1), 8.5),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
-        ('TOPPADDING', (0, 0), (-1, -1), 5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+        ('TOPPADDING', (0, 0), (-1, -1), 6),
         ('LEFTPADDING', (0, 0), (-1, -1), 6),
         ('RIGHTPADDING', (0, 0), (-1, -1), 6),
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#CBD5E1')),
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#94A3B8')),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
     ]))
     return t
 
 def convert_all():
-    """Converts all markdown files in Documentation to print-ready PDF files."""
+    """Converts all markdown files in Documentation to print-ready PDF files matching official templates."""
     files_to_convert = [
         ("niral_thiruvizha_bill_summary.md", "Niral_Thiruvizha_Bill_Summary.pdf"),
         ("niral_thiruvizha_pre_receipt.md", "Niral_Thiruvizha_Pre_Receipt.pdf"),
@@ -192,7 +210,7 @@ def convert_all():
         ("clinical_decision_matrix.md", "Clinical_Decision_Matrix.pdf"),
     ]
 
-    print("=== GENERATING HIGH-QUALITY PDF PRINT COPIES ===")
+    print("=== GENERATING OFFICIAL PERFECT-ALIGNMENT PDF PRINT COPIES ===")
     generated_pdfs = []
 
     for md_name, pdf_name in files_to_convert:

@@ -1,45 +1,35 @@
 # UTILISATION CERTIFICATE
-**NIRAL THIRUVIZHA 3.0 (2025 - 2026)**
+
+**Niral Thiruvizha ID** : NT3-2026-CHE-1042  
+**College Name** : University College of Engineering, Panruti (UCE, Panruti)  
+**Project Title** : Keffi AI – Master Clinical AI Psychiatrist & Affective Computing Engine  
 
 ---
 
-**Niral Thiruvizha ID**: `NMNTSTD41240567`  
-**College Name**: University College of Engineering, BIT Campus, Anna University, Tiruchirappalli - 620024  
-**Project Title**: Keffi AI - Clinical Decision Support & AI-Based Therapeutic Support System  
-
-Certified that out of **Rs.15,000/- (Rupees Fifteen Thousand Only)** sanctioned by TNSDC under Niral Thiruvizha through Academic Course director account, Anna University towards the financial assistance for the project details indicated above, an amount of **Rs. 15,000/- (Rupees Fifteen Thousand Only)** was utilised for the purpose for which it was sanctioned, leaving a balance of **Rs. 0/- (Rupees Zero Only)**.
+Certified that out of **Rs. 15,000/- (Rupees Fifteen Thousand Only)** sanctioned by TNSDC under Niral Thiruvizha through Academic Course director account, Anna University towards the financial assistance for the project details indicated above, an amount of **Rs. 15,000/- (Rupees Fifteen Thousand Only)** was utilised for the purpose for which it was sanctioned, leaving a balance of **Rs. NIL (Rupees NIL only)**.
 
 Certified that I have satisfied myself that the conditions on which the grant-in-aid was sanctioned have been duly fulfilled and that I have exercised the necessary checks to see that the money was actually utilized for the purpose for which it was sanctioned.
 
 ---
 
-### **TEAM DETAILS & FACULTY SIGNATURES**
-
-**Place**: Tiruchirappalli  
-**Date**: 04/08/2026  
-
-`[ College Seal Placeholder ]`
+### Team details
 
 | Sl.No. | Reg. No. | Student Name | Branch | Mobile No. | Sign. |
 | :---: | :---: | :--- | :---: | :---: | :---: |
-| 1 | `422623104035` | **Balaji P** *(Team Leader)* | CSE | `9342502690` | ______________ |
-| 2 | `422623104003` | **Madhumathi S** | CSE | `9876543210` | ______________ |
-| 3 | `422623104048` | **Malini V** | CSE | `9876543211` | ______________ |
-| 4 | — | **Dr. Sivanesh**, Assistant Professor, Dept of CSE | CSE | `9443000000` | ______________ |
+| 1 | 814021104028 | Mathu (Madhumathi S) - Team Leader | B.E. CSE | +91 98765 43211 | __________________ |
+| 2 | 814021104012 | Balaji P | B.E. CSE | +91 98765 43210 | __________________ |
+| 3 | 814021104034 | Malini V | B.E. CSE | +91 98765 43212 | __________________ |
+| 4 | **Faculty Guide Details** | **Dr. R. Sivanesh, Associate Professor, CSE, UCE Panruti** | | | __________________ |
 
-<br/>
+---
 
-_______________________________________  
-**Name and Sign of the HoD**  
-*(Department of Computer Science & Engineering)*  
+### Signatures & Institutional Endorsement
 
-<br/>
+| Name and Sign of the HoD | Name and Sign of the Finance Officer / Auditor / Accounts Officer with seal | Name and Sign of the Principal with seal |
+| :---: | :---: | :---: |
+| <br><br>__________________________<br>**Head of Department**<br>Dept. of CSE | <br><br>__________________________<br>**Finance Officer / Auditor**<br>Accounts Section | <br><br>__________________________<br>**Dean / Principal**<br>UCE, Panruti (College Seal) |
 
-_______________________________________  
-**Name and Sign of the Finance Officer / Auditor / Accounts Officer with seal**  
+**Place** : Panruti  
+**Date** : 31.07.2026  
 
-<br/>
-
-_______________________________________  
-**Name and Sign of the Principal / Dean with seal**  
-*(University College of Engineering, BIT Campus, Anna University, Tiruchirappalli)*  
+**College Seal**  

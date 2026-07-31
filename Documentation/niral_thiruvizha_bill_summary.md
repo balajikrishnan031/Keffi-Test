@@ -1,59 +1,63 @@
-# ANNA UNIVERSITY - CENTRE FOR ACADEMIC COURSES
-## NIRAL THIRUVIZHA 3.0 (2026) - OFFICIAL BILL SUMMARY STATEMENT
+# BILL SUMMARY
 
-**Sanction Order Ref**: Lr. No. AU / N.T.3.0 / CAC -5 / 2026 – 27 (Date: 31.07.2026)  
-**Sanctioned Amount**: Rs. 15,000/- (Rupees Fifteen Thousand Only)  
-**Billed To**: The Director, Centre for Academic Courses, Anna University, Chennai – 600 025  
+**Niral Thiruvizha ID** : NT3-2026-CHE-1042  
+**College Name** : University College of Engineering, Panruti (UCE, Panruti)  
+**Project Title** : Keffi AI – Master Clinical AI Psychiatrist & Affective Computing Engine  
 
 ---
 
-### Project & Team Metadata
+Certified that, the following expenditures are made by us and the bills are claimed for the above project only. Bills are in order. It is assured that, no other claims are made in these bills.
 
-| Field | Detail |
+---
+
+| Sl.No. | Bill No. | Bill Date | Description | Amount |
+| :---: | :---: | :---: | :--- | :---: |
+| 1 | CASH-01 | 05-05-2026 | ESP32 Boards, PPG Pulse Sensor & GSR Telemetry Kit | Rs. 4,250/- |
+| 2 | CASH-02 | 18-05-2026 | High-Memory Cloud Server & BERT Backend Deployment | Rs. 5,800/- |
+| 3 | CASH-03 | 02-06-2026 | Clinical Psychiatry Corpora & DSM-5-TR Data Licensing | Rs. 2,450/- |
+| 4 | CASH-04 | 15-06-2026 | Project Report Binding (3 copies) & Architecture Banner | Rs. 1,500/- |
+| 5 | CASH-05 | 28-06-2026 | Local Review Venue Transport & Equipment Logistics | Rs. 1,000/- |
+| **TOTAL** | | | | **Rs. 15,000/-** |
+
+**(Rupees Fifteen Thousand Only)**
+
+---
+
+### For Reimbursement
+
+The above amount was spent by the Institutions / Individual.  
+Kindly reimburse the same to the Institutions / Individual.  
+
+---
+
+### Team details
+
+| Sl.No. | Reg. No. | Student Name | Branch | Mobile No. | Sign. |
+| :---: | :---: | :--- | :---: | :---: | :---: |
+| 1 | 814021104028 | Mathu (Madhumathi S) - Team Leader | B.E. CSE | +91 98765 43211 | __________________ |
+| 2 | 814021104012 | Balaji P | B.E. CSE | +91 98765 43210 | __________________ |
+| 3 | 814021104034 | Malini V | B.E. CSE | +91 98765 43212 | __________________ |
+
+---
+
+### Faculty Guide Details
+
+| Field | Details |
 | :--- | :--- |
-| **Niral Thiruvizha ID** | NT3-2026-CHE-1042 |
-| **Institution** | University College of Engineering, BIT Campus, Anna University, Tiruchirappalli |
-| **Project Title** | Keffi AI – Master Clinical AI Psychiatrist & Affective Computing Engine |
-| **Theme / Problem Statement** | Healthcare & Affective Computing / PS-14 |
-| **Faculty Guide Name** | Dr. R. Sivanesh, M.E., Ph.D. (Associate Professor, CSE) |
+| **Name** | Dr. R. Sivanesh |
+| **Designation** | Associate Professor |
+| **Department** | Computer Science and Engineering |
+| **Institution** | University College of Engineering, Panruti (UCE, Panruti) |
 
 ---
 
-### Expenditure Breakdown (Max Single Item Limit: < Rs. 10,000/- Including GST)
+### Signatures & Institutional Endorsement
 
-| Sl. No. | Cash Bill No. | Bill Date | Vendor Name & GSTIN | Description | Base Amount (Rs.) | GST (18%) | Total Claimed (Rs.) | Endorsement |
-| :---: | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :---: |
-| 1 | CASH-2026-01 | 05-05-2026 | MicroTech Electronics (GSTIN: 33AAACM1024F1Z1) | ESP32 Boards (2x), MAX30102 PPG Heart Rate Sensor, GSR Sensor & Telemetry Cables | 3,601.69 | 648.31 | **4,250.00** | PAID / Cash Received |
-| 2 | CASH-2026-02 | 18-05-2026 | CloudNet Solutions India (GSTIN: 33AAACC5012G1Z9) | High-Memory Cloud Server & FastAPI/BERT Backend Hosting for Keffi AI | 4,915.25 | 884.75 | **5,800.00** | PAID / Cash Received |
-| 3 | CASH-2026-03 | 02-06-2026 | DataSphere Analytics (GSTIN: 33AAACD9088H1Z4) | Clinical Psychiatry Corpora & DSM-5-TR Data Structuring Resources | 2,076.27 | 373.73 | **2,450.00** | PAID / Cash Received |
-| 4 | CASH-2026-04 | 15-06-2026 | National Printers & Stationers (GSTIN: 33AAACN3040I1Z2) | 3 Hardbound Copies of Project Documentation & High-Res Banner Printing | 1,271.19 | 228.81 | **1,500.00** | PAID / Cash Received |
-| 5 | CASH-2026-05 | 28-06-2026 | Express Travel & Logistics (GSTIN: 33AAACE1080J1Z7) | Local Transport & Logistics Allowance for Review Venue Travel | 847.46 | 152.54 | **1,000.00** | PAID / Cash Received |
-| **TOTAL** | | | | | **12,711.86** | **2,288.14** | **Rs. 15,000.00** | |
+| Name and Sign of the HoD | Name and Sign of the Finance Officer / Auditor / Accounts Officer with seal | Name and Sign of the Principal with seal |
+| :---: | :---: | :---: |
+| <br><br>__________________________<br>**Head of Department**<br>Dept. of CSE | <br><br>__________________________<br>**Finance Officer / Auditor**<br>Accounts Section | <br><br>__________________________<br>**Dean / Principal**<br>UCE, Panruti (College Seal) |
 
-**Amount in Words**: **Rupees Fifteen Thousand Only**
+**Place** : Panruti  
+**Date** : 31.07.2026  
 
----
-
-### Certification & Compliance Declaration
-Certified that the expenditures listed above were incurred strictly for the development of the *Keffi AI* project under Niral Thiruvizha 3.0. All cash bills are issued in the name of **"The Director, Centre for Academic Courses, Anna University"**, bear valid GSTIN, 18% GST breakdown, vendor signatures/seals, and "PAID / Cash Received" endorsements. No single item exceeds Rs. 10,000/-.
-
----
-
-### Student Team Details
-
-| Sl. No. | Register No. | Student Name | Branch / Department | Mobile No. | Signature |
-| :---: | :---: | :--- | :--- | :---: | :---: |
-| 1 | 810021104012 | Balaji P (Team Lead) | B.E. Computer Science & Eng. | +91 98765 43210 | __________________ |
-| 2 | 810021104028 | Madhumathi S | B.E. Computer Science & Eng. | +91 98765 43211 | __________________ |
-| 3 | 810021104034 | Malini V | B.E. Computer Science & Eng. | +91 98765 43212 | __________________ |
-
----
-
-### Endorsements & Institutional Authorization
-
-| Name and Sign of Faculty Guide | Name and Sign of HoD | Name and Sign of Finance Officer / Auditor | Name and Sign of Principal with Seal |
-| :---: | :---: | :---: | :---: |
-| <br><br>______________________<br>**Dr. R. Sivanesh**<br>Associate Professor, CSE | <br><br>______________________<br>**Head of Department**<br>Dept. of CSE | <br><br>______________________<br>**Finance Officer / Auditor**<br>Accounts Section | <br><br>______________________<br>**Dean / Principal**<br>UCE BIT Campus (College Seal) |
-
-**Place**: Tiruchirappalli  
-**Date**: 31.07.2026  
+**College Seal**  
