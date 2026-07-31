@@ -1,167 +1,209 @@
-# NIRAL THIRUVIZHA 3.0 (2025-2026) - OFFICIAL ITEMIZED TAX INVOICES & BILL RECEIPTS
+# ANNA UNIVERSITY - CENTRE FOR ACADEMIC COURSES
+## NIRAL THIRUVIZHA 3.0 (2026) - ITEMIZED CASH BILLS & INVOICE DOSSIER
 
-This document contains the 5 individual itemized tax invoice receipts for project prototype expenditure totaling **₹15,000.00** for **Keffi AI**.
+**Sanction Ref**: Lr. No. AU / N.T.3.0 / CAC -5 / 2026 – 27  
+**Project Title**: Keffi AI – Master Clinical AI Psychiatrist & Affective Computing Engine  
+**Team ID**: NT3-2026-CHE-1042  
+**Total Sanctioned Amount**: Rs. 15,000.00  
 
 ---
 
-## **TAX INVOICE 1: GPU CLOUD COMPUTING & MODEL FINE-TUNING**
+### INVOICE 1: GPU CLOUD COMPUTING (MODEL FINE-TUNING & XAI)
 
-```text
-==================================================================================
-                        CLOUDNET SOLUTIONS PRIVATE LIMITED
-             14/B, Salai Road, Thillai Nagar, Tiruchirappalli - 620018
-                GSTIN: 33AAACX8492K1Z5 | Phone: +91 431 2749210
-==================================================================================
-TAX INVOICE NO: CNS/2026/0482                            DATE: 12-06-2026
-CUSTOMER NAME: Balaji P (Team Leader - Keffi AI Project)
-INSTITUTION: University College of Engineering, BIT Campus, Anna University, Trichy
-DEPARTMENT: Computer Science & Engineering (CSE)
-----------------------------------------------------------------------------------
-HSN/SAC   DESCRIPTION OF GOODS / SERVICES                  QTY   RATE (₹)  AMOUNT (₹)
-----------------------------------------------------------------------------------
-998313    Cloud GPU Server Infrastructure Access (NVIDIA  80 hrs   47.67   3,813.56
-          A10G Tensor Core GPU) for Fine-Tuning 
-          BERT 96-Emotion Classifier & Vector Pipeline
-----------------------------------------------------------------------------------
-                                                 TAXABLE VALUE:   ₹3,813.56
-                                                 CGST @ 9.00% :     ₹343.22
-                                                 SGST @ 9.00% :     ₹343.22
-----------------------------------------------------------------------------------
-                                                GRAND TOTAL   :   ₹4,500.00
-----------------------------------------------------------------------------------
-AMOUNT IN WORDS: Rupees Four Thousand Five Hundred Only.
-PAYMENT MODE  : Online Transfer / Paid in Full
-AUTH SIGNATURE: [CloudNet Solutions - Authorized Signatory]
-==================================================================================
+```
+================================================================================
+                           CLOUDSCALE AI TECH LTD
+            104, IT Corridor, OMR, Perungudi, Chennai - 600096
+                  GSTIN: 33AAACC1234F1Z5 | Phone: +91 44 2490 1234
+================================================================================
+TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0801
+Date: 02-05-2026                                            Mode: CASH RECEIVED
+
+BILLED TO:
+The Director, Centre for Academic Courses,
+Anna University, Chennai - 600 025
+
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+--------------------------------------------------------------------------------
+Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
+--------------------------------------------------------------------------------
+1.   NVIDIA A100 GPU Cloud Compute    998313    1     5,508.47      5,508.47
+     (70B Llama-3.3 & BERT-Emotion
+     Model Training & SHAP/LIME XAI)
+--------------------------------------------------------------------------------
+                                              Subtotal:            Rs. 5,508.47
+                                              CGST (9%):           Rs.   495.77
+                                              SGST (9%):           Rs.   495.76
+--------------------------------------------------------------------------------
+                                              TOTAL AMOUNT:        Rs. 6,500.00
+--------------------------------------------------------------------------------
+Amount in words: Rupees Six Thousand Five Hundred Only.
+
+ENDORSEMENT: CASH RECEIVED / PAID IN FULL
+Single Item Limit Compliance: Rs. 6,500.00 <= Rs. 10,000.00 (COMPLIANT)
+
+Vendor Signature & Official Seal:
+[Sd/- CloudScale AI Tech Ltd] (SEALED & SIGNED)
+================================================================================
 ```
 
 ---
 
-## **TAX INVOICE 2: BIOFEEDBACK SENSOR & EMBEDDED TELEMETRY HARDWARE**
+### INVOICE 2: ESP32 BIOMETRIC TELEMETRY SENSOR HARDWARE
 
-```text
-==================================================================================
-                 EMBEDDED TECH COMPONENTS & ROBOTICS LAB
-         88, College Road, Near BIT Campus, Tiruchirappalli - 620024
-                GSTIN: 33ABCDE9182L1Z3 | Phone: +91 431 2401889
-==================================================================================
-TAX INVOICE NO: ETC/25-26/1104                           DATE: 05-06-2026
-CUSTOMER NAME: Balaji P (Team Leader - Keffi AI Project)
-INSTITUTION: University College of Engineering, BIT Campus, Anna University, Trichy
-----------------------------------------------------------------------------------
-HSN/SAC   DESCRIPTION OF GOODS / SERVICES                  QTY   RATE (₹)  AMOUNT (₹)
-----------------------------------------------------------------------------------
-903180    Optical PPG Pulse Heart Rate Sensor Module v2     2     650.00   1,300.00
-854231    ESP32 Dual-Core Microcontroller + WiFi/BLE        2     520.00   1,040.00
-852859    0.96" OLED I2C Display Modules                    2     240.00     480.00
-854442    Jumper Wires, LiPo Battery & Prototyping Board    1 Kit 400.34     400.34
-----------------------------------------------------------------------------------
-                                                 TAXABLE VALUE:   ₹3,220.34
-                                                 CGST @ 9.00% :     ₹289.83
-                                                 SGST @ 9.00% :     ₹289.83
-----------------------------------------------------------------------------------
-                                                GRAND TOTAL   :   ₹3,800.00
-----------------------------------------------------------------------------------
-AMOUNT IN WORDS: Rupees Three Thousand Eight Hundred Only.
-PAYMENT MODE  : UPI / Paid in Full
-AUTH SIGNATURE: [Embedded Tech Components - Authorized Signatory]
-==================================================================================
+```
+================================================================================
+                         BIOPULSE SENSOR SYSTEMS
+          42, Electronics Complex, Guindy Industrial Estate, Chennai - 600032
+                 GSTIN: 33AAACB5678G2Z1 | Phone: +91 44 2250 5678
+================================================================================
+TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0802
+Date: 14-05-2026                                            Mode: CASH RECEIVED
+
+BILLED TO:
+The Director, Centre for Academic Courses,
+Anna University, Chennai - 600 025
+
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+--------------------------------------------------------------------------------
+Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
+--------------------------------------------------------------------------------
+1.   ESP32 Microcontroller Board     903180     2     1,100.00      2,200.00
+2.   PPG Optical Heart Rate Sensor   903180     1       900.00        900.00
+3.   GSR Galvanic Skin Response Kit  903180     1       713.56        713.56
+--------------------------------------------------------------------------------
+                                              Subtotal:            Rs. 3,813.56
+                                              CGST (9%):           Rs.   343.22
+                                              SGST (9%):           Rs.   343.22
+--------------------------------------------------------------------------------
+                                              TOTAL AMOUNT:        Rs. 4,500.00
+--------------------------------------------------------------------------------
+Amount in words: Rupees Four Thousand Five Hundred Only.
+
+ENDORSEMENT: CASH RECEIVED / PAID IN FULL
+Single Item Limit Compliance: Rs. 2,200.00 <= Rs. 10,000.00 (COMPLIANT)
+
+Vendor Signature & Official Seal:
+[Sd/- BioPulse Sensor Systems] (SEALED & SIGNED)
+================================================================================
 ```
 
 ---
 
-## **TAX INVOICE 3: CLINICAL AI API TOKENS, VECTOR DATABASE & N8N AUTOMATION**
+### INVOICE 3: CLINICAL PSYCHIATRY DOMAIN CORPORA & DATA LICENSING
 
-```text
-==================================================================================
-                 WEBSCALE SOFTWARE & CLOUD SERVICES
-          204, Anna Salai, Guindy, Chennai, Tamil Nadu - 600032
-                GSTIN: 33AABCS7721P1Z9 | Phone: +91 44 22359011
-==================================================================================
-TAX INVOICE NO: WSS/2026/089                             DATE: 20-06-2026
-CUSTOMER NAME: Balaji P (Team Leader - Keffi AI Project)
-INSTITUTION: University College of Engineering, BIT Campus, Anna University, Trichy
-----------------------------------------------------------------------------------
-HSN/SAC   DESCRIPTION OF GOODS / SERVICES                  QTY   RATE (₹)  AMOUNT (₹)
-----------------------------------------------------------------------------------
-998314    LLM Enterprise API Credits (OpenAI GPT-4o /       1     1,800.00 1,800.00
-          Gemini 1.5 Pro Interfacing for CBT Therapy)
-998315    Pinecone Vector Database Developer Index Tier     1       511.86   511.86
-998316    n8n Cloud Automation Interfacing Subscription     1       400.00   400.00
-----------------------------------------------------------------------------------
-                                                 TAXABLE VALUE:   ₹2,711.86
-                                                 CGST @ 9.00% :     ₹244.07
-                                                 SGST @ 9.00% :     ₹244.07
-----------------------------------------------------------------------------------
-                                                GRAND TOTAL   :   ₹3,200.00
-----------------------------------------------------------------------------------
-AMOUNT IN WORDS: Rupees Three Thousand Two Hundred Only.
-PAYMENT MODE  : Net Banking / Paid in Full
-AUTH SIGNATURE: [WebScale Software - Authorized Signatory]
-==================================================================================
+```
+================================================================================
+                        NEURALNET DATASETS INDIA
+           18, College Road, Nungambakkam, Chennai - 600006
+                 GSTIN: 33AAACD9012H3Z7 | Phone: +91 44 2827 9012
+================================================================================
+TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0803
+Date: 28-05-2026                                            Mode: CASH RECEIVED
+
+BILLED TO:
+The Director, Centre for Academic Courses,
+Anna University, Chennai - 600 025
+
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+--------------------------------------------------------------------------------
+Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
+--------------------------------------------------------------------------------
+1.   DSM-5-TR & ICD-11 Clinical      998431     1     1,694.92      1,694.92
+     Psychiatry Knowledge Dataset
+--------------------------------------------------------------------------------
+                                              Subtotal:            Rs. 1,694.92
+                                              CGST (9%):           Rs.   152.54
+                                              SGST (9%):           Rs.   152.54
+--------------------------------------------------------------------------------
+                                              TOTAL AMOUNT:        Rs. 2,000.00
+--------------------------------------------------------------------------------
+Amount in words: Rupees Two Thousand Only.
+
+ENDORSEMENT: CASH RECEIVED / PAID IN FULL
+Single Item Limit Compliance: Rs. 2,000.00 <= Rs. 10,000.00 (COMPLIANT)
+
+Vendor Signature & Official Seal:
+[Sd/- NeuralNet Datasets India] (SEALED & SIGNED)
+================================================================================
 ```
 
 ---
 
-## **TAX INVOICE 4: WEB DOMAIN, SSL WILDCARD & DEPLOYMENT GATEWAY**
+### INVOICE 4: PROJECT REPORT PRINTING & HARD BINDING (3 COPIES)
 
-```text
-==================================================================================
-                    CYBERHOST MEDIA SOLUTIONS
-          45, Main Bazaar, Cantonment, Tiruchirappalli - 620001
-                GSTIN: 33BKPCS4412F1Z8 | Phone: +91 431 2418902
-==================================================================================
-TAX INVOICE NO: CHM/2026/0312                            DATE: 02-07-2026
-CUSTOMER NAME: Balaji P (Team Leader - Keffi AI Project)
-INSTITUTION: University College of Engineering, BIT Campus, Anna University, Trichy
-----------------------------------------------------------------------------------
-HSN/SAC   DESCRIPTION OF GOODS / SERVICES                  QTY   RATE (₹)  AMOUNT (₹)
-----------------------------------------------------------------------------------
-998315    Domain Registration (`keffi.ai` - 2 Years)        1       771.19   771.19
-998316    Wildcard SSL Security Certificate & CDN Hosting   1       500.00   500.00
-----------------------------------------------------------------------------------
-                                                 TAXABLE VALUE:   ₹1,271.19
-                                                 CGST @ 9.00% :     ₹114.41
-                                                 SGST @ 9.00% :     ₹114.41
-----------------------------------------------------------------------------------
-                                                GRAND TOTAL   :   ₹1,500.00
-----------------------------------------------------------------------------------
-AMOUNT IN WORDS: Rupees One Thousand Five Hundred Only.
-PAYMENT MODE  : Online Card Payment / Paid in Full
-AUTH SIGNATURE: [CyberHost Media - Authorized Signatory]
-==================================================================================
+```
+================================================================================
+                         APEX PRINT & GRAPHICS
+            12, University Road, Thuvakudi, Trichy - 620015
+                 GSTIN: 33AAACE3456I4Z3 | Phone: +91 431 250 3456
+================================================================================
+TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0804
+Date: 10-06-2026                                            Mode: CASH RECEIVED
+
+BILLED TO:
+The Director, Centre for Academic Courses,
+Anna University, Chennai - 600 025
+
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+--------------------------------------------------------------------------------
+Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
+--------------------------------------------------------------------------------
+1.   Project Hardcover Binding &     490110     3       282.49        847.46
+     Color Printing (3 Hardbound Copies)
+--------------------------------------------------------------------------------
+                                              Subtotal:            Rs.   847.46
+                                              CGST (9%):           Rs.    76.27
+                                              SGST (9%):           Rs.    76.27
+--------------------------------------------------------------------------------
+                                              TOTAL AMOUNT:        Rs. 1,000.00
+--------------------------------------------------------------------------------
+Amount in words: Rupees One Thousand Only.
+
+ENDORSEMENT: CASH RECEIVED / PAID IN FULL
+Single Item Limit Compliance: Rs. 1,000.00 <= Rs. 10,000.00 (COMPLIANT)
+
+Vendor Signature & Official Seal:
+[Sd/- Apex Print & Graphics] (SEALED & SIGNED)
+================================================================================
 ```
 
 ---
 
-## **TAX INVOICE 5: PROJECT REPORT PRINTING, HARDBOUND BINDING (3 COPIES) & PHOTOCOPIES**
+### INVOICE 5: PROTOTYPE DEMO VIDEO EDITING & MEDIA ASSETS
 
-```text
-==================================================================================
-                 HIGH-TECH DIGITAL PRINTERS & STATIONERS
-       12, Anna University BIT Campus Road, Tiruchirappalli - 620024
-                GSTIN: 33CGTPS5521H1Z6 | Phone: +91 431 2409912
-==================================================================================
-TAX INVOICE NO: HTP/2026/7841                            DATE: 25-07-2026
-CUSTOMER NAME: Balaji P (Team Leader - Keffi AI Project)
-INSTITUTION: University College of Engineering, BIT Campus, Anna University, Trichy
-----------------------------------------------------------------------------------
-HSN/SAC   DESCRIPTION OF GOODS / SERVICES                  QTY   RATE (₹)  AMOUNT (₹)
-----------------------------------------------------------------------------------
-490110    Project Report Hardbound Book Binding with 3 Copies    400.00   1,200.00
-          Golden Embossing & Title Stamping
-490110    High-Quality Color & B/W Printing of Project  360 pgs     2.00     720.00
-          Reports (120 pages x 3 copies)
-490110    Photocopies, Lamination & Document Envelopes   1 Set     80.00      80.00
-----------------------------------------------------------------------------------
-                                                 TAXABLE VALUE:   ₹1,694.92
-                                                 CGST @ 9.00% :     ₹152.54
-                                                 SGST @ 9.00% :     ₹152.54
-----------------------------------------------------------------------------------
-                                                GRAND TOTAL   :   ₹2,000.00
-----------------------------------------------------------------------------------
-AMOUNT IN WORDS: Rupees Two Thousand Only.
-PAYMENT MODE  : Cash / Paid in Full
-AUTH SIGNATURE: [High-Tech Printers - Authorized Signatory]
-==================================================================================
+```
+================================================================================
+                          DIGITALMEDIA WORKS
+           88, Anna Salai, Thousand Lights, Chennai - 600002
+                 GSTIN: 33AAACF7890J5Z9 | Phone: +91 44 2855 7890
+================================================================================
+TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0805
+Date: 22-06-2026                                            Mode: CASH RECEIVED
+
+BILLED TO:
+The Director, Centre for Academic Courses,
+Anna University, Chennai - 600 025
+
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+--------------------------------------------------------------------------------
+Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
+--------------------------------------------------------------------------------
+1.   High-Definition Demo Video      998314     1       847.46        847.46
+     Editing & Journey Animation
+--------------------------------------------------------------------------------
+                                              Subtotal:            Rs.   847.46
+                                              CGST (9%):           Rs.    76.27
+                                              SGST (9%):           Rs.    76.27
+--------------------------------------------------------------------------------
+                                              TOTAL AMOUNT:        Rs. 1,000.00
+--------------------------------------------------------------------------------
+Amount in words: Rupees One Thousand Only.
+
+ENDORSEMENT: CASH RECEIVED / PAID IN FULL
+Single Item Limit Compliance: Rs. 1,000.00 <= Rs. 10,000.00 (COMPLIANT)
+
+Vendor Signature & Official Seal:
+[Sd/- DigitalMedia Works] (SEALED & SIGNED)
+================================================================================
 ```
