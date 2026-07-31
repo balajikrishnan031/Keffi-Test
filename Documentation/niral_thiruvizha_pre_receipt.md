@@ -11,9 +11,9 @@
 
 | Sl.No. | University Register Number | Student Name | Branch | Mobile No. | Mail ID |
 | :---: | :---: | :--- | :---: | :---: | :--- |
-| 1 | 814021104028 | Mathu (Madhumathi S) - Team Leader | B.E. CSE | +91 98765 43211 | mathu.cse@ucepanruti.ac.in |
-| 2 | 814021104012 | Balaji P | B.E. CSE | +91 98765 43210 | balaji.cse@ucepanruti.ac.in |
-| 3 | 814021104034 | Malini V | B.E. CSE | +91 98765 43212 | malini.cse@ucepanruti.ac.in |
+| 1 | 422623104003 | Mathu (Madhumathi S) - Team Leader | B.E. CSE | +91 98765 43211 | mathu.cse@ucepanruti.ac.in |
+| 2 | 4226231035 | Balaji P | B.E. CSE | +91 98765 43210 | balaji.cse@ucepanruti.ac.in |
+| 3 | 4226231048 | Malini V | B.E. CSE | +91 98765 43212 | malini.cse@ucepanruti.ac.in |
 
 ---
 

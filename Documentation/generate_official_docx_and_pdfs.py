@@ -46,9 +46,9 @@ TEAM_METADATA = {
 }
 
 STUDENTS = [
-    {"sl": "1", "reg": "814021104028", "name": "Mathu (Madhumathi S) - Team Leader", "branch": "B.E. CSE", "mobile": "+91 98765 43211", "email": "mathu.cse@ucepanruti.ac.in"},
-    {"sl": "2", "reg": "814021104012", "name": "Balaji P", "branch": "B.E. CSE", "mobile": "+91 98765 43210", "email": "balaji.cse@ucepanruti.ac.in"},
-    {"sl": "3", "reg": "814021104034", "name": "Malini V", "branch": "B.E. CSE", "mobile": "+91 98765 43212", "email": "malini.cse@ucepanruti.ac.in"}
+    {"sl": "1", "reg": "422623104003", "name": "Mathu (Madhumathi S) - Team Leader", "branch": "B.E. CSE", "mobile": "+91 98765 43211", "email": "mathu.cse@ucepanruti.ac.in"},
+    {"sl": "2", "reg": "4226231035", "name": "Balaji P", "branch": "B.E. CSE", "mobile": "+91 98765 43210", "email": "balaji.cse@ucepanruti.ac.in"},
+    {"sl": "3", "reg": "4226231048", "name": "Malini V", "branch": "B.E. CSE", "mobile": "+91 98765 43212", "email": "malini.cse@ucepanruti.ac.in"}
 ]
 
 BILLS = [
