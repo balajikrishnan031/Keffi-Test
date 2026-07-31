@@ -1630,11 +1630,20 @@ const ChatArea = ({
     try {
       const payloadContext = isCameraActive && visualEmotion ? `[Visual Face Emotion Detected via Webcam: ${visualEmotion}] ` + lastEmotionalMessage : lastEmotionalMessage;
       
-      const response = await axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/chat', {
-        message: message,
-        patient_id: userData?.patient_id || "P-102",
-        emotional_context: payloadContext
-      });
+      let response;
+      try {
+        response = await axios.post('http://127.0.0.1:8000/api/chat', {
+          message: message,
+          patient_id: userData?.patient_id || "P-102",
+          emotional_context: payloadContext
+        }, { timeout: 8000 });
+      } catch (e) {
+        response = await axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/chat', {
+          message: message,
+          patient_id: userData?.patient_id || "P-102",
+          emotional_context: payloadContext
+        });
+      }
       
       let botResponse = response.data.reply || "I'm here for you.";
       
@@ -1657,16 +1666,20 @@ const ChatArea = ({
         setTimeout(() => setShowAppointmentPopup(true), 1500);
       }
 
-      if ('speechSynthesis' in window && isVoiceEnabled) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(botResponse.replace(/[#*]/g, ''));
-        utterance.lang = 'en-US';
-        const voices = window.speechSynthesis.getVoices();
-        const preferredVoice = voices.find(v => v.name.includes('Google UK English Female') || v.name.includes('Google US English') || v.name.includes('Female'));
-        if (preferredVoice) utterance.voice = preferredVoice;
-        utterance.pitch = 0.95;
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
+      try {
+        if ('speechSynthesis' in window && isVoiceEnabled) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(botResponse.replace(/[#*]/g, ''));
+          utterance.lang = 'en-US';
+          const voices = window.speechSynthesis.getVoices();
+          const preferredVoice = voices.find(v => v.name.includes('Google UK English Female') || v.name.includes('Google US English') || v.name.includes('Female'));
+          if (preferredVoice) utterance.voice = preferredVoice;
+          utterance.pitch = 0.95;
+          utterance.rate = 0.9;
+          window.speechSynthesis.speak(utterance);
+        }
+      } catch (speechErr) {
+        console.warn("Speech synthesis unavailable:", speechErr);
       }
     } catch (err) {
       console.error(err);
