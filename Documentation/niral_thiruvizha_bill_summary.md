@@ -1,6 +1,7 @@
 # BILL SUMMARY
 
-**Niral Thiruvizha ID** : NT3-2026-CHE-1042  
+**Niral Thiruvizha ID** : NMNTSTD42260064  
+**Team Name** : Hackers Team (Panel 2 | 05/08/2026 AN | Chennai Region)  
 **College Name** : University College of Engineering, Panruti (UCE, Panruti)  
 **Project Title** : Keffi AI – Master Clinical AI Psychiatrist & Affective Computing Engine  
 

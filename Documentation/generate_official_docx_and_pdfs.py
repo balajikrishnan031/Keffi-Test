@@ -29,9 +29,13 @@ os.makedirs(PDF_OUT_DIR, exist_ok=True)
 
 # Shared Project & Team Metadata
 TEAM_METADATA = {
-    "id": "NT3-2026-CHE-1042",
+    "id": "NMNTSTD42260064",
+    "team_name": "Hackers Team",
     "college": "University College of Engineering, Panruti (UCE, Panruti)",
     "project": "Keffi AI – Master Clinical AI Psychiatrist & Affective Computing Engine",
+    "problem_statement": "How might we utilize AI chatbots and machine learning to address the challenges of incomplete alleviation of depression symptoms, attrition, and loss of follow-up in mental health treatment",
+    "theme": "Artificial Intelligence",
+    "slot": "05/08/2026 AN (Afternoon Session) | Panel 2 | Chennai Region",
     "guide": "Dr. R. Sivanesh",
     "guide_designation": "Associate Professor",
     "guide_dept": "Computer Science and Engineering",
