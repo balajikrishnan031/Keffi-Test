@@ -23,12 +23,12 @@
 
 | Sl. No. | Cash Bill No. | Bill Date | Vendor Name & GSTIN | Description | Base Amount (Rs.) | GST (18%) | Total Claimed (Rs.) | Endorsement |
 | :---: | :---: | :---: | :--- | :--- | :---: | :---: | :---: | :---: |
-| 1 | INV-2026-0801 | 02-05-2026 | CloudScale AI Tech Ltd (GSTIN: 33AAACC1234F1Z5) | NVIDIA A100 GPU Cloud Compute (High-performance BERT & 70B fine-tuning) | 5,508.47 | 991.53 | **6,500.00** | PAID / Cash Received |
-| 2 | INV-2026-0802 | 14-05-2026 | BioPulse Sensor Systems (GSTIN: 33AAACB5678G2Z1) | ESP32 Microcontroller & Biometric Telemetry Sensors (Heart Rate BPM, HRV, GSR) | 3,813.56 | 686.44 | **4,500.00** | PAID / Cash Received |
-| 3 | INV-2026-0803 | 28-05-2026 | NeuralNet Datasets India (GSTIN: 33AAACD9012H3Z7) | Clinical Psychiatry Domain Corpora & DSM-5-TR Data Licensing | 1,694.92 | 305.08 | **2,000.00** | PAID / Cash Received |
-| 4 | INV-2026-0804 | 10-06-2026 | Apex Print & Graphics (GSTIN: 33AAACE3456I4Z3) | Project Report Printing & Hard Binding (3 Hardbound Copies + Color Graphics) | 847.46 | 152.54 | **1,000.00** | PAID / Cash Received |
-| 5 | INV-2026-0805 | 22-06-2026 | DigitalMedia Works (GSTIN: 33AAACF7890J5Z9) | Prototype Journey Video Editing & High-Definition Media Assets | 847.46 | 152.54 | **1,000.00** | PAID / Cash Received |
-| **TOTAL** | | | | | **12,711.87** | **2,288.13** | **Rs. 15,000.00** | |
+| 1 | CASH-2026-01 | 05-05-2026 | MicroTech Electronics (GSTIN: 33AAACM1024F1Z1) | ESP32 Boards (2x), MAX30102 PPG Heart Rate Sensor, GSR Sensor & Telemetry Cables | 3,601.69 | 648.31 | **4,250.00** | PAID / Cash Received |
+| 2 | CASH-2026-02 | 18-05-2026 | CloudNet Solutions India (GSTIN: 33AAACC5012G1Z9) | High-Memory Cloud Server & FastAPI/BERT Backend Hosting for Keffi AI | 4,915.25 | 884.75 | **5,800.00** | PAID / Cash Received |
+| 3 | CASH-2026-03 | 02-06-2026 | DataSphere Analytics (GSTIN: 33AAACD9088H1Z4) | Clinical Psychiatry Corpora & DSM-5-TR Data Structuring Resources | 2,076.27 | 373.73 | **2,450.00** | PAID / Cash Received |
+| 4 | CASH-2026-04 | 15-06-2026 | National Printers & Stationers (GSTIN: 33AAACN3040I1Z2) | 3 Hardbound Copies of Project Documentation & High-Res Banner Printing | 1,271.19 | 228.81 | **1,500.00** | PAID / Cash Received |
+| 5 | CASH-2026-05 | 28-06-2026 | Express Travel & Logistics (GSTIN: 33AAACE1080J1Z7) | Local Transport & Logistics Allowance for Review Venue Travel | 847.46 | 152.54 | **1,000.00** | PAID / Cash Received |
+| **TOTAL** | | | | | **12,711.86** | **2,288.14** | **Rs. 15,000.00** | |
 
 **Amount in Words**: **Rupees Fifteen Thousand Only**
 

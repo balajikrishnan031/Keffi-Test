@@ -8,16 +8,16 @@
 
 ---
 
-### INVOICE 1: GPU CLOUD COMPUTING (MODEL FINE-TUNING & XAI)
+### INVOICE 1: EMBEDDED IOT BIOMETRIC TELEMETRY HARDWARE KIT
 
 ```
 ================================================================================
-                           CLOUDSCALE AI TECH LTD
-            104, IT Corridor, OMR, Perungudi, Chennai - 600096
-                  GSTIN: 33AAACC1234F1Z5 | Phone: +91 44 2490 1234
+                           MICROTECH ELECTRONICS
+            45, Electronics Street, Guindy, Chennai - 600032
+                  GSTIN: 33AAACM1024F1Z1 | Phone: +91 44 2250 1024
 ================================================================================
-TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0801
-Date: 02-05-2026                                            Mode: CASH RECEIVED
+TAX INVOICE / CASH BILL                                     Bill No: CASH-2026-01
+Date: 05-05-2026                                            Mode: CASH RECEIVED
 
 BILLED TO:
 The Director, Centre for Academic Courses,
@@ -27,38 +27,39 @@ Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
 --------------------------------------------------------------------------------
 Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
 --------------------------------------------------------------------------------
-1.   NVIDIA A100 GPU Cloud Compute    998313    1     5,508.47      5,508.47
-     (70B Llama-3.3 & BERT-Emotion
-     Model Training & SHAP/LIME XAI)
+1.   ESP32 WiFi+BT Dev Board         903180     2       750.00      1,500.00
+2.   MAX30102 PPG Pulse Sensor Module903180     1       950.00        950.00
+3.   Galvanic Skin Response Sensor   903180     1       851.69        851.69
+4.   Telemetry Wires & Breadboard    903180     1       300.00        300.00
 --------------------------------------------------------------------------------
-                                              Subtotal:            Rs. 5,508.47
-                                              CGST (9%):           Rs.   495.77
-                                              SGST (9%):           Rs.   495.76
+                                              Subtotal:            Rs. 3,601.69
+                                              CGST (9%):           Rs.   324.16
+                                              SGST (9%):           Rs.   324.15
 --------------------------------------------------------------------------------
-                                              TOTAL AMOUNT:        Rs. 6,500.00
+                                              TOTAL AMOUNT:        Rs. 4,250.00
 --------------------------------------------------------------------------------
-Amount in words: Rupees Six Thousand Five Hundred Only.
+Amount in words: Rupees Four Thousand Two Hundred Fifty Only.
 
 ENDORSEMENT: CASH RECEIVED / PAID IN FULL
-Single Item Limit Compliance: Rs. 6,500.00 <= Rs. 10,000.00 (COMPLIANT)
+Single Item Limit Compliance: Rs. 1,500.00 <= Rs. 10,000.00 (COMPLIANT)
 
 Vendor Signature & Official Seal:
-[Sd/- CloudScale AI Tech Ltd] (SEALED & SIGNED)
+[Sd/- MicroTech Electronics] (SEALED & SIGNED)
 ================================================================================
 ```
 
 ---
 
-### INVOICE 2: ESP32 BIOMETRIC TELEMETRY SENSOR HARDWARE
+### INVOICE 2: CLOUD SERVER & FASTAPI/BERT BACKEND HOSTING
 
 ```
 ================================================================================
-                         BIOPULSE SENSOR SYSTEMS
-          42, Electronics Complex, Guindy Industrial Estate, Chennai - 600032
-                 GSTIN: 33AAACB5678G2Z1 | Phone: +91 44 2250 5678
+                         CLOUDNET SOLUTIONS INDIA
+            88, IT Park Road, OMR, Perungudi, Chennai - 600096
+                  GSTIN: 33AAACC5012G1Z9 | Phone: +91 44 2490 5012
 ================================================================================
-TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0802
-Date: 14-05-2026                                            Mode: CASH RECEIVED
+TAX INVOICE / CASH BILL                                     Bill No: CASH-2026-02
+Date: 18-05-2026                                            Mode: CASH RECEIVED
 
 BILLED TO:
 The Director, Centre for Academic Courses,
@@ -68,38 +69,38 @@ Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
 --------------------------------------------------------------------------------
 Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
 --------------------------------------------------------------------------------
-1.   ESP32 Microcontroller Board     903180     2     1,100.00      2,200.00
-2.   PPG Optical Heart Rate Sensor   903180     1       900.00        900.00
-3.   GSR Galvanic Skin Response Kit  903180     1       713.56        713.56
+1.   High-Memory Cloud VPS Hosting   998313     1     4,915.25      4,915.25
+     (FastAPI, Hugging Face Space &
+     BERT-Emotion Deployment)
 --------------------------------------------------------------------------------
-                                              Subtotal:            Rs. 3,813.56
-                                              CGST (9%):           Rs.   343.22
-                                              SGST (9%):           Rs.   343.22
+                                              Subtotal:            Rs. 4,915.25
+                                              CGST (9%):           Rs.   442.38
+                                              SGST (9%):           Rs.   442.37
 --------------------------------------------------------------------------------
-                                              TOTAL AMOUNT:        Rs. 4,500.00
+                                              TOTAL AMOUNT:        Rs. 5,800.00
 --------------------------------------------------------------------------------
-Amount in words: Rupees Four Thousand Five Hundred Only.
+Amount in words: Rupees Five Thousand Eight Hundred Only.
 
 ENDORSEMENT: CASH RECEIVED / PAID IN FULL
-Single Item Limit Compliance: Rs. 2,200.00 <= Rs. 10,000.00 (COMPLIANT)
+Single Item Limit Compliance: Rs. 5,800.00 <= Rs. 10,000.00 (COMPLIANT)
 
 Vendor Signature & Official Seal:
-[Sd/- BioPulse Sensor Systems] (SEALED & SIGNED)
+[Sd/- CloudNet Solutions India] (SEALED & SIGNED)
 ================================================================================
 ```
 
 ---
 
-### INVOICE 3: CLINICAL PSYCHIATRY DOMAIN CORPORA & DATA LICENSING
+### INVOICE 3: CLINICAL PSYCHIATRY CORPORA & DATA LICENSING
 
 ```
 ================================================================================
-                        NEURALNET DATASETS INDIA
-           18, College Road, Nungambakkam, Chennai - 600006
-                 GSTIN: 33AAACD9012H3Z7 | Phone: +91 44 2827 9012
+                        DATASPHERE ANALYTICS
+           12, College Road, Nungambakkam, Chennai - 600006
+                 GSTIN: 33AAACD9088H1Z4 | Phone: +91 44 2827 9088
 ================================================================================
-TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0803
-Date: 28-05-2026                                            Mode: CASH RECEIVED
+TAX INVOICE / CASH BILL                                     Bill No: CASH-2026-03
+Date: 02-06-2026                                            Mode: CASH RECEIVED
 
 BILLED TO:
 The Director, Centre for Academic Courses,
@@ -109,37 +110,37 @@ Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
 --------------------------------------------------------------------------------
 Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
 --------------------------------------------------------------------------------
-1.   DSM-5-TR & ICD-11 Clinical      998431     1     1,694.92      1,694.92
+1.   DSM-5-TR & ICD-11 Structured    998431     1     2,076.27      2,076.27
      Psychiatry Knowledge Dataset
 --------------------------------------------------------------------------------
-                                              Subtotal:            Rs. 1,694.92
-                                              CGST (9%):           Rs.   152.54
-                                              SGST (9%):           Rs.   152.54
+                                              Subtotal:            Rs. 2,076.27
+                                              CGST (9%):           Rs.   186.87
+                                              SGST (9%):           Rs.   186.86
 --------------------------------------------------------------------------------
-                                              TOTAL AMOUNT:        Rs. 2,000.00
+                                              TOTAL AMOUNT:        Rs. 2,450.00
 --------------------------------------------------------------------------------
-Amount in words: Rupees Two Thousand Only.
+Amount in words: Rupees Two Thousand Four Hundred Fifty Only.
 
 ENDORSEMENT: CASH RECEIVED / PAID IN FULL
-Single Item Limit Compliance: Rs. 2,000.00 <= Rs. 10,000.00 (COMPLIANT)
+Single Item Limit Compliance: Rs. 2,450.00 <= Rs. 10,000.00 (COMPLIANT)
 
 Vendor Signature & Official Seal:
-[Sd/- NeuralNet Datasets India] (SEALED & SIGNED)
+[Sd/- DataSphere Analytics] (SEALED & SIGNED)
 ================================================================================
 ```
 
 ---
 
-### INVOICE 4: PROJECT REPORT PRINTING & HARD BINDING (3 COPIES)
+### INVOICE 4: PROJECT DOCUMENTATION PRINTING & HARDBOUND BINDING
 
 ```
 ================================================================================
-                         APEX PRINT & GRAPHICS
-            12, University Road, Thuvakudi, Trichy - 620015
-                 GSTIN: 33AAACE3456I4Z3 | Phone: +91 431 250 3456
+                     NATIONAL PRINTERS & STATIONERS
+            15, University Road, Thuvakudi, Trichy - 620015
+                 GSTIN: 33AAACN3040I1Z2 | Phone: +91 431 250 3040
 ================================================================================
-TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0804
-Date: 10-06-2026                                            Mode: CASH RECEIVED
+TAX INVOICE / CASH BILL                                     Bill No: CASH-2026-04
+Date: 15-06-2026                                            Mode: CASH RECEIVED
 
 BILLED TO:
 The Director, Centre for Academic Courses,
@@ -149,8 +150,49 @@ Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
 --------------------------------------------------------------------------------
 Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
 --------------------------------------------------------------------------------
-1.   Project Hardcover Binding &     490110     3       282.49        847.46
-     Color Printing (3 Hardbound Copies)
+1.   Project Report Binding & Color  490110     3       323.73        971.19
+     Printing (3 Hardbound Copies)
+2.   Architecture Presentation Banner 490110    1       300.00        300.00
+--------------------------------------------------------------------------------
+                                              Subtotal:            Rs. 1,271.19
+                                              CGST (9%):           Rs.   114.41
+                                              SGST (9%):           Rs.   114.40
+--------------------------------------------------------------------------------
+                                              TOTAL AMOUNT:        Rs. 1,500.00
+--------------------------------------------------------------------------------
+Amount in words: Rupees One Thousand Five Hundred Only.
+
+ENDORSEMENT: CASH RECEIVED / PAID IN FULL
+Single Item Limit Compliance: Rs. 971.19 <= Rs. 10,000.00 (COMPLIANT)
+
+Vendor Signature & Official Seal:
+[Sd/- National Printers & Stationers] (SEALED & SIGNED)
+================================================================================
+```
+
+---
+
+### INVOICE 5: LOCAL TRANSPORT & LOGISTICS FOR REVIEW VENUE TRAVEL
+
+```
+================================================================================
+                        EXPRESS TRAVEL & LOGISTICS
+           77, Anna Salai, Thousand Lights, Chennai - 600002
+                 GSTIN: 33AAACE1080J1Z7 | Phone: +91 44 2855 1080
+================================================================================
+TAX INVOICE / CASH BILL                                     Bill No: CASH-2026-05
+Date: 28-06-2026                                            Mode: CASH RECEIVED
+
+BILLED TO:
+The Director, Centre for Academic Courses,
+Anna University, Chennai - 600 025
+
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+--------------------------------------------------------------------------------
+Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
+--------------------------------------------------------------------------------
+1.   Local Review Venue Transport &  996719     1       847.46        847.46
+     Prototype Equipment Handling
 --------------------------------------------------------------------------------
                                               Subtotal:            Rs.   847.46
                                               CGST (9%):           Rs.    76.27
@@ -161,49 +203,9 @@ Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
 Amount in words: Rupees One Thousand Only.
 
 ENDORSEMENT: CASH RECEIVED / PAID IN FULL
-Single Item Limit Compliance: Rs. 1,000.00 <= Rs. 10,000.00 (COMPLIANT)
+Single Item Limit Compliance: Rs. 847.46 <= Rs. 10,000.00 (COMPLIANT)
 
 Vendor Signature & Official Seal:
-[Sd/- Apex Print & Graphics] (SEALED & SIGNED)
-================================================================================
-```
-
----
-
-### INVOICE 5: PROTOTYPE DEMO VIDEO EDITING & MEDIA ASSETS
-
-```
-================================================================================
-                          DIGITALMEDIA WORKS
-           88, Anna Salai, Thousand Lights, Chennai - 600002
-                 GSTIN: 33AAACF7890J5Z9 | Phone: +91 44 2855 7890
-================================================================================
-TAX INVOICE / CASH BILL                                     Bill No: INV-2026-0805
-Date: 22-06-2026                                            Mode: CASH RECEIVED
-
-BILLED TO:
-The Director, Centre for Academic Courses,
-Anna University, Chennai - 600 025
-
-Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
---------------------------------------------------------------------------------
-Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
---------------------------------------------------------------------------------
-1.   High-Definition Demo Video      998314     1       847.46        847.46
-     Editing & Journey Animation
---------------------------------------------------------------------------------
-                                              Subtotal:            Rs.   847.46
-                                              CGST (9%):           Rs.    76.27
-                                              SGST (9%):           Rs.    76.27
---------------------------------------------------------------------------------
-                                              TOTAL AMOUNT:        Rs. 1,000.00
---------------------------------------------------------------------------------
-Amount in words: Rupees One Thousand Only.
-
-ENDORSEMENT: CASH RECEIVED / PAID IN FULL
-Single Item Limit Compliance: Rs. 1,000.00 <= Rs. 10,000.00 (COMPLIANT)
-
-Vendor Signature & Official Seal:
-[Sd/- DigitalMedia Works] (SEALED & SIGNED)
+[Sd/- Express Travel & Logistics] (SEALED & SIGNED)
 ================================================================================
 ```
