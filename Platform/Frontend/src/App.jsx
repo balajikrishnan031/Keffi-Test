@@ -1595,13 +1595,14 @@ const ChatArea = ({
           message: message,
           patient_id: userData?.patient_id || "P-102",
           emotional_context: payloadContext
-        }, { timeout: 8000 });
+        }, { timeout: 25000 });
       } catch (e) {
+        console.warn("[API RETRY] Local port 8000 failed or timed out. Trying cloud fallback...", e);
         response = await axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/chat', {
           message: message,
           patient_id: userData?.patient_id || "P-102",
           emotional_context: payloadContext
-        });
+        }, { timeout: 25000 });
       }
       
       let botResponse = response.data.reply || "I'm here for you.";

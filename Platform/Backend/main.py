@@ -736,10 +736,10 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         import re
         ai_reply = re.sub(r"<reflection>.*?</reflection>", "", ai_reply, flags=re.DOTALL).strip()
 
-        # Safety Check
-        is_safe = evaluate_safety(ai_reply)
-        if not is_safe:
-            ai_reply = "I'm sorry, but I can't provide that specific kind of advice. If you're feeling overwhelmed, please reach out to a professional or helpline immediately."
+        # Safety Check: evaluate_safety returns True if self-harm/suicide terms are flagged
+        has_safety_violation = evaluate_safety(ai_reply)
+        if has_safety_violation:
+            ai_reply = "I am deeply concerned about your safety right now. If you are experiencing thoughts of self-harm, please reach out immediately to a trusted loved one or crisis support helpline (e.g. 988 or Vandrevala Foundation helpline 9999 666 555)."
 
         # Backend Post-Processing: Force strip all asterisks to prevent UI bleeding
         ai_reply = ai_reply.replace("**", "").replace("*", "")
