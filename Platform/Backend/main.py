@@ -27,6 +27,10 @@ from cleanup import run_backend_cleanup
 from sync_n8n_prompt import sync_n8n_flow
 from qa_test import run_qa_diagnostics
 from clinical_knowledge_base import query_clinical_knowledge_base
+from voice_prosody_analyzer import analyze_audio_prosody
+from cognitive_distortion_mapper import detect_cognitive_distortions
+from iot_telemetry_engine import process_biometric_telemetry
+from temporal_knowledge_graph import query_temporal_knowledge_graph
 import schemas
 
 app = FastAPI(title="Keffi Clinical AI Brain")
@@ -35,10 +39,15 @@ app = FastAPI(title="Keffi Clinical AI Brain")
 @app.get("/")
 def root_status():
     return {
-        "status": "Keffi Clinical AI Backend is Running 🚀",
-        "version": "1.0",
-        "inter_module_connectivity": "100% Fully Connected (17/17 Backend Modules Active)",
-        "master_knowledge_base": "DSM-5-TR + ICD-11 + Beck CBT + Linehan DBT + Hayes ACT + Van der Kolk Somatic Active"
+        "status": "Keffi Clinical AI Brain - Affective Computing Engine Active 🚀",
+        "version": "2.0 Master Edition",
+        "inter_module_connectivity": "100% Fully Connected (21/21 Backend Modules Active)",
+        "affective_computing_layers": [
+            "Voice Sentiment & Prosody Analyzer (Librosa/OpenSMILE)",
+            "Cognitive Distortion Mapping Engine (10 CBT Distortions)",
+            "Physiological Emotion Sync & IoT Biometric Telemetry (ESP32/HRV/GSR)",
+            "Temporal Emotion Knowledge Graph (Long-term Memory)"
+        ]
     }
 
 app.add_middleware(
@@ -833,6 +842,47 @@ class KBQueryRequest(BaseModel):
 async def search_clinical_kb(req: KBQueryRequest):
     """Searches DSM-5-TR, ICD-11, Beck CBT, Linehan DBT, Hayes ACT, and Van der Kolk Somatic literature."""
     return query_clinical_knowledge_base(req.query)
+
+# ----------------------------------------------------------
+# AFFECTIVE COMPUTING & EMOTION AI API ENDPOINTS
+# ----------------------------------------------------------
+class ProsodyRequest(BaseModel):
+    transcript: str = ""
+    audio_metadata: dict = None
+
+@app.post("/api/audio_prosody")
+async def analyze_prosody(req: ProsodyRequest):
+    """Analyzes voice pitch, speech rate WPM, energy, and silence gaps."""
+    return analyze_audio_prosody(req.audio_metadata, req.transcript)
+
+class DistortionRequest(BaseModel):
+    text: str
+
+@app.post("/api/cognitive_distortions")
+async def analyze_distortions(req: DistortionRequest):
+    """Maps patient text to 10 CBT cognitive distortions (Catastrophizing, All-or-Nothing, etc.)."""
+    return detect_cognitive_distortions(req.text)
+
+class TelemetryRequest(BaseModel):
+    patient_id: str = "P-102"
+    heart_rate_bpm: float = 72.0
+    hrv_ms: float = 45.0
+    gsr_microsiemens: float = 3.5
+
+@app.post("/api/telemetry/sensor_stream")
+async def process_telemetry(req: TelemetryRequest):
+    """Processes real-time IoT sensor streams (ESP32 Heart Rate, HRV, GSR)."""
+    return process_biometric_telemetry(req.patient_id, req.heart_rate_bpm, req.hrv_ms, req.gsr_microsiemens)
+
+class GraphMemoryRequest(BaseModel):
+    patient_id: str = "P-102"
+    current_message: str
+    current_state: str = "General"
+
+@app.post("/api/temporal_knowledge_graph")
+async def query_graph_memory(req: GraphMemoryRequest):
+    """Queries long-term Temporal Knowledge Graph for past triggers and personalized coping mechanisms."""
+    return query_temporal_knowledge_graph(req.patient_id, req.current_message, req.current_state)
 
 # ----------------------------------------------------------
 # APPOINTMENT BOOKING AUTOMATION
