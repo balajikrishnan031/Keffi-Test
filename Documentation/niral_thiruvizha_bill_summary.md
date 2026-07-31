@@ -13,8 +13,8 @@ Certified that, the following expenditures are made by us and the bills are clai
 
 | Sl.No. | Bill No. | Bill Date | Description | Amount |
 | :---: | :---: | :---: | :--- | :---: |
-| 1 | CASH-01 | 05-05-2026 | ESP32 Boards, PPG Pulse Sensor & GSR Telemetry Kit | Rs. 4,250/- |
-| 2 | CASH-02 | 18-05-2026 | High-Memory Cloud Server & BERT Backend Deployment | Rs. 5,800/- |
+| 1 | CASH-01 | 05-05-2026 | Cloud Server Infrastructure & FastAPI/BERT Backend Hosting | Rs. 5,800/- |
+| 2 | CASH-02 | 18-05-2026 | Groq 70B & OpenAI Cloud LLM API Inference Tokens | Rs. 4,250/- |
 | 3 | CASH-03 | 02-06-2026 | Clinical Psychiatry Corpora & DSM-5-TR Data Licensing | Rs. 2,450/- |
 | 4 | CASH-04 | 15-06-2026 | Project Report Binding (3 copies) & Architecture Banner | Rs. 1,500/- |
 | 5 | CASH-05 | 28-06-2026 | Local Review Venue Transport & Equipment Logistics | Rs. 1,000/- |

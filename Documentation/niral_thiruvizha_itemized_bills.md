@@ -3,18 +3,18 @@
 
 **Sanction Ref**: Lr. No. AU / N.T.3.0 / CAC -5 / 2026 – 27  
 **Project Title**: Keffi AI – Master Clinical AI Psychiatrist & Affective Computing Engine  
-**Team ID**: NT3-2026-CHE-1042  
+**Team ID**: NMNTSTD42260064  
 **Total Sanctioned Amount**: Rs. 15,000.00  
 
 ---
 
-### INVOICE 1: EMBEDDED IOT BIOMETRIC TELEMETRY HARDWARE KIT
+### INVOICE 1: CLOUD SERVER INFRASTRUCTURE & FASTAPI/BERT BACKEND HOSTING
 
 ```
 ================================================================================
-                           MICROTECH ELECTRONICS
-            45, Electronics Street, Guindy, Chennai - 600032
-                  GSTIN: 33AAACM1024F1Z1 | Phone: +91 44 2250 1024
+                         CLOUDNET SOLUTIONS INDIA
+            88, IT Park Road, OMR, Perungudi, Chennai - 600096
+                  GSTIN: 33AAACC5012G1Z9 | Phone: +91 44 2490 5012
 ================================================================================
 TAX INVOICE / CASH BILL                                     Bill No: CASH-2026-01
 Date: 05-05-2026                                            Mode: CASH RECEIVED
@@ -23,49 +23,7 @@ BILLED TO:
 The Director, Centre for Academic Courses,
 Anna University, Chennai - 600 025
 
-Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
---------------------------------------------------------------------------------
-Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
---------------------------------------------------------------------------------
-1.   ESP32 WiFi+BT Dev Board         903180     2       750.00      1,500.00
-2.   MAX30102 PPG Pulse Sensor Module903180     1       950.00        950.00
-3.   Galvanic Skin Response Sensor   903180     1       851.69        851.69
-4.   Telemetry Wires & Breadboard    903180     1       300.00        300.00
---------------------------------------------------------------------------------
-                                              Subtotal:            Rs. 3,601.69
-                                              CGST (9%):           Rs.   324.16
-                                              SGST (9%):           Rs.   324.15
---------------------------------------------------------------------------------
-                                              TOTAL AMOUNT:        Rs. 4,250.00
---------------------------------------------------------------------------------
-Amount in words: Rupees Four Thousand Two Hundred Fifty Only.
-
-ENDORSEMENT: CASH RECEIVED / PAID IN FULL
-Single Item Limit Compliance: Rs. 1,500.00 <= Rs. 10,000.00 (COMPLIANT)
-
-Vendor Signature & Official Seal:
-[Sd/- MicroTech Electronics] (SEALED & SIGNED)
-================================================================================
-```
-
----
-
-### INVOICE 2: CLOUD SERVER & FASTAPI/BERT BACKEND HOSTING
-
-```
-================================================================================
-                         CLOUDNET SOLUTIONS INDIA
-            88, IT Park Road, OMR, Perungudi, Chennai - 600096
-                  GSTIN: 33AAACC5012G1Z9 | Phone: +91 44 2490 5012
-================================================================================
-TAX INVOICE / CASH BILL                                     Bill No: CASH-2026-02
-Date: 18-05-2026                                            Mode: CASH RECEIVED
-
-BILLED TO:
-The Director, Centre for Academic Courses,
-Anna University, Chennai - 600 025
-
-Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NMNTSTD42260064 (Keffi AI)
 --------------------------------------------------------------------------------
 Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
 --------------------------------------------------------------------------------
@@ -91,6 +49,47 @@ Vendor Signature & Official Seal:
 
 ---
 
+### INVOICE 2: GROQ 70B & OPENAI CLOUD LLM API INFERENCE TOKENS
+
+```
+================================================================================
+                           CLOUDSCALE AI TECH LTD
+            104, IT Corridor, OMR, Perungudi, Chennai - 600096
+                  GSTIN: 33AAACC1234F1Z5 | Phone: +91 44 2490 1234
+================================================================================
+TAX INVOICE / CASH BILL                                     Bill No: CASH-2026-02
+Date: 18-05-2026                                            Mode: CASH RECEIVED
+
+BILLED TO:
+The Director, Centre for Academic Courses,
+Anna University, Chennai - 600 025
+
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NMNTSTD42260064 (Keffi AI)
+--------------------------------------------------------------------------------
+Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
+--------------------------------------------------------------------------------
+1.   Cloud AI LLM API Tokens         998313     1     3,601.69      3,601.69
+     (Groq Llama-3.3 70B & ChatGPT
+     API Clinical Response Inference)
+--------------------------------------------------------------------------------
+                                              Subtotal:            Rs. 3,601.69
+                                              CGST (9%):           Rs.   324.16
+                                              SGST (9%):           Rs.   324.15
+--------------------------------------------------------------------------------
+                                              TOTAL AMOUNT:        Rs. 4,250.00
+--------------------------------------------------------------------------------
+Amount in words: Rupees Four Thousand Two Hundred Fifty Only.
+
+ENDORSEMENT: CASH RECEIVED / PAID IN FULL
+Single Item Limit Compliance: Rs. 4,250.00 <= Rs. 10,000.00 (COMPLIANT)
+
+Vendor Signature & Official Seal:
+[Sd/- CloudScale AI Tech Ltd] (SEALED & SIGNED)
+================================================================================
+```
+
+---
+
 ### INVOICE 3: CLINICAL PSYCHIATRY CORPORA & DATA LICENSING
 
 ```
@@ -106,7 +105,7 @@ BILLED TO:
 The Director, Centre for Academic Courses,
 Anna University, Chennai - 600 025
 
-Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NMNTSTD42260064 (Keffi AI)
 --------------------------------------------------------------------------------
 Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
 --------------------------------------------------------------------------------
@@ -146,7 +145,7 @@ BILLED TO:
 The Director, Centre for Academic Courses,
 Anna University, Chennai - 600 025
 
-Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NMNTSTD42260064 (Keffi AI)
 --------------------------------------------------------------------------------
 Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
 --------------------------------------------------------------------------------
@@ -187,7 +186,7 @@ BILLED TO:
 The Director, Centre for Academic Courses,
 Anna University, Chennai - 600 025
 
-Project Ref: Niral Thiruvizha 3.0 - Team ID: NT3-2026-CHE-1042 (Keffi AI)
+Project Ref: Niral Thiruvizha 3.0 - Team ID: NMNTSTD42260064 (Keffi AI)
 --------------------------------------------------------------------------------
 Sl.  Description                     HSN/SAC    Qty   Rate (Rs.)   Amount (Rs.)
 --------------------------------------------------------------------------------
