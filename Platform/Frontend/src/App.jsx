@@ -1512,6 +1512,29 @@ const ChatArea = ({
   }, [messages]);
 
   useEffect(() => {
+    const pid = userData?.patient_id || "P-102";
+    axios.get(`http://127.0.0.1:8000/api/history/${pid}`)
+      .then(res => {
+        if (res.data && res.data.history && res.data.history.length > 0) {
+          const pastMsgs = [];
+          res.data.history.forEach(item => {
+            if (item.user) {
+              pastMsgs.push({ id: item.id * 2 - 1, sender: 'user', time: 'Past', text: item.user });
+            }
+            if (item.bot) {
+              pastMsgs.push({ id: item.id * 2, sender: 'keffi', time: 'Past', text: item.bot });
+            }
+          });
+          if (pastMsgs.length > 0) {
+            setMessages(pastMsgs);
+            setMoodSet(true);
+          }
+        }
+      })
+      .catch(err => console.warn("Failed to load backend history:", err));
+  }, [userData?.patient_id]);
+
+  useEffect(() => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognitionRef.current = new SpeechRecognition();

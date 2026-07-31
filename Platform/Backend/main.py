@@ -897,6 +897,30 @@ def list_all_patients(db: Session = Depends(get_db)):
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/api/history/{patient_id}")
+def get_patient_chat_history(patient_id: str, db: Session = Depends(get_db)):
+    try:
+        messages = db.query(ChatMessage).filter(ChatMessage.patient_id == patient_id).order_by(ChatMessage.timestamp.asc()).all()
+        history = []
+        for m in messages:
+            history.append({
+                "id": m.id,
+                "user": m.message,
+                "bot": m.ai_reply,
+                "bert_emotion": m.bert_emotion,
+                "clinical_state": m.clinical_state,
+                "clinical_category": m.clinical_category,
+                "timestamp": m.timestamp.isoformat() if m.timestamp else ""
+            })
+        return {
+            "patient_id": patient_id,
+            "total_messages": len(history),
+            "history": history
+        }
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
 # ----------------------------------------------------------
 # SYSTEM ADMINISTRATION & MODULE CONNECTIVITY ENDPOINTS
 # ----------------------------------------------------------

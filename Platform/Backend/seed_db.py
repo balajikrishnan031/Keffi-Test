@@ -25,10 +25,10 @@ def seed_database():
     try:
         # 1. Seed Patients
         patients = [
-            Patient(patient_id="P-101", name="Anand Sharma", dob="1998-05-14", gender="Male", mhq_score=68.5, depression_level="Low", assigned_doctor="Dr. R. Sivanesh", mhq_trend="Improving", attrition_probability=0.08),
-            Patient(patient_id="P-102", name="Balaji P", dob="2001-01-01", gender="Male", mhq_score=52.0, depression_level="Moderate", assigned_doctor="Dr. R. Sivanesh", mhq_trend="Stable", attrition_probability=0.15),
-            Patient(patient_id="P-103", name="Mathu (Madhumathi S)", dob="2002-03-22", gender="Female", mhq_score=75.0, depression_level="Low", assigned_doctor="Dr. R. Sivanesh", mhq_trend="Improving", attrition_probability=0.05),
-            Patient(patient_id="P-104", name="Malini V", dob="2002-08-11", gender="Female", mhq_score=64.0, depression_level="Low", assigned_doctor="Dr. R. Sivanesh", mhq_trend="Stable", attrition_probability=0.10)
+            Patient(patient_id="P-101", name="Anand Sharma", phone="+91 98765 43210", email="anand@example.com", dob="1998-05-14", gender="Male", place="Chennai", mhq_score=68.5, depression_level="Low", assigned_doctor="Dr. R. Sivanesh", mhq_trend="Improving", attrition_probability=0.08),
+            Patient(patient_id="P-102", name="Balaji P", phone="+91 98765 43211", email="balaji@example.com", dob="2001-01-01", gender="Male", place="Panruti", mhq_score=52.0, depression_level="Moderate", assigned_doctor="Dr. R. Sivanesh", mhq_trend="Stable", attrition_probability=0.15),
+            Patient(patient_id="P-103", name="Mathu (Madhumathi S)", phone="+91 98765 43212", email="mathu@example.com", dob="2002-03-22", gender="Female", place="Panruti", mhq_score=75.0, depression_level="Low", assigned_doctor="Dr. R. Sivanesh", mhq_trend="Improving", attrition_probability=0.05),
+            Patient(patient_id="P-104", name="Malini V", phone="+91 98765 43213", email="malini@example.com", dob="2002-08-11", gender="Female", place="Panruti", mhq_score=64.0, depression_level="Low", assigned_doctor="Dr. R. Sivanesh", mhq_trend="Stable", attrition_probability=0.10)
         ]
         for p in patients:
             existing = db.query(Patient).filter(Patient.patient_id == p.patient_id).first()
