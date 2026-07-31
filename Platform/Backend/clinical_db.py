@@ -14,8 +14,11 @@ class Patient(Base):
     __tablename__ = "patients"
     patient_id = Column(String, primary_key=True, index=True)
     name = Column(String, default="Anonymous")
+    phone = Column(String, default="")
+    email = Column(String, default="")
     dob = Column(String, default="2000-01-01")
     gender = Column(String, default="Not Specified")
+    place = Column(String, default="")
     mhq_score = Column(Float, default=50.0)  # 0-100: lower = more depressed
     depression_level = Column(String, default="Moderate")  # Low / Moderate / High / Critical
     assigned_doctor = Column(String, default="Dr. R. Sivanesh")

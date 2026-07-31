@@ -1024,10 +1024,26 @@ const PatientLogin = ({ setView, setUserData }) => {
         }
       }
 
-      const patientId = 'P-' + phoneClean.slice(-6);
+      const patientId = 'P-' + (phoneClean.length >= 6 ? phoneClean.slice(-6) : '102');
       const fullData = { ...formData, age: computedAge, patient_id: patientId };
       localStorage.setItem('keffi_user', JSON.stringify(fullData));
       setUserData(fullData);
+
+      // Instantly register and sync full user profile to Backend Database
+      try {
+        axios.post('http://127.0.0.1:8000/api/register', {
+          patient_id: patientId,
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          dob: formData.dob,
+          gender: formData.gender,
+          place: formData.place
+        }).catch(err => console.warn("Backend registration sync warning:", err));
+      } catch (err) {
+        console.warn("Backend registration sync warning:", err);
+      }
+
       setView('patient-dashboard');
     }
   };

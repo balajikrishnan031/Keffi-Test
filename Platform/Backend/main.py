@@ -1,6 +1,7 @@
 import os
 import sys
 import traceback
+from typing import Optional, List, Dict, Any
 
 # Force UTF-8 stdout/stderr on Windows to prevent UnicodeEncodeError with emojis
 if hasattr(sys.stdout, 'reconfigure'):
@@ -93,9 +94,18 @@ N8N_ALERT_WEBHOOK = "http://localhost:5678/webhook/patient-alert"
 N8N_APPOINTMENT_WEBHOOK = "http://localhost:5678/webhook/keffi-appointment"
 
 class ChatRequest(BaseModel):
-    patient_id: str
     message: str
-    emotional_context: str = ""  # Last emotional message for Story/Music/Joke context
+    patient_id: Optional[str] = "P-102"
+    emotional_context: Optional[str] = None
+
+class RegisterRequest(BaseModel):
+    patient_id: Optional[str] = None
+    name: str
+    phone: str
+    email: str
+    dob: Optional[str] = "2000-01-01"
+    gender: Optional[str] = "Not Specified"
+    place: Optional[str] = ""
 
 class AppointmentRequest(BaseModel):
     patient_id: str
@@ -813,6 +823,79 @@ class XAIRequest(BaseModel):
 @app.post("/api/explain_clinical_decision")
 async def explain_decision(req: XAIRequest):
     return explain_clinical_decision(req.text, req.emotion_label, req.clinical_state)
+
+@app.post("/api/register")
+def register_patient(req: RegisterRequest, db: Session = Depends(get_db)):
+    try:
+        pid = req.patient_id or (f"P-{req.phone[-6:]}" if req.phone and len(req.phone) >= 6 else req.email) or f"P-{int(time.time())}"
+        patient = db.query(Patient).filter(Patient.patient_id == pid).first()
+        if not patient:
+            patient = Patient(
+                patient_id=pid,
+                name=req.name,
+                phone=req.phone,
+                email=req.email,
+                dob=req.dob,
+                gender=req.gender,
+                place=req.place
+            )
+            db.add(patient)
+        else:
+            patient.name = req.name
+            patient.phone = req.phone
+            patient.email = req.email
+            patient.dob = req.dob
+            patient.gender = req.gender
+            patient.place = req.place
+            patient.last_active_at = datetime.utcnow()
+        db.commit()
+        db.refresh(patient)
+        print(f"  [DB REGISTER] Registered Patient {patient.name} ({patient.phone} | {patient.email}) - ID: {patient.patient_id}")
+        return {
+            "status": "success",
+            "message": f"Patient profile for {patient.name} registered and saved in database!",
+            "patient": {
+                "patient_id": patient.patient_id,
+                "name": patient.name,
+                "phone": patient.phone,
+                "email": patient.email,
+                "dob": patient.dob,
+                "gender": patient.gender,
+                "place": patient.place,
+                "mhq_score": patient.mhq_score,
+                "depression_level": patient.depression_level
+            }
+        }
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/patients")
+def list_all_patients(db: Session = Depends(get_db)):
+    try:
+        patients = db.query(Patient).all()
+        return {
+            "total_patients": len(patients),
+            "patients": [
+                {
+                    "patient_id": p.patient_id,
+                    "name": p.name,
+                    "phone": p.phone or "",
+                    "email": p.email or "",
+                    "dob": p.dob or "",
+                    "gender": p.gender or "",
+                    "place": p.place or "",
+                    "mhq_score": p.mhq_score,
+                    "depression_level": p.depression_level,
+                    "assigned_doctor": p.assigned_doctor,
+                    "last_active": p.last_active_at.isoformat() if p.last_active_at else ""
+                }
+                for p in patients
+            ]
+        }
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
 
 # ----------------------------------------------------------
 # SYSTEM ADMINISTRATION & MODULE CONNECTIVITY ENDPOINTS
