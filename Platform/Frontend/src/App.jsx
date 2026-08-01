@@ -1544,8 +1544,12 @@ const ChatArea = ({
 
       recognitionRef.current.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
-        setInput(prev => prev + (prev ? " " : "") + transcript);
-        setIsRecording(false);
+        if (transcript.trim()) {
+          setInput(transcript);
+          setIsRecording(false);
+          setIsVoiceEnabled(true); // Automatically enable Voice Output when user speaks
+          handleSend(transcript);   // Instantly send spoken message to Keffi AI
+        }
       };
 
       recognitionRef.current.onerror = () => setIsRecording(false);
@@ -1558,11 +1562,12 @@ const ChatArea = ({
       recognitionRef.current?.stop();
       setIsRecording(false);
     } else {
-      if(recognitionRef.current) {
-         recognitionRef.current.start();
-         setIsRecording(true);
+      if (recognitionRef.current) {
+        setIsVoiceEnabled(true); // Automatically enable voice mode when mic clicked
+        recognitionRef.current.start();
+        setIsRecording(true);
       } else {
-         alert("Voice recognition is not supported in this browser.");
+        alert("Voice recognition is not supported in this browser.");
       }
     }
   };
