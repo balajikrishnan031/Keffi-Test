@@ -2803,9 +2803,29 @@ const PatientDashboard = ({ setView, userData }) => {
 const AdminDashboard = ({ setView }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [patientDetail, setPatientDetail] = useState(null);
+  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
   const [patients, setPatients] = useState([]);
   const [inactivePatients, setInactivePatients] = useState([]);
   const [analytics, setAnalytics] = useState(null);
+
+  useEffect(() => {
+    if (selectedPatient) {
+      const pid = selectedPatient.patient_id || selectedPatient.id;
+      setIsLoadingDetail(true);
+      axios.get(`http://127.0.0.1:8000/api/admin/patient_detail/${pid}`)
+        .then(res => {
+          setPatientDetail(res.data);
+          setIsLoadingDetail(false);
+        })
+        .catch(err => {
+          console.warn("Failed to fetch detail:", err);
+          setIsLoadingDetail(false);
+        });
+    } else {
+      setPatientDetail(null);
+    }
+  }, [selectedPatient]);
 
   // Real-time tracking data states
   const [liveBpm, setLiveBpm] = useState(76);
@@ -2820,9 +2840,9 @@ const AdminDashboard = ({ setView }) => {
     const fetchData = async () => {
       try {
         const [resPat, resInact, resAnalyt] = await Promise.all([
-          axios.get('https://balajikrishnan031-keffi-backend.hf.space/api/admin/patients'),
-          axios.get('https://balajikrishnan031-keffi-backend.hf.space/api/admin/inactive-patients'),
-          axios.get('https://balajikrishnan031-keffi-backend.hf.space/api/admin/analytics')
+          axios.get('http://127.0.0.1:8000/api/admin/patients_full').catch(() => ({ data: { patients: [] } })),
+          axios.get('http://127.0.0.1:8000/api/admin/inactive-patients').catch(() => ({ data: { patients: [] } })),
+          axios.get('http://127.0.0.1:8000/api/admin/analytics').catch(() => ({ data: null }))
         ]);
         if (resPat.data && resPat.data.patients) setPatients(resPat.data.patients);
         if (resInact.data && resInact.data.patients) setInactivePatients(resInact.data.patients);
@@ -2832,7 +2852,7 @@ const AdminDashboard = ({ setView }) => {
       }
     };
     fetchData();
-    const interval = setInterval(fetchData, 10000);
+    const interval = setInterval(fetchData, 8000);
     return () => clearInterval(interval);
   }, []);
 
@@ -2948,42 +2968,94 @@ const AdminDashboard = ({ setView }) => {
         <div className="absolute inset-0 rounded-[2rem] glass-panel shadow-inner p-8 overflow-hidden glow-emerald">
           {selectedPatient ? (
              <div className={`h-full flex flex-col animate-fade-in`}>
-                <div className="flex justify-between items-center mb-6">
-                  <div className="flex items-center gap-4">
-                    <button onClick={() => setSelectedPatient(null)} className={`p-2.5 rounded-full bg-white border border-slate-200 shadow-sm text-slate-500 hover:bg-slate-50`}><ArrowRight className="rotate-180" size={18}/></button>
-                    <h2 className="text-xl font-black text-slate-800">Patient: {selectedPatient.id}</h2>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="px-4 py-1.5 rounded-xl bg-white border border-slate-100 shadow-sm font-bold text-xs text-slate-600 flex items-center gap-2">
-                      Current Chat Category: <span className={
-                        selectedPatient.category?.includes("Depression") || selectedPatient.category?.includes("Panic") || selectedPatient.category?.includes("Grief") ? "text-red-500" :
-                        selectedPatient.category?.includes("Anxiety") || selectedPatient.category?.includes("Exhaustion") || selectedPatient.category?.includes("Burnout") ? "text-orange-500" :
-                        "text-emerald-500"
-                      }>
-                        {selectedPatient.category?.includes("Depression") || selectedPatient.category?.includes("Panic") || selectedPatient.category?.includes("Grief") ? "🔴" :
-                        selectedPatient.category?.includes("Anxiety") || selectedPatient.category?.includes("Exhaustion") || selectedPatient.category?.includes("Burnout") ? "🟠" :
-                        "🟢"} [{selectedPatient.category || 'Normal Stress / Positive'}]
-                      </span>
-                    </div>
-                    <div className={`px-4 py-1.5 rounded-xl bg-white border border-slate-100 shadow-sm font-bold text-xs ${selectedPatient.color}`}>Risk: {selectedPatient.risk}</div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-3 gap-6 flex-1">
-                  <div className={`col-span-1 p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col gap-4`}>
-                    <h3 className="text-base font-bold text-slate-800">Depression / MHQ Score</h3>
-                    <div className="flex-1 flex flex-col justify-center items-center gap-2">
-                       <span className={`text-4xl font-black ${selectedPatient.color}`}>{selectedPatient.score}</span>
-                       <span className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-2">Current Score</span>
-                    </div>
-                  </div>
-                  <div className={`col-span-2 p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col`}>
-                    <h3 className="text-base font-bold text-slate-800 mb-3">Recent Logs</h3>
-                    <div className={`flex-1 bg-white/10 border border-white/10 rounded-xl p-4 overflow-y-auto`}>
-                      {selectedPatient.logs.map((l,i) => <div key={i} className="p-3 mb-3 glass-card rounded-lg shadow-sm border border-white/15 text-xs font-semibold text-slate-700">{l}</div>)}
-                    </div>
-                  </div>
-                </div>
-             </div>
+                 <div className="flex justify-between items-center mb-4">
+                   <div className="flex items-center gap-4">
+                     <button onClick={() => setSelectedPatient(null)} className={`p-2.5 rounded-full bg-white border border-slate-200 shadow-sm text-slate-500 hover:bg-slate-50 cursor-pointer`}><ArrowRight className="rotate-180" size={18}/></button>
+                     <div>
+                       <h2 className="text-xl font-black text-slate-800">
+                         Patient: {patientDetail?.profile?.name || selectedPatient.name || selectedPatient.patient_id || selectedPatient.id}
+                       </h2>
+                       <p className="text-xs text-slate-500 font-medium">ID: {patientDetail?.profile?.patient_id || selectedPatient.patient_id || selectedPatient.id}</p>
+                     </div>
+                   </div>
+                   <div className="flex items-center gap-3">
+                     <div className="px-4 py-1.5 rounded-xl bg-white border border-slate-100 shadow-sm font-bold text-xs text-slate-600">
+                       MHQ Score: <span className="text-[#3A7070] font-black">{patientDetail?.profile?.mhq_score ?? selectedPatient.mhq_score ?? selectedPatient.score ?? 50}</span>
+                     </div>
+                     <div className="px-4 py-1.5 rounded-xl bg-white border border-slate-100 shadow-sm font-bold text-xs text-amber-700 bg-amber-50">
+                       Days Inactive: <span className="font-black">{patientDetail?.profile?.days_inactive ?? selectedPatient.days_inactive ?? 0} Days</span>
+                     </div>
+                   </div>
+                 </div>
+
+                 {/* A-to-Z Patient Metadata Header */}
+                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 p-4 rounded-2xl bg-white/40 border border-white/30 text-xs shadow-sm">
+                   <div><span className="text-slate-400 font-bold uppercase tracking-wider block text-[10px]">Mobile Phone</span> <span className="font-black text-slate-800">{patientDetail?.profile?.phone || selectedPatient.phone || 'N/A'}</span></div>
+                   <div><span className="text-slate-400 font-bold uppercase tracking-wider block text-[10px]">Gmail / Email</span> <span className="font-black text-slate-800">{patientDetail?.profile?.email || selectedPatient.email || 'N/A'}</span></div>
+                   <div><span className="text-slate-400 font-bold uppercase tracking-wider block text-[10px]">DOB & Gender</span> <span className="font-black text-slate-800">{patientDetail?.profile?.dob || 'N/A'} ({patientDetail?.profile?.gender || 'N/A'})</span></div>
+                   <div><span className="text-slate-400 font-bold uppercase tracking-wider block text-[10px]">City / Location</span> <span className="font-black text-slate-800">{patientDetail?.profile?.place || selectedPatient.place || 'N/A'}</span></div>
+                 </div>
+
+                 {/* Main Transcript & Telemetry Layout */}
+                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1 min-h-0">
+                   {/* Left Column: Full Conversation Transcript */}
+                   <div className="md:col-span-2 p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col min-h-0">
+                     <h3 className="text-sm font-black text-slate-800 mb-3 flex items-center justify-between">
+                       <span>💬 Complete Conversation Transcript (A to Z History)</span>
+                       <span className="text-xs font-bold text-slate-500">{patientDetail?.history?.length || 0} Messages</span>
+                     </h3>
+                     <div className="flex-1 bg-slate-900/10 border border-white/20 rounded-xl p-4 overflow-y-auto space-y-3 font-sans text-xs scrollbar-thin">
+                       {isLoadingDetail ? (
+                         <div className="text-center text-slate-500 font-bold py-10">Loading conversation transcript...</div>
+                       ) : patientDetail?.history && patientDetail.history.length > 0 ? (
+                         patientDetail.history.map((m, i) => (
+                           <div key={i} className="space-y-1.5 pb-2 border-b border-slate-200/40">
+                             <div className="flex justify-between text-[10px] font-bold text-slate-500">
+                               <span className="text-teal-700">Patient ({m.timestamp})</span>
+                               {m.bert_emotion && <span className="px-2 py-0.5 rounded bg-teal-100 text-teal-800 font-semibold">{m.bert_emotion}</span>}
+                             </div>
+                             <div className="p-2.5 rounded-lg bg-white/70 text-slate-800 font-medium leading-relaxed border border-slate-200/50">
+                               {m.user}
+                             </div>
+                             <div className="p-2.5 rounded-lg bg-[#3A7070]/15 text-[#0D5050] font-medium leading-relaxed border border-[#3A7070]/20 ml-3">
+                               <span className="font-bold text-[10px] block text-[#2C5555] mb-0.5">Keffi AI Response ({m.clinical_state || 'Therapeutic'}):</span>
+                               {m.bot}
+                             </div>
+                           </div>
+                         ))
+                       ) : (
+                         <div className="text-center text-slate-500 font-bold py-10">No past conversation history recorded for this patient yet.</div>
+                       )}
+                     </div>
+                   </div>
+
+                   {/* Right Column: CBT Distortions & Biometric Stream */}
+                   <div className="p-5 rounded-2xl glass-card border border-white/20 shadow-sm flex flex-col gap-4">
+                     <div>
+                       <h3 className="text-xs font-black uppercase tracking-wider text-slate-700 mb-2">Detected CBT Distortions</h3>
+                       <div className="space-y-2 max-h-[160px] overflow-y-auto">
+                         {patientDetail?.distortion_logs && patientDetail.distortion_logs.length > 0 ? (
+                           patientDetail.distortion_logs.map((d, i) => (
+                             <div key={i} className="p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[11px]">
+                               <span className="font-black text-amber-800 block">{d.type}</span>
+                               <span className="text-slate-600 block line-clamp-2">"{d.user}"</span>
+                             </div>
+                           ))
+                         ) : (
+                           <div className="text-xs text-slate-400 font-medium">No CBT distortion patterns flagged.</div>
+                         )}
+                       </div>
+                     </div>
+                     <div className="mt-auto pt-4 border-t border-slate-200">
+                       <h3 className="text-xs font-black uppercase tracking-wider text-slate-700 mb-2">Assigned Clinical Specialist</h3>
+                       <div className="p-3 rounded-xl bg-white/50 border border-white/40 font-bold text-xs text-slate-800 flex items-center gap-2">
+                         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                         {patientDetail?.profile?.assigned_doctor || 'Dr. R. Sivanesh'}
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+              </div>
           ) : activeTab === 'overview' ? (
             <div className="h-full flex flex-col overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#3A7070]/20 scrollbar-track-transparent animate-fade-in">
                <h2 className="text-2xl font-poppins font-black text-slate-800 mb-6 flex items-center justify-between">

@@ -16,7 +16,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 import requests
 
-from clinical_db import get_db, get_or_create_patient, calculate_mhq_delta, update_mhq_score, Patient, ChatMessage, MoodCheckIn
+from clinical_db import get_db, get_or_create_patient, calculate_mhq_delta, update_mhq_score, Patient, ChatMessage, MoodCheckIn, BiometricTelemetryLog, CognitiveDistortionLog
 from clinical_ai import analyze_clinical_state, analyze_intent
 from memory_engine import memory_engine
 
@@ -916,6 +916,100 @@ def get_patient_chat_history(patient_id: str, db: Session = Depends(get_db)):
             "patient_id": patient_id,
             "total_messages": len(history),
             "history": history
+        }
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/admin/patients_full")
+def get_admin_patients_full(db: Session = Depends(get_db)):
+    try:
+        patients = db.query(Patient).all()
+        now = datetime.utcnow()
+        result = []
+        for p in patients:
+            days_inactive = 0
+            if p.last_active_at:
+                delta = now - p.last_active_at
+                days_inactive = max(0, delta.days)
+
+            msg_count = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id).count()
+            last_msg = db.query(ChatMessage).filter(ChatMessage.patient_id == p.patient_id).order_by(ChatMessage.timestamp.desc()).first()
+
+            result.append({
+                "patient_id": p.patient_id,
+                "name": p.name or "Anonymous",
+                "phone": p.phone or "N/A",
+                "email": p.email or "N/A",
+                "dob": p.dob or "N/A",
+                "gender": p.gender or "N/A",
+                "place": p.place or "N/A",
+                "mhq_score": round(p.mhq_score, 1),
+                "depression_level": p.depression_level or "Moderate",
+                "assigned_doctor": p.assigned_doctor or "Dr. R. Sivanesh",
+                "attrition_probability": round(p.attrition_probability * 100, 1),
+                "created_at": p.created_at.strftime("%Y-%m-%d %H:%M") if p.created_at else "",
+                "last_active_at": p.last_active_at.strftime("%Y-%m-%d %H:%M") if p.last_active_at else "",
+                "days_inactive": days_inactive,
+                "total_messages": msg_count,
+                "last_message": last_msg.message[:80] + "..." if last_msg and last_msg.message else "No messages yet"
+            })
+
+        return {
+            "total_patients": len(result),
+            "critical_count": sum(1 for p in result if p["depression_level"] in ["Critical", "High"]),
+            "patients": result
+        }
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/admin/patient_detail/{patient_id}")
+def get_admin_patient_detail(patient_id: str, db: Session = Depends(get_db)):
+    try:
+        patient = db.query(Patient).filter(Patient.patient_id == patient_id).first()
+        if not patient:
+            raise HTTPException(status_code=404, detail="Patient not found")
+
+        messages = db.query(ChatMessage).filter(ChatMessage.patient_id == patient_id).order_by(ChatMessage.timestamp.asc()).all()
+        history = [
+            {
+                "id": m.id,
+                "user": m.message,
+                "bot": m.ai_reply,
+                "bert_emotion": m.bert_emotion,
+                "clinical_state": m.clinical_state,
+                "clinical_category": m.clinical_category,
+                "timestamp": m.timestamp.strftime("%Y-%m-%d %H:%M") if m.timestamp else ""
+            }
+            for m in messages
+        ]
+
+        telemetry = db.query(BiometricTelemetryLog).filter(BiometricTelemetryLog.patient_id == patient_id).all()
+        distortions = db.query(CognitiveDistortionLog).filter(CognitiveDistortionLog.patient_id == patient_id).all()
+
+        now = datetime.utcnow()
+        days_inactive = (now - patient.last_active_at).days if patient.last_active_at else 0
+
+        return {
+            "profile": {
+                "patient_id": patient.patient_id,
+                "name": patient.name,
+                "phone": patient.phone,
+                "email": patient.email,
+                "dob": patient.dob,
+                "gender": patient.gender,
+                "place": patient.place,
+                "mhq_score": patient.mhq_score,
+                "depression_level": patient.depression_level,
+                "assigned_doctor": patient.assigned_doctor,
+                "days_inactive": days_inactive,
+                "created_at": patient.created_at.strftime("%Y-%m-%d %H:%M") if patient.created_at else "",
+                "last_active_at": patient.last_active_at.strftime("%Y-%m-%d %H:%M") if patient.last_active_at else ""
+            },
+            "history": history,
+            "biometric_logs": [{"hr": b.heart_rate_bpm, "hrv": b.hrv_ms, "panic": b.panic_flag} for b in telemetry],
+            "distortion_logs": [{"type": d.distortion_type, "user": d.user_thought, "reframed": d.reframed_thought} for d in distortions]
         }
     except Exception as e:
         traceback.print_exc()
