@@ -1,5 +1,4 @@
 import os
-import sys
 import pptx
 from pptx import Presentation
 from pptx.util import Inches, Pt
@@ -8,7 +7,7 @@ from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE
 
 def create_master_20_slide_deck():
-    print("=== BUILDING MASTER 20-SLIDE KEFFI PRESENTATION DECK ===")
+    print("=== BUILDING ENHANCED MASTER 20-SLIDE KEFFI PRESENTATION DECK WITH ALL SPECIFIC PPT DETAILS ===")
 
     prs = Presentation()
     prs.slide_width = Inches(13.333)
@@ -30,9 +29,9 @@ def create_master_20_slide_deck():
             "subtitle": "Multimodal Mental Health Assessment & Continuous Outpatient Care Engine",
             "category": "TNSDC NAAN MUDHALVAN NIRAL THIRUVIZHA 3.0 (ID: NT3.0-4226-035)",
             "bullets": [
-                "Institution: University College of Engineering Panruti (Constituent College of Anna University)",
+                "Institution: University College of Engineering Panruti (Constituent College of Anna University, Chennai)",
                 "Team Name: HACKERS TEAM | Members: MADHUMATHI S (422623104003), BALAJI P (422623104035), MALINI V (422623104048)",
-                "Faculty Project Guide: DR. S. SIVANESH M.Tech., Ph.D. (Head of Department, CSE)",
+                "Faculty Project Guide: DR. S. SIVANESH M.Tech., Ph.D. (Assistant Professor & Head of Department, CSE)",
                 "Live Platform URL: https://keffi-test.vercel.app | Backend API: https://balajikrishnan031-keffi-backend.hf.space"
             ]
         },
@@ -42,62 +41,61 @@ def create_master_20_slide_deck():
             "subtitle": "Bridging the 167-Hour Unmonitored Clinical Care Gap",
             "category": "ABSTRACT & CORE VISION",
             "bullets": [
-                "Clinical Gap: Outpatients receive 1 hour of weekly therapy, leaving 167 hours completely unmonitored during critical distress windows.",
-                "Multimodal Architecture: Combines FINGERS HD Webcam facial affect scanning, ZEBRONICS mic voice prosody, and fine-tuned BERT NLP.",
-                "Triple-Tier Therapeutics: Delivers Empathetic Validation -> Biological Psychoeducation -> Actionable CBT Somatic Skills.",
-                "XAI Transparency: SHAP & LIME token attribution heatmaps enable attending psychiatrists to audit AI decisions.",
-                "Full Infrastructure: Deployed live on HuggingFace Space with Write-Ahead Logging (WAL) database and n8n crisis automation."
+                "The 167-Hour Problem: Outpatients receive 1 hour of weekly therapy, leaving 167 hours unmonitored during acute distress windows.",
+                "Triple-Tier Therapeutics: Integrates Rogerian Validation -> Biological Psychoeducation (Cortisol/Amygdala) -> Actionable CBT Skill.",
+                "Multimodal Sensor Fusion: Combines FINGERS HD Webcam 68-landmark facial affect, ZEBRONICS mic voice prosody, and fine-tuned BERT NLP.",
+                "Clinical Safety & SOS Protocols: WHO Suicide Prevention & Columbia C-SSRS triage protocol for instant automated doctor escalation.",
+                "Production Deployment: Live FastAPI backend hosted on HuggingFace Space with Write-Ahead Logging (WAL) database and n8n webhooks."
             ]
         },
-        # Slide 3: Problem Statement
+        # Slide 3: Clinical Problem Statement — The 167-Hour Care Gap
         {
-            "title": "CLINICAL PROBLEM STATEMENT",
-            "subtitle": "The 167-Hour Care Gap & Limitations of Current Solutions",
+            "title": "CLINICAL PROBLEM STATEMENT & EXISTING SYSTEM LIMITATIONS",
+            "subtitle": "Critical Vulnerability in Outpatient Psychiatric Healthcare",
             "category": "PROBLEM DEFINITION",
             "bullets": [
-                "167-Hour Vulnerability: Traditional psychiatric care lacks real-time monitoring between weekly therapy sessions.",
-                "Shallow Rule-Based Chatbots: Existing bots (Woebot, Wysa) rely on rigid decision trees with zero biometric or facial emotion awareness.",
-                "Text-Only Deception: Patients frequently type 'I am fine' while experiencing acute physiological panic or depressive facial slumps.",
-                "Black-Box Risk: Commercial AI models lack explainability, preventing clinicians from trusting automated risk assessments.",
-                "Lack of Automated Crisis Escalation: Delayed intervention during acute distress increases crisis escalation risks."
+                "1. Rule-Based Chatbots (Woebot, Wysa): Keyword matching with pre-written static scripts. Zero clinical memory or doctor involvement.",
+                "2. LLM Wrappers (ChatGPT Bots): Raw prompts sent to OpenAI without privacy filtering, high hallucination risk, zero PHQ/MHQ scoring.",
+                "3. Traditional Therapy Apps (BetterHelp): Costly ($60-$100/hr), weeks of waiting, zero 24/7 real-time monitoring during acute crises.",
+                "4. Text-Only Deception: Patients frequently type 'I am fine' while experiencing acute physiological panic or depressive facial slumps.",
+                "5. Patient Attrition & Loss of Follow-up: High dropout rates due to lack of continuous engagement between weekly clinical visits."
             ]
         },
-        # Slide 4: The Keffi AI Solution Architecture
+        # Slide 4: Scientific Research & Medical Validation
         {
-            "title": "THE KEFFI AI SOLUTION ARCHITECTURE",
-            "subtitle": "Multimodal Affective Computing & 3-Tier Clinical Therapeutics",
-            "category": "PROPOSED SOLUTION",
+            "title": "RESEARCH & SCIENTIFIC MEDICAL VALIDATION",
+            "subtitle": "Peer-Reviewed Clinical Evidence Supporting Keffi AI",
+            "category": "SCIENTIFIC EVIDENCE",
             "bullets": [
-                "3-Tier Rogerian & CBT Cascade: 1. Validate Emotion -> 2. Explain Brain Physiology (Amygdala/Cortisol) -> 3. Provide Somatic CBT Skill.",
-                "Dual-Model AI Engine: Fine-tuned BERT 96-emotion classifier coupled with Llama-3 & GPT-4o clinical inference.",
-                "Privacy-Preserving Gateway: End-to-end encrypted API infrastructure hosted on HuggingFace Space with zero third-party data tracking.",
-                "Empathetic Multimodal Sensing: Integrates computer vision facial tracking, acoustic voice prosody, and semantic text intent.",
-                "24/7 Outpatient Monitoring: Bridges the 167-hour gap with continuous longitudinal MHQ score tracking."
+                "CBT Gold Standard (Hofmann et al., 2012): Meta-analysis proving 50-75% symptom reduction in depression & anxiety via CBT reframing.",
+                "Therapeutic Alliance (Norcross & Wampold, 2011): Person-centered empathy accounts for 30% of treatment success independent of drugs.",
+                "ACT & Mindfulness (Hayes et al., 2006): Grounding & 4-7-8 somatic breathing reduce panic attacks by 45-50%.",
+                "The Stanford Woebot Study (Fitzpatrick et al., JMIR 2017): Randomized Controlled Trial proving 22% depression reduction in 2 weeks.",
+                "Columbia C-SSRS Crisis Triage (Posner et al., 2011): Validated suicide triage protocol backing Keffi's automated emergency SOS."
             ]
         },
-        # Slide 5: Literature Survey & Scientific Validation
+        # Slide 5: Literature Survey & Benchmark Controls
         {
-            "title": "LITERATURE SURVEY & BENCHMARK CONTROLS",
-            "subtitle": "Comparative Evaluation Against State-of-the-Art Mental Health Platforms",
-            "category": "SCIENTIFIC BENCHMARKING",
+            "title": "LITERATURE SURVEY & SYSTEM COMPARISON",
+            "subtitle": "Comparative Matrix Against Existing Mental Health Technologies",
+            "category": "LITERATURE COMPARISON",
             "bullets": [
-                "Woebot (2017): CBT-based decision tree chatbot | Limitation: No voice prosody, facial tracking, or clinician XAI heatmaps.",
-                "Wysa (2020): Conversational agent with guided meditation | Limitation: Rule-bound responses with no automated doctor booking.",
-                "Youper (2021): Mind-monitoring AI app | Limitation: Proprietary black-box model without transparent SHAP/LIME attribution.",
+                "Woebot (2017): Automated CBT chatbot | Limitation: Rigid decision tree scripts with zero voice/facial affect sensing.",
+                "Wysa (2020): Conversational agent with guided meditation | Limitation: No automated psychiatrist booking or XAI heatmaps.",
+                "Youper (2021): Mind-monitoring AI app | Limitation: Proprietary black-box LLM without transparent SHAP/LIME attribution.",
                 "Keffi AI (2026 Innovation): Industry-first multimodal platform uniting HD facial Reticle vision, Librosa voice prosody, SHAP XAI, and n8n crisis automation."
             ]
         },
         # Slide 6: 96-State Clinical Emotion Model
         {
             "title": "96-STATE CLINICAL EMOTION MODEL",
-            "subtitle": "Granular Transformer-Based Affective State Taxonomy",
+            "subtitle": "Fine-Tuned Transformer Affective State Taxonomy",
             "category": "NLP EMOTION TAXONOMY",
             "bullets": [
-                "Granular Classification: Classifies patient expressions across 96 fine-grained emotional states.",
-                "24 Distress States: Acute Anxiety, Panic Attack, Dissociation, Helplessness, Depressive Slump, Grief, Agitation.",
-                "18 Alleviation & Recovery States: Grounded Calm, Relief, Self-Compassion, Hope, Somatic Stability, Re-engagement.",
-                "30 Transitional & Somatic States: Hesitation, Hypervigilance, Overwhelm, Fatigue, Restlessness, Emotional Confusion.",
-                "High Clinical Efficacy: Evaluated with 94.8% F1-score accuracy against benchmark clinical transcripts."
+                "41 Depression Types: MDD, Chronic PDD, Bipolar Swings, Postpartum, SAD, Smiling Depression, TRD, Melancholic, Agitated.",
+                "18 Alleviation & Recovery States: Full Remission, Sustained Recovery, Partial Response, Placebo Effect, Somatic Stability.",
+                "20 Attrition Types & 17 Loss of Follow-up Categories: Tracking voluntary dropout, stigma, non-compliance, and admin loss.",
+                "High Classification Accuracy: Evaluated with 94.8% F1-score accuracy against benchmark clinical transcripts."
             ]
         },
         # Slide 7: Hybrid PHQ-9 & MHQ Scoring System
@@ -271,18 +269,18 @@ def create_master_20_slide_deck():
         }
     ]
 
-    blank_layout = prs.slide_layouts[6] # Blank slide layout
+    blank_layout = prs.slide_layouts[6]
 
     for idx, slide_info in enumerate(slides_data, 1):
         slide = prs.slides.add_slide(blank_layout)
 
-        # 1. Header Banner Box (Executive Dark Teal)
+        # Header Banner Box (Executive Dark Teal)
         header_shape = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(13.333), Inches(1.3))
         header_shape.fill.solid()
         header_shape.fill.fore_color.rgb = DARK_TEAL
         header_shape.line.fill.background()
 
-        # Header Category Pill
+        # Category Pill
         cat_box = slide.shapes.add_textbox(Inches(0.6), Inches(0.15), Inches(12), Inches(0.3))
         tf_cat = cat_box.text_frame
         tf_cat.word_wrap = True
@@ -292,17 +290,17 @@ def create_master_20_slide_deck():
         p_cat.font.bold = True
         p_cat.font.color.rgb = SAGE_GREEN
 
-        # Header Main Title
+        # Title
         title_box = slide.shapes.add_textbox(Inches(0.6), Inches(0.4), Inches(12), Inches(0.5))
         tf_title = title_box.text_frame
         tf_title.word_wrap = True
         p_title = tf_title.paragraphs[0]
         p_title.text = f"SLIDE {idx:02d}: {slide_info['title']}"
-        p_title.font.size = Pt(22)
+        p_title.font.size = Pt(21)
         p_title.font.bold = True
         p_title.font.color.rgb = WHITE
 
-        # Header Subtitle
+        # Subtitle
         sub_box = slide.shapes.add_textbox(Inches(0.6), Inches(0.9), Inches(12), Inches(0.35))
         tf_sub = sub_box.text_frame
         tf_sub.word_wrap = True
@@ -312,14 +310,14 @@ def create_master_20_slide_deck():
         p_sub.font.italic = True
         p_sub.font.color.rgb = GOLD_ACCENT
 
-        # 2. Main Content Card Area (Light Clean Background)
+        # Content Card Area
         content_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.6), Inches(1.5), Inches(12.133), Inches(5.4))
         content_card.fill.solid()
         content_card.fill.fore_color.rgb = LIGHT_BG
         content_card.line.color.rgb = SAGE_GREEN
         content_card.line.width = Pt(1.5)
 
-        # Bullet Text Content Inside Card
+        # Bullet Content Inside Card
         text_box = slide.shapes.add_textbox(Inches(0.9), Inches(1.7), Inches(11.533), Inches(5.0))
         tf_body = text_box.text_frame
         tf_body.word_wrap = True
@@ -327,12 +325,12 @@ def create_master_20_slide_deck():
         for b_idx, bullet_text in enumerate(slide_info["bullets"]):
             p = tf_body.add_paragraph() if b_idx > 0 else tf_body.paragraphs[0]
             p.text = f"•  {bullet_text}"
-            p.font.size = Pt(16)
+            p.font.size = Pt(15)
             p.font.color.rgb = DARK_CHARCOAL
-            p.space_after = Pt(14)
-            p.space_before = Pt(4)
+            p.space_after = Pt(12)
+            p.space_before = Pt(3)
 
-        # 3. Footer Bar
+        # Footer Bar
         footer_box = slide.shapes.add_textbox(Inches(0.6), Inches(7.0), Inches(12.133), Inches(0.4))
         tf_foot = footer_box.text_frame
         p_foot = tf_foot.paragraphs[0]
@@ -341,14 +339,13 @@ def create_master_20_slide_deck():
         p_foot.font.color.rgb = MEDIUM_TEAL
         p_foot.alignment = PP_ALIGN.RIGHT
 
-    # Save Master 20-Slide PPTX to both Presentations_and_Extracted_Media & Final_Submission_Pack
     out_path_1 = r"e:\Keffi Ai\Presentations_and_Extracted_Media\KEFFI_MASTER_20_SLIDE_PRESENTATION.pptx"
     out_path_2 = r"e:\Keffi Ai\Final_Submission_Pack\KEFFI_MASTER_20_SLIDE_PRESENTATION.pptx"
 
     prs.save(out_path_1)
     prs.save(out_path_2)
 
-    print(f"[SUCCESS] Created Master 20-Slide PPTX at:\n  1. {out_path_1}\n  2. {out_path_2}")
+    print(f"[SUCCESS] Re-built Master 20-Slide PPTX with deep review details at:\n  1. {out_path_1}\n  2. {out_path_2}")
 
 if __name__ == "__main__":
     create_master_20_slide_deck()
