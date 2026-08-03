@@ -1655,14 +1655,16 @@ const ChatArea = ({
         response = await axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/chat', {
           message: message,
           patient_id: userData?.patient_id || "P-102",
-          emotional_context: payloadContext
+          emotional_context: payloadContext,
+          visual_affect_vector: { emotion: detectedFacialEmotion, confidence: facialConfidence, tension: 'High' }
         }, { timeout: 25000 });
       } catch (e) {
         console.warn("[API RETRY] Local port 8000 failed or timed out. Trying cloud fallback...", e);
         response = await axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/chat', {
           message: message,
           patient_id: userData?.patient_id || "P-102",
-          emotional_context: payloadContext
+          emotional_context: payloadContext,
+          visual_affect_vector: { emotion: detectedFacialEmotion, confidence: facialConfidence, tension: 'High' }
         }, { timeout: 25000 });
       }
       
