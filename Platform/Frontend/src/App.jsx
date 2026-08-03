@@ -1495,7 +1495,7 @@ const ChatArea = ({
 
   const [isTyping, setIsTyping] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
-  const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
   const [showSOS, setShowSOS] = useState(false);
   const [showMediaPlayer, setShowMediaPlayer] = useState(false);
   const [showAppointmentPopup, setShowAppointmentPopup] = useState(false);
@@ -1612,6 +1612,22 @@ const ChatArea = ({
     }
   }, [heartRate, hasTriggeredPanic, isTyping]);
 
+  
+  const playAudioVoice = (textToSpeak) => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const cleanText = textToSpeak.replace(/[#*`_]/g, '');
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      const voices = window.speechSynthesis.getVoices();
+      const voice = voices.find(v => v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Female') || v.name.includes('English'));
+      if (voice) utterance.voice = voice;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
   const handleSend = async (forcedMessage = null, isPanicTrigger = false) => {
     const message = forcedMessage || input;
     if (!message.trim()) return;
@@ -1690,7 +1706,7 @@ const ChatArea = ({
       }
 
       try {
-        if ('speechSynthesis' in window && isVoiceEnabled) {
+        if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
           const utterance = new SpeechSynthesisUtterance(botResponse.replace(/[#*]/g, ''));
           utterance.lang = 'en-US';
