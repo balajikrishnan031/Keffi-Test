@@ -1484,6 +1484,15 @@ const ChatArea = ({
   }, [messages, currentSessionId]);
 
   const [input, setInput] = useState('');
+
+  const handleStartNewChat = () => {
+    setMessages([]);
+    setInput('');
+    setMoodSet(false);
+    localStorage.removeItem('keffi_active_messages');
+    alert("New chat session started!");
+  };
+
   const [isTyping, setIsTyping] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
