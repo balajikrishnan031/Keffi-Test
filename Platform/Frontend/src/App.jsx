@@ -463,7 +463,7 @@ const LandingPage = ({ setView }) => {
                   className={`p-8 rounded-[2.5rem] border border-white/45 flex flex-col md:flex-row gap-6 justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${stat.glow}`}
                 >
                   <div className="flex flex-col items-center md:items-start shrink-0 md:w-32">
-                    <div className={`w-28 h-28 rounded-[2rem] ${stat.bgGlow} flex flex-col items-center justify-center shadow-inner mb-4`}>
+                    <div className={`w-80 h-80 rounded-[2rem] ${stat.bgGlow} flex flex-col items-center justify-center shadow-inner mb-4`}>
                       <span className={`text-3xl font-black ${stat.valColor} font-space`}>{stat.val}</span>
                     </div>
                     <span className={`text-[10px] font-black font-space uppercase tracking-widest px-3 py-1 rounded-full ${stat.badgeColor} border`}>{stat.unit}</span>
@@ -1697,6 +1697,21 @@ const ChatArea = ({
           if (preferredVoice) utterance.voice = preferredVoice;
           utterance.pitch = 0.95;
           utterance.rate = 0.9;
+          
+          utterance.onend = () => {
+            // Continuous Back-and-Forth Loop: Auto-restart mic to listen for patient's next question!
+            if (recognitionRef.current && isVoiceEnabled) {
+              try {
+                setTimeout(() => {
+                  recognitionRef.current.start();
+                  setIsRecording(true);
+                }, 400);
+              } catch (e) {
+                console.log("Mic auto-restart:", e);
+              }
+            }
+          };
+
           window.speechSynthesis.speak(utterance);
         }
       } catch (speechErr) {
@@ -2024,7 +2039,22 @@ const ChatArea = ({
                                       window.speechSynthesis.cancel();
                                       const utterance = new SpeechSynthesisUtterance(mainText.replace(/[#*]/g, ''));
                                       utterance.lang = 'en-US';
-                                      window.speechSynthesis.speak(utterance);
+                                      
+          utterance.onend = () => {
+            // Continuous Back-and-Forth Loop: Auto-restart mic to listen for patient's next question!
+            if (recognitionRef.current && isVoiceEnabled) {
+              try {
+                setTimeout(() => {
+                  recognitionRef.current.start();
+                  setIsRecording(true);
+                }, 400);
+              } catch (e) {
+                console.log("Mic auto-restart:", e);
+              }
+            }
+          };
+
+          window.speechSynthesis.speak(utterance);
                                     }
                                   }}
                                   className="gemini-action-btn-light"
