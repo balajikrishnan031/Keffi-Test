@@ -1031,7 +1031,7 @@ const PatientLogin = ({ setView, setUserData }) => {
 
       // Instantly register and sync full user profile to Backend Database
       try {
-        axios.post('http://127.0.0.1:8000/api/register', {
+        axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/register', {
           patient_id: patientId,
           name: formData.name,
           phone: formData.phone,
@@ -1513,7 +1513,7 @@ const ChatArea = ({
 
   useEffect(() => {
     const pid = userData?.patient_id || "P-102";
-    axios.get(`http://127.0.0.1:8000/api/history/${pid}`)
+    axios.get(`https://balajikrishnan031-keffi-backend.hf.space/api/history/${pid}`)
       .then(res => {
         if (res.data && res.data.history && res.data.history.length > 0) {
           const pastMsgs = [];
@@ -1643,7 +1643,7 @@ const ChatArea = ({
       
       let response;
       try {
-        response = await axios.post('http://127.0.0.1:8000/api/chat', {
+        response = await axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/chat', {
           message: message,
           patient_id: userData?.patient_id || "P-102",
           emotional_context: payloadContext
@@ -2818,7 +2818,7 @@ const AdminDashboard = ({ setView }) => {
     if (selectedPatient) {
       const pid = selectedPatient.patient_id || selectedPatient.id;
       setIsLoadingDetail(true);
-      axios.get(`http://127.0.0.1:8000/api/admin/patient_detail/${pid}`)
+      axios.get(`https://balajikrishnan031-keffi-backend.hf.space/api/admin/patient_detail/${pid}`)
         .then(res => {
           setPatientDetail(res.data);
           setIsLoadingDetail(false);
@@ -2845,9 +2845,9 @@ const AdminDashboard = ({ setView }) => {
     const fetchData = async () => {
       try {
         const [resPat, resInact, resAnalyt] = await Promise.all([
-          axios.get('http://127.0.0.1:8000/api/admin/patients_full').catch(() => ({ data: { patients: [] } })),
-          axios.get('http://127.0.0.1:8000/api/admin/inactive-patients').catch(() => ({ data: { patients: [] } })),
-          axios.get('http://127.0.0.1:8000/api/admin/analytics').catch(() => ({ data: null }))
+          axios.get('https://balajikrishnan031-keffi-backend.hf.space/api/admin/patients_full').catch(() => ({ data: { patients: [] } })),
+          axios.get('https://balajikrishnan031-keffi-backend.hf.space/api/admin/inactive-patients').catch(() => ({ data: { patients: [] } })),
+          axios.get('https://balajikrishnan031-keffi-backend.hf.space/api/admin/analytics').catch(() => ({ data: null }))
         ]);
         if (resPat.data && resPat.data.patients) setPatients(resPat.data.patients);
         if (resInact.data && resInact.data.patients) setInactivePatients(resInact.data.patients);
@@ -2907,12 +2907,12 @@ const AdminDashboard = ({ setView }) => {
   }, []);
 
   const adminTabs = [
-    { id: 'overview', label: 'System Overview', icon: Activity, fontClass: 'font-greatvibes text-[22px] leading-none py-1.5 font-normal tracking-wide', activeBg: 'bg-teal-700 text-white shadow-lg shadow-teal-500/25 scale-102', inactiveColor: 'text-teal-700 hover:text-teal-900 hover:bg-teal-500/5' },
-    { id: 'roster', label: 'Patient Roster', icon: Users, fontClass: 'font-playball text-[17px] font-bold tracking-wide', activeBg: 'bg-blue-700 text-white shadow-lg shadow-blue-500/25 scale-102', inactiveColor: 'text-blue-700 hover:text-blue-900 hover:bg-blue-500/5' },
-    { id: 'inactive', label: 'Inactive Patients', icon: Frown, fontClass: 'font-alexbrush text-[24px] leading-none py-1 font-normal tracking-wide', activeBg: 'bg-rose-600 text-white shadow-lg shadow-rose-500/25 scale-102', inactiveColor: 'text-rose-700 hover:text-rose-900 hover:bg-rose-500/5' },
-    { id: 'analytics', label: 'NLP Analytics', icon: PieChart, fontClass: 'font-pacifico text-[14px] leading-none font-normal', activeBg: 'bg-purple-700 text-white shadow-lg shadow-purple-500/25 scale-102', inactiveColor: 'text-purple-700 hover:text-purple-900 hover:bg-purple-500/5' },
-    { id: 'therapists', label: 'Therapists Allocation', icon: Shield, fontClass: 'font-sacramento text-[25px] leading-none font-bold tracking-wide', activeBg: 'bg-amber-700 text-white shadow-lg shadow-amber-500/25 scale-102', inactiveColor: 'text-amber-800 hover:text-amber-900 hover:bg-amber-500/5' },
-    { id: 'settings', label: 'System Settings', icon: Settings, fontClass: 'font-allura text-[25px] leading-none font-normal tracking-wide', activeBg: 'bg-emerald-700 text-white shadow-lg shadow-emerald-500/25 scale-102', inactiveColor: 'text-emerald-700 hover:text-emerald-900 hover:bg-emerald-500/5' },
+    { id: 'overview', label: 'System Overview', icon: Activity, fontClass: 'font-sans font-bold text-sm tracking-wide', activeBg: 'bg-[#2C5555] text-white shadow-md scale-102', inactiveColor: 'text-[#2C5555] hover:bg-[#2C5555]/10' },
+    { id: 'roster', label: 'Patient Roster', icon: Users, fontClass: 'font-sans font-bold text-sm tracking-wide', activeBg: 'bg-[#2C5555] text-white shadow-md scale-102', inactiveColor: 'text-[#2C5555] hover:bg-[#2C5555]/10' },
+    { id: 'inactive', label: 'Inactive Patients', icon: Frown, fontClass: 'font-sans font-bold text-sm tracking-wide', activeBg: 'bg-[#2C5555] text-white shadow-md scale-102', inactiveColor: 'text-[#2C5555] hover:bg-[#2C5555]/10' },
+    { id: 'analytics', label: 'NLP Analytics', icon: PieChart, fontClass: 'font-sans font-bold text-sm tracking-wide', activeBg: 'bg-[#2C5555] text-white shadow-md scale-102', inactiveColor: 'text-[#2C5555] hover:bg-[#2C5555]/10' },
+    { id: 'therapists', label: 'Doctor Appointments', icon: Shield, fontClass: 'font-sans font-bold text-sm tracking-wide', activeBg: 'bg-[#2C5555] text-white shadow-md scale-102', inactiveColor: 'text-[#2C5555] hover:bg-[#2C5555]/10' },
+    { id: 'settings', label: 'System Settings', icon: Settings, fontClass: 'font-sans font-bold text-sm tracking-wide', activeBg: 'bg-[#2C5555] text-white shadow-md scale-102', inactiveColor: 'text-[#2C5555] hover:bg-[#2C5555]/10' },
   ];
 
   const handleExportAbstract = async (patientId) => {
