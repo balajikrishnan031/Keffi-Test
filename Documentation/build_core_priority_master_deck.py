@@ -6,7 +6,7 @@ from pptx.enum.text import PP_ALIGN
 from pptx.dml.color import RGBColor
 
 def build_core_16_slide_deck():
-    print("=== BUILDING KEFFI CORE PRIORITY 16-SLIDE MASTER DECK (PURE WHITE TIMES NEW ROMAN) ===")
+    print("=== BUILDING KEFFI CORE PRIORITY 16-SLIDE MASTER DECK (DEDICATED BERT SLIDE INCLUDED) ===")
 
     prs = Presentation()
     prs.slide_width = Inches(13.333)
@@ -102,21 +102,21 @@ def build_core_16_slide_deck():
                 ("7. Crisis Escalation Protocol: Triggers emergency SOS overlays & n8n WhatsApp/SMS webhooks (<40 MHQ).", False)
             ]
         },
-        # Slide 6: DEDICATED BERT TRANSFORMER NLP ENGINE
+        # Slide 6: STANDALONE DEDICATED BERT TRANSFORMER SLIDE
         {
             "title": "DEDICATED BERT TRANSFORMER NLP ENGINE (96-STATE TAXONOMY)",
             "img": None,
             "paragraphs": [
                 ("Fine-Tuned BERT Transformer Architecture:", True),
-                ("Custom deep learning transformer model fine-tuned on clinical transcripts to classify patient text across a comprehensive 96-state clinical emotion taxonomy.", False),
+                ("Custom bidirectional deep learning transformer model fine-tuned on clinical psychiatric transcripts to overcome superficial sentiment analysis and classify patient text into a 96-state clinical emotion taxonomy.", False),
                 ("", False),
-                ("96-State Taxonomy Breakdown:", True),
-                ("• 41 Depression Sub-Types (MDD, PDD, Bipolar, Smiling Depression, TRD, Melancholic, Agitated)", False),
-                ("• 24 Acute Distress & Anxiety States (Panic, Catastrophizing, Somatic Tremors, Agitation)", False),
-                ("• 18 Alleviation & Recovery States (Remission, Recovery, Somatic Stability, Re-engagement)", False),
-                ("• 13 Transitional Affective States (Ambivalence, Hesitation, Cognitive Reframing)", False),
+                ("96-State Affective Taxonomy Breakdown:", True),
+                ("• 41 Depression Sub-Types: Major Depressive Disorder (MDD), Persistent Depressive Disorder (PDD), Bipolar, SAD, Smiling Depression, Treatment-Resistant Depression (TRD), Melancholic, Agitated.", False),
+                ("• 24 Acute Distress & Anxiety States: Panic, Catastrophizing, Somatic Tremors, Agitation, Generalized Anxiety.", False),
+                ("• 18 Alleviation & Recovery States: Full Remission, Sustained Recovery, Partial Response, Somatic Stability.", False),
+                ("• 13 Transitional Affective States: Ambivalence, Hesitation, Cognitive Reframing.", False),
                 ("", False),
-                ("Diagnostic Precision: Achieved 94.8% F1-score accuracy evaluated against benchmark clinical psychiatric transcripts.", True)
+                ("Diagnostic Efficacy & Precision: Achieved 94.8% F1-score accuracy evaluated against benchmark clinical transcripts, feeding fine-grained emotion vectors directly to attending psychiatrists in the Admin Hub.", True)
             ]
         },
         # Slide 7: DEDICATED RAG VECTOR MEMORY ENGINE
@@ -149,7 +149,7 @@ def build_core_16_slide_deck():
                 ("Improves clinical emotion classification accuracy by 34% compared to single-modality text models.", False)
             ]
         },
-        # Slide 9: COMBINED MULTIMODAL HARDWARE & LIVE VIDEO CALL ENGINE (Slides 13, 14, 15 Merged!)
+        # Slide 9: COMBINED MULTIMODAL HARDWARE & LIVE VIDEO CALL ENGINE
         {
             "title": "MULTIMODAL HARDWARE SENSING & LIVE VIDEO CALL ENGINE",
             "img": None,
@@ -333,7 +333,7 @@ def build_core_16_slide_deck():
     prs.save(out_pptx_1)
     prs.save(out_pptx_2)
 
-    print(f"[SUCCESS] Built Keffi Core Priority 16-Slide Deck at:\n  1. {out_pptx_1}\n  2. {out_pptx_2}")
+    print(f"[SUCCESS] Built Keffi Core Priority 16-Slide Deck (with Standalone BERT Slide) at:\n  1. {out_pptx_1}\n  2. {out_pptx_2}")
 
 if __name__ == "__main__":
     build_core_16_slide_deck()
