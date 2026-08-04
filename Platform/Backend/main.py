@@ -313,7 +313,7 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
                 "Otherwise, present ONE highly unique, immersive riddle or puzzle. Do NOT explain or reveal the solution in this message. Keep it a mystery so they can think about it. "
                 "CRITICAL RULES: DO NOT therapize the user. For the option, output EXACTLY: |||OPTION||| Show me the solution 🗝️"
             ),
-            "Casual": "Give a warm, short, friendly greeting. Ask how their day is going. Keep it strictly under 3 sentences. DO NOT therapize.",
+            "Casual": "Give a warm, deeply comforting multi-paragraph human greeting. Validate that you are here to listen with deep empathy, ask how their day is going, and invite them to share whatever is on their mind or heart.",
             "Factual": "Provide a direct, factual answer clearly and warmly. STRICTLY DO NOT therapize the user. DO NOT validate their feelings. DO NOT mention their emotional context. Just answer the question.",
             "Dynamic_Counselor": (
                 "Rule 1: Deep Validation: Empathize deeply with the user's specific mental health struggle, feeling their pain like a human friend.\n"
