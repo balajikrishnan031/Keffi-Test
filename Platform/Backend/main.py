@@ -177,7 +177,7 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             }
 
         greetings = ["hi", "hii", "hello", "hey", "good morning", "good evening", "hi keffi", "hello keffi"]
-        is_greeting = user_text in greetings or len(user_text) < 4
+        is_greeting = user_text in greetings
 
         if is_greeting:
             clinical = {}
@@ -223,8 +223,6 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
                 new_mhq = mhq_before
                 
             requires_appointment = is_sos or (user_intent == "PERSONAL_DISTRESS" and (clinical_severity >= 8 or new_mhq < 20))
-        # NOTE: is_sos must ONLY come from the current message's router keywords.
-        # MHQ score must NOT override is_sos to avoid false positives on non-crisis messages.
 
         # Memory recall
         past_context = memory_engine.recall_past_memory(req.patient_id, req.message)
@@ -233,10 +231,10 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         dynamic_rules = {
             # --- CLINICAL MODES ---
             "CBT": (
-                "Rule 1: Deep Validation: Empathize deeply with the user's exact problem, feeling their pain like a human friend.\n"
-                "Rule 2: Psychological Explanation: Give a brief, literal psychological explanation of why their mind/body is reacting this way (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
-                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, tailored cognitive action. Start with a bullet point ( - ) focusing on a real-world grounding technique. No visualization exercises.\n"
-                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
+                "Rule 1: Deep Validation: Empathize deeply with the user's exact problem across 1-2 rich paragraphs, feeling their pain like a human friend.\n"
+                "Rule 2: Biological & Psychological Explanation: Give a detailed biological/neurological explanation of why their brain's Amygdala and Cortisol levels are reacting this way.\n"
+                "Rule 3: Deep Solution: Provide a practical, step-by-step cognitive or somatic grounding action starting with a bullet point ( - ).\n"
+                "Rule 4: Comprehensive Depth: NEVER give brief 1-line or 2-line answers. Provide a rich 3 to 4 paragraph clinical explanation."
             ),
             "Double_Standard_CBT": (
                 "Rule 1: Deep Validation: Empathize deeply with the user's exact problem, feeling their pain like a human friend.\n"
