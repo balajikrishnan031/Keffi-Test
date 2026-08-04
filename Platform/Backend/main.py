@@ -97,6 +97,14 @@ class ChatRequest(BaseModel):
     message: str
     patient_id: Optional[str] = "P-102"
     emotional_context: Optional[str] = None
+    session_id: Optional[str] = None
+    user_id: Optional[str] = None
+    visual_affect: Optional[dict] = None
+    voice_prosody: Optional[dict] = None
+    visual_affect_vector: Optional[dict] = None
+
+    class Config:
+        extra = "allow"
 
 class RegisterRequest(BaseModel):
     patient_id: Optional[str] = None

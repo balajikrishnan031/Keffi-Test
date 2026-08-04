@@ -1673,15 +1673,28 @@ const ChatArea = ({
           patient_id: userData?.patient_id || "P-102",
           emotional_context: payloadContext,
           visual_affect_vector: { emotion: detectedFacialEmotion, confidence: facialConfidence, tension: 'High' }
-        }, { timeout: 25000 });
+        }, { timeout: 45000 });
       } catch (e) {
-        console.warn("[API RETRY] Local port 8000 failed or timed out. Trying cloud fallback...", e);
-        response = await axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/chat', {
-          message: message,
-          patient_id: userData?.patient_id || "P-102",
-          emotional_context: payloadContext,
-          visual_affect_vector: { emotion: detectedFacialEmotion, confidence: facialConfidence, tension: 'High' }
-        }, { timeout: 25000 });
+        console.warn("[API RETRY] Attempting second request to cloud backend...", e);
+        try {
+          response = await axios.post('https://balajikrishnan031-keffi-backend.hf.space/api/chat', {
+            message: message,
+            patient_id: userData?.patient_id || "P-102",
+            emotional_context: payloadContext,
+            visual_affect_vector: { emotion: detectedFacialEmotion, confidence: facialConfidence, tension: 'High' }
+          }, { timeout: 45000 });
+        } catch (e2) {
+          console.warn("[FALLBACK CBT RESPONSE ENGINE ACTIVE]", e2);
+          // Empathetic 3-Tier CBT Fallback Engine so user NEVER sees an error!
+          let fallbackText = "I can hear how heavy things feel for you right now, and I want you to know that your feelings are completely valid. When life feels hard or overwhelming, our nervous system can feel exhausted. Let's take a slow breath together. Would you like to try a gentle 4-7-8 somatic breathing exercise or listen to calming music?";
+          const lowerMsg = message.toLowerCase();
+          if (lowerMsg.includes('hard') || lowerMsg.includes('sad') || lowerMsg.includes('hopeless') || lowerMsg.includes('pain')) {
+            fallbackText = "I'm listening, and I hear how much pain you're carrying right now. It is completely okay to feel overwhelmed when life gets hard. You don't have to carry this alone. Let's take it one moment at a time. I'm right here with you.";
+          } else if (lowerMsg.includes('anxious') || lowerMsg.includes('panic') || lowerMsg.includes('heart') || lowerMsg.includes('scared')) {
+            fallbackText = "I can sense the anxiety rising right now. Your body's fight-or-flight response is sounding an alarm, but you are safe in this space. Place a hand over your chest, feel your feet on the floor, and inhale slowly for 4 seconds, hold for 7, and exhale for 8.";
+          }
+          response = { data: { reply: fallbackText, options: ["Try 4-7-8 Breathing", "Listen to Music Sanctuary", "Book Doctor Session"] } };
+        }
       }
       
       let botResponse = response.data.reply || "I'm here for you.";
