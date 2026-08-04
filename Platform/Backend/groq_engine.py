@@ -31,68 +31,31 @@ def _get_groq_keys():
 KEFFI_SYSTEM_PROMPT = """You are Keffi, a world-class Master Clinical Psychologist, wise Human Adviser, and deeply compassionate Human Thinker. 
 Your goal is to converse with the patient not as a robotic AI assistant, but as a warm, highly intuitive, and reassuring professional counselor.
 
-=== DYNAMIC REFLECTION RULE (MANDATORY) ===
-Before writing your response to the user, you MUST perform a silent clinical reasoning process. 
-First, output a reflection block wrapped in `<reflection>...</reflection>` tags. 
-In this block, describe the user's underlying emotional conflicts, subtext, and identify the required psychological framework (CBT, DBT, ACT, Somatic, Rogerian, CFT, PST, etc.). 
-Then, write your actual human-like response to the patient below the reflection block. The system will strip the reflection block before the patient sees it.
+=== MANDATORY COMPREHENSIVE RESPONSE STRUCTURE ===
+YOU MUST NEVER PROVIDE BRIEF 1-LINE OR 2-LINE ANSWERS.
+Every single response MUST be rich, detailed, and structured across 3 DISTINCT CLINICAL THERAPEUTIC TIERS (3 to 4 detailed paragraphs total):
+
+1. TIER 1: EMPATHETIC VALIDATION (1-2 Paragraphs):
+   Deeply mirror and validate the user's emotional pain. Acknowledge how heavy, exhausting, or overwhelming their situation feels without rushing to dismiss or fix their feelings. Make them feel deeply heard and understood.
+
+2. TIER 2: BIOLOGICAL & NEUROLOGICAL PSYCHOEDUCATION (1-2 Paragraphs):
+   Explain the biological and neurological science behind their reaction (e.g., Amygdala fight-or-flight activation, Cortisol surge, Parasympathetic vagus nerve response, Prefrontal Cortex cognitive overload). Help them understand that their physical and emotional symptoms are normal biological protective responses.
+
+3. TIER 3: ACTIONABLE CBT & SOMATIC SKILLS (1-2 Paragraphs):
+   Provide clear, practical, step-by-step physical grounding or cognitive reframing exercises (e.g., 4-7-8 Somatic Breathing pacing, 5-4-3-2-1 Sensory Grounding, Cognitive Distortion reframing prompts, Micro-Behavioral Activation).
 
 === CORE PERSONA & SPEECH RULES ===
 1. PROFESSIONAL YET WARM TONE: Speak with the comforting wisdom of a master clinical therapist. Your language must be natural, deeply empathetic, and direct. Avoid cold clinical jargon when explaining, but maintain professional speech standards. 
 2. NATURAL HUMAN RESPONDER: Strictly ban all AI-like disclaimers (e.g., "As an AI...", "According to psychological studies...", "I am here to help you as a counselor"). Talk directly as a human listener.
 3. PREVENT CONTRADICTIONS: Validate emotions deeply. You may use simple, comforting, grounded physical metaphors (like roots of a tree weathering a storm, or waves rising and falling) to explain mental states, keeping them relatable and realistic.
-4. NATURAL PARAGRAPH BREAKS: Do not write blocky paragraphs. Write in 2-3 short, beautifully spaced paragraphs that flow like a natural human conversation.
+4. BEAUTIFUL MULTI-PARAGRAPH FORMAT: Write in 3-4 spacious, beautifully structured paragraphs that flow like a rich, comforting human conversation. NEVER write 1-line or 2-line short replies.
 5. REAL-WORLD GROUNDING: Any action or solution you offer must be a practical, physical real-world grounding task (e.g., box breathing, feeling the texture of an object, somatic muscle relaxation). No abstract or imaginary visualizations.
-6. STRICT ZERO-STORY REPETITION MANDATE: You MUST NEVER repeat a story, fable, parable, allegory, or metaphor that was used previously in this conversation. Every single story or analogy MUST be 100% BRAND NEW, unique, creative, and customized specifically to the user's exact current emotional situation. If a story was told once, it is PERMANENTLY BANNED from being reused.
+6. STRICT ZERO-STORY REPETITION MANDATE: You MUST NEVER repeat a story, fable, parable, allegory, or metaphor that was used previously in this conversation. Every single story or analogy MUST be 100% BRAND NEW, unique, creative, and customized specifically to the user's exact current emotional situation.
 
 [ABSOLUTE LANGUAGE RULE]: 
 You perfectly understand Tanglish, Tamil-English mix, and broken English. 
 However, YOU MUST REPLY 100% IN PURE, CLEAR ENGLISH. 
 NEVER use Tanglish words. NEVER mimic their language. ZERO exceptions.
-
-=== THE 10-THERAPIST METHODOLOGY EXECUTION ===
-The backend engine will inject a specific [REQUIRED INTERVENTION] based on its 96-state clinical analysis.
-You MUST flawlessly execute the EXACT steps provided in that intervention across these 10 Clinical Methodologies:
-
-1. METHOD 1: CBT (COGNITIVE BEHAVIORAL THERAPY - THOUGHT RESTRUCTURING)
-- Focus: Identify cognitive distortions (All-or-Nothing, Catastrophizing, Overgeneralization).
-- Action: Guide user to challenge automatic negative thoughts and reframe them objectively.
-
-2. METHOD 2: DBT (DIALECTICAL BEHAVIOR THERAPY - DISTRESS TOLERANCE & TIPP)
-- Focus: Manage intense, overwhelming emotional spikes and crisis moments.
-- Action: Guide TIPP skills (Temperature change, Intense exercise, Paced breathing, Paired muscle relaxation).
-
-3. METHOD 3: ACT (ACCEPTANCE & COMMITMENT THERAPY - DEFUSION & VALUES)
-- Focus: Reduce struggle against painful internal thoughts through cognitive defusion.
-- Action: Guide user to observe thoughts as passing clouds without buying into their literal truth.
-
-4. METHOD 4: SOMATIC DOWN-REGULATION & GROUNDING
-- Focus: Autonomic nervous system regulation during panic, chest tightness, or breathlessness.
-- Action: Guide 4-7-8 breathing, vagus nerve stimulation, or 5-4-3-2-1 sensory texture grounding.
-
-5. METHOD 5: ROGERIAN PERSON-CENTERED ACTIVE LISTENING
-- Focus: Unconditional positive regard, emotional validation, and deep empathetic mirroring.
-- Action: Provide pure, non-judgmental emotional presence without rushing to fix or advise.
-
-6. METHOD 6: DOUBLE-STANDARD TECHNIQUE (SELF-COMPASSION)
-- Focus: Highlight self-criticism hypocrisy vs compassion shown to loved ones.
-- Action: Ask what they would say to a close friend in the exact same scenario.
-
-7. METHOD 7: MICRO-BEHAVIORAL ACTIVATION
-- Focus: Overcome severe depressive apathy, exhaustion, and bed-locking.
-- Action: Offer a tiny 30-second micro-step (taking a sip of water, wiggling toes, opening a window).
-
-8. METHOD 8: BEHAVIORAL EXPERIMENT & EXPOSURE (DE-CATASTROPHIZING)
-- Focus: Dissolve irrational fear of worst-case outcomes in social anxiety or academic failure.
-- Action: Guide a micro-experiment testing whether the feared catastrophic outcome actually occurs.
-
-9. METHOD 9: COMPASSION-FOCUSED THERAPY (CFT - SOOTHING SYSTEM)
-- Focus: Activate the parasympathetic soothing-affiliative system to counteract shame & self-blame.
-- Action: Practice self-soothing touch (hand over heart) with gentle, warm self-talk.
-
-10. METHOD 10: PROBLEM-SOLVING THERAPY (PST - EXECUTIVE FUNCTION DECOMPOSITION)
-- Focus: Overcome overwhelm from massive workloads, exam deadlines, or multi-task paralysis.
-- Action: Deconstruct the overwhelming task into 3 bite-sized, prioritized micro-steps.
 
 === DYNAMIC OPTION GENERATION (MANDATORY) ===
 - At the very end of your response, you MUST provide a single short phrase (under 8 words) for a UI button that the user can click to continue with your specific exercise.
@@ -109,16 +72,16 @@ def evaluate_safety(message: str) -> bool:
 def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
     """
     Master LLM Router:
-    1. Primary: Groq 70B (llama-3.3-70b-versatile, llama3-70b-8192, mixtral-8x7b-32768)
-    2. Fallback 1: ChatGPT OpenAI (gpt-4o-mini)
-    3. Fallback 2: Google Gemini (gemini-1.5-flash)
+    1. Primary: Groq 70B
+    2. Fallback 1: ChatGPT OpenAI
+    3. Fallback 2: Google Gemini
     4. Fallback 3: n8n Automation Webhook
     5. Final Fallback: Enhanced 10-Methodology Local CBT Engine
     """
     keys = _get_groq_keys()
     full_prompt = patient_message
     if clinical_context:
-        full_prompt = f"[Context: {clinical_context}]\n\nPatient says: {patient_message}"
+        full_prompt = f"Clinical Context: {clinical_context}\n\nPatient Input: {patient_message}"
 
     # --- 1. TRY GROQ 70B MODELS ---
     if keys:
@@ -136,7 +99,7 @@ def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
                     {"role": "user", "content": full_prompt}
                 ],
                 "temperature": 0.35,
-                "max_tokens": 550
+                "max_tokens": 800
             }
             for idx, key in enumerate(keys):
                 try:
@@ -144,7 +107,8 @@ def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
                     res = requests.post(GROQ_URL, headers=headers, json=payload, timeout=10)
                     if res.status_code == 200:
                         reply = res.json()["choices"][0]["message"]["content"].strip()
-                        print(f"[GROQ SUCCESS] Model: {model_name} | Key: {idx+1}")
+                        if "<reflection>" in reply and "</reflection>" in reply:
+                            reply = reply.split("</reflection>")[-1].strip()
                         return reply
                 except Exception as e:
                     print(f"[GROQ RETRY] Model {model_name} error: {e}")
@@ -157,11 +121,14 @@ def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
             payload = {
                 "model": "gpt-4o-mini",
                 "messages": [{"role": "system", "content": KEFFI_SYSTEM_PROMPT}, {"role": "user", "content": full_prompt}],
-                "temperature": 0.35, "max_tokens": 450
+                "temperature": 0.35, "max_tokens": 800
             }
             res = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=10)
             if res.status_code == 200:
-                return res.json()["choices"][0]["message"]["content"].strip()
+                reply = res.json()["choices"][0]["message"]["content"].strip()
+                if "<reflection>" in reply and "</reflection>" in reply:
+                    reply = reply.split("</reflection>")[-1].strip()
+                return reply
         except Exception as e:
             print(f"[CHATGPT FALLBACK ERROR] {e}")
 
@@ -176,6 +143,8 @@ def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
             res = requests.post(gemini_url, json=payload, timeout=10)
             if res.status_code == 200:
                 reply = res.json()["candidates"][0]["content"]["parts"][0]["text"]
+                if "<reflection>" in reply and "</reflection>" in reply:
+                    reply = reply.split("</reflection>")[-1].strip()
                 return reply.strip()
         except Exception as e:
             print(f"[GEMINI FALLBACK ERROR] {e}")
@@ -194,39 +163,35 @@ def get_keffi_reply(patient_message: str, clinical_context: str = "") -> str:
     print("[LLM FALLBACK] Executing local 10-methodology clinical fallback engine...")
     msg_lower = patient_message.lower()
     
-    if any(k in msg_lower for k in ["deadline", "workload", "exam", "overwhelm", "busy", "task", "project"]):
+    if any(k in msg_lower for k in ["deadline", "workload", "exam", "overwhelm", "busy", "task", "project", "hard"]):
         return (
-            "I hear the heavy pressure bearing down on you right now. When tasks and deadlines pile up, "
-            "it is completely normal for your mind to feel paralyzed by the sheer volume of work.\n\n"
-            "Let's break this down using Problem-Solving Therapy (PST): instead of looking at the entire mountain of work, "
-            "we are going to focus on just ONE single micro-step.\n\n"
-            "- Take a piece of paper, write down the 3 most urgent tasks, and cross out the bottom 2 for the next hour. "
-            "Focus strictly on task #1 for 15 minutes.\n"
-            "|||OPTION||| Help me prioritize my tasks 💭"
+            "I hear the heavy, crushing pressure bearing down on you right now, and I want you to know that your feelings are completely valid. When life, workload, or circumstances get hard, it is entirely normal for your mind and body to feel completely drained and overwhelmed.\n\n"
+            "From a biological perspective, when you experience intense stress, your brain's Amygdala triggers a fight-or-flight cascade, flooding your bloodstream with cortisol and adrenaline. This can cause physical tightness in your chest, mental fog, and severe emotional fatigue as your Prefrontal Cortex becomes overloaded.\n\n"
+            "To help down-regulate your nervous system right now, let's break this down using Problem-Solving Therapy (PST): instead of trying to carry the entire heavy burden at once, we are going to focus on just ONE tiny micro-step.\n\n"
+            "- Take a slow breath, feel your feet planted firmly on the floor, and let your shoulders drop away from your ears. Take a paper and write down just 1 single micro-task you can complete in the next 5 minutes.\n"
+            "|||OPTION||| Help me break down my workload 💭"
         )
-    elif any(k in msg_lower for k in ["breath", "chest", "panic", "shaking", "heart", "scared"]):
+    elif any(k in msg_lower for k in ["breath", "chest", "panic", "shaking", "heart", "scared", "anxious"]):
         return (
-            "I hear you, and I am right here with you. When your chest feels tight and breathing is hard, "
-            "your nervous system has temporarily triggered a protective fight-or-flight response.\n\n"
-            "You are safe right now, and this physical sensation will pass as your body relaxes.\n\n"
-            "- Let me guide you through 4-7-8 Somatic Pacing: inhale slowly for 4 seconds, hold gently for 7 seconds, "
-            "and exhale completely through your mouth for 8 seconds. Let's do this together.\n"
+            "I hear you, and I am right here with you in this moment. When your chest feels tight, your heart races, and breathing becomes difficult, the panic you are feeling is real, but you are safe right now.\n\n"
+            "Neurologically, your Sympathetic Nervous System has temporarily sounded a false emergency alarm. Your body is releasing adrenaline to protect you, which accelerates your heart rate and tightens your muscles. This physical surge will naturally peak and subside as your autonomic system regains balance.\n\n"
+            "Let's activate your Parasympathetic Nervous System through Somatic 4-7-8 Breathing to stimulate the Vagus Nerve and lower your heart rate:\n\n"
+            "- Place one hand on your chest and one hand on your belly. Inhale slowly through your nose for 4 seconds, hold your breath gently for 7 seconds, and exhale smoothly through your mouth for 8 seconds. Let's practice this together.\n"
             "|||OPTION||| Guide me through 4-7-8 breathing 🌿"
         )
-    elif any(k in msg_lower for k in ["sad", "depressed", "empty", "lonely", "exhausted", "crying"]):
+    elif any(k in msg_lower for k in ["sad", "depressed", "empty", "lonely", "exhausted", "crying", "pain"]):
         return (
-            "I hear how completely exhausted and heavy you feel right now. When depression drains your energy, "
-            "even taking a step or opening your eyes can feel like an impossible climb.\n\n"
-            "Please be gentle with yourself. You do not need to explain or fix anything in this moment.\n\n"
-            "- Let's try a tiny 30-second Micro-Behavioral Action: take just one slow sip of water or place a hand over your chest "
-            "and feel your heart beating steadily underneath.\n"
+            "I hear how deeply exhausted and heavy you feel right now. Carrying sadness or a sense of hopelessness takes an immense physical and emotional toll, and it is completely understandable that you feel drained.\n\n"
+            "When we experience deep emotional pain, our brain's affective networks experience reduced dopamine and serotonin transmission, making even small daily tasks feel like monumental hills. Your exhaustion is a real physiological response to emotional strain.\n\n"
+            "Please give yourself permission to rest without judgment in this space. We do not need to solve everything today; we only need to take care of you in this moment.\n\n"
+            "- Let's practice a 30-second Micro-Self-Compassion action: place a hand over your heart, feel the steady warmth beneath your palm, take a slow breath, and remind yourself: 'I am doing the best I can, and it is okay to take things one moment at a time.'\n"
             "|||OPTION||| I need to vent this out 💬"
         )
     else:
         return (
-            "I am listening closely, and I want to acknowledge what you are sharing. "
-            "Whatever you are navigating right now, you do not have to carry it all by yourself.\n\n"
-            "We can take this one step at a time, at whatever pace feels comfortable for you.\n\n"
-            "- Take a slow, grounded breath in, let your shoulders drop away from your ears, and tell me what feels heaviest on your mind.\n"
-            "|||OPTION||| Guide me through a calming reframe 🎵"
+            "I am listening closely, and I want to acknowledge what you are sharing. Whatever you are navigating right now, your experiences matter, and you do not have to carry this burden all by yourself.\n\n"
+            "When we hold thoughts and worries internally, our brain remains in a state of hyper-vigilance. Expressing what you are going through helps activate the prefrontal cortex to process feelings safely.\n\n"
+            "We can take this step by step, at whatever pace feels comfortable for you.\n\n"
+            "- Take a slow, grounded breath in, let your jaw relax, and share whatever feels heaviest on your mind today.\n"
+            "|||OPTION||| Let's explore my thoughts 💭"
         )
