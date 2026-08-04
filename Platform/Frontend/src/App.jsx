@@ -1684,16 +1684,26 @@ const ChatArea = ({
             visual_affect_vector: { emotion: detectedFacialEmotion, confidence: facialConfidence, tension: 'High' }
           }, { timeout: 45000 });
         } catch (e2) {
-          console.warn("[FALLBACK CBT RESPONSE ENGINE ACTIVE]", e2);
-          // Empathetic 3-Tier CBT Fallback Engine so user NEVER sees an error!
-          let fallbackText = "I can hear how heavy things feel for you right now, and I want you to know that your feelings are completely valid. When life feels hard or overwhelming, our nervous system can feel exhausted. Let's take a slow breath together. Would you like to try a gentle 4-7-8 somatic breathing exercise or listen to calming music?";
+          console.warn("[FALLBACK CLINICAL RESPONSE ENGINE ACTIVE]", e2);
+          // Empathetic Problem-Specific Fallback Engine - ZERO 4-7-8 default breathing!
           const lowerMsg = message.toLowerCase();
-          if (lowerMsg.includes('hard') || lowerMsg.includes('sad') || lowerMsg.includes('hopeless') || lowerMsg.includes('pain')) {
-            fallbackText = "I'm listening, and I hear how much pain you're carrying right now. It is completely okay to feel overwhelmed when life gets hard. You don't have to carry this alone. Let's take it one moment at a time. I'm right here with you.";
-          } else if (lowerMsg.includes('anxious') || lowerMsg.includes('panic') || lowerMsg.includes('heart') || lowerMsg.includes('scared')) {
-            fallbackText = "I can sense the anxiety rising right now. Your body's fight-or-flight response is sounding an alarm, but you are safe in this space. Place a hand over your chest, feel your feet on the floor, and inhale slowly for 4 seconds, hold for 7, and exhale for 8.";
+          let fallbackText = "I'm listening closely, and I want to acknowledge what you're sharing. Whatever you are navigating right now, your experiences matter and you don't have to carry this burden all by yourself. Let's take it one moment at a time.";
+          let fallbackOptions = ["Help me reframe this 💭", "Listen to Music Sanctuary 🎵", "Book Doctor Session 📅"];
+
+          if (lowerMsg.includes('work') || lowerMsg.includes('exam') || lowerMsg.includes('deadline') || lowerMsg.includes('overwhelm') || lowerMsg.includes('busy') || lowerMsg.includes('task')) {
+            fallbackText = "I hear the heavy pressure of deadlines and workload bearing down on you. When tasks pile up, it is completely normal for your mind to feel paralyzed by the sheer volume of work.\n\nFrom a neurological perspective, intense stress impairs prefrontal executive function. Let's use Problem-Solving Therapy (PST): write down the 3 most urgent tasks, cross out the bottom 2 for the next hour, and focus strictly on task #1 for just 5 minutes.";
+            fallbackOptions = ["Help me prioritize tasks 💭", "Listen to Music Sanctuary 🎵", "Book Doctor Session 📅"];
+          } else if (lowerMsg.includes('mistake') || lowerMsg.includes('fail') || lowerMsg.includes('ruined') || lowerMsg.includes('career') || lowerMsg.includes('error')) {
+            fallbackText = "I can sense how harsh your self-criticism feels right now after that mistake. When an error occurs, it is natural to feel shaken, but judging yourself severely only magnifies the pain.\n\nYour brain is experiencing catastrophizing. Let's use the Double-Standard Technique: If a dear friend came to you today having made this exact mistake, what compassionate words would you tell them? Offer those exact words of kindness to yourself right now.";
+            fallbackOptions = ["Guide me through self-compassion 💖", "Help me reframe 💭", "Book Doctor Session 📅"];
+          } else if (lowerMsg.includes('hard') || lowerMsg.includes('sad') || lowerMsg.includes('hopeless') || lowerMsg.includes('pain') || lowerMsg.includes('exhausted') || lowerMsg.includes('tired')) {
+            fallbackText = "I hear how deeply exhausted and heavy life feels for you right now. Carrying emotional strain takes a real physiological toll, lowering dopamine and serotonin transmission.\n\nPlease give yourself permission to rest without judgment today. Let's try a tiny 30-second Micro-Self-Compassion action: place a gentle hand over your heart, feel the steady warmth beneath your palm, and remind yourself: 'I am taking this one moment at a time.'";
+            fallbackOptions = ["I need to vent 💬", "Listen to Music Sanctuary 🎵", "Book Doctor Session 📅"];
+          } else if (lowerMsg.includes('panic') || lowerMsg.includes('can\'t breathe') || lowerMsg.includes('chest tight')) {
+            fallbackText = "I hear you, and I am right here with you. When your chest feels tight and panic hits, your sympathetic fight-or-flight system has sounded a temporary false alarm.\n\nYou are safe in this space, and this physical surge will naturally peak and subside. Let's activate your parasympathetic system: inhale slowly for 4 seconds, hold gently for 7, and exhale completely for 8.";
+            fallbackOptions = ["Guide me through grounding 🌿", "Listen to Music Sanctuary 🎵", "Book Doctor Session 📅"];
           }
-          response = { data: { reply: fallbackText, options: ["Try 4-7-8 Breathing", "Listen to Music Sanctuary", "Book Doctor Session"] } };
+          response = { data: { reply: fallbackText, options: fallbackOptions } };
         }
       }
       
