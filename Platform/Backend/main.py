@@ -54,7 +54,7 @@ def root_status():
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -97,14 +97,6 @@ class ChatRequest(BaseModel):
     message: str
     patient_id: Optional[str] = "P-102"
     emotional_context: Optional[str] = None
-    session_id: Optional[str] = None
-    user_id: Optional[str] = None
-    visual_affect: Optional[dict] = None
-    voice_prosody: Optional[dict] = None
-    visual_affect_vector: Optional[dict] = None
-
-    class Config:
-        extra = "allow"
 
 class RegisterRequest(BaseModel):
     patient_id: Optional[str] = None
@@ -177,7 +169,7 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
             }
 
         greetings = ["hi", "hii", "hello", "hey", "good morning", "good evening", "hi keffi", "hello keffi"]
-        is_greeting = user_text in greetings
+        is_greeting = user_text in greetings or len(user_text) < 4
 
         if is_greeting:
             clinical = {}
@@ -223,6 +215,8 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
                 new_mhq = mhq_before
                 
             requires_appointment = is_sos or (user_intent == "PERSONAL_DISTRESS" and (clinical_severity >= 8 or new_mhq < 20))
+        # NOTE: is_sos must ONLY come from the current message's router keywords.
+        # MHQ score must NOT override is_sos to avoid false positives on non-crisis messages.
 
         # Memory recall
         past_context = memory_engine.recall_past_memory(req.patient_id, req.message)
@@ -231,10 +225,10 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
         dynamic_rules = {
             # --- CLINICAL MODES ---
             "CBT": (
-                "Rule 1: Deep Validation: Empathize deeply with the user's exact problem across 1-2 rich paragraphs, feeling their pain like a human friend.\n"
-                "Rule 2: Biological & Psychological Explanation: Give a detailed biological/neurological explanation of why their brain's Amygdala and Cortisol levels are reacting this way.\n"
-                "Rule 3: Deep Solution: Provide a practical, step-by-step cognitive or somatic grounding action starting with a bullet point ( - ).\n"
-                "Rule 4: Comprehensive Depth: NEVER give brief 1-line or 2-line answers. Provide a rich 3 to 4 paragraph clinical explanation."
+                "Rule 1: Deep Validation: Empathize deeply with the user's exact problem, feeling their pain like a human friend.\n"
+                "Rule 2: Psychological Explanation: Give a brief, literal psychological explanation of why their mind/body is reacting this way (strictly NO metaphors or analogies). NEVER repeat a past explanation.\n"
+                "Rule 3: Deep Solution: Provide exactly ONE deeply detailed, tailored cognitive action. Start with a bullet point ( - ) focusing on a real-world grounding technique. No visualization exercises.\n"
+                "Rule 4: Limit: Keep it to 2-3 natural human paragraphs."
             ),
             "Double_Standard_CBT": (
                 "Rule 1: Deep Validation: Empathize deeply with the user's exact problem, feeling their pain like a human friend.\n"
@@ -313,7 +307,7 @@ async def process_chat(req: ChatRequest, background_tasks: BackgroundTasks, db: 
                 "Otherwise, present ONE highly unique, immersive riddle or puzzle. Do NOT explain or reveal the solution in this message. Keep it a mystery so they can think about it. "
                 "CRITICAL RULES: DO NOT therapize the user. For the option, output EXACTLY: |||OPTION||| Show me the solution 🗝️"
             ),
-            "Casual": "Give a warm, deeply comforting multi-paragraph human greeting. Validate that you are here to listen with deep empathy, ask how their day is going, and invite them to share whatever is on their mind or heart.",
+            "Casual": "Give a warm, short, friendly greeting. Ask how their day is going. Keep it strictly under 3 sentences. DO NOT therapize.",
             "Factual": "Provide a direct, factual answer clearly and warmly. STRICTLY DO NOT therapize the user. DO NOT validate their feelings. DO NOT mention their emotional context. Just answer the question.",
             "Dynamic_Counselor": (
                 "Rule 1: Deep Validation: Empathize deeply with the user's specific mental health struggle, feeling their pain like a human friend.\n"
